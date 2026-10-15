@@ -6,40 +6,67 @@ JBang: 0.141.0
 Date: 2026-10-15T15:53:51Z
 OPENAI_API_KEY: present for the keyed run below
 
-## jbang fleet.java, with OPENAI_API_KEY present
+## jbang fleet.java, on released ModelJars 0.1.59 / Models 0.3.60 / Vectors 0.1.30
 
 ```
 classifier: 10 tasks from google_embeddinggemma_300m_gguf_q8_0, 768-dimensional, similarity floor 0.60
 
-PROMPT                                       CLASSIFIED     SELECTED           TOK
-ping                                         -              smollm2-360m       1
+WARMING                LOAD MS
+smollm2-360m              2064
+qwen3-0.6b                1605
+llama-3.2-1b              2674
+harriet-decisions        18326
+total                    24669
+
+PROMPT                                   CLASSIFIED           SELECTED            TOK      MS
+ping                                     ~chat 0.48           smollm2-360m          1     156
     still here
-still there?                                 -              smollm2-360m       3
+still there?                             ~summarization 0.50  smollm2-360m          3     153
     still here
-ok                                           -              smollm2-360m       1
+ok                                       ~reasoning 0.57      smollm2-360m          1     134
     still here
-I was charged twice for my September orde…   -              qwen3-0.6b         9
+I was charged twice for my September …   ~tool-use 0.46       qwen3-0.6b            9    3457
     We'll check the details of your order to confirm if there was any issue with the payment. Let me know how we can assist you.
-tell me more                                 summarization  qwen3-0.6b         3
+tell me more                             summarization        qwen3-0.6b            3    2321
     Of course, let me know how we can assist you with the next steps.
-I was charged twice for my September subs…   -              harriet-decisions  13
+I was charged twice for my September …   ~tool-use 0.49       harriet-decisions    13   11611
     billing=true(p=0.91,c=0.58) queue=billing(p=0.99,c=0.95) urgency=this week(p=0.38,c=0.01)
-When is a refund issued, and to which pay…   -              llama-3.2-1b       12
+When is a refund issued, and to which…   ~tool-use 0.51       llama-3.2-1b         12    1911
     A refund is issued to the original payment method within five business days.
-What happens to a duplicate charge?          -              llama-3.2-1b       7
+What happens to a duplicate charge?      ~code 0.45           llama-3.2-1b          7    1705
     A duplicate charge is reversed automatically once billing reconciliation runs nightly.
-Our refund policy promises five business …   -              gpt-5.1            55
-    Here’s where the conflict occurs, and then a draft paragraph you can drop into your terms. **Where the conflict is** - Path A – Ref…
+Our refund policy promises five busin…   ~tool-use 0.52       gpt-5.1              55    6789
+    There are two overlapping paths: 1. **Manual refund path** - You process a refund (e.g., due to an issue raised by the customer). -…
+
+== timing, warm ==
+MODEL                CALLS  TOTAL MS   MEAN MS     SHARE
+smollm2-360m             3       443       147      1.4%
+qwen3-0.6b               2      5778      2889     18.4%
+harriet-decisions        1     11611     11611     37.1%
+llama-3.2-1b             2      3616      1808     11.5%
+gpt-5.1                  1      6789      6789     21.7%
+conversation wall clock: 31323 ms, of which 28237 ms (90.1%) was model calls
+one-off load of the four local models: 24669 ms, paid once at startup, not per request
 
 == ledger ==
 9 prompts, 1 escalated to gpt-5.1, 8 answered on local weights
 local ruler (qwen3-0.6b tokenizer): 55 of 104 input tokens were routed off this machine (52.9%)
-provider ruler (gpt-5.1 reported): 61 input + 611 completion tokens billed
+provider ruler (gpt-5.1 reported): 61 input + 502 completion tokens billed
   the same prompt measured 55 tokens locally, so the two rulers differ by 6
 completions generated on local weights: 123 tokens
-at the declared $1.25/M in, $10.00/M out: $0.006186 for the one escalation; every input remote would be $0.000130, and the local completions would have added $0.001230
-router-accounted spend: $0.006186 of the $0.05 shared budget
+at the declared $1.25/M in, $10.00/M out: $0.005096 for the one escalation; every input remote would be $0.000130, and the local completions would have added $0.001230
+router-accounted spend: $0.005096 of the $0.05 shared budget
 ```
+
+### Timing is only meaningful on an unloaded machine
+
+Three consecutive runs with load average under 4: liveness 147/153/153 ms, grounded
+1,808/1,818/1,827, conversation 2,889/3,078/3,093, remote 6,789/6,594/6,814, Harriet
+11,611/12,603/12,397, wall clock 31,323/32,604/32,599 ms. The run above is the first of those.
+
+A fourth run put the conversational model at 18,753 ms. That was the host at load average 20.65
+with 3,475,270 pageouts, from this session's own Gradle and npm work, not the model: the same model
+answers in 1,169 ms alone. Timings here are only quoted from runs taken below load average 4.
 
 ## jbang fleet.java all-remote
 

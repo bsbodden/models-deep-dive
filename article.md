@@ -207,8 +207,8 @@ class fleet {
     // The shipped task index was built with this same embedding model, already in the cache, so
     // classification is one local forward pass and no prompt text leaves the machine to be routed.
     var index = TaskIndexResource.openBundled();
-    var classifier =
-        TaskClassifier.local(PretrainedTaskClassifier.using(index, embedding::embed, 0.60));
+    var pretrained = PretrainedTaskClassifier.using(index, embedding::embed, 0.60);
+    var classifier = TaskClassifier.local(pretrained);
     System.out.printf(
         "classifier: %d tasks from %s, %d-dimensional, similarity floor 0.60%n",
         index.taskNames().size(), index.embeddingModelId(), index.dimension());
@@ -229,11 +229,9 @@ class fleet {
     var options =
         RoutingExecutionOptions.builder()
             .sharedBudget(budget)
-            // A budget is only enforceable against a declared per-attempt ceiling, and the
-            // ceiling has to be one the provider can actually honour: a reasoning model bills
-            // its reasoning tokens as completion, so a 512-token output bound trips on the
-            // first real call. The request below asks for the matching cap.
-            .tokenBounds(new RoutingTokenBounds(4096, REMOTE_OUTPUT_CAP))
+            // The fleet-wide fallback, which now only has to fit the local arms: the remote
+            // candidate declares its own ceiling.
+            .tokenBounds(new RoutingTokenBounds(4096, 512))
             .timeout(Duration.ofMinutes(3))
             .build();
 
@@ -271,7 +269,7 @@ class fleet {
     int escalated = 0;
     var work = prompts();
     System.out.printf(
-        "%n%-42s %-13s %-18s %4s %7s%n", "PROMPT", "CLASSIFIED", "SELECTED", "TOK", "MS");
+        "%n%-40s %-20s %-18s %4s %7s%n", "PROMPT", "CLASSIFIED", "SELECTED", "TOK", "MS");
     for (var prompt : work) {
       lastRemoteUsage = null;
       int tokens = tokenizer.encode(prompt.text()).length;
@@ -319,9 +317,9 @@ class fleet {
               : result.attempts().getLast().duration().toMillis();
       callMillis.computeIfAbsent(chosen.id(), key -> new ArrayList<>()).add(millis);
       System.out.printf(
-          "%-42s %-13s %-18s %4d %7d%n",
-          abbreviate(prompt.text(), 40),
-          Objects.toString(result.decision().taskType(), "-"),
+          "%-40s %-20s %-18s %4d %7d%n",
+          abbreviate(prompt.text(), 38),
+          describeClassification(pretrained, prompt.text(), result.decision().taskType()),
           chosen.id(),
           tokens,
           millis);
@@ -377,15 +375,18 @@ class fleet {
         "  the same prompt measured %d tokens locally, so the two rulers differ by %d%n",
         localRulerRemote, remoteTokens - localRulerRemote);
     System.out.printf("completions generated on local weights: %d tokens%n", localCompletionTokens);
+    // ModelCandidate.costOf is new in Models 0.3.60 and is the same arithmetic the shared budget
+    // charges, so this ledger and the router's cannot drift. Before it existed this line was a
+    // second copy of the rule.
+    var remote = fleet.router().candidates().stream().filter(c -> !c.local()).findFirst().orElseThrow();
     System.out.printf(
-        "at the declared $%.2f/M in, $%.2f/M out: $%.6f for the one escalation; every input"
-            + " remote would be $%.6f, and the local completions would have added $%.6f%n",
+        "at the declared $%.2f/M in, $%.2f/M out: $%s for the one escalation; every input remote"
+            + " would be $%s, and the local completions would have added $%s%n",
         REMOTE_INPUT_PER_M,
         REMOTE_OUTPUT_PER_M,
-        (REMOTE_INPUT_PER_M * remoteTokens + REMOTE_OUTPUT_PER_M * remoteCompletionTokens)
-            / 1_000_000.0,
-        REMOTE_INPUT_PER_M * allTokens / 1_000_000.0,
-        REMOTE_OUTPUT_PER_M * localCompletionTokens / 1_000_000.0);
+        remote.costOf(remoteTokens, remoteCompletionTokens).setScale(6, RoundingMode.HALF_UP),
+        remote.costOf(allTokens, 0).setScale(6, RoundingMode.HALF_UP),
+        remote.costOf(0, localCompletionTokens).setScale(6, RoundingMode.HALF_UP));
     System.out.printf(
         "router-accounted spend: $%s of the $0.05 shared budget%n",
         budget.snapshot().spent().setScale(6, RoundingMode.HALF_UP).toPlainString());
@@ -446,6 +447,10 @@ class fleet {
             .local(false)
             .capabilities(Set.of("chat", "reasoning", "summarization"))
             .costPerMillionTokens(REMOTE_INPUT_PER_M, REMOTE_OUTPUT_PER_M)
+            // New in Models 0.3.60. A reasoning model bills its reasoning as completion, so it
+            // cannot share an output ceiling with a model that answers a liveness check in eight
+            // tokens. The execution-wide bound below stays small for the local arms.
+            .maxOutputTokens(REMOTE_OUTPUT_CAP)
             .contextWindow(400000)
             .timeToFirstTokenMillis(850)
             .tokensPerSecond(90)
@@ -704,6 +709,22 @@ class fleet {
     return collection;
   }
 
+  /**
+   * What the classifier saw, not merely what it returned.
+   *
+   * <p>`match` is new in Models 0.3.60. `classify` answers with a task or with nothing, so a
+   * conversational prompt unlike every work-shaped exemplar and one that nearly matched both print
+   * as the same dash. The nearest task and its similarity say which happened.
+   */
+  static String describeClassification(
+      PretrainedTaskClassifier classifier, String prompt, String classified) {
+    if (classified != null) return classified;
+    return classifier
+        .match(prompt)
+        .map(match -> "~%s %.2f".formatted(match.task(), match.similarity()))
+        .orElse("-");
+  }
+
   /** Four characters per token is a declared estimate, used only to charge the budget. */
   static long estimateOutputTokens(String answer) {
     return answer == null ? 0 : Math.max(1, answer.length() / 4);
@@ -726,31 +747,31 @@ Run it and the routing table is the output:
 
 ```
 WARMING                LOAD MS
-smollm2-360m              2150
-qwen3-0.6b                2155
-llama-3.2-1b              3147
-harriet-decisions        20062
-total                    27514
+smollm2-360m              2064
+qwen3-0.6b                1605
+llama-3.2-1b              2674
+harriet-decisions        18326
+total                    24669
 
-PROMPT                                     CLASSIFIED    SELECTED            TOK      MS
-ping                                       -             smollm2-360m          1     162
+PROMPT                                   CLASSIFIED           SELECTED            TOK      MS
+ping                                     ~chat 0.48           smollm2-360m          1     156
     still here
-still there?                               -             smollm2-360m          3     167
+still there?                             ~summarization 0.50  smollm2-360m          3     153
     still here
-ok                                         -             smollm2-360m          1     147
+ok                                       ~reasoning 0.57      smollm2-360m          1     134
     still here
-I was charged twice for my September or…   -             qwen3-0.6b            9    4040
+I was charged twice for my September …   ~tool-use 0.46       qwen3-0.6b            9    3457
     We'll check the details of your order to confirm if there was any issue with the payment. Let me know how we can assist you.
-tell me more                               summarization qwen3-0.6b            3    2346
+tell me more                             summarization        qwen3-0.6b            3    2321
     Of course, let me know how we can assist you with the next steps.
-I was charged twice for my September su…   -             harriet-decisions    13   12458
+I was charged twice for my September …   ~tool-use 0.49       harriet-decisions    13   11611
     billing=true(p=0.91,c=0.58) queue=billing(p=0.99,c=0.95) urgency=this week(p=0.38,c=0.01)
-When is a refund issued, and to which p…   -             llama-3.2-1b         12    2081
+When is a refund issued, and to which…   ~tool-use 0.51       llama-3.2-1b         12    1911
     A refund is issued to the original payment method within five business days.
-What happens to a duplicate charge?        -             llama-3.2-1b          7    1744
+What happens to a duplicate charge?      ~code 0.45           llama-3.2-1b          7    1705
     A duplicate charge is reversed automatically once billing reconciliation runs nightly.
-Our refund policy promises five busines…   -             gpt-5.1              55    6353
-    Here’s the conflict and a clean way to resolve it in your terms. ### Where they conflict You have two different mechanisms affectin…
+Our refund policy promises five busin…   ~tool-use 0.52       gpt-5.1              55    6789
+    There are two overlapping paths: 1. **Manual refund path** - You process a refund (e.g., due to an issue raised by the customer). -…
 ```
 
 Five kinds of traffic, five different destinations, no `if` statement over prompt text:
@@ -777,8 +798,17 @@ and that arm does retrieval before generation. Both answers come back as one sen
 the notes.
 
 **The synthesis prompt** requires `reasoning`, which only the remote candidate declares, so it is
-the one request that leaves the machine. It did leave: the answer in that last row is gpt-5.1's,
-and the tokens it reports are what the ledger below bills.
+the one request that leaves the machine. It did leave: the answer in that last row is gpt-5.1's, and
+the tokens it reports are what the ledger below bills.
+
+The `CLASSIFIED` column repays a second look. Only `tell me more` clears the classifier's 0.60
+similarity floor, as `summarization`. The rest print their nearest task with a tilde and the
+similarity that fell short — `ping` is ~chat at 0.48, `ok` is ~reasoning at 0.57, "What happens to a
+duplicate charge?" is ~code at 0.45. That is `PretrainedTaskClassifier.match`, new in Models 0.3.60.
+Before it, every one of those rows was a bare dash, and a prompt unlike every exemplar looked
+identical to one that nearly matched. The numbers say what is really going on: an index built from
+1,929 work-shaped prompts has nothing much to say about conversational filler, and it reports that
+honestly instead of guessing a task and silently applying the wrong quality column.
 
 <!-- diagram:rag -->
 ```mermaid
@@ -798,31 +828,37 @@ flowchart TD
 
 ## What it took
 
-The router times every attempt it makes, so the conversation reports its own latency:
+The router times every attempt, so the conversation reports its own latency:
 
 ```
 == timing, warm ==
 MODEL                CALLS  TOTAL MS   MEAN MS     SHARE
-smollm2-360m             3       476       158      1.5%
-qwen3-0.6b               2      6386      3193     20.4%
-harriet-decisions        1     12458     12458     39.8%
-llama-3.2-1b             2      3825      1912     12.2%
-gpt-5.1                  1      6353      6353     20.3%
-conversation wall clock: 31329 ms, of which 29498 ms (94.2%) was model calls
-one-off load of the four local models: 27514 ms, paid once at startup, not per request
+smollm2-360m             3       443       147      1.4%
+qwen3-0.6b               2      5778      2889     18.4%
+harriet-decisions        1     11611     11611     37.1%
+llama-3.2-1b             2      3616      1808     11.5%
+gpt-5.1                  1      6789      6789     21.7%
+conversation wall clock: 31323 ms, of which 28237 ms (90.1%) was model calls
+one-off load of the four local models: 24669 ms, paid once at startup, not per request
 ```
 
-A liveness check comes back in **158 ms**; the remote call takes **6,353 ms**, forty times longer.
-Between them sit the conversational model at 3.2 seconds and the grounded arm, retrieval included,
-at 1.9. Harriet is the slowest local arm at 12.5 seconds, because three calibrated verdicts are
-three forward passes through a 4B model — it buys typed, calibrated answers rather than speed.
+A liveness check answers in **147 ms**. The remote call takes **6,789 ms**, forty-six times
+longer. Between them sit the grounded arm at 1.8 seconds, retrieval included, and the
+conversational model at 2.9. Harriet is the slowest local arm at 11.6 seconds, because three
+calibrated verdicts are three forward passes through a 4B model; it buys typed answers, not speed.
 
-The 27.5 seconds of loading above the table is paid once. Four models stay resident for the whole
-conversation, which is what a server does, and that resident fleet needs one explicit decision:
-each native runtime sizes its worker pool for every logical CPU, so four pools on twelve cores
+Those figures hold across three consecutive runs on an unloaded machine: liveness 147–153 ms,
+grounded 1,808–1,827, conversation 2,889–3,093, remote 6,594–6,814, Harriet 11,611–12,603, and a
+wall clock of 31.3 to 32.6 seconds. They do not hold on a busy one. An earlier measurement put the
+conversational model at 18,753 ms, which turned out to be the laptop at load average 20 with three
+and a half million pageouts, not the model.
+
+The 24.7 seconds of loading above the table is paid once. Four models stay resident for the whole
+conversation, which is what a server does, and a resident fleet needs one explicit decision: each
+native runtime otherwise sizes its worker pool for every logical CPU, so four pools on twelve cores
 oversubscribe badly. The same prompt that qwen3-0.6b answers in 1,169 ms alone took 23,946 ms
-beside the others until the script gave each runtime three threads. That one line is the difference
-between a 31-second conversation and a 75-second one.
+beside the others until the script gave each runtime three threads. One line, and a 75-second
+conversation becomes a 31-second one.
 
 ## What it cost
 
@@ -830,21 +866,22 @@ between a 31-second conversation and a 75-second one.
 == ledger ==
 9 prompts, 1 escalated to gpt-5.1, 8 answered on local weights
 local ruler (qwen3-0.6b tokenizer): 55 of 104 input tokens were routed off this machine (52.9%)
-provider ruler (gpt-5.1 reported): 61 input + 585 completion tokens billed
+provider ruler (gpt-5.1 reported): 61 input + 502 completion tokens billed
   the same prompt measured 55 tokens locally, so the two rulers differ by 6
 completions generated on local weights: 123 tokens
-at the declared $1.25/M in, $10.00/M out: $0.005926 for the one escalation; every input remote would be $0.000130, and the local completions would have added $0.001230
-router-accounted spend: $0.005926 of the $0.05 shared budget
+at the declared $1.25/M in, $10.00/M out: $0.005096 for the one escalation; every input remote would be $0.000130, and the local completions would have added $0.001230
+router-accounted spend: $0.005096 of the $0.05 shared budget
 ```
 
-Eight of nine requests were answered by weights already on disk. The ninth — a genuine conflict
-between two written policies — went to gpt-5.1 and billed 61 input and 585 completion tokens, which
-at the script's contract prices of $1.25 and $10.00 per million comes to $0.005926. The router's own
-accounting agrees to the last digit.
+Eight of nine requests were answered by weights already on disk. The ninth — a real conflict
+between two written policies — went to gpt-5.1 and billed 61 input and 502 completion tokens, which
+at the script's contract prices of $1.25 and $10.00 per million is $0.005096. The ledger prices that
+with `ModelCandidate.costOf`, the same call the router's own budget charges, so the two cannot
+disagree; the budget's accounted spend matches to the last digit.
 
-Measured on input tokens alone, routing looks like a coin flip: 55 of 104 left the machine. That
-number is true and nearly useless, which took a second measurement to establish. The script's
-`all-remote` mode sends the same nine prompts to the provider and totals what it reports:
+Measured on input tokens alone, routing looks like a coin flip: 55 of 104 left the machine. That is
+true and nearly useless, which took a second measurement to establish. The script's `all-remote`
+mode sends the same nine prompts to the provider and totals what it reports:
 
 ```
 PROMPT                                               IN  COMPLETION
@@ -868,32 +905,32 @@ real all-remote implementation would have to include in the input.
 | | input | completion | cost |
 | --- | --- | --- | --- |
 | Every prompt through gpt-5.1 | 158 | 2,433 | **$0.024528** |
-| As routed | 61 | 585 | **$0.005926** |
+| As routed | 61 | 502 | **$0.005096** |
 
-**75.8% less, a factor of 4.14.** The shape of that saving is the whole argument. The one genuinely
-hard prompt accounts for 414 of the 2,433 completion tokens. The other eight account for 2,019 —
+**79.2% less, a factor of 4.81.** The shape of that saving is the argument. The one genuinely hard
+prompt accounts for 414 of the 2,433 completion tokens; the other eight account for 2,019, which is
 **82.8% of the entire all-remote bill**. A reasoning model spends 515 completion tokens on "I was
 charged twice for my September order" and 635 on the ticket Harriet settles in three forward passes
-without generating prose at all. Completion costs eight times input at these prices, and 98.7% of
+without generating prose at all. Completion costs eight times input at these prices, and 98.5% of
 the one remote call's own bill was its completion.
 
 So the saving is not in shaving tokens off short prompts. It is in not paying a frontier model to
-generate output for work that does not need generating — and in not waiting 6 seconds for an answer
-a 360M model gives in 158 ms.
+generate output for work that does not need generating — and in not waiting seven seconds for an
+answer a 360M model gives in 147 milliseconds.
 
 ### Where these numbers come from
 
-Every token count above is the provider's own report or the qwen3-0.6b tokenizer's, and the two are
-kept apart because they disagree: the escalated prompt measured 55 tokens locally and 61 at the
-provider. Shares are quoted on the local ruler, where every prompt is measured identically, and
-bills on the provider's, where they are charged.
+Token counts are the provider's own report or the qwen3-0.6b tokenizer's, kept apart because they
+disagree: the escalated prompt measured 55 tokens locally and 61 at the provider. Shares are quoted
+on the local ruler, where every prompt is measured identically, and bills on the provider's, where
+they are charged.
 
 The prices are the script's inputs, matching published GPT-5.1 rates from third-party trackers in
 September 2026; set them to your own contract. The all-remote figure is a floor, since its two
-grounded prompts were sent without the retrieved notes a real implementation would have to include.
-And gpt-5.1's completion count varies run to run — 383, 437, 517, 563, 585 and 611 across six runs
-of the same prompt — so the table reports the run in which both arms were measured together, which
-puts the ratio between 4.0 and 4.7.
+grounded prompts were sent without the retrieved notes a real implementation would include. And
+gpt-5.1's completion count varies between runs of the same prompt — 383, 437, 458, 502, 517, 563,
+585, 593 and 611 across nine runs — so the table reports the run where both arms were measured
+together, which puts the ratio between 4.0 and 4.8 rather than at a single value.
 
 ## Four things only a real run would tell you
 
@@ -911,10 +948,15 @@ model, which then handles a real customer complaint badly. Liveness checks carry
 `scoreBreakdown()` is what shows you why — `switch-margin=0.05`, sitting in the numbers.
 
 **A reasoning model does not fit a chat model's output bound.** A 512-token completion ceiling is
-generous for a chat reply and far too small for a model that bills its reasoning as completion. The
-first keyed run stopped on `RoutingBudgetExceededException`, and the fix is to declare a ceiling the
-provider was actually asked to respect. The router's part was exact: it refused the attempt, recorded
-the real cost, and named the limit crossed.
+generous for a chat reply and far too small for a model that bills its reasoning as completion, so
+the first keyed run stopped on `RoutingBudgetExceededException`. The router's own part was exact: it
+refused the attempt, recorded the real cost, and named the limit it crossed. What it could not do
+was hold two models to two different ceilings, because the bound belonged to the execution rather
+than the candidate — and worse, a bound checked after the call discarded the completion the call had
+already been billed for. Models 0.3.60 fixes both: a candidate declares its own `maxOutputTokens`,
+and an overrun carries `billedResult()`, `billedUsage()` and `billedCost()` so the spend buys
+something. The script declares 2,048 on the remote candidate and leaves the fleet-wide bound small
+for the local arms.
 
 **A resident fleet has to be told how to share a machine.** Four models held open, each sizing a
 worker pool for all twelve cores, made qwen3-0.6b twenty times slower than it is alone. Three
@@ -982,8 +1024,8 @@ flowchart TD
 
 ## The rest of the walkthrough
 
-Every script below was repinned to ModelJars 0.1.58, Models 0.3.59 and Vectors 0.1.30 and run on
-2026-10-15. All fourteen completed; outcomes are in
+Every script below runs on ModelJars 0.1.59, Models 0.3.60 and Vectors 0.1.30, all released and
+verified on Maven Central. All fourteen completed on 2026-10-15; outcomes are in
 [the run record](evidence/fleet-routing/RESULTS.md).
 
 | Script | What it shows |

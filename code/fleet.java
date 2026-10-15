@@ -6,11 +6,11 @@
 // 20x: qwen3-0.6b answered the same prompt in 1,169 ms alone and 23,946 ms beside the others.
 // Three threads each shares the twelve this host has.
 //RUNTIME_OPTIONS -Dmodels.native.kernels.threads=3
-//DEPS org.modeljars:modeljars:0.1.58
-//DEPS com.integrallis:models-router:0.3.59
+//DEPS org.modeljars:modeljars:0.1.59
+//DEPS com.integrallis:models-router:0.3.60
 //DEPS com.integrallis:vectors-db:0.1.30
 //DEPS com.fasterxml.jackson.core:jackson-databind:2.22.3
-//DEPS org.modeljars.composite:harriet:0.1.58
+//DEPS org.modeljars.composite:harriet:0.1.59
 //DEPS org.modeljars.huggingface:ggml-org.embeddinggemma-300m-gguf.q8_0:3.0.0-q8_0.1
 //DEPS org.modeljars.huggingface:huggingfacetb.smollm2-360m-instruct-gguf.q8_0:2.0.0-q8_0.1
 //DEPS org.modeljars.huggingface:ggml-org.qwen3-0.6b-gguf.q4_0:3.0.0-q4_0.1
@@ -93,8 +93,8 @@ class fleet {
     // The shipped task index was built with this same embedding model, already in the cache, so
     // classification is one local forward pass and no prompt text leaves the machine to be routed.
     var index = TaskIndexResource.openBundled();
-    var classifier =
-        TaskClassifier.local(PretrainedTaskClassifier.using(index, embedding::embed, 0.60));
+    var pretrained = PretrainedTaskClassifier.using(index, embedding::embed, 0.60);
+    var classifier = TaskClassifier.local(pretrained);
     System.out.printf(
         "classifier: %d tasks from %s, %d-dimensional, similarity floor 0.60%n",
         index.taskNames().size(), index.embeddingModelId(), index.dimension());
@@ -115,11 +115,9 @@ class fleet {
     var options =
         RoutingExecutionOptions.builder()
             .sharedBudget(budget)
-            // A budget is only enforceable against a declared per-attempt ceiling, and the
-            // ceiling has to be one the provider can actually honour: a reasoning model bills
-            // its reasoning tokens as completion, so a 512-token output bound trips on the
-            // first real call. The request below asks for the matching cap.
-            .tokenBounds(new RoutingTokenBounds(4096, REMOTE_OUTPUT_CAP))
+            // The fleet-wide fallback, which now only has to fit the local arms: the remote
+            // candidate declares its own ceiling.
+            .tokenBounds(new RoutingTokenBounds(4096, 512))
             .timeout(Duration.ofMinutes(3))
             .build();
 
@@ -157,7 +155,7 @@ class fleet {
     int escalated = 0;
     var work = prompts();
     System.out.printf(
-        "%n%-42s %-13s %-18s %4s %7s%n", "PROMPT", "CLASSIFIED", "SELECTED", "TOK", "MS");
+        "%n%-40s %-20s %-18s %4s %7s%n", "PROMPT", "CLASSIFIED", "SELECTED", "TOK", "MS");
     for (var prompt : work) {
       lastRemoteUsage = null;
       int tokens = tokenizer.encode(prompt.text()).length;
@@ -205,9 +203,9 @@ class fleet {
               : result.attempts().getLast().duration().toMillis();
       callMillis.computeIfAbsent(chosen.id(), key -> new ArrayList<>()).add(millis);
       System.out.printf(
-          "%-42s %-13s %-18s %4d %7d%n",
-          abbreviate(prompt.text(), 40),
-          Objects.toString(result.decision().taskType(), "-"),
+          "%-40s %-20s %-18s %4d %7d%n",
+          abbreviate(prompt.text(), 38),
+          describeClassification(pretrained, prompt.text(), result.decision().taskType()),
           chosen.id(),
           tokens,
           millis);
@@ -263,15 +261,18 @@ class fleet {
         "  the same prompt measured %d tokens locally, so the two rulers differ by %d%n",
         localRulerRemote, remoteTokens - localRulerRemote);
     System.out.printf("completions generated on local weights: %d tokens%n", localCompletionTokens);
+    // ModelCandidate.costOf is new in Models 0.3.60 and is the same arithmetic the shared budget
+    // charges, so this ledger and the router's cannot drift. Before it existed this line was a
+    // second copy of the rule.
+    var remote = fleet.router().candidates().stream().filter(c -> !c.local()).findFirst().orElseThrow();
     System.out.printf(
-        "at the declared $%.2f/M in, $%.2f/M out: $%.6f for the one escalation; every input"
-            + " remote would be $%.6f, and the local completions would have added $%.6f%n",
+        "at the declared $%.2f/M in, $%.2f/M out: $%s for the one escalation; every input remote"
+            + " would be $%s, and the local completions would have added $%s%n",
         REMOTE_INPUT_PER_M,
         REMOTE_OUTPUT_PER_M,
-        (REMOTE_INPUT_PER_M * remoteTokens + REMOTE_OUTPUT_PER_M * remoteCompletionTokens)
-            / 1_000_000.0,
-        REMOTE_INPUT_PER_M * allTokens / 1_000_000.0,
-        REMOTE_OUTPUT_PER_M * localCompletionTokens / 1_000_000.0);
+        remote.costOf(remoteTokens, remoteCompletionTokens).setScale(6, RoundingMode.HALF_UP),
+        remote.costOf(allTokens, 0).setScale(6, RoundingMode.HALF_UP),
+        remote.costOf(0, localCompletionTokens).setScale(6, RoundingMode.HALF_UP));
     System.out.printf(
         "router-accounted spend: $%s of the $0.05 shared budget%n",
         budget.snapshot().spent().setScale(6, RoundingMode.HALF_UP).toPlainString());
@@ -332,6 +333,10 @@ class fleet {
             .local(false)
             .capabilities(Set.of("chat", "reasoning", "summarization"))
             .costPerMillionTokens(REMOTE_INPUT_PER_M, REMOTE_OUTPUT_PER_M)
+            // New in Models 0.3.60. A reasoning model bills its reasoning as completion, so it
+            // cannot share an output ceiling with a model that answers a liveness check in eight
+            // tokens. The execution-wide bound below stays small for the local arms.
+            .maxOutputTokens(REMOTE_OUTPUT_CAP)
             .contextWindow(400000)
             .timeToFirstTokenMillis(850)
             .tokensPerSecond(90)
@@ -588,6 +593,22 @@ class fleet {
     }
     collection.commit();
     return collection;
+  }
+
+  /**
+   * What the classifier saw, not merely what it returned.
+   *
+   * <p>`match` is new in Models 0.3.60. `classify` answers with a task or with nothing, so a
+   * conversational prompt unlike every work-shaped exemplar and one that nearly matched both print
+   * as the same dash. The nearest task and its similarity say which happened.
+   */
+  static String describeClassification(
+      PretrainedTaskClassifier classifier, String prompt, String classified) {
+    if (classified != null) return classified;
+    return classifier
+        .match(prompt)
+        .map(match -> "~%s %.2f".formatted(match.task(), match.similarity()))
+        .orElse("-");
   }
 
   /** Four characters per token is a declared estimate, used only to charge the budget. */
