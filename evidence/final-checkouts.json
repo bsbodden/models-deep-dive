@@ -1,0 +1,32 @@
+{
+  "vectors": {
+    "head": "7e77a637d74350dca3fb5cc0e01401a08f26f27a",
+    "branch": "main",
+    "clean": true,
+    "matchesOriginMain": true,
+    "remainingBranches": [
+      "continue/construction-validation",
+      "main"
+    ]
+  },
+  "models": {
+    "head": "46842b835432c3a6f5e3d17ccc268a1c67086aeb",
+    "branch": "main",
+    "clean": true,
+    "matchesOriginMain": true,
+    "remainingBranches": [
+      "continue/router-measurements",
+      "main"
+    ]
+  },
+  "model-jars": {
+    "head": "96c5bca1b8a1d90068e38ce9a9ef7316904736ff",
+    "branch": "main",
+    "clean": true,
+    "matchesOriginMain": true,
+    "remainingBranches": [
+      "continue/catalog-research",
+      "main"
+    ]
+  }
+}

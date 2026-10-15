@@ -1,0 +1,4 @@
+✓ Generated embedding demo
+  Model  embeddinggemma-2
+  File   /Users/briansam-bodden/Code/java-ai/articles/models-deep-dive/evidence/onboarding-cli/EmbeddingGemmaDemo.java
+Run: jbang '/Users/briansam-bodden/Code/java-ai/articles/models-deep-dive/evidence/onboarding-cli/EmbeddingGemmaDemo.java'

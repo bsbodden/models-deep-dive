@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.modeljars.composite.granite.GraniteAnswerabilityIntegrationIT" tests="2" skipped="0" failures="1" errors="0" timestamp="2026-10-11T01:24:44.756Z" hostname="Brians-MacBook-Pro.local" time="77.756">
+  <properties/>
+  <testcase name="producesTheSameVerdictWhetherOrNotThePrefixIsPhysicallyShared()" classname="org.modeljars.composite.granite.GraniteAnswerabilityIntegrationIT" time="44.688">
+    <failure message="org.opentest4j.AssertionFailedError: expected: &lt;182&gt; but was: &lt;0&gt;" type="org.opentest4j.AssertionFailedError">org.opentest4j.AssertionFailedError: expected: &lt;182&gt; but was: &lt;0&gt;
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:150)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:145)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:531)
+	at org.modeljars.composite.granite.GraniteAnswerabilityIntegrationIT.producesTheSameVerdictWhetherOrNotThePrefixIsPhysicallyShared(GraniteAnswerabilityIntegrationIT.java:76)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+</failure>
+  </testcase>
+  <testcase name="runsThePublishedRecipeThroughModelJars()" classname="org.modeljars.composite.granite.GraniteAnswerabilityIntegrationIT" time="33.047"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Oct 10, 2026 6:24:44 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Verifying cached model ibm_granite_granite_4_1_3b_gguf_q4_k_m (1.96 GiB) at /Users/briansam-bodden/.modeljars/cache/sha256/66/662b0626cd58f443baea23559b469df6576a81d349649c59413b36a9fb32eb29/model.gguf
+Oct 10, 2026 6:24:52 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Model cache verified: ibm_granite_granite_4_1_3b_gguf_q4_k_m
+Oct 10, 2026 6:24:52 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Verifying cached model modeljars_granite_4_1_3b_answerability_alora_integrallis_f32 (118.8 MiB) at /Users/briansam-bodden/.modeljars/cache/sha256/67/67533dff14cd0cfa9ae0d00e83a9955226426ff1f98f1fd28790b2fd8757eea6/adapter_model.safetensors
+Oct 10, 2026 6:24:52 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Verifying cached model modeljars_granite_4_1_3b_answerability_alora_integrallis_f32 (1.9 KiB) at /Users/briansam-bodden/.modeljars/cache/sha256/67/67533dff14cd0cfa9ae0d00e83a9955226426ff1f98f1fd28790b2fd8757eea6/models-activated-lora.json
+Oct 10, 2026 6:24:52 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Verifying cached model modeljars_granite_4_1_3b_answerability_alora_integrallis_f32 (1.1 KiB) at /Users/briansam-bodden/.modeljars/cache/sha256/67/67533dff14cd0cfa9ae0d00e83a9955226426ff1f98f1fd28790b2fd8757eea6/NOTICE
+Oct 10, 2026 6:24:52 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Verifying cached model modeljars_granite_4_1_3b_answerability_alora_integrallis_f32 (10.5 KiB) at /Users/briansam-bodden/.modeljars/cache/sha256/67/67533dff14cd0cfa9ae0d00e83a9955226426ff1f98f1fd28790b2fd8757eea6/LICENSE
+Oct 10, 2026 6:24:52 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Model cache verified: modeljars_granite_4_1_3b_answerability_alora_integrallis_f32
+Oct 10, 2026 6:24:52 PM com.integrallis.vectors.core.PanamaVectorUtilSupportProvider create
+INFO: vectors-core: Using Panama Vector API SIMD provider (vector bits: 256)
+Oct 10, 2026 6:24:52 PM com.integrallis.vectors.core.VectorizationProvider logActiveToggles
+INFO: vectors-core: provider=PanamaVectorUtilSupport panama=true maxBits=256 preferredBits=256 fastVectorFMA=true fastScalarFMA=true sve=false ggufParallel=true ggufParallelThreshold=1048576 ggufExecutor=persistent ggufThreads=12 ggufChunksPerThread=2 mappedKQuantLongOffsets=auto(q4=true,q5=false,q6=false) q4ShortPairwiseSupported=true q4UnsignedPairwiseSupported=true toggles=[(defaults — no -Dvectors.* overrides)]
+Oct 10, 2026 6:25:29 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Verifying cached model ibm_granite_granite_4_1_3b_gguf_q4_k_m (1.96 GiB) at /Users/briansam-bodden/.modeljars/cache/sha256/66/662b0626cd58f443baea23559b469df6576a81d349649c59413b36a9fb32eb29/model.gguf
+Oct 10, 2026 6:25:36 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Model cache verified: ibm_granite_granite_4_1_3b_gguf_q4_k_m
+Oct 10, 2026 6:25:36 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Verifying cached model modeljars_granite_4_1_3b_answerability_alora_integrallis_f32 (118.8 MiB) at /Users/briansam-bodden/.modeljars/cache/sha256/67/67533dff14cd0cfa9ae0d00e83a9955226426ff1f98f1fd28790b2fd8757eea6/adapter_model.safetensors
+Oct 10, 2026 6:25:36 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Verifying cached model modeljars_granite_4_1_3b_answerability_alora_integrallis_f32 (1.9 KiB) at /Users/briansam-bodden/.modeljars/cache/sha256/67/67533dff14cd0cfa9ae0d00e83a9955226426ff1f98f1fd28790b2fd8757eea6/models-activated-lora.json
+Oct 10, 2026 6:25:36 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Verifying cached model modeljars_granite_4_1_3b_answerability_alora_integrallis_f32 (1.1 KiB) at /Users/briansam-bodden/.modeljars/cache/sha256/67/67533dff14cd0cfa9ae0d00e83a9955226426ff1f98f1fd28790b2fd8757eea6/NOTICE
+Oct 10, 2026 6:25:36 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Verifying cached model modeljars_granite_4_1_3b_answerability_alora_integrallis_f32 (10.5 KiB) at /Users/briansam-bodden/.modeljars/cache/sha256/67/67533dff14cd0cfa9ae0d00e83a9955226426ff1f98f1fd28790b2fd8757eea6/LICENSE
+Oct 10, 2026 6:25:36 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Model cache verified: modeljars_granite_4_1_3b_answerability_alora_integrallis_f32
+]]></system-err>
+</testsuite>

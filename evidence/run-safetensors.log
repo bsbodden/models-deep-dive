@@ -1,0 +1,21 @@
+[jbang] Resolving dependencies...
+[jbang]    org.modeljars:modeljars:0.1.55
+[jbang]    org.modeljars.huggingface:qwen.qwen2.5-0.5b-instruct.bf16:2.5.0-bf16.2
+[jbang] Dependencies resolved
+[jbang] Building jar for safetensors.java...
+WARNING: Using incubator modules: jdk.incubator.vector
+Oct 10, 2026 5:54:41 PM com.integrallis.vectors.core.PanamaVectorUtilSupportProvider create
+INFO: vectors-core: Using Panama Vector API SIMD provider (vector bits: 256)
+Oct 10, 2026 5:54:41 PM com.integrallis.vectors.core.VectorizationProvider logActiveToggles
+INFO: vectors-core: provider=PanamaVectorUtilSupport panama=true maxBits=256 preferredBits=256 fastVectorFMA=true fastScalarFMA=true sve=false ggufParallel=true ggufParallelThreshold=1048576 ggufExecutor=persistent ggufThreads=12 ggufChunksPerThread=2 mappedKQuantLongOffsets=auto(q4=true,q5=false,q6=false) q4ShortPairwiseSupported=true q4UnsignedPairwiseSupported=true toggles=[(defaults — no -Dvectors.* overrides)]
+Input:  What is the capital of France? Reply with only the city name.
+Output: Paris
+
+Metrics:
+  Load                 82,820 ms
+  Tokenization         4 ms
+  Prompt preparation   0 ms
+  Prefill              1,821 ms
+  TTFT                 1,833 ms
+  Decode               418 ms (0.0 tokens/s)
+  Tokens               22 prompt + 1 completion

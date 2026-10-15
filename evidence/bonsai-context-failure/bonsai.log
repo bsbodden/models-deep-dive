@@ -1,0 +1,20 @@
+$ jbang bonsai.java
+[jbang] Resolving dependencies...
+[jbang]    com.integrallis:models:0.3.58
+[jbang]    com.integrallis:backend-java:0.3.58
+[jbang] Dependencies resolved
+[jbang] Building jar for bonsai.java...
+WARNING: Using incubator modules: jdk.incubator.vector
+Bonsai 2: verified 5.95 GB PTQ1_0 text artifact
+Runtime compatibility demonstration; production qualification is pending.
+Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
+	at com.integrallis.models.backend.purejava.qwen35.Qwen35ForwardPass$SessionState.<init>(Qwen35ForwardPass.java:1714)
+	at com.integrallis.models.backend.purejava.qwen35.Qwen35ForwardPass$Session.<init>(Qwen35ForwardPass.java:62)
+	at com.integrallis.models.backend.purejava.qwen35.Qwen35ForwardPass.openSession(Qwen35ForwardPass.java:258)
+	at com.integrallis.models.backend.purejava.Qwen35DecoderAdapter$Qwen35Session.<init>(Qwen35DecoderAdapter.java:26)
+	at com.integrallis.models.backend.purejava.Qwen35DecoderAdapter.<init>(Qwen35DecoderAdapter.java:41)
+	at com.integrallis.models.backend.purejava.PureJavaBackend.loadQwen35(PureJavaBackend.java:1103)
+	at com.integrallis.models.backend.purejava.PureJavaBackend.load(PureJavaBackend.java:503)
+	at com.integrallis.models.backend.purejava.PureJavaBackend.load(PureJavaBackend.java:380)
+	at com.integrallis.models.backend.purejava.PureJavaBackend.load(PureJavaBackend.java:217)
+	at bonsai.main(bonsai.java:39)

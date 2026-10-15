@@ -1,0 +1,236 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "org.modeljars.composite",
+    "module": "granite-answerability",
+    "version": "0.1.57",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.4.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 25,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "org.modeljars",
+          "module": "modeljars",
+          "version": {
+            "requires": "0.1.57"
+          }
+        },
+        {
+          "group": "com.fasterxml.jackson",
+          "module": "jackson-bom",
+          "version": {
+            "requires": "2.22.3"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-bom",
+          "version": {
+            "requires": "2.0.20"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "commons-codec",
+          "module": "commons-codec",
+          "version": {
+            "requires": "1.22.1"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5-h2",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.client5",
+          "module": "httpclient5",
+          "version": {
+            "requires": "5.6.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "granite-answerability-0.1.57.jar",
+          "url": "granite-answerability-0.1.57.jar",
+          "size": 14883,
+          "sha512": "3db64df8e06f609a76be08aea417cf6b8cdd66a0754598f1ee48c8a9f47abe5377b117b9493b1c48aa38a831658ea9b938a31b3960d042aa662d46bdc7097f95",
+          "sha256": "143f91bf979b53a23d198a5540c516f883b9ca615b97cabe93e84754e23bbd6e",
+          "sha1": "8ff3a9d6bcf5a1aeadfbfef3c2e281ffedca4005",
+          "md5": "b42daf19d377c10d928deff19f0eba42"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 25,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.modeljars",
+          "module": "modeljars",
+          "version": {
+            "requires": "0.1.57"
+          }
+        },
+        {
+          "group": "com.fasterxml.jackson",
+          "module": "jackson-bom",
+          "version": {
+            "requires": "2.22.3"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-bom",
+          "version": {
+            "requires": "2.0.20"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.modeljars.huggingface",
+          "module": "ibm-granite.granite-4.1-3b-gguf.q4_k_m",
+          "version": {
+            "requires": "4.1.0-q4_k_m.2"
+          }
+        },
+        {
+          "group": "org.modeljars.github",
+          "module": "modeljars.activated-adapters.granite-4.1-3b-answerability-alora-integrallis.f32",
+          "version": {
+            "requires": "1.0.0-f32.2"
+          }
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "commons-codec",
+          "module": "commons-codec",
+          "version": {
+            "requires": "1.22.1"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5-h2",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.client5",
+          "module": "httpclient5",
+          "version": {
+            "requires": "5.6.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "granite-answerability-0.1.57.jar",
+          "url": "granite-answerability-0.1.57.jar",
+          "size": 14883,
+          "sha512": "3db64df8e06f609a76be08aea417cf6b8cdd66a0754598f1ee48c8a9f47abe5377b117b9493b1c48aa38a831658ea9b938a31b3960d042aa662d46bdc7097f95",
+          "sha256": "143f91bf979b53a23d198a5540c516f883b9ca615b97cabe93e84754e23bbd6e",
+          "sha1": "8ff3a9d6bcf5a1aeadfbfef3c2e281ffedca4005",
+          "md5": "b42daf19d377c10d928deff19f0eba42"
+        }
+      ]
+    },
+    {
+      "name": "javadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "granite-answerability-0.1.57-javadoc.jar",
+          "url": "granite-answerability-0.1.57-javadoc.jar",
+          "size": 4186588,
+          "sha512": "beb1541c8448bfd436ae80dbed49d6137d21eede24172f6291a073f8a3632bef92c122ae16d13453840880809c558b72535ec52f2411e97636e4a37cbb22a9ab",
+          "sha256": "ced961a27d1e16d5e5a825d4b0f7491868098e51be756ce31c52330af1a9178d",
+          "sha1": "bc307503529c83ce54e86a0d2d81ffe712e83276",
+          "md5": "72370c08fe990cff1ac7fdb36b53630e"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "granite-answerability-0.1.57-sources.jar",
+          "url": "granite-answerability-0.1.57-sources.jar",
+          "size": 6453,
+          "sha512": "0b75b3a08925c896052314588fc005f7dd19d642b3b1939aab1436697548aa5eada657118509dc22147f42526dae0398758af2e197a05f92e0df95cf927cdf1d",
+          "sha256": "dd3be1f6930e7d963ff66f2157f0e1768d39bae3b57c03f5a618850f33d35113",
+          "sha1": "59bfc0c9ad2473d624c67e4dccbf585e9192ef40",
+          "md5": "e1612031072764ff434588d71da60ec9"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+[jbang] Resolving dependencies...
+[jbang]    org.modeljars:modeljars:0.1.55
+[jbang]    com.integrallis:vectors-db:0.1.29
+[jbang]    com.integrallis:models-rag:0.3.57
+[jbang]    org.modeljars.huggingface:second-state.all-minilm-l6-v2-embedding-gguf.q4_k_m:2.0.0-q4_k_m.2
+[jbang]    org.modeljars.huggingface:ggml-org.qwen3-0.6b-gguf.q4_0:3.0.0-q4_0.1
+[jbang] Dependencies resolved
+[jbang] Building jar for rag.java...
+[jbang] There is a new version of jbang available!
+[jbang] You have version 0.141.0 and 0.142.0 is the latest.
+[jbang] Use your package manager to update jbang to the latest version,
+[jbang] or visit https://jbang.dev to download and install it yourself.

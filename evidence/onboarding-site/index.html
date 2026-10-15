@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Find qualified models | ModelJARs.org</title>
+    <meta
+      name="description"
+      content="Discover qualified local AI models, pull verified weights with the native ModelJars CLI, and run them in-process from Java.">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="stylesheet" href="/assets/styles.css?v=3fe35f3eb1970e3aeb971864bc3fa719c857fee9">
+    <script>
+      document.documentElement.dataset.theme = localStorage.getItem("modeljars-theme") ||
+        (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    </script>
+    <script src="/assets/app.js?v=3fe35f3eb1970e3aeb971864bc3fa719c857fee9" type="module"></script>
+    <script src="/assets/github-stars.js?v=3fe35f3eb1970e3aeb971864bc3fa719c857fee9" type="module"></script>
+    <script src="/assets/install-drawer.js?v=3fe35f3eb1970e3aeb971864bc3fa719c857fee9" type="module"></script>
+    <script src="/assets/video-drawer.js?v=3fe35f3eb1970e3aeb971864bc3fa719c857fee9" type="module"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="/" aria-label="ModelJARs.org home">
+          <img src="/android-chrome-192x192.png" alt="" width="34" height="34">
+          <span>ModelJARs.org</span>
+        </a>
+        <nav class="nav" aria-label="Primary">
+          <a class="active" href="/">Models</a>
+          <a class="nav-cli" href="/#modeljars-cli">CLI</a>
+          <a class="nav-java" href="/#using-modeljars" aria-label="Use from Java">
+            <span class="nav-java-icon" aria-hidden="true"></span>
+            <span>Use from Java</span>
+          </a>
+          <a href="/benchmarks/">Benchmarks</a>
+          <a href="/apple/">Apple</a>
+          <a class="nav-secondary" href="https://integrallis.github.io/models/docs/models/current/index.html">Docs</a>
+          <a class="nav-secondary" href="/contribute/">Contribute</a>
+          <a class="nav-secondary" href="https://github.com/ModelJars/modeljars">GitHub</a>
+          <button id="theme-toggle" class="icon-button" type="button" aria-label="Change theme">
+            <span class="theme-light" aria-hidden="true">&#9728;</span>
+            <span class="theme-dark" aria-hidden="true">&#9790;</span>
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="catalog-shell" id="catalog" aria-labelledby="catalog-title">
+        <div class="catalog-heading">
+          <div>
+            <p class="eyebrow">Community model registry</p>
+            <h1 id="catalog-title">Find qualified models</h1>
+            <details class="lede-disclosure" open>
+              <summary>
+                <span class="lede-summary-text">
+                  Discover the power of small and medium-sized models for local, in-JVM inference.
+                </span>
+              </summary>
+              <p class="lede">
+                ModelJARs are versioned JAR files that make AI models available to the
+                <a href="https://integrallis.github.io/models/">Models</a> JVM inference library.
+                Think of WebJars, but for AI models: standard dependency coordinates,
+                immutable metadata, and measured runtime support across GGUF, Safetensors, and CACT
+                model formats.
+              </p>
+            </details>
+            <div class="catalog-actions" aria-label="Get started">
+              <a class="primary-button" href="#modeljars-cli">Install the native CLI</a>
+              <a class="secondary-button" href="#using-modeljars">Use from Java</a>
+              <a
+                href="https://github.com/ModelJars/modeljars"
+                class="github-star-button"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Star ModelJars on GitHub">
+                <span class="github-star-icon" aria-hidden="true">&#9733;</span>
+                <span>Star on GitHub</span>
+                <span id="github-star-count" class="github-star-count" hidden></span>
+              </a>
+            </div>
+          </div>
+          <div class="catalog-stats" aria-label="Catalog statistics">
+            <span><strong id="model-total">0</strong> model artifacts</span>
+            <span><strong id="hybrid-total">0</strong> qualified hybrids</span>
+            <span><strong id="identity-total">0</strong> model identities</span>
+            <span><strong id="pure-java-total">0</strong> pure Java</span>
+            <span><strong id="publisher-total">0</strong> publishers</span>
+          </div>
+        </div>
+
+        <form class="discovery" role="search" onsubmit="return false">
+          <label class="search-field" for="catalog-search">
+            <span class="sr-only">Search models</span>
+            <span class="search-symbol" aria-hidden="true">&#128269;</span>
+            <input
+              id="catalog-search"
+              type="search"
+              autocomplete="off"
+              placeholder="Search by model, task, architecture, publisher, or tag">
+          </label>
+
+          <div class="filter-row">
+            <div id="domain-filters" class="chip-list" aria-label="Model categories"></div>
+            <button
+              id="filter-toggle"
+              class="secondary-button"
+              type="button"
+              aria-expanded="false"
+              aria-controls="advanced-filters">
+              Filters <span id="active-filter-count" class="filter-count" hidden>0</span>
+            </button>
+          </div>
+
+          <div id="advanced-filters" class="advanced-filters" hidden>
+            <label>
+              <span>Runtime</span>
+              <select id="backend-filter"><option value="">Any runtime</option></select>
+            </label>
+            <label>
+              <span>Architecture</span>
+              <select id="architecture-filter"><option value="">Any architecture</option></select>
+            </label>
+            <label>
+              <span>Model size</span>
+              <select id="size-filter"><option value="">Any size</option></select>
+            </label>
+            <label>
+              <span>Production evidence</span>
+              <select id="qualification-filter">
+                <option value="">Any qualified tier</option>
+                <option value="production-rag">Production RAG</option>
+                <option value="generative-rag">Generative RAG</option>
+                <option value="guarded-rag">Guarded RAG</option>
+                <option value="semantic-search">Semantic search</option>
+                <option value="second-stage-reranking">Second-stage reranking</option>
+                <option value="tool-calling">Tool calling</option>
+                <option value="text-to-speech">Text-to-speech</option>
+              </select>
+            </label>
+            <button id="clear-filters" class="text-button" type="button">Clear filters</button>
+          </div>
+        </form>
+
+        <div class="results-toolbar">
+          <p id="result-count" aria-live="polite">Loading models...</p>
+          <label class="sort-control">
+            <span>Sort</span>
+            <select id="sort-filter">
+              <option value="name">Name</option>
+              <option value="smallest">Smallest download</option>
+              <option value="largest">Largest download</option>
+              <option value="newest">Newest version</option>
+            </select>
+          </label>
+        </div>
+
+        <div id="catalog-results" class="catalog-results" aria-busy="true"></div>
+        <div id="empty-state" class="empty-state" hidden>
+          <h2>No matching models</h2>
+          <p>Try a broader term or clear one of the active filters.</p>
+          <button class="secondary-button" type="button" data-clear-filters>Clear filters</button>
+        </div>
+      </section>
+
+      <section class="guide-band" id="modeljars-cli" aria-labelledby="cli-title">
+        <div class="guide-inner">
+          <div class="guide-intro">
+            <p class="eyebrow">No Java required</p>
+            <h2 id="cli-title">Find, pull, and try models locally</h2>
+            <p>
+              The GraalVM-native ModelJars CLI searches and filters the qualified catalog, exposes
+              exact provenance, reports local inference capabilities, produces build-tool
+              coordinates, and downloads verified weights into the same cache used by the JVM
+              Runtime. It checks the published catalog hash on catalog-backed commands, atomically
+              activates changed metadata, and keeps the last verified catalog available offline.
+              Generated chat, embedding, reranking, and tool demos execute the same in-process Java APIs
+              applications use.
+            </p>
+          </div>
+          <div class="guide-body">
+            <div class="guide-steps">
+              <article>
+                <div class="guide-step-heading">
+                  <span class="step-number">01</span>
+                  <h3>Install the native CLI</h3>
+                </div>
+                <pre><code class="language-bash hljs" data-lang="bash">brew install integrallis/tap/modeljars
+
+# Or install directly on macOS or Linux
+curl -fsSL https://raw.githubusercontent.com/ModelJars/modeljars/main/install.sh | sh</code></pre>
+              </article>
+              <article>
+                <div class="guide-step-heading">
+                  <span class="step-number">02</span>
+                  <h3>Explore interactively or run once</h3>
+                </div>
+                <pre><code class="language-bash hljs" data-lang="bash"># Open the ModelJars prompt
+modeljars
+
+# Or run a single command
+modeljars search gemma
+modeljars models embedding --sort size
+modeljars search --capability embedding --sort size
+modeljars search fintech
+modeljars search gemma --details
+modeljars alias list
+modeljars show gemma-26b</code></pre>
+              </article>
+              <article>
+                <div class="guide-step-heading">
+                  <span class="step-number">03</span>
+                  <h3>Pull and verify</h3>
+                </div>
+                <pre><code class="language-bash hljs" data-lang="bash">modeljars pull qwen-bf16
+modeljars list</code></pre>
+              </article>
+              <article>
+                <div class="guide-step-heading">
+                  <span class="step-number">04</span>
+                  <h3>Generate and run a Java demo</h3>
+                </div>
+                <pre><code class="language-bash hljs" data-lang="bash">modeljars demo qwen-0.6b "What is the capital of France? Reply with only the city name."
+jbang qwen3-0-6b-chat-demo.java
+
+modeljars demo embeddinggemma "Public transit schedule"
+jbang ggml-org-embeddinggemma-300m-embedding-demo.java
+
+modeljars demo minilm-reranker "How many people live in Berlin?"
+jbang cstr-ms-marco-minilm-l6-v2-reranking-demo.java
+
+# Generated demos use the same public Java APIs as your application
+modeljars info
+modeljars snippet gemma-26b --tool maven
+
+# Stable output for scripts and agents
+modeljars search gemma --output json</code></pre>
+              </article>
+            </div>
+            <p class="guide-runtime-note">
+              Model files come directly from immutable, revision-pinned upstream URLs. Every file
+              in a GGUF, Safetensors, or CACT artifact must match the marker's exact byte count and
+              SHA-256 before the complete artifact enters the cache. Newly published catalog
+              entries are marked <strong>NEW</strong> in CLI search results for 48 hours. The CLI
+              generates an unambiguous short name for every model in each verified catalog update.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="guide-band" id="using-modeljars" aria-labelledby="guide-title">
+        <div class="guide-inner">
+          <div class="guide-intro">
+            <p class="eyebrow">Use from Java</p>
+            <h2 id="guide-title">Run a qualified model in Java</h2>
+            <p>
+              A model JAR identifies and verifies model weights; it is not an inference engine.
+              The ModelJars JVM Runtime brings Integrallis Models and its Java and Rust/FFM execution
+              backends, then resolves the qualified profile for the exact artifact. Applications can
+              add Models' optional Java/Tornado backend for capacity-qualified NVIDIA Q4_0 execution;
+              the same API safely retains the Vector API fallback.
+            </p>
+          </div>
+          <div class="guide-body">
+            <div class="guide-steps">
+              <article>
+                <div class="guide-step-heading">
+                  <span class="step-number">01</span>
+                  <h3>Add the JVM Runtime and the model</h3>
+                </div>
+                <pre><code class="language-kotlin hljs" data-lang="kotlin">dependencies {
+  implementation("org.modeljars:modeljars:0.1.57")
+  implementation("org.modeljars.huggingface:ggml-org.qwen3-0.6b-gguf.q4_0:3.0.0-q4_0.1")
+}</code></pre>
+              </article>
+              <article>
+                <div class="guide-step-heading">
+                  <span class="step-number">02</span>
+                  <h3>Select the exact artifact</h3>
+                </div>
+                <pre><code class="language-java hljs" data-lang="java">import static org.modeljars.catalog.Qwen3_0_6b_Q4_0.MODEL;
+
+var selected = MODEL;</code></pre>
+              </article>
+              <article>
+                <div class="guide-step-heading">
+                  <span class="step-number">03</span>
+                  <h3>Run inference in-process</h3>
+                </div>
+                <pre><code class="language-java hljs" data-lang="java">import com.integrallis.models.api.ModelPrompt;
+import com.integrallis.models.runtime.InferencePipeline;
+
+var options = SamplingOptions.builder()
+  .temperature(0).maxTokens(128).build();
+
+try (var runtime = ModelJars.openRuntime(selected)) {
+  InferencePipeline pipeline = runtime.pipeline();
+  ModelPrompt prompt = runtime.chatTemplate().render(
+    List.of(ChatMessage.user("Name one JVM language.")));
+  String answer = pipeline.generate(prompt, options);
+}</code></pre>
+              </article>
+            </div>
+            <p class="guide-runtime-note">
+              Inference requires Java 25 or newer and
+              <code>--add-modules=jdk.incubator.vector</code>. The qualified
+              Rust/FFM profiles also require <code>--enable-native-access=ALL-UNNAMED</code>.
+              Class-file versions 69 versus 61 mean the process actually launched with Java 17;
+              check <code>java -version</code>, <code>mvn -v</code>, and the Gradle JVM.
+              For low-level inference, <code>runtime.pipeline()</code> exposes the tokenizer,
+              metadata, active context, structured prefill, logits, reset, checkpoint, and rewind.
+            </p>
+            <p class="guide-runtime-note guide-spring-note">
+              Using Spring AI or Spring Boot? Run
+              <code>modeljars coordinates &lt;model&gt; --spring-boot</code> for the BOMs, Models
+              starter, qualified <code>application.yaml</code> chat template, and model bean, or
+              <code>modeljars demo &lt;model&gt; --spring-ai</code> for a runnable
+              <code>ChatClient</code> program. <code>--spring-ai</code> and
+              <code>--spring-boot</code> work with both commands for chat, tool-calling, embedding,
+              and reranking models.
+            </p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <a class="footer-brand" href="/">ModelJARs.org</a>
+        <span class="footer-credit">
+          Built with <span aria-label="love">&#10084;&#65039;</span> by
+          <a href="https://integrallis.com" aria-label="Integrallis">
+            <img class="footer-integrallis-logo" src="/assets/integrallis-logo.png" alt="Integrallis">
+          </a>
+        </span>
+        <div>
+          <a href="/benchmarks/">Benchmarks</a>
+          <a href="/apple/">Apple</a>
+          <a href="https://integrallis.github.io/models/docs/models/current/index.html">Docs</a>
+          <a href="https://github.com/ModelJars/modeljars">GitHub</a>
+          <a href="/contribute/">Contribute</a>
+        </div>
+      </div>
+    </footer>
+    <script src="/assets/highlight.js?v=3fe35f3eb1970e3aeb971864bc3fa719c857fee9"></script>
+  </body>
+</html>

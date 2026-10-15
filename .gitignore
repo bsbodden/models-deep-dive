@@ -1,0 +1,10 @@
+# macOS
+.DS_Store
+
+# Reproducible build outputs, excluded from history with their SHA-256 retained beside them.
+# See evidence/EXCLUDED-ARTIFACTS.md. Each is 22-53 MB and is rebuilt or refetched, not reasoned
+# about, so the digest is the evidence and the bytes are not.
+evidence/local-install/modeljars-macos-x86_64
+evidence/local-install-0157/native-release/modeljars-macos-x86_64
+evidence/release-bundle/modeljars-central-bundle.zip
+evidence/release-bundle-0157/modeljars-central-bundle.zip

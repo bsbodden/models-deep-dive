@@ -1,0 +1,18 @@
+[
+  "com.integrallis:backend-apple:0.3.58",
+  "com.integrallis:backend-cuda:0.3.58",
+  "com.integrallis:backend-java:0.3.58",
+  "com.integrallis:backend-native:0.3.58",
+  "com.integrallis:models:0.3.58",
+  "com.integrallis:models-api:0.3.58",
+  "com.integrallis:models-audio:0.3.58",
+  "com.integrallis:models-decisions:0.3.58",
+  "com.integrallis:models-embedding:0.3.58",
+  "com.integrallis:models-langchain4j:0.3.58",
+  "com.integrallis:models-rag:0.3.58",
+  "com.integrallis:models-router:0.3.58",
+  "com.integrallis:models-runtime:0.3.58",
+  "com.integrallis:models-semantic-order:0.3.58",
+  "com.integrallis:models-spring-ai:0.3.58",
+  "com.integrallis:models-spring-boot-starter:0.3.58"
+]

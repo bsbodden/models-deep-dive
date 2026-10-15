@@ -1,0 +1,22 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------< release.consumer:harriet-consumer >------------------
+[INFO] Building harriet-consumer 1
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] Downloading from candidate: https://repo.maven.apache.org/maven2/org/modeljars/composite/harriet/0.1.57/harriet-0.1.57.pom
+[INFO] Downloaded from candidate: https://repo.maven.apache.org/maven2/org/modeljars/composite/harriet/0.1.57/harriet-0.1.57.pom (3.3 kB at 4.9 kB/s)
+[INFO] Downloading from candidate: https://repo.maven.apache.org/maven2/org/modeljars/huggingface/unsloth.qwen3.5-4b-gguf.q4_k_m/3.5.0-q4_k_m.2/unsloth.qwen3.5-4b-gguf.q4_k_m-3.5.0-q4_k_m.2.pom
+[INFO] Downloaded from candidate: https://repo.maven.apache.org/maven2/org/modeljars/huggingface/unsloth.qwen3.5-4b-gguf.q4_k_m/3.5.0-q4_k_m.2/unsloth.qwen3.5-4b-gguf.q4_k_m-3.5.0-q4_k_m.2.pom (1.3 kB at 29 kB/s)
+[INFO] 
+[INFO] --- enforcer:3.6.2:enforce (default-cli) @ harriet-consumer ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] 
+[INFO] --- dependency:3.8.1:tree (default-cli) @ harriet-consumer ---
+[INFO] Wrote dependency tree to: /Users/briansam-bodden/Code/java-ai/articles/models-deep-dive/evidence/onboarding-central-consumers/harriet/maven-graph.json
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  3.122 s
+[INFO] Finished at: 2026-10-11T11:30:47-07:00
+[INFO] ------------------------------------------------------------------------

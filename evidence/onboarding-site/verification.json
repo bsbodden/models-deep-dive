@@ -1,0 +1,35 @@
+{
+  "verifiedAt": "2026-10-11T18:41:54.250876+00:00",
+  "release": "0.1.57",
+  "publicEntries": 103,
+  "embeddingGemmaQualified": true,
+  "bonsaiPublished": false,
+  "registryHashMatches": true,
+  "files": [
+    {
+      "path": "index.html",
+      "url": "https://modeljars.org/",
+      "sha256": "a4727daa7f7e81c1577367a4a662778b6617d497435700a33e8d096d127c18fd"
+    },
+    {
+      "path": "assets/dependency-snippets.js",
+      "url": "https://modeljars.org/assets/dependency-snippets.js",
+      "sha256": "02e4fc1f601028c406f23ac02df7499a1daecb26e8f464af6ec1e810fd5e51af"
+    },
+    {
+      "path": "catalog.json",
+      "url": "https://modeljars.org/catalog.json",
+      "sha256": "7a2e4785c887df86783669ff187519e9a533f96eb7fa7619301ae89e61160294"
+    },
+    {
+      "path": "catalog/registry.properties",
+      "url": "https://modeljars.org/catalog/registry.properties",
+      "sha256": "b55a67dc8e59c29c0a0fe32da11ed2c159d1cce9d0222eba9394cd49f1df3b6e"
+    },
+    {
+      "path": "catalog/registry.properties.sha256",
+      "url": "https://modeljars.org/catalog/registry.properties.sha256",
+      "sha256": "8a75dc8ab86e8e59f5d65c638de996ae00d8cf323768fb76ba4c93cc9ed5ddd1"
+    }
+  ]
+}

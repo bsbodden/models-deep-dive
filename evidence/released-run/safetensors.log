@@ -1,0 +1,13 @@
+$ jbang safetensors.java
+WARNING: Using incubator modules: jdk.incubator.vector
+Input:  What is the capital of France? Reply with only the city name.
+Output: Paris
+
+Metrics:
+  Load                 5,382 ms
+  Tokenization         9 ms
+  Prompt preparation   0 ms
+  Prefill              1,466 ms
+  TTFT                 1,482 ms
+  Decode               375 ms (0.0 tokens/s)
+  Tokens               22 prompt + 1 completion

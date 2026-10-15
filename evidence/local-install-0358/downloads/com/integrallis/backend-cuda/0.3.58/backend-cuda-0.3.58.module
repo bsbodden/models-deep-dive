@@ -1,0 +1,236 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.integrallis",
+    "module": "backend-cuda",
+    "version": "0.3.58",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.4.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 25,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "com.fasterxml.jackson",
+          "module": "jackson-bom",
+          "version": {
+            "requires": "2.22.3"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-bom",
+          "version": {
+            "requires": "2.0.20"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "com.integrallis",
+          "module": "models-api",
+          "version": {
+            "requires": "0.3.58"
+          }
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "commons-codec",
+          "module": "commons-codec",
+          "version": {
+            "requires": "1.22.1"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5-h2",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.client5",
+          "module": "httpclient5",
+          "version": {
+            "requires": "5.6.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "backend-cuda-0.3.58.jar",
+          "url": "backend-cuda-0.3.58.jar",
+          "size": 47596,
+          "sha512": "ade97acc414f9d7543206aee41087c15f059ea465805c8dd172835465b5c2d168e2df34e94b0c40573636a8d85ee7740a73368ca8d6c7c6dabb6bbb38032ad80",
+          "sha256": "0ca5764f364a96303f32a1de61adb45f880dabadba03b84633ffcde89ec9ca88",
+          "sha1": "0587457b0e7469c2fd6a13d7802a2b643258cccc",
+          "md5": "533beccaedae316cd3e877e6c8ecd11d"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 25,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.integrallis",
+          "module": "backend-java",
+          "version": {
+            "requires": "0.3.58"
+          }
+        },
+        {
+          "group": "com.integrallis",
+          "module": "vectors-core",
+          "version": {
+            "requires": "0.1.29"
+          }
+        },
+        {
+          "group": "com.fasterxml.jackson",
+          "module": "jackson-bom",
+          "version": {
+            "requires": "2.22.3"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-bom",
+          "version": {
+            "requires": "2.0.20"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "com.integrallis",
+          "module": "models-api",
+          "version": {
+            "requires": "0.3.58"
+          }
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "commons-codec",
+          "module": "commons-codec",
+          "version": {
+            "requires": "1.22.1"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5-h2",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.client5",
+          "module": "httpclient5",
+          "version": {
+            "requires": "5.6.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "backend-cuda-0.3.58.jar",
+          "url": "backend-cuda-0.3.58.jar",
+          "size": 47596,
+          "sha512": "ade97acc414f9d7543206aee41087c15f059ea465805c8dd172835465b5c2d168e2df34e94b0c40573636a8d85ee7740a73368ca8d6c7c6dabb6bbb38032ad80",
+          "sha256": "0ca5764f364a96303f32a1de61adb45f880dabadba03b84633ffcde89ec9ca88",
+          "sha1": "0587457b0e7469c2fd6a13d7802a2b643258cccc",
+          "md5": "533beccaedae316cd3e877e6c8ecd11d"
+        }
+      ]
+    },
+    {
+      "name": "javadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "backend-cuda-0.3.58-javadoc.jar",
+          "url": "backend-cuda-0.3.58-javadoc.jar",
+          "size": 4187030,
+          "sha512": "253e2f97d720f8bfad1fea64ff15bf469fde0df76739b9218e7370001219a5b721c2bfb4067cbf37aef3848c57977632ceee9ceb31a1c6078c1dad56bdf9f86c",
+          "sha256": "60b4b15ff39d0513ab0afb5ee1e894d749a3dcaf00e4c73278da114111ca2630",
+          "sha1": "39e484b84434ea8f1076ab4f262932a53addf7ab",
+          "md5": "ead46a2055a40e8f5d0d98835abc8d9c"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "backend-cuda-0.3.58-sources.jar",
+          "url": "backend-cuda-0.3.58-sources.jar",
+          "size": 40916,
+          "sha512": "1c1f10269d5b8ad9365423e57c24bc59159ac6f1a9d5ccdb2d9511114771674008bda8af932a4ce5ac384426786c08f69adaf7ebb1216e05130ba9adb56a65cd",
+          "sha256": "c51f19f75df1f68cdbc697863e9386fe05bb13534b71b68067565df1f8341425",
+          "sha1": "eac9472e1cdd130485b24c2bf1e716d139b32bdc",
+          "md5": "8b66e65ae63f8bb3479c9278b1755d99"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+[
+  {
+    "command": [
+      "modeljars",
+      "show",
+      "ggml_org_embeddinggemma_2_gguf_q8_0",
+      "--output",
+      "json"
+    ],
+    "startedAt": "2026-10-11T18:41:52.678849+00:00",
+    "finishedAt": "2026-10-11T18:41:53.937700+00:00",
+    "exitCode": 0,
+    "log": "embeddinggemma-descriptor.json"
+  },
+  {
+    "command": [
+      "modeljars",
+      "demo",
+      "ggml_org_embeddinggemma_2_gguf_q8_0",
+      "task: search result | query: How can public transit connect neighborhoods?",
+      "--output-file",
+      "/Users/briansam-bodden/Code/java-ai/articles/models-deep-dive/evidence/onboarding-cli/EmbeddingGemmaDemo.java"
+    ],
+    "startedAt": "2026-10-11T18:41:53.938258+00:00",
+    "finishedAt": "2026-10-11T18:41:55.219542+00:00",
+    "exitCode": 0,
+    "log": "generate.log"
+  },
+  {
+    "command": [
+      "jbang",
+      "EmbeddingGemmaDemo.java"
+    ],
+    "startedAt": "2026-10-11T18:41:55.220102+00:00",
+    "finishedAt": "2026-10-11T18:42:00.836022+00:00",
+    "exitCode": 0,
+    "log": "run.log"
+  }
+]

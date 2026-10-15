@@ -1,0 +1,53 @@
+ffmpeg version 9.0.2 Copyright (c) 2000-2026 the FFmpeg developers
+  built with Apple clang version 21.0.0 (clang-2100.1.1.101)
+  configuration: --prefix=/usr/local/Cellar/ffmpeg/9.0.2 --enable-shared --enable-pthreads --enable-version3 --cc=clang --host-cflags= --host-ldflags= --enable-ffplay --enable-gpl --enable-libsvtav1 --enable-libopus --enable-libx264 --enable-libmp3lame --enable-libdav1d --enable-libvmaf --enable-libvpx --enable-libx265 --enable-openssl --enable-videotoolbox --enable-audiotoolbox
+  libavutil      61.  1.102 / 61.  1.102
+  libavcodec     63.  1.102 / 63.  1.102
+  libavformat    63.  1.102 / 63.  1.102
+  libavdevice    63.  1.102 / 63.  1.102
+  libavfilter    12.  1.102 / 12.  1.102
+  libswscale     10.  1.102 / 10.  1.102
+  libswresample   7.  1.102 /  7.  1.102
+Input #0, matroska,webm, from '/Users/briansam-bodden/Code/java-ai/articles/models-deep-dive/recordings/02-safetensors.webm':
+  Metadata:
+    ENCODER         : Lavf63.1.102
+  Duration: N/A, start: 0.040000, bitrate: N/A
+  Stream #0:0: Video: vp9 (Profile 1), gbrp(pc, gbr/unknown/unknown, progressive), 1920x1080, SAR 1:1 DAR 16:9, 25 fps, 25 tbr, 1k tbn, start 0.040000
+    Metadata:
+      ENCODER         : Lavc63.1.102 libvpx-vp9
+Stream mapping:
+  Stream #0:0 -> #0:0 (vp9 (native) -> h264 (libx264))
+Press [q] to stop, [?] for help
+[libx264 @ 0x7f950e808240] using SAR=1/1
+[libx264 @ 0x7f950e808240] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2
+[libx264 @ 0x7f950e808240] profile High, level 4.0, 4:2:0, 8-bit
+[libx264 @ 0x7f950e808240] 264 - core 165 r3222 b35605a - H.264/MPEG-4 AVC codec - Copyleft 2003-2025 - http://www.videolan.org/x264.html - options: cabac=1 ref=2 deblock=1:0:0 analyse=0x3:0x113 me=hex subme=6 psy=1 psy_rd=1.00:0.00 mixed_ref=1 me_range=16 chroma_me=1 trellis=1 8x8dct=1 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=-2 threads=18 lookahead_threads=3 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=3 b_pyramid=2 b_adapt=1 b_bias=0 direct=1 weightb=1 open_gop=0 weightp=1 keyint=250 keyint_min=25 scenecut=40 intra_refresh=0 rc_lookahead=30 rc=crf mbtree=1 crf=20.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 ip_ratio=1.40 aq=1:1.00
+Output #0, mp4, to '/Users/briansam-bodden/Code/java-ai/articles/models-deep-dive/recordings/02-safetensors.mp4':
+  Metadata:
+    encoder         : Lavf63.1.102
+  Stream #0:0: Video: h264 (avc1 / 0x31637661), yuv420p(tv, progressive), 1920x1080 [SAR 1:1 DAR 16:9], q=2-31, 25 fps, 12800 tbn
+    Metadata:
+      encoder         : Lavc63.1.102 libx264
+    Side data:
+      CPB properties: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: N/A
+frame=   12 fps=0.0 q=25.0 size=       0KiB time=00:00:00.40 bitrate=   1.0kbits/s speed=0.798x elapsed=0:00:00.50    frame=   70 fps= 70 q=25.0 size=       0KiB time=00:00:02.72 bitrate=   0.1kbits/s speed=2.71x elapsed=0:00:01.00    frame=  100 fps= 66 q=25.0 size=       0KiB time=00:00:03.92 bitrate=   0.1kbits/s speed= 2.6x elapsed=0:00:01.50    frame=  162 fps= 81 q=25.0 size=       0KiB time=00:00:06.40 bitrate=   0.1kbits/s speed=3.19x elapsed=0:00:02.00    frame=  236 fps= 94 q=25.0 size=       0KiB time=00:00:09.36 bitrate=   0.0kbits/s speed=3.73x elapsed=0:00:02.50    [mp4 @ 0x7f950e806c80] Starting second pass: moving the moov atom to the beginning of the file
+[out#0/mp4 @ 0x7f950e806b80] video:96KiB audio:0KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 3.972589%
+frame=  254 fps= 90 q=-1.0 Lsize=     100KiB time=00:00:10.08 bitrate=  81.3kbits/s speed=3.55x elapsed=0:00:02.83    
+[libx264 @ 0x7f950e808240] frame I:2     Avg QP: 5.83  size: 26218
+[libx264 @ 0x7f950e808240] frame P:64    Avg QP:14.66  size:   503
+[libx264 @ 0x7f950e808240] frame B:188   Avg QP:15.75  size:    70
+[libx264 @ 0x7f950e808240] consecutive B-frames:  1.2%  0.0%  1.2% 97.6%
+[libx264 @ 0x7f950e808240] mb I  I16..4: 85.6%  9.3%  5.1%
+[libx264 @ 0x7f950e808240] mb P  I16..4:  0.0%  0.0%  0.1%  P16..4:  0.1%  0.0%  0.0%  0.0%  0.0%    skip:99.8%
+[libx264 @ 0x7f950e808240] mb B  I16..4:  0.0%  0.0%  0.0%  B16..8:  0.0%  0.0%  0.0%  direct: 0.0%  skip:100.0%  L0:57.2% L1:42.6% BI: 0.2%
+[libx264 @ 0x7f950e808240] 8x8 transform intra:9.2% inter:27.0%
+[libx264 @ 0x7f950e808240] coded y,uvDC,uvAC intra: 4.8% 5.1% 4.6% inter: 0.0% 0.0% 0.0%
+[libx264 @ 0x7f950e808240] i16 v,h,dc,p: 94%  4%  2%  0%
+[libx264 @ 0x7f950e808240] i8 v,h,dc,ddl,ddr,vr,hd,vl,hu: 79%  6% 15%  0%  0%  0%  0%  0%  0%
+[libx264 @ 0x7f950e808240] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 33% 27% 17%  3%  4%  4%  4%  4%  5%
+[libx264 @ 0x7f950e808240] i8c dc,h,v,p: 90%  7%  3%  0%
+[libx264 @ 0x7f950e808240] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 0x7f950e808240] ref P L0: 82.4% 17.6%
+[libx264 @ 0x7f950e808240] ref B L0: 97.0%  3.0%
+[libx264 @ 0x7f950e808240] ref B L1: 99.5%  0.5%
+[libx264 @ 0x7f950e808240] kb/s:77.02

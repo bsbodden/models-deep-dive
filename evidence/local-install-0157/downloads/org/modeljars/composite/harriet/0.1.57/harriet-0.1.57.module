@@ -1,0 +1,229 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "org.modeljars.composite",
+    "module": "harriet",
+    "version": "0.1.57",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.4.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 25,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "org.modeljars",
+          "module": "modeljars",
+          "version": {
+            "requires": "0.1.57"
+          }
+        },
+        {
+          "group": "com.fasterxml.jackson",
+          "module": "jackson-bom",
+          "version": {
+            "requires": "2.22.3"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-bom",
+          "version": {
+            "requires": "2.0.20"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "commons-codec",
+          "module": "commons-codec",
+          "version": {
+            "requires": "1.22.1"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5-h2",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.client5",
+          "module": "httpclient5",
+          "version": {
+            "requires": "5.6.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "harriet-0.1.57.jar",
+          "url": "harriet-0.1.57.jar",
+          "size": 3041,
+          "sha512": "21aa7f8280d0c5ae9641ef8d17fb931739a27eee54812543d8928ee10c06ae6f4a16b4cb71b2ca378f4ce788e9cc50514c1929884207deba09d825a56b738156",
+          "sha256": "a314c2493838c0303d649ce7b5b29773c4fddee37e497a7a9f42daa3f3e8be94",
+          "sha1": "934e7075f47d2c51dbac8ab51b0029ded780e30a",
+          "md5": "8428b64b85ecda4e48f78fe36ff28f3a"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 25,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.modeljars",
+          "module": "modeljars",
+          "version": {
+            "requires": "0.1.57"
+          }
+        },
+        {
+          "group": "com.fasterxml.jackson",
+          "module": "jackson-bom",
+          "version": {
+            "requires": "2.22.3"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-bom",
+          "version": {
+            "requires": "2.0.20"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.modeljars.huggingface",
+          "module": "unsloth.qwen3.5-4b-gguf.q4_k_m",
+          "version": {
+            "requires": "3.5.0-q4_k_m.2"
+          }
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "commons-codec",
+          "module": "commons-codec",
+          "version": {
+            "requires": "1.22.1"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5-h2",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.client5",
+          "module": "httpclient5",
+          "version": {
+            "requires": "5.6.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "harriet-0.1.57.jar",
+          "url": "harriet-0.1.57.jar",
+          "size": 3041,
+          "sha512": "21aa7f8280d0c5ae9641ef8d17fb931739a27eee54812543d8928ee10c06ae6f4a16b4cb71b2ca378f4ce788e9cc50514c1929884207deba09d825a56b738156",
+          "sha256": "a314c2493838c0303d649ce7b5b29773c4fddee37e497a7a9f42daa3f3e8be94",
+          "sha1": "934e7075f47d2c51dbac8ab51b0029ded780e30a",
+          "md5": "8428b64b85ecda4e48f78fe36ff28f3a"
+        }
+      ]
+    },
+    {
+      "name": "javadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "harriet-0.1.57-javadoc.jar",
+          "url": "harriet-0.1.57-javadoc.jar",
+          "size": 4150725,
+          "sha512": "aa3b6017731a8ac584f6dd0e2004e76f82645fba46880fed2702085a25676016fade1941fcc886da37360ad013398a7a102c2e887862a4bf40741e25bbdd4638",
+          "sha256": "8e0d198212c92439c0d7a2252ff0630c3e6c4bda634c9bdd6a6f5f5c7af8544e",
+          "sha1": "b988060949ac2064b58048ea5233c71a929976d4",
+          "md5": "124d6c773ba7b35e9c48525b65f4433f"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "harriet-0.1.57-sources.jar",
+          "url": "harriet-0.1.57-sources.jar",
+          "size": 4175,
+          "sha512": "70c5e3cdc8f813f59533ff1d2a5dc3c3734d4443320db7161531410030752a29cc2a4aa054581094225b7bf2aca34255d120815897fec9752079302d15a4d9da",
+          "sha256": "989f452f76e8e0010583df83c11fa742feaacb656f7f88c8e7ae1b6987cb692f",
+          "sha1": "0d6bc5c026edeb2e036e51eef0a9b694a9db4f66",
+          "md5": "07cf2a9f0f06afcb709087e886e9da77"
+        }
+      ]
+    }
+  ]
+}

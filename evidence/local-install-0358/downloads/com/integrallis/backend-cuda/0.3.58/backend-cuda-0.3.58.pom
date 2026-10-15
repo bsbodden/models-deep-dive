@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <!-- This module was also published with a richer model, Gradle metadata,  -->
+  <!-- which should be used instead. Do not delete the following line which  -->
+  <!-- is to indicate to Gradle or any Gradle module metadata file consumer  -->
+  <!-- that they should prefer consuming it instead. -->
+  <!-- do_not_remove: published-with-gradle-metadata -->
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.integrallis</groupId>
+  <artifactId>backend-cuda</artifactId>
+  <version>0.3.58</version>
+  <name>backend-cuda</name>
+  <description>models — backend-cuda</description>
+  <url>https://github.com/integrallis/models</url>
+  <licenses>
+    <license>
+      <name>The Apache License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>bsbodden</id>
+      <name>Brian Sam-Bodden</name>
+      <email>bsbodden@gmail.com</email>
+      <organization>Integrallis Software</organization>
+      <organizationUrl>https://integrallis.com</organizationUrl>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:https://github.com/integrallis/models.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/integrallis/models.git</developerConnection>
+    <url>https://github.com/integrallis/models</url>
+  </scm>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>commons-codec</groupId>
+        <artifactId>commons-codec</artifactId>
+        <version>1.22.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.httpcomponents.core5</groupId>
+        <artifactId>httpcore5</artifactId>
+        <version>5.4.4</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.httpcomponents.core5</groupId>
+        <artifactId>httpcore5-h2</artifactId>
+        <version>5.4.4</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.httpcomponents.client5</groupId>
+        <artifactId>httpclient5</artifactId>
+        <version>5.6.5</version>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson</groupId>
+        <artifactId>jackson-bom</artifactId>
+        <version>2.22.3</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-bom</artifactId>
+        <version>2.0.20</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>com.integrallis</groupId>
+      <artifactId>models-api</artifactId>
+      <version>0.3.58</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.integrallis</groupId>
+      <artifactId>backend-java</artifactId>
+      <version>0.3.58</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.integrallis</groupId>
+      <artifactId>vectors-core</artifactId>
+      <version>0.1.29</version>
+      <scope>runtime</scope>
+    </dependency>
+  </dependencies>
+</project>

@@ -1,0 +1,19 @@
+sequenceDiagram
+  participant App as Application
+  participant MJ as ModelJars
+  participant Cache as Artifact cache
+  participant HF as Pinned upstream
+  participant Models as Models
+  App->>MJ: openRuntime(coordinate)
+  MJ->>MJ: Resolve descriptor<br/>and task qualification
+  MJ->>Cache: Locate artifact<br/>or bundle
+  alt Files not cached
+    Cache->>HF: Download declared files
+    HF-->>Cache: Weights, tokenizer<br/>and configuration
+  end
+  MJ->>MJ: Verify sizes<br/>and SHA-256
+  MJ->>Models: Load qualified execution path
+  Models-->>App: Runtime and chat template
+  App->>Models: Render prompt, generate
+  Models-->>App: Text and metrics
+  App->>Models: close()

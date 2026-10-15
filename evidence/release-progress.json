@@ -1,0 +1,36 @@
+{
+  "targetVersion": "0.1.56",
+  "status": "complete: public artifacts, website, native CLI and local installation verified",
+  "runtimeFixPr": 211,
+  "runtimeFixSource": "93ed4b5b5120ac7f8cec239b0aff117ad7b21acd",
+  "compositionGatePr": 213,
+  "versionAndSitePr": 212,
+  "modelsNativeDocsPr": 261,
+  "modelsCudaDocsPr": 262,
+  "completedVerificationRun": 38101407255,
+  "canceledPublicationRun": 38101788929,
+  "cancellationReason": "Additional real-weight Granite test exposed a stale sharing-count assertion; stage canceled before publication",
+  "releaseSource": "42fadd26b8cacc1b205e0218f79f321858bfb28f",
+  "finalVerificationRun": 38102477918,
+  "publicationRun": 38103026288,
+  "finalizationRun": 38103711593,
+  "cliReleaseRun": 38104194455,
+  "siteRun": 38104197924,
+  "websiteSource": "96c5bca1b8a1d90068e38ce9a9ef7316904736ff",
+  "completedAt": "2026-10-11T02:21:17.556839+00:00",
+  "historicalCompositionGateRun": 38101957913,
+  "walkthroughRuns": {
+    "total": 11,
+    "passed": 11,
+    "receipt": "released-run/runs.json"
+  },
+  "videos": {
+    "clips": 11,
+    "formats": [
+      "MP4",
+      "WebM"
+    ],
+    "verification": "video-verification.json"
+  },
+  "nativeInstallationReceipt": "local-install/native-cli-receipt.json"
+}

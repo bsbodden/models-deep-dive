@@ -1,0 +1,10 @@
+{
+  "script": "composite.java",
+  "sha256": "95569d82e5015c2367a22e2764a4a9665283b3fb0dec18c67f3d1ca279de4b3a",
+  "runtime": "ModelJars 0.1.55 / Models 0.3.57 / Vectors 0.1.29",
+  "exitCode": 0,
+  "log": "run-composite-initial.log",
+  "observedAnswerability": "ANSWERABLE",
+  "physicallySharesPrefix": true,
+  "sharedPrefixTokens": 182
+}

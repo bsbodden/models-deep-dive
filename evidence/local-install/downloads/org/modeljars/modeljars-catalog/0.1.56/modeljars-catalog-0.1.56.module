@@ -1,0 +1,222 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "org.modeljars",
+    "module": "modeljars-catalog",
+    "version": "0.1.56",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.4.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "org.modeljars",
+          "module": "modeljars-core",
+          "version": {
+            "requires": "0.1.56"
+          }
+        },
+        {
+          "group": "com.fasterxml.jackson",
+          "module": "jackson-bom",
+          "version": {
+            "requires": "2.22.3"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-bom",
+          "version": {
+            "requires": "2.0.20"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "commons-codec",
+          "module": "commons-codec",
+          "version": {
+            "requires": "1.22.1"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5-h2",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.client5",
+          "module": "httpclient5",
+          "version": {
+            "requires": "5.6.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "modeljars-catalog-0.1.56.jar",
+          "url": "modeljars-catalog-0.1.56.jar",
+          "size": 379629,
+          "sha512": "471399d1a68817ebd4c981cabd050a8fc4553c66d90d6190186af641c64a6933d368636e4b98dec29533f92f75d2883e7eeb4c046e85e54de4498ef8f6ae0ecc",
+          "sha256": "5b6b1500c12cb421d0d177ac94eeb41160ba3e30c0ea420f8859e364b403e0fe",
+          "sha1": "cf594af8059741b1ee93b8cf1f1b0fc1a0f91861",
+          "md5": "b765e290b108fcf954a9037842a6165f"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 21,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.modeljars",
+          "module": "modeljars-core",
+          "version": {
+            "requires": "0.1.56"
+          }
+        },
+        {
+          "group": "com.fasterxml.jackson",
+          "module": "jackson-bom",
+          "version": {
+            "requires": "2.22.3"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-bom",
+          "version": {
+            "requires": "2.0.20"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "commons-codec",
+          "module": "commons-codec",
+          "version": {
+            "requires": "1.22.1"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5-h2",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.client5",
+          "module": "httpclient5",
+          "version": {
+            "requires": "5.6.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "modeljars-catalog-0.1.56.jar",
+          "url": "modeljars-catalog-0.1.56.jar",
+          "size": 379629,
+          "sha512": "471399d1a68817ebd4c981cabd050a8fc4553c66d90d6190186af641c64a6933d368636e4b98dec29533f92f75d2883e7eeb4c046e85e54de4498ef8f6ae0ecc",
+          "sha256": "5b6b1500c12cb421d0d177ac94eeb41160ba3e30c0ea420f8859e364b403e0fe",
+          "sha1": "cf594af8059741b1ee93b8cf1f1b0fc1a0f91861",
+          "md5": "b765e290b108fcf954a9037842a6165f"
+        }
+      ]
+    },
+    {
+      "name": "javadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "modeljars-catalog-0.1.56-javadoc.jar",
+          "url": "modeljars-catalog-0.1.56-javadoc.jar",
+          "size": 323023,
+          "sha512": "ffc347170254f2ab220936b7ff267b6d8dd197b896255b29d6ab22df0832183bcfec5406b9b06d1fc08aad4fb877a3d7d6f8a1f8938155fc0923065b8c35a9b9",
+          "sha256": "91763b874212f03c495d7cb35487ebab9111a5023846c778a7780624601e92c2",
+          "sha1": "6274614683c7d7f1a9685994eca6aaf4bee62ab7",
+          "md5": "ec5325aafada7ce1e3326e9d09ad7227"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "modeljars-catalog-0.1.56-sources.jar",
+          "url": "modeljars-catalog-0.1.56-sources.jar",
+          "size": 367018,
+          "sha512": "8c0a6405c5656dd8ae531d273c0ffba5c20736fb186a70507c70df32c022467535039c8adfb1a08f82ec74c992d314e297f3e15b727937d5f34c61cf14669f27",
+          "sha256": "1020013c05b3149f03b8c1e4a16718dbca29345e5539e55ff925218620b9b4aa",
+          "sha1": "cb3aab5d692538593a77942695630728af24c9ef",
+          "md5": "ff92a9f6aaeeb6f5328f1e5657b4929e"
+        }
+      ]
+    }
+  ]
+}

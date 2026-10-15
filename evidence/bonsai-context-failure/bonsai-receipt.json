@@ -1,0 +1,18 @@
+{
+  "script": "bonsai.java",
+  "sha256": "dd5bf94983d3966aabf390664693ac5f3b1339f064be7d91b178dfaa05acb30e",
+  "command": [
+    "jbang",
+    "bonsai.java"
+  ],
+  "startedAt": "2026-10-11T17:13:45.538590+00:00",
+  "finishedAt": "2026-10-11T17:15:48.656092+00:00",
+  "exitCode": 1,
+  "log": "bonsai.log",
+  "dependencies": [
+    "com.integrallis:models:0.3.58",
+    "com.integrallis:backend-java:0.3.58"
+  ],
+  "cast": "13-bonsai.cast",
+  "castSha256": "ddfebfc5c2a3f87d7a82836da79c11b02235f50232fe3b0411f4cb4f1e681a3f"
+}

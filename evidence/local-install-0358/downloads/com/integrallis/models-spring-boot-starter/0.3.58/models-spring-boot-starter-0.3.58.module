@@ -1,0 +1,222 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.integrallis",
+    "module": "models-spring-boot-starter",
+    "version": "0.3.58",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.4.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 25,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "com.fasterxml.jackson",
+          "module": "jackson-bom",
+          "version": {
+            "requires": "2.22.3"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-bom",
+          "version": {
+            "requires": "2.0.20"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "com.integrallis",
+          "module": "models-spring-ai",
+          "version": {
+            "requires": "0.3.58"
+          }
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "commons-codec",
+          "module": "commons-codec",
+          "version": {
+            "requires": "1.22.1"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5-h2",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.client5",
+          "module": "httpclient5",
+          "version": {
+            "requires": "5.6.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "models-spring-boot-starter-0.3.58.jar",
+          "url": "models-spring-boot-starter-0.3.58.jar",
+          "size": 10998,
+          "sha512": "ef00389a734adaaca5ae56809c59fe30cf023e33d8f34d76cb9b8b75d6c44cec7c12f8b522ef16a209952044aa7d19c870114ad013edbcf2d75785c04104ef43",
+          "sha256": "73cbdc16e0504eb5336780a7d2687b8f02133332721820fca24203732e0f7c82",
+          "sha1": "ef5ad9cca48029af861f1ebd78d621e3410e6d25",
+          "md5": "23915b591bf917e139c52a238872301e"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 25,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.fasterxml.jackson",
+          "module": "jackson-bom",
+          "version": {
+            "requires": "2.22.3"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-bom",
+          "version": {
+            "requires": "2.0.20"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "com.integrallis",
+          "module": "models-spring-ai",
+          "version": {
+            "requires": "0.3.58"
+          }
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "commons-codec",
+          "module": "commons-codec",
+          "version": {
+            "requires": "1.22.1"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5-h2",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.client5",
+          "module": "httpclient5",
+          "version": {
+            "requires": "5.6.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "models-spring-boot-starter-0.3.58.jar",
+          "url": "models-spring-boot-starter-0.3.58.jar",
+          "size": 10998,
+          "sha512": "ef00389a734adaaca5ae56809c59fe30cf023e33d8f34d76cb9b8b75d6c44cec7c12f8b522ef16a209952044aa7d19c870114ad013edbcf2d75785c04104ef43",
+          "sha256": "73cbdc16e0504eb5336780a7d2687b8f02133332721820fca24203732e0f7c82",
+          "sha1": "ef5ad9cca48029af861f1ebd78d621e3410e6d25",
+          "md5": "23915b591bf917e139c52a238872301e"
+        }
+      ]
+    },
+    {
+      "name": "javadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "models-spring-boot-starter-0.3.58-javadoc.jar",
+          "url": "models-spring-boot-starter-0.3.58-javadoc.jar",
+          "size": 4163200,
+          "sha512": "47c5d8460f22bd0dec15293e5f78b9f876ca945ceeeb66734f3e169441f3cb0c183c408d05f9ab29212223533b5ae5e67db867658f0ac7e52200404f9762abe8",
+          "sha256": "a7e087c1c1c2f7cff1f3c12ad50b45630f81c552323a0345f9e223472e29f916",
+          "sha1": "dadea3601c747b9946e54b6a9101518019af9471",
+          "md5": "39032b61af2071d9acbb55b398037c0f"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "models-spring-boot-starter-0.3.58-sources.jar",
+          "url": "models-spring-boot-starter-0.3.58-sources.jar",
+          "size": 5719,
+          "sha512": "bcdb1d05eaa5a866097c23b1766183a50f4b2590ad9d850ab10ed3db27a1a5e1e21bd71efd454d80adf6cfd569bce3b7b9ec575125ea60a01089d2f23f979095",
+          "sha256": "d92d2703c42a0cd765ff61e3a1d374f79e1bdc1112628a9ca8869f9bc172e1e2",
+          "sha1": "9023d4f132d5a4237aa17faca3c08831a124cbe3",
+          "md5": "f2a9b81a9a2c9b6a8dc9f9b30003a5db"
+        }
+      ]
+    }
+  ]
+}

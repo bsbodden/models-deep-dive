@@ -1,0 +1,12 @@
+$ jbang route.java
+WARNING: Using incubator modules: jdk.incubator.vector
+Oct 10, 2026 7:11:35 PM com.integrallis.vectors.core.PanamaVectorUtilSupportProvider create
+INFO: vectors-core: Using Panama Vector API SIMD provider (vector bits: 256)
+Oct 10, 2026 7:11:35 PM com.integrallis.vectors.core.VectorizationProvider logActiveToggles
+INFO: vectors-core: provider=PanamaVectorUtilSupport panama=true maxBits=256 preferredBits=256 fastVectorFMA=true fastScalarFMA=true sve=false ggufParallel=true ggufParallelThreshold=1048576 ggufExecutor=persistent ggufThreads=12 ggufChunksPerThread=2 mappedKQuantLongOffsets=auto(q4=true,q5=false,q6=false) q4ShortPairwiseSupported=true q4UnsignedPairwiseSupported=true toggles=[(defaults — no -Dvectors.* overrides)]
+qwen3_0_6b_q4_0: [chat]; performance=no matching host measurement
+qwen_qwen2_5_0_5b_instruct_bf16: [chat]; performance=no matching host measurement
+Oct 10, 2026 7:11:35 PM com.integrallis.models.router.CatalogDiscovery discover
+INFO: estimated throughput for 2 model(s) with no profile for this hardware: qwen3_0_6b_q4_0, qwen_qwen2_5_0_5b_instruct_bf16. Estimates are conservative defaults, since nothing on this machine has been measured; benchmark them for measured figures.
+qwen3_0_6b_q4_0 (score 0.684, availability 1.000, cost 0.211, latency 0.105, locality 0.368, quality 0.000)
+Selection only; no generation or remote call took place.

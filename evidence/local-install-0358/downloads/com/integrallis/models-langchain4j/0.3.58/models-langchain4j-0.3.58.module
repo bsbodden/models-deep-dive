@@ -1,0 +1,243 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.integrallis",
+    "module": "models-langchain4j",
+    "version": "0.3.58",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.4.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 25,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "com.fasterxml.jackson",
+          "module": "jackson-bom",
+          "version": {
+            "requires": "2.22.3"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-bom",
+          "version": {
+            "requires": "2.0.20"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "com.integrallis",
+          "module": "models-runtime",
+          "version": {
+            "requires": "0.3.58"
+          }
+        },
+        {
+          "group": "com.integrallis",
+          "module": "models-router",
+          "version": {
+            "requires": "0.3.58"
+          }
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "commons-codec",
+          "module": "commons-codec",
+          "version": {
+            "requires": "1.22.1"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5-h2",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.client5",
+          "module": "httpclient5",
+          "version": {
+            "requires": "5.6.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "models-langchain4j-0.3.58.jar",
+          "url": "models-langchain4j-0.3.58.jar",
+          "size": 67519,
+          "sha512": "a2b7dcf4873408ffd11d354603258ccaf459e67aed7ed61760b7b7890ce851ae3dc5d7fc2db15d42e51ab19af09aa9b803e9a9ecdd0a9454b3389925d1ca5416",
+          "sha256": "209e20597bedf2057823b33165b4169f604de3edd7835715dcee83c5a6a8203b",
+          "sha1": "a438cd282d479450cdc5445df58dc37eba9bc8b4",
+          "md5": "f50937aa37d48bb0bdffe3b105b569b3"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 25,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.fasterxml.jackson.core",
+          "module": "jackson-databind",
+          "version": {
+            "requires": "2.22.3"
+          }
+        },
+        {
+          "group": "com.fasterxml.jackson",
+          "module": "jackson-bom",
+          "version": {
+            "requires": "2.22.3"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-bom",
+          "version": {
+            "requires": "2.0.20"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "com.integrallis",
+          "module": "models-runtime",
+          "version": {
+            "requires": "0.3.58"
+          }
+        },
+        {
+          "group": "com.integrallis",
+          "module": "models-router",
+          "version": {
+            "requires": "0.3.58"
+          }
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "commons-codec",
+          "module": "commons-codec",
+          "version": {
+            "requires": "1.22.1"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5-h2",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.client5",
+          "module": "httpclient5",
+          "version": {
+            "requires": "5.6.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "models-langchain4j-0.3.58.jar",
+          "url": "models-langchain4j-0.3.58.jar",
+          "size": 67519,
+          "sha512": "a2b7dcf4873408ffd11d354603258ccaf459e67aed7ed61760b7b7890ce851ae3dc5d7fc2db15d42e51ab19af09aa9b803e9a9ecdd0a9454b3389925d1ca5416",
+          "sha256": "209e20597bedf2057823b33165b4169f604de3edd7835715dcee83c5a6a8203b",
+          "sha1": "a438cd282d479450cdc5445df58dc37eba9bc8b4",
+          "md5": "f50937aa37d48bb0bdffe3b105b569b3"
+        }
+      ]
+    },
+    {
+      "name": "javadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "models-langchain4j-0.3.58-javadoc.jar",
+          "url": "models-langchain4j-0.3.58-javadoc.jar",
+          "size": 4170192,
+          "sha512": "0658e143e9e11655f11b71d20cb5c0abce124222cabfc6510b7e6a9110d88198cdd495fc72bffc00afc1ba1deba5db07f22b16ed02b8a82b9c660ce77cee716f",
+          "sha256": "f6f89148968df05fbc585feb935141672f3da0b78174cdedb36673212553c87c",
+          "sha1": "f45f755cdc724104ea30b0d4b6d4bb95916e8a48",
+          "md5": "3711e229ad1aa4f95824cc2bf6b56188"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "models-langchain4j-0.3.58-sources.jar",
+          "url": "models-langchain4j-0.3.58-sources.jar",
+          "size": 31960,
+          "sha512": "998a497bf255db24f2899e56dee1531b4491bbdc4fcb9c5278e157489974971da07a54847b825aa8bd3802e53af0c56d8af912d67d90c29e8dddea164132faf0",
+          "sha256": "c1785bd14a38815053b4312fb12a17211b45f1e14916ac22b509f79fb0a77874",
+          "sha1": "2d7623c25e0da5cd6923926493a31e92ceb66651",
+          "md5": "aed064bb3bcb0be36aa680f82feaa851"
+        }
+      ]
+    }
+  ]
+}

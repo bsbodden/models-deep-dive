@@ -1,0 +1,37 @@
+ffmpeg version 9.0.2 Copyright (c) 2000-2026 the FFmpeg developers
+  built with Apple clang version 21.0.0 (clang-2100.1.1.101)
+  configuration: --prefix=/usr/local/Cellar/ffmpeg/9.0.2 --enable-shared --enable-pthreads --enable-version3 --cc=clang --host-cflags= --host-ldflags= --enable-ffplay --enable-gpl --enable-libsvtav1 --enable-libopus --enable-libx264 --enable-libmp3lame --enable-libdav1d --enable-libvmaf --enable-libvpx --enable-libx265 --enable-openssl --enable-videotoolbox --enable-audiotoolbox
+  libavutil      61.  1.102 / 61.  1.102
+  libavcodec     63.  1.102 / 63.  1.102
+  libavformat    63.  1.102 / 63.  1.102
+  libavdevice    63.  1.102 / 63.  1.102
+  libavfilter    12.  1.102 / 12.  1.102
+  libswscale     10.  1.102 / 10.  1.102
+  libswresample   7.  1.102 /  7.  1.102
+Input #0, matroska,webm, from '/Users/briansam-bodden/Code/java-ai/articles/models-deep-dive/recordings/08-speech-terminal.webm':
+  Metadata:
+    ENCODER         : Lavf63.1.102
+  Duration: N/A, start: 0.040000, bitrate: N/A
+  Stream #0:0: Video: vp9 (Profile 1), gbrp(pc, gbr/unknown/unknown, progressive), 1920x1080, SAR 1:1 DAR 16:9, 25 fps, 25 tbr, 1k tbn, start 0.040000
+    Metadata:
+      ENCODER         : Lavc63.1.102 libvpx-vp9
+[aist#1:0/pcm_s16le @ 0x7fd980708580] Guessed Channel Layout: mono
+Input #1, wav, from '/Users/briansam-bodden/Code/java-ai/articles/models-deep-dive/recordings/speech.wav':
+  Duration: 00:00:01.86, bitrate: 512 kb/s
+  Stream #1:0: Audio: pcm_s16le ([1][0][0][0] / 0x0001), 32000 Hz, mono, s16, 512 kb/s
+Stream mapping:
+  Stream #0:0 -> #0:0 (copy)
+  Stream #1:0 -> #0:1 (pcm_s16le (native) -> opus (libopus))
+Press [q] to stop, [?] for help
+[libopus @ 0x7fd98070a040] No bit rate set. Defaulting to 64000 bps.
+Output #0, webm, to '/Users/briansam-bodden/Code/java-ai/articles/models-deep-dive/recordings/08-speech.webm':
+  Metadata:
+    encoder         : Lavf63.1.102
+  Stream #0:0: Video: vp9 (Profile 1), gbrp(pc, gbr/unknown/unknown, progressive), 1920x1080 [SAR 1:1 DAR 16:9], q=2-31, 25 fps, 25 tbr, 1k tbn
+    Metadata:
+      ENCODER         : Lavc63.1.102 libvpx-vp9
+  Stream #0:1: Audio: opus, 24000 Hz, mono, s16, 64 kb/s
+    Metadata:
+      encoder         : Lavc63.1.102 libopus
+[out#0/webm @ 0x7fd980708380] video:1144KiB audio:21KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 0.514458%
+frame=  290 fps=0.0 q=-1.0 Lsize=    1172KiB time=00:00:11.61 bitrate= 826.4kbits/s speed=70.5x elapsed=0:00:00.16    

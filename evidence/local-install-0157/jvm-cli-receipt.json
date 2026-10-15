@@ -1,0 +1,22 @@
+{
+  "verifiedAt": "2026-10-11T18:01:53.824928+00:00",
+  "path": "/Users/briansam-bodden/Code/java-ai/projects/model-jars/modeljars-cli/build/install/modeljars/bin/modeljars",
+  "buildCommand": "./gradlew --no-daemon :modeljars-cli:installDist",
+  "buildProvenance": "local source build at 3fe35f3eb1970e3aeb971864bc3fa719c857fee9",
+  "versionOutput": "0.1.57\n",
+  "exitCode": 0,
+  "files": [
+    {
+      "file": "/Users/briansam-bodden/Code/java-ai/projects/model-jars/modeljars-cli/build/install/modeljars/lib/modeljars-catalog-0.1.57.jar",
+      "sha256": "e8cb453b56c31b1734da921dbd276a6b0333693c1c4a66cbbabbde207f1abef9"
+    },
+    {
+      "file": "/Users/briansam-bodden/Code/java-ai/projects/model-jars/modeljars-cli/build/install/modeljars/lib/modeljars-cli-0.1.57.jar",
+      "sha256": "9d89666ea849d8b47479fb826f0040cc99c31d2695f3a52b7b46bc14a5e8936f"
+    },
+    {
+      "file": "/Users/briansam-bodden/Code/java-ai/projects/model-jars/modeljars-cli/build/install/modeljars/lib/modeljars-core-0.1.57.jar",
+      "sha256": "97be952f2347124d90b9f6dca22bebff7059aa2217cbb3b601ed614d53213e85"
+    }
+  ]
+}

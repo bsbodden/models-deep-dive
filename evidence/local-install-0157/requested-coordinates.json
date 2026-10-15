@@ -1,0 +1,8 @@
+[
+  "org.modeljars:modeljars-core:0.1.57",
+  "org.modeljars:modeljars-catalog:0.1.57",
+  "org.modeljars:modeljars-cli:0.1.57",
+  "org.modeljars:modeljars:0.1.57",
+  "org.modeljars.composite:granite-answerability:0.1.57",
+  "org.modeljars.composite:harriet:0.1.57"
+]

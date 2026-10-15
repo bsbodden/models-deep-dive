@@ -1,0 +1,21 @@
+[aist#0:0/pcm_s16le @ 0x7fc8cd806fc0] Guessed Channel Layout: mono
+Input #0, wav, from 'articles/models-deep-dive/recordings/speech.wav':
+  Duration: 00:00:01.86, bitrate: 512 kb/s
+  Stream #0:0: Audio: pcm_s16le ([1][0][0][0] / 0x0001), 32000 Hz, mono, s16, 512 kb/s
+[Parsed_volumedetect_0 @ 0x7fc8cd809800] n_samples: 0
+Stream mapping:
+  Stream #0:0 -> #0:0 (pcm_s16le (native) -> pcm_s16le (native))
+Press [q] to stop, [?] for help
+Output #0, null, to 'pipe:':
+  Metadata:
+    encoder         : Lavf63.1.102
+  Stream #0:0: Audio: pcm_s16le, 32000 Hz, mono, s16, 512 kb/s
+    Metadata:
+      encoder         : Lavc63.1.102 pcm_s16le
+[Parsed_volumedetect_0 @ 0x7fc8bd8040c0] n_samples: 59392
+[Parsed_volumedetect_0 @ 0x7fc8bd8040c0] mean_volume: -23.6 dB
+[Parsed_volumedetect_0 @ 0x7fc8bd8040c0] max_volume: -8.0 dB
+[Parsed_volumedetect_0 @ 0x7fc8bd8040c0] histogram_8db: 18
+[Parsed_volumedetect_0 @ 0x7fc8bd8040c0] histogram_9db: 88
+[out#0/null @ 0x7fc8cd807ec0] video:0KiB audio:116KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown
+size=N/A time=00:00:01.85 bitrate=N/A speed= 435x elapsed=0:00:00.00    

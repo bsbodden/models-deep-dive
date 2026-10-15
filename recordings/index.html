@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Models and ModelJars — recorded walkthrough</title>
+  <link rel="stylesheet" href="player/asciinema-player.css">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 30px 56px; background: #10141f; color: #edf1fa; font-family: -apple-system, system-ui, sans-serif; }
+    header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 18px; gap: 20px; }
+    h1 { font-size: 30px; font-weight: 650; margin: 0; }
+    .tag { color: #7be0b7; font-size: 20px; white-space: nowrap; }
+    nav { margin-bottom: 18px; }
+    select { background: #222c3d; color: #edf1fa; font: inherit; padding: 8px; border: 1px solid #52617a; border-radius: 6px; }
+    a { color: #8ad7ff; margin-left: 18px; }
+    #terminal { height: 820px; padding: 14px; border: 1px solid #344052; border-radius: 12px; background: #282a36; overflow: hidden; }
+    footer { font-size: 17px; color: #aeb8c9; margin-top: 14px; }
+    body.export nav { display: none; }
+    body.export #terminal { height: 900px; }
+    audio { display: block; margin-top: 12px; }
+    audio[hidden] { display: none; }
+    @media(max-width:900px) { body {padding:20px;} header {display:block;} .tag {font-size:16px;} #terminal {height:70vh;} }
+  </style>
+</head>
+<body>
+  <header><h1 id="title">Models and ModelJars</h1><span class="tag">JAVA 25 · JBANG · MODELJARS 0.1.56</span></header>
+  <nav><label>Walkthrough <select id="demos"></select></label><a id="source">Java source</a><a id="raw">Raw recording</a><a id="mp4">MP4</a><a id="webm">WebM</a><a href="../article.md">Article</a></nav>
+  <div id="terminal"></div>
+  <footer id="status">Actual terminal output. Playback shortens pauses longer than three seconds; original timing remains in the raw cast. These are walkthroughs, not benchmarks.</footer>
+  <audio id="speech" controls src="speech.wav" hidden aria-label="Generated Soprano speech"></audio>
+  <script src="player/asciinema-player.min.js"></script>
+  <script>
+    const demos = [
+      ['chat', 'Qwen3: GGUF chat'], ['safetensors', 'Qwen2.5: BF16 Safetensors'],
+      ['embed', 'LFM2.5: embeddings'], ['rerank', 'MiniLM: reranking'],
+      ['tools', 'Needle 2: tool calls'], ['composite', 'Granite: shared-prefix specialist'],
+      ['decisions', 'Harriet: typed decisions'], ['speech', 'Soprano: speech synthesis'],
+      ['spring', 'Spring AI: local ChatClient'], ['route', 'Choose a local model'],
+      ['rag', 'Embeddings, Vectors and grounded answers'],
+      ['gemma', 'EmbeddingGemma 2: projected text embeddings'],
+      ['bonsai', 'Bonsai 2: PTQ1_0 text compatibility']
+    ];
+    const params = new URLSearchParams(location.search);
+    const exporting = params.get('export') === '1';
+    document.body.classList.toggle('export', exporting);
+    const selector = document.querySelector('#demos');
+    for (const [id, title] of demos) selector.add(new Option(title, id));
+    const selected = demos.find(([id]) => id === params.get('demo')) || demos[0];
+    selector.value = selected[0];
+    const release = selected[0] === 'bonsai' ? 'MODELS 0.3.58'
+      : selected[0] === 'gemma' ? 'MODELJARS 0.1.57' : 'MODELJARS 0.1.56';
+    document.querySelector('.tag').textContent = 'JAVA 25 · JBANG · ' + release;
+    selector.addEventListener('change', () => { location.search = new URLSearchParams({demo: selector.value}); });
+    const index = demos.indexOf(selected) + 1;
+    const cast = `../evidence/released-run/${String(index).padStart(2, '0')}-${selected[0]}.cast`;
+    document.querySelector('#title').textContent = selected[1];
+    document.querySelector('#source').href = `../code/${selected[0]}.java`;
+    document.querySelector('#raw').href = cast;
+    const stem = `${String(index).padStart(2, '0')}-${selected[0]}`;
+    document.querySelector('#mp4').href = stem + '.mp4';
+    document.querySelector('#webm').href = stem + '.webm';
+    document.querySelector('#speech').hidden = exporting || selected[0] !== 'speech';
+    window.playerEnded = false;
+    window.playbackError = null;
+    window.player = AsciinemaPlayer.create(cast, document.querySelector('#terminal'), {
+      cols: 120, rows: 36, preload: true, controls: !exporting, fit: 'both', theme: 'dracula',
+      terminalFontFamily: 'Menlo, monospace', idleTimeLimit: 3, speed: 1
+    });
+    player.addEventListener('ended', () => window.playerEnded = true);
+    player.addEventListener('error', event => {
+      window.playbackError = String(event);
+      document.querySelector('#status').textContent = 'Recording unavailable. Complete the released-run capture first.';
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------< release.consumer:modeljars-cli-consumer >---------------
+[INFO] Building modeljars-cli-consumer 1
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] Downloading from candidate: https://repo.maven.apache.org/maven2/org/modeljars/modeljars-cli/0.1.57/modeljars-cli-0.1.57.pom
+[INFO] Downloaded from candidate: https://repo.maven.apache.org/maven2/org/modeljars/modeljars-cli/0.1.57/modeljars-cli-0.1.57.pom (3.7 kB at 6.5 kB/s)
+[INFO] Downloading from candidate: https://repo.maven.apache.org/maven2/info/picocli/picocli/4.7.7/picocli-4.7.7.pom
+[INFO] Downloaded from candidate: https://repo.maven.apache.org/maven2/info/picocli/picocli/4.7.7/picocli-4.7.7.pom (1.4 kB at 14 kB/s)
+[INFO] Downloading from candidate: https://repo.maven.apache.org/maven2/info/picocli/picocli-shell-jline3/4.7.7/picocli-shell-jline3-4.7.7.pom
+[INFO] Downloaded from candidate: https://repo.maven.apache.org/maven2/info/picocli/picocli-shell-jline3/4.7.7/picocli-shell-jline3-4.7.7.pom (1.7 kB at 30 kB/s)
+[INFO] Downloading from candidate: https://repo.maven.apache.org/maven2/org/jline/jline/3.29.0/jline-3.29.0.pom
+[INFO] Downloaded from candidate: https://repo.maven.apache.org/maven2/org/jline/jline/3.29.0/jline-3.29.0.pom (24 kB at 506 kB/s)
+[INFO] Downloading from candidate: https://repo.maven.apache.org/maven2/org/jline/jline-parent/3.29.0/jline-parent-3.29.0.pom
+[INFO] Downloaded from candidate: https://repo.maven.apache.org/maven2/org/jline/jline-parent/3.29.0/jline-parent-3.29.0.pom (33 kB at 662 kB/s)
+[INFO] Downloading from candidate: https://repo.maven.apache.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.22.3/jackson-databind-2.22.3.pom
+[INFO] Downloaded from candidate: https://repo.maven.apache.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.22.3/jackson-databind-2.22.3.pom (23 kB at 443 kB/s)
+[INFO] Downloading from candidate: https://repo.maven.apache.org/maven2/com/fasterxml/jackson/jackson-base/2.22.3/jackson-base-2.22.3.pom
+[INFO] Downloaded from candidate: https://repo.maven.apache.org/maven2/com/fasterxml/jackson/jackson-base/2.22.3/jackson-base-2.22.3.pom (13 kB at 252 kB/s)
+[INFO] Downloading from candidate: https://repo.maven.apache.org/maven2/org/junit/junit-bom/5.14.3/junit-bom-5.14.3.pom
+[INFO] Downloaded from candidate: https://repo.maven.apache.org/maven2/org/junit/junit-bom/5.14.3/junit-bom-5.14.3.pom (5.7 kB at 149 kB/s)
+[INFO] Downloading from candidate: https://repo.maven.apache.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.22/jackson-annotations-2.22.pom
+[INFO] Downloaded from candidate: https://repo.maven.apache.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.22/jackson-annotations-2.22.pom (7.2 kB at 163 kB/s)
+[INFO] Downloading from candidate: https://repo.maven.apache.org/maven2/com/fasterxml/jackson/core/jackson-core/2.22.3/jackson-core-2.22.3.pom
+[INFO] Downloaded from candidate: https://repo.maven.apache.org/maven2/com/fasterxml/jackson/core/jackson-core/2.22.3/jackson-core-2.22.3.pom (9.7 kB at 226 kB/s)
+[INFO] 
+[INFO] --- enforcer:3.6.2:enforce (default-cli) @ modeljars-cli-consumer ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] 
+[INFO] --- dependency:3.8.1:tree (default-cli) @ modeljars-cli-consumer ---
+[INFO] Wrote dependency tree to: /Users/briansam-bodden/Code/java-ai/articles/models-deep-dive/evidence/onboarding-central-consumers/modeljars-cli/maven-graph.json
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  3.352 s
+[INFO] Finished at: 2026-10-11T11:30:28-07:00
+[INFO] ------------------------------------------------------------------------

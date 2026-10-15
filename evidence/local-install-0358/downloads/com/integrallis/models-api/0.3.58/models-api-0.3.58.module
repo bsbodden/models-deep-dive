@@ -1,0 +1,208 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.integrallis",
+    "module": "models-api",
+    "version": "0.3.58",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.4.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 25,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "com.fasterxml.jackson",
+          "module": "jackson-bom",
+          "version": {
+            "requires": "2.22.3"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-bom",
+          "version": {
+            "requires": "2.0.20"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "commons-codec",
+          "module": "commons-codec",
+          "version": {
+            "requires": "1.22.1"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5-h2",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.client5",
+          "module": "httpclient5",
+          "version": {
+            "requires": "5.6.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "models-api-0.3.58.jar",
+          "url": "models-api-0.3.58.jar",
+          "size": 73028,
+          "sha512": "993edacf219f0a0a9dd90ab7cd63a1eeab70d5a87573315d162826db914a83a01c1c9194a737f25617b4216018a2f57b702eaeaf05f85213207ec68bae10bfff",
+          "sha256": "f2dbd2bc50f5592cceb05dc71a7030ffa4e14bfa41e6b3cbf79baf6eb504d37e",
+          "sha1": "ec83c4bdc5abfc728e1f20147b5902ba17b8790d",
+          "md5": "704d27cbb7f9acbbed5ed94833167015"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 25,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.fasterxml.jackson",
+          "module": "jackson-bom",
+          "version": {
+            "requires": "2.22.3"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-bom",
+          "version": {
+            "requires": "2.0.20"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "commons-codec",
+          "module": "commons-codec",
+          "version": {
+            "requires": "1.22.1"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5-h2",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.client5",
+          "module": "httpclient5",
+          "version": {
+            "requires": "5.6.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "models-api-0.3.58.jar",
+          "url": "models-api-0.3.58.jar",
+          "size": 73028,
+          "sha512": "993edacf219f0a0a9dd90ab7cd63a1eeab70d5a87573315d162826db914a83a01c1c9194a737f25617b4216018a2f57b702eaeaf05f85213207ec68bae10bfff",
+          "sha256": "f2dbd2bc50f5592cceb05dc71a7030ffa4e14bfa41e6b3cbf79baf6eb504d37e",
+          "sha1": "ec83c4bdc5abfc728e1f20147b5902ba17b8790d",
+          "md5": "704d27cbb7f9acbbed5ed94833167015"
+        }
+      ]
+    },
+    {
+      "name": "javadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "models-api-0.3.58-javadoc.jar",
+          "url": "models-api-0.3.58-javadoc.jar",
+          "size": 4379764,
+          "sha512": "4e5f8d00424a4cee5e403e41f29abd579c5f6e6068b756393f62ce08c07a1caf1027308a579a371e8e542a43d2f57bf6ee8f13a2e3f8c293d67db54d94cb24ca",
+          "sha256": "92f1e862023b655645ffa34a3b195fd03f53b33d63e2cd3c41e7aa2933332323",
+          "sha1": "bbf9d7846d9893eb7f42f0516a308c739fdca8e2",
+          "md5": "6733cc6fba78ef123c7a06029b33cf16"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "models-api-0.3.58-sources.jar",
+          "url": "models-api-0.3.58-sources.jar",
+          "size": 60116,
+          "sha512": "b7772f651dcf6adbf90febf8a752725b5fe9869be6f408d450b9fb1a6559c8e0c71c2fda539de40a95b7749cbceb7b1fd728c672f3758946c7eb07ebbab3f0af",
+          "sha256": "33c9bd4a04c33279175fbdbbf15c854be27501e06241ee31b84ab1f0c3c03489",
+          "sha1": "6d6085052118aaddc81c0edfaab80dbda0625b1b",
+          "md5": "54a544ee43c43e74ca9c6d47b3123372"
+        }
+      ]
+    }
+  ]
+}

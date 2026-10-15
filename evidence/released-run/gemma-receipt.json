@@ -1,0 +1,18 @@
+{
+  "script": "gemma.java",
+  "sha256": "4d20b46e445ccfdc92e538079b04b02f97e10698595a4c05bec6402b4ad741ec",
+  "command": [
+    "jbang",
+    "gemma.java"
+  ],
+  "startedAt": "2026-10-11T18:30:15.803625+00:00",
+  "finishedAt": "2026-10-11T18:30:25.085798+00:00",
+  "exitCode": 0,
+  "log": "gemma.log",
+  "dependencies": [
+    "org.modeljars:modeljars:0.1.57",
+    "org.modeljars.huggingface:ggml-org.embeddinggemma-2-gguf.q8_0:2.0.0-q8_0.1"
+  ],
+  "cast": "12-gemma.cast",
+  "castSha256": "9f5b5851780041ca10933514651960c6506b53bf845ab473ec406c6b4ac2dc5c"
+}

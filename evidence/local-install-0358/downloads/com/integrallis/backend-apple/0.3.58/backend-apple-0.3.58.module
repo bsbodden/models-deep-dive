@@ -1,0 +1,222 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.integrallis",
+    "module": "backend-apple",
+    "version": "0.3.58",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.4.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 25,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "com.fasterxml.jackson",
+          "module": "jackson-bom",
+          "version": {
+            "requires": "2.22.3"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-bom",
+          "version": {
+            "requires": "2.0.20"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "com.integrallis",
+          "module": "models-api",
+          "version": {
+            "requires": "0.3.58"
+          }
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "commons-codec",
+          "module": "commons-codec",
+          "version": {
+            "requires": "1.22.1"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5-h2",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.client5",
+          "module": "httpclient5",
+          "version": {
+            "requires": "5.6.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "backend-apple-0.3.58.jar",
+          "url": "backend-apple-0.3.58.jar",
+          "size": 46792,
+          "sha512": "be04f2da31fd30644a7d5e50c08d1dbb6615164d8a5f851a6adcd7da8148733b9976a9972a30a0c82090481fef9323451a3f90e70fe83559a304a007760ef5a1",
+          "sha256": "849b7a6337e4f7a1b15fa443004bc81640a265e4192cf9b625dfa59ab5cc3262",
+          "sha1": "624aa1922c1e4f4c6704327cdc05f46ee589d0ee",
+          "md5": "144f68fdd545e4fd71de8857e302b01a"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 25,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.fasterxml.jackson",
+          "module": "jackson-bom",
+          "version": {
+            "requires": "2.22.3"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-bom",
+          "version": {
+            "requires": "2.0.20"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "com.integrallis",
+          "module": "models-api",
+          "version": {
+            "requires": "0.3.58"
+          }
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "commons-codec",
+          "module": "commons-codec",
+          "version": {
+            "requires": "1.22.1"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5-h2",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.client5",
+          "module": "httpclient5",
+          "version": {
+            "requires": "5.6.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "backend-apple-0.3.58.jar",
+          "url": "backend-apple-0.3.58.jar",
+          "size": 46792,
+          "sha512": "be04f2da31fd30644a7d5e50c08d1dbb6615164d8a5f851a6adcd7da8148733b9976a9972a30a0c82090481fef9323451a3f90e70fe83559a304a007760ef5a1",
+          "sha256": "849b7a6337e4f7a1b15fa443004bc81640a265e4192cf9b625dfa59ab5cc3262",
+          "sha1": "624aa1922c1e4f4c6704327cdc05f46ee589d0ee",
+          "md5": "144f68fdd545e4fd71de8857e302b01a"
+        }
+      ]
+    },
+    {
+      "name": "javadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "backend-apple-0.3.58-javadoc.jar",
+          "url": "backend-apple-0.3.58-javadoc.jar",
+          "size": 4174138,
+          "sha512": "4b0c38e7470a600554e4c1514d45a0029579cf4f210de73e54afd59bd1f4bd64b5afc0a41fc32d2f04e7bf8218b00145182445a1b7be25b9d2a4c60427f7fe02",
+          "sha256": "3c7d4121045edf7b09e79362915dde70e2d633cca7535589c742b7d91027114b",
+          "sha1": "d8eb1c907b0faa66286c1e7db91bc551932ff463",
+          "md5": "7fc2b4de8c8c67d98f79d2a2e533c608"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "backend-apple-0.3.58-sources.jar",
+          "url": "backend-apple-0.3.58-sources.jar",
+          "size": 22073,
+          "sha512": "8d676a1e683b6283a07e3683b86a88a35f78e706b94763c1f2a2023241c9b65c4571a46e805975b709790bf9fcf19ad7ee9efb8227e8ddef26534167d4619d87",
+          "sha256": "5a55813520a18ad65575f464ba1fac8ab4bc1a31c2435eb046f0b7d79024c6bb",
+          "sha1": "d35829cccc26001eb5dc48048f45c916f7a96ba5",
+          "md5": "bfaac8b83ae79f28306583a14678f5f2"
+        }
+      ]
+    }
+  ]
+}

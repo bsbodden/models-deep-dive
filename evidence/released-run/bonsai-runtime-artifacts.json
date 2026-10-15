@@ -1,0 +1,85 @@
+{
+  "source": "Maven Central; same local paths used by the recorded JBang process",
+  "artifacts": [
+    {
+      "coordinate": "com.integrallis:backend-java:0.3.58",
+      "files": [
+        {
+          "file": "/Users/briansam-bodden/.m2/repository/com/integrallis/backend-java/0.3.58/backend-java-0.3.58.jar",
+          "sha256": "51c6a69803604c7b115f55de4bb797cd2b4a65aaf07b2869a29b4b0155bfd28a",
+          "previousSha256": "51c6a69803604c7b115f55de4bb797cd2b4a65aaf07b2869a29b4b0155bfd28a"
+        },
+        {
+          "file": "/Users/briansam-bodden/.m2/repository/com/integrallis/backend-java/0.3.58/backend-java-0.3.58.pom",
+          "sha256": "908e7e06aa50ee74d907f388e0c8dbceb88621dac175e2ed7acf24a73164b31d",
+          "previousSha256": "908e7e06aa50ee74d907f388e0c8dbceb88621dac175e2ed7acf24a73164b31d"
+        },
+        {
+          "file": "/Users/briansam-bodden/.m2/repository/com/integrallis/backend-java/0.3.58/backend-java-0.3.58.module",
+          "sha256": "924fd7999d0b278f50ed7de3f008cafbd1783543dbd47a191182c6938b306048",
+          "previousSha256": null
+        }
+      ]
+    },
+    {
+      "coordinate": "com.integrallis:models:0.3.58",
+      "files": [
+        {
+          "file": "/Users/briansam-bodden/.m2/repository/com/integrallis/models/0.3.58/models-0.3.58.jar",
+          "sha256": "eeb190717f24e750216ad4aa093459e9ba788d5d28aa2a235604180d4b57dbca",
+          "previousSha256": "eeb190717f24e750216ad4aa093459e9ba788d5d28aa2a235604180d4b57dbca"
+        },
+        {
+          "file": "/Users/briansam-bodden/.m2/repository/com/integrallis/models/0.3.58/models-0.3.58.pom",
+          "sha256": "9644c2f805aa45f24f3e33785313f3d1d6502d5fd1cba6c8aebc5cf9537b3d92",
+          "previousSha256": "9644c2f805aa45f24f3e33785313f3d1d6502d5fd1cba6c8aebc5cf9537b3d92"
+        },
+        {
+          "file": "/Users/briansam-bodden/.m2/repository/com/integrallis/models/0.3.58/models-0.3.58.module",
+          "sha256": "c4ebfed300174429585ca2e1a341861be7d006d40a67f37ff3170247d3349610",
+          "previousSha256": null
+        }
+      ]
+    },
+    {
+      "coordinate": "com.integrallis:models-api:0.3.58",
+      "files": [
+        {
+          "file": "/Users/briansam-bodden/.m2/repository/com/integrallis/models-api/0.3.58/models-api-0.3.58.jar",
+          "sha256": "f2dbd2bc50f5592cceb05dc71a7030ffa4e14bfa41e6b3cbf79baf6eb504d37e",
+          "previousSha256": "f2dbd2bc50f5592cceb05dc71a7030ffa4e14bfa41e6b3cbf79baf6eb504d37e"
+        },
+        {
+          "file": "/Users/briansam-bodden/.m2/repository/com/integrallis/models-api/0.3.58/models-api-0.3.58.pom",
+          "sha256": "eea640cc8c8997475f022b793eacb75aa1a375ccb188f06a77c3c07740a87866",
+          "previousSha256": "eea640cc8c8997475f022b793eacb75aa1a375ccb188f06a77c3c07740a87866"
+        },
+        {
+          "file": "/Users/briansam-bodden/.m2/repository/com/integrallis/models-api/0.3.58/models-api-0.3.58.module",
+          "sha256": "efbe8928c10962ae9a0c3aefcfd04723ea8d409687dcf8f644f523c50dd2498f",
+          "previousSha256": null
+        }
+      ]
+    },
+    {
+      "coordinate": "com.integrallis:models-runtime:0.3.58",
+      "files": [
+        {
+          "file": "/Users/briansam-bodden/.m2/repository/com/integrallis/models-runtime/0.3.58/models-runtime-0.3.58.jar",
+          "sha256": "d3b9cc7c5239c754b3fb389ca67e24f46b666b5473926bed1de6ade22f422883",
+          "previousSha256": "d3b9cc7c5239c754b3fb389ca67e24f46b666b5473926bed1de6ade22f422883"
+        },
+        {
+          "file": "/Users/briansam-bodden/.m2/repository/com/integrallis/models-runtime/0.3.58/models-runtime-0.3.58.pom",
+          "sha256": "18b770566b11989664321dd9ffc6818aeffbbf712855c01b051509a28d514309",
+          "previousSha256": "18b770566b11989664321dd9ffc6818aeffbbf712855c01b051509a28d514309"
+        },
+        {
+          "file": "/Users/briansam-bodden/.m2/repository/com/integrallis/models-runtime/0.3.58/models-runtime-0.3.58.module",
+          "sha256": "c938068304181cabbb4d5f0fb1dcc0bdec29cdd591c9b285a9e40ac211bec949",
+          "previousSha256": null
+        }
+      ]
+    }
+  ]
+}

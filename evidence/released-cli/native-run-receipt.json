@@ -1,0 +1,11 @@
+{
+  "generatedBy": "/usr/local/bin/modeljars 0.1.56",
+  "source": "NativeGraniteDemo.java",
+  "sourceSha256": "e28f29a19e90a4fc6c28af3480dc9dae412abcbbeb5b22d21d18b104235a247d",
+  "command": "jbang evidence/released-cli/NativeGraniteDemo.java",
+  "exitCode": 0,
+  "log": "native-granite-run.log",
+  "answerability": "ANSWERABLE",
+  "physicallySharesPrefix": true,
+  "sharedPrefixTokens": 182
+}

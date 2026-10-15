@@ -1,0 +1,20 @@
+npm warn deprecated puppeteer@23.11.1: < 24.15.0 is no longer supported
+
+added 139 packages, and audited 302 packages in 16s
+
+29 packages are looking for funding
+  run `npm fund` for details
+
+17 vulnerabilities (1 low, 6 moderate, 10 high)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues, run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+npm warn allow-scripts 1 package has install scripts not yet covered by allowScripts:
+npm warn allow-scripts   puppeteer@23.11.1 (postinstall: node install.mjs)
+npm warn allow-scripts
+npm warn allow-scripts Run `npm approve-scripts --allow-scripts-pending` to review, or `npm approve-scripts <pkg>` to allow.

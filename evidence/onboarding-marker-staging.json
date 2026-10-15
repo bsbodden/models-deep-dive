@@ -1,0 +1,308 @@
+{
+  "conclusion": "success",
+  "databaseId": 38161679662,
+  "headSha": "3fe35f3eb1970e3aeb971864bc3fa719c857fee9",
+  "jobs": [
+    {
+      "completedAt": "2026-10-11T17:55:57Z",
+      "conclusion": "success",
+      "databaseId": 114535732202,
+      "name": "Plan immutable model publications",
+      "startedAt": "2026-10-11T17:55:49Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-11T17:55:51Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-11T17:55:50Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:55:52Z",
+          "conclusion": "success",
+          "name": "Checkout",
+          "number": 2,
+          "startedAt": "2026-10-11T17:55:51Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:55:53Z",
+          "conclusion": "success",
+          "name": "Set up Node",
+          "number": 3,
+          "startedAt": "2026-10-11T17:55:52Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:55:54Z",
+          "conclusion": "success",
+          "name": "Install catalog tooling",
+          "number": 4,
+          "startedAt": "2026-10-11T17:55:53Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:55:54Z",
+          "conclusion": "success",
+          "name": "Verify qualified composition evidence",
+          "number": 5,
+          "startedAt": "2026-10-11T17:55:54Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:55:55Z",
+          "conclusion": "success",
+          "name": "Verify qualified component evidence",
+          "number": 6,
+          "startedAt": "2026-10-11T17:55:54Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:55:55Z",
+          "conclusion": "success",
+          "name": "Resolve model publication plan",
+          "number": 7,
+          "startedAt": "2026-10-11T17:55:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:55:55Z",
+          "conclusion": "success",
+          "name": "Summarize plan",
+          "number": 8,
+          "startedAt": "2026-10-11T17:55:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:55:55Z",
+          "conclusion": "success",
+          "name": "Post Set up Node",
+          "number": 15,
+          "startedAt": "2026-10-11T17:55:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:55:55Z",
+          "conclusion": "success",
+          "name": "Post Checkout",
+          "number": 16,
+          "startedAt": "2026-10-11T17:55:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:55:55Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 17,
+          "startedAt": "2026-10-11T17:55:55Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/ModelJars/modeljars/actions/runs/38161679662/job/114535732202"
+    },
+    {
+      "completedAt": "2026-10-11T17:57:29Z",
+      "conclusion": "success",
+      "databaseId": 114535766025,
+      "name": "Verify selected model artifacts",
+      "startedAt": "2026-10-11T17:56:00Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-11T17:56:02Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-11T17:56:00Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:56:04Z",
+          "conclusion": "success",
+          "name": "Checkout",
+          "number": 2,
+          "startedAt": "2026-10-11T17:56:02Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:56:11Z",
+          "conclusion": "success",
+          "name": "Set up Java",
+          "number": 3,
+          "startedAt": "2026-10-11T17:56:04Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:56:14Z",
+          "conclusion": "success",
+          "name": "Set up Node",
+          "number": 4,
+          "startedAt": "2026-10-11T17:56:11Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:56:15Z",
+          "conclusion": "success",
+          "name": "Install catalog tooling",
+          "number": 5,
+          "startedAt": "2026-10-11T17:56:14Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:57:25Z",
+          "conclusion": "success",
+          "name": "Test publication policy and generated artifacts",
+          "number": 6,
+          "startedAt": "2026-10-11T17:56:15Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:57:25Z",
+          "conclusion": "success",
+          "name": "Post Set up Node",
+          "number": 10,
+          "startedAt": "2026-10-11T17:57:25Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:57:26Z",
+          "conclusion": "success",
+          "name": "Post Set up Java",
+          "number": 11,
+          "startedAt": "2026-10-11T17:57:25Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:57:26Z",
+          "conclusion": "success",
+          "name": "Post Checkout",
+          "number": 12,
+          "startedAt": "2026-10-11T17:57:26Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:57:26Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 13,
+          "startedAt": "2026-10-11T17:57:26Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/ModelJars/modeljars/actions/runs/38161679662/job/114535766025"
+    },
+    {
+      "completedAt": "2026-10-11T17:59:11Z",
+      "conclusion": "success",
+      "databaseId": 114536064339,
+      "name": "Stage ggml_org_embeddinggemma_2_gguf_q8_0 for Maven Central",
+      "startedAt": "2026-10-11T17:58:26Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-11T17:58:29Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-11T17:58:26Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:58:31Z",
+          "conclusion": "success",
+          "name": "Checkout",
+          "number": 2,
+          "startedAt": "2026-10-11T17:58:29Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:58:37Z",
+          "conclusion": "success",
+          "name": "Set up Java",
+          "number": 3,
+          "startedAt": "2026-10-11T17:58:31Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:58:38Z",
+          "conclusion": "success",
+          "name": "Verify release credentials",
+          "number": 4,
+          "startedAt": "2026-10-11T17:58:37Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:58:59Z",
+          "conclusion": "success",
+          "name": "Build signed model release bundle",
+          "number": 5,
+          "startedAt": "2026-10-11T17:58:38Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:59:07Z",
+          "conclusion": "success",
+          "name": "Attest Central bundle",
+          "number": 6,
+          "startedAt": "2026-10-11T17:58:59Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:59:08Z",
+          "conclusion": "success",
+          "name": "Retain verified Central bundle",
+          "number": 7,
+          "startedAt": "2026-10-11T17:59:07Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:59:09Z",
+          "conclusion": "success",
+          "name": "Upload USER_MANAGED deployment",
+          "number": 8,
+          "startedAt": "2026-10-11T17:59:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:59:09Z",
+          "conclusion": "success",
+          "name": "Post Set up Java",
+          "number": 15,
+          "startedAt": "2026-10-11T17:59:09Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:59:09Z",
+          "conclusion": "success",
+          "name": "Post Checkout",
+          "number": 16,
+          "startedAt": "2026-10-11T17:59:09Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:59:09Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 17,
+          "startedAt": "2026-10-11T17:59:09Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/ModelJars/modeljars/actions/runs/38161679662/job/114536064339"
+    },
+    {
+      "completedAt": "2026-10-11T17:57:29Z",
+      "conclusion": "skipped",
+      "databaseId": 114536065754,
+      "name": "Publish ${{ matrix.id }} to GitHub Packages",
+      "startedAt": "2026-10-11T17:57:29Z",
+      "status": "completed",
+      "steps": [],
+      "url": "https://github.com/ModelJars/modeljars/actions/runs/38161679662/job/114536065754"
+    }
+  ],
+  "status": "completed",
+  "url": "https://github.com/ModelJars/modeljars/actions/runs/38161679662"
+}

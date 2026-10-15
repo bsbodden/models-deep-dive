@@ -1,0 +1,31 @@
+{
+  "groupId": "release.consumer",
+  "artifactId": "modeljars-catalog-consumer",
+  "version": "1",
+  "type": "jar",
+  "scope": "",
+  "classifier": "",
+  "optional": "false",
+  "children": [
+    {
+      "groupId": "org.modeljars",
+      "artifactId": "modeljars-catalog",
+      "version": "0.1.57",
+      "type": "jar",
+      "scope": "compile",
+      "classifier": "",
+      "optional": "false",
+      "children": [
+        {
+          "groupId": "org.modeljars",
+          "artifactId": "modeljars-core",
+          "version": "0.1.57",
+          "type": "jar",
+          "scope": "compile",
+          "classifier": "",
+          "optional": "false"
+        }
+        ]
+    }
+    ]
+}

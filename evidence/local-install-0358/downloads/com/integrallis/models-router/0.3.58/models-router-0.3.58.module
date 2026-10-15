@@ -1,0 +1,236 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.integrallis",
+    "module": "models-router",
+    "version": "0.3.58",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.4.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 25,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "com.fasterxml.jackson",
+          "module": "jackson-bom",
+          "version": {
+            "requires": "2.22.3"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-bom",
+          "version": {
+            "requires": "2.0.20"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "com.integrallis",
+          "module": "vectors-db",
+          "version": {
+            "requires": "0.1.29"
+          }
+        },
+        {
+          "group": "com.integrallis",
+          "module": "models-runtime",
+          "version": {
+            "requires": "0.3.58"
+          }
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "commons-codec",
+          "module": "commons-codec",
+          "version": {
+            "requires": "1.22.1"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5-h2",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.client5",
+          "module": "httpclient5",
+          "version": {
+            "requires": "5.6.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "models-router-0.3.58.jar",
+          "url": "models-router-0.3.58.jar",
+          "size": 795554,
+          "sha512": "42ae2d7f025a4219a78d1e20a70575e1543780de6604f891d73ddbbfaa3003e16f6fd6d1dd055d996fea7b5a80178c5b44dfccb137564dcf8f06b97beffc0b23",
+          "sha256": "61985cb27ba2c895f6e7ac4489d8663e67aa36c9af03925005a5ab559bee04eb",
+          "sha1": "2c82edc5bdb31f03c2f67368dd780ba07f135e1f",
+          "md5": "5720e496c40f94426296474722544b49"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 25,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.fasterxml.jackson",
+          "module": "jackson-bom",
+          "version": {
+            "requires": "2.22.3"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-bom",
+          "version": {
+            "requires": "2.0.20"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "com.integrallis",
+          "module": "vectors-db",
+          "version": {
+            "requires": "0.1.29"
+          }
+        },
+        {
+          "group": "com.integrallis",
+          "module": "models-runtime",
+          "version": {
+            "requires": "0.3.58"
+          }
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "commons-codec",
+          "module": "commons-codec",
+          "version": {
+            "requires": "1.22.1"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5-h2",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.client5",
+          "module": "httpclient5",
+          "version": {
+            "requires": "5.6.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "models-router-0.3.58.jar",
+          "url": "models-router-0.3.58.jar",
+          "size": 795554,
+          "sha512": "42ae2d7f025a4219a78d1e20a70575e1543780de6604f891d73ddbbfaa3003e16f6fd6d1dd055d996fea7b5a80178c5b44dfccb137564dcf8f06b97beffc0b23",
+          "sha256": "61985cb27ba2c895f6e7ac4489d8663e67aa36c9af03925005a5ab559bee04eb",
+          "sha1": "2c82edc5bdb31f03c2f67368dd780ba07f135e1f",
+          "md5": "5720e496c40f94426296474722544b49"
+        }
+      ]
+    },
+    {
+      "name": "javadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "models-router-0.3.58-javadoc.jar",
+          "url": "models-router-0.3.58-javadoc.jar",
+          "size": 4358132,
+          "sha512": "4cd15632155af203488ead1d3c61992c15e3f0e2700a1d19d7d06712a98aee4c3b55c730fd75097581e701d83bc52234d36554a7a46c118857a3c9342ed58162",
+          "sha256": "b94f5c44d66abc03e49594e1cbed9f2deb5bc04e4e13aedb1d7012bea7a06f77",
+          "sha1": "95ff20fe34b3173cdee27a02617b727e28651b7c",
+          "md5": "40d16da3ef11f13743e3f607699ed36e"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "models-router-0.3.58-sources.jar",
+          "url": "models-router-0.3.58-sources.jar",
+          "size": 745621,
+          "sha512": "6f767857f13371660df4f4b160614d51c4e74bf90eb8e477e828062aa7f6d70cbe6526fa7aefe9607a9c37a6823bfac17ca76f2b18e21fbc19758cc0860eff40",
+          "sha256": "4a4028cd05714eb1706f026bd69d4cccede3c3d37ac6b6ad622d0c5d2009c14b",
+          "sha1": "85c34dfd8e0495d4ca6bd572dbd1555f9c992200",
+          "md5": "4dc783faa23263fd8b5a331d6071e252"
+        }
+      ]
+    }
+  ]
+}

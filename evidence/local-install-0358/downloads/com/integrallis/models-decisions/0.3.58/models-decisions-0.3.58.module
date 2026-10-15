@@ -1,0 +1,222 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.integrallis",
+    "module": "models-decisions",
+    "version": "0.3.58",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.4.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 25,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "com.fasterxml.jackson",
+          "module": "jackson-bom",
+          "version": {
+            "requires": "2.22.3"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-bom",
+          "version": {
+            "requires": "2.0.20"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "com.integrallis",
+          "module": "models-api",
+          "version": {
+            "requires": "0.3.58"
+          }
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "commons-codec",
+          "module": "commons-codec",
+          "version": {
+            "requires": "1.22.1"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5-h2",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.client5",
+          "module": "httpclient5",
+          "version": {
+            "requires": "5.6.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "models-decisions-0.3.58.jar",
+          "url": "models-decisions-0.3.58.jar",
+          "size": 65854,
+          "sha512": "e117bed7cfb5f4a5398e2e5ce0134af528985f117375c1f939110aaa2dd4adfe0c83aa6a30dc0d379573671163408c9c7e7bd65187e1c041f3f37d992ab2a74a",
+          "sha256": "779e225f61c345de26c046f587a0f5762b44727fe1f357a189b274910ace158b",
+          "sha1": "a3d64f20548a98938b8df9899e09487c4081f724",
+          "md5": "a15598ae36babc87ef29e1d37609ded8"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 25,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.fasterxml.jackson",
+          "module": "jackson-bom",
+          "version": {
+            "requires": "2.22.3"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-bom",
+          "version": {
+            "requires": "2.0.20"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "com.integrallis",
+          "module": "models-api",
+          "version": {
+            "requires": "0.3.58"
+          }
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "commons-codec",
+          "module": "commons-codec",
+          "version": {
+            "requires": "1.22.1"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5-h2",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.client5",
+          "module": "httpclient5",
+          "version": {
+            "requires": "5.6.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "models-decisions-0.3.58.jar",
+          "url": "models-decisions-0.3.58.jar",
+          "size": 65854,
+          "sha512": "e117bed7cfb5f4a5398e2e5ce0134af528985f117375c1f939110aaa2dd4adfe0c83aa6a30dc0d379573671163408c9c7e7bd65187e1c041f3f37d992ab2a74a",
+          "sha256": "779e225f61c345de26c046f587a0f5762b44727fe1f357a189b274910ace158b",
+          "sha1": "a3d64f20548a98938b8df9899e09487c4081f724",
+          "md5": "a15598ae36babc87ef29e1d37609ded8"
+        }
+      ]
+    },
+    {
+      "name": "javadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "models-decisions-0.3.58-javadoc.jar",
+          "url": "models-decisions-0.3.58-javadoc.jar",
+          "size": 4284130,
+          "sha512": "e163b623f8fccf82b27f1b0f9fc75f0231df75db4cc1b8361eecfeb6697c4398246a816c98f27b6d6641e8cbe8dc46ced9816d948a66b1eacdbe7034d702e69a",
+          "sha256": "73f513d6fb3d132f96fecccac814a04d193283c0d97854ad5f3402e5105b59d2",
+          "sha1": "38652de27b9a14da7a4854c8f337aee4aa2813b8",
+          "md5": "048e275a974f392d28445c5d7834f205"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "models-decisions-0.3.58-sources.jar",
+          "url": "models-decisions-0.3.58-sources.jar",
+          "size": 58474,
+          "sha512": "36211218feef55ba78879fdaf330e2bca4823fd76abaaf7d474d81a149180fefdcbc0ba9a9ad0242e51456464200e6abf1ef4f0228efc3aa0d87586effe1e7f3",
+          "sha256": "1307ab8e3298f9c2e49c34009ebec49d7387befc15b9373e73d86c5d4c67a068",
+          "sha1": "b0ac5f4fea7f9485bf287f9262e65b80503e620f",
+          "md5": "5c9fd18eb2406c2bf90d3b3993899d27"
+        }
+      ]
+    }
+  ]
+}

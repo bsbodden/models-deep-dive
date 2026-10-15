@@ -1,0 +1,39 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ---------< local.release.verification:installed-release-train >---------
+[INFO] Building installed-release-train 1
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- dependency:3.7.0:tree (default-cli) @ installed-release-train ---
+[INFO] local.release.verification:installed-release-train:jar:1
+[INFO] +- org.modeljars.composite:granite-answerability:jar:0.1.56:compile
+[INFO] |  +- org.modeljars.huggingface:ibm-granite.granite-4.1-3b-gguf.q4_k_m:jar:4.1.0-q4_k_m.2:runtime
+[INFO] |  \- org.modeljars.github:modeljars.activated-adapters.granite-4.1-3b-answerability-alora-integrallis.f32:jar:1.0.0-f32.2:runtime
+[INFO] +- org.modeljars.composite:harriet:jar:0.1.56:compile
+[INFO] |  \- org.modeljars.huggingface:unsloth.qwen3.5-4b-gguf.q4_k_m:jar:3.5.0-q4_k_m.2:runtime
+[INFO] +- org.modeljars:modeljars:jar:0.1.56:compile
+[INFO] |  +- com.integrallis:models:jar:0.3.57:compile
+[INFO] |  |  \- com.integrallis:models-runtime:jar:0.3.57:compile
+[INFO] |  +- com.integrallis:backend-java:jar:0.3.57:compile
+[INFO] |  |  +- com.integrallis:models-api:jar:0.3.57:compile
+[INFO] |  |  +- com.integrallis:vectors-core:jar:0.1.29:runtime
+[INFO] |  |  |  \- org.slf4j:slf4j-api:jar:2.0.20:runtime
+[INFO] |  |  \- com.fasterxml.jackson.core:jackson-core:jar:2.22.3:runtime
+[INFO] |  +- com.integrallis:backend-native:jar:0.3.57:compile
+[INFO] |  +- com.integrallis:models-audio:jar:0.3.57:compile
+[INFO] |  \- com.integrallis:models-decisions:jar:0.3.57:compile
+[INFO] +- org.modeljars:modeljars-catalog:jar:0.1.56:compile
+[INFO] +- org.modeljars:modeljars-cli:jar:0.1.56:compile
+[INFO] |  +- info.picocli:picocli:jar:4.7.7:runtime
+[INFO] |  +- info.picocli:picocli-shell-jline3:jar:4.7.7:runtime
+[INFO] |  |  \- org.jline:jline:jar:3.29.0:runtime
+[INFO] |  \- com.fasterxml.jackson.core:jackson-databind:jar:2.22.3:runtime
+[INFO] |     \- com.fasterxml.jackson.core:jackson-annotations:jar:2.22:runtime
+[INFO] \- org.modeljars:modeljars-core:jar:0.1.56:compile
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  1.257 s
+[INFO] Finished at: 2026-10-10T19:08:32-07:00
+[INFO] ------------------------------------------------------------------------

@@ -1,0 +1,8 @@
+{"version":2,"width":120,"height":36,"timestamp":1791739029,"command":"python3 /Users/briansam-bodden/Code/java-ai/articles/models-deep-dive/tools/record_command.py bonsai.java","title":"jbang bonsai.java — weights cached","env":{"SHELL":"/bin/zsh"}}
+[0.201672, "o", "$ jbang bonsai.java\r\n"]
+[2.939363, "o", "[jbang] Building jar for bonsai.java...\r\n"]
+[6.911951, "o", "WARNING: Using incubator modules: jdk.incubator.vector\r\n"]
+[82.375978, "o", "Bonsai 2: verified 5.95 GB PTQ1_0 text artifact\r\n"]
+[82.375994, "o", "Runtime compatibility demonstration; production qualification is pending.\r\n"]
+[166.985469, "o", "Completion: The quick brown fox jumps over the lazy dog.\r\n\r\nThe\r\n"]
+[167.621399, "x", "0"]

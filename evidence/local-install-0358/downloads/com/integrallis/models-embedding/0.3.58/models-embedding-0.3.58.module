@@ -1,0 +1,236 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.integrallis",
+    "module": "models-embedding",
+    "version": "0.3.58",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.4.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 25,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "com.fasterxml.jackson",
+          "module": "jackson-bom",
+          "version": {
+            "requires": "2.22.3"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-bom",
+          "version": {
+            "requires": "2.0.20"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "com.integrallis",
+          "module": "models-api",
+          "version": {
+            "requires": "0.3.58"
+          }
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "commons-codec",
+          "module": "commons-codec",
+          "version": {
+            "requires": "1.22.1"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5-h2",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.client5",
+          "module": "httpclient5",
+          "version": {
+            "requires": "5.6.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "models-embedding-0.3.58.jar",
+          "url": "models-embedding-0.3.58.jar",
+          "size": 4804,
+          "sha512": "671c3879d8e7f7521d272d20c95d867742ed5db5c2783de4634dfe33b75909eebc0709e80c34519902222ae900a669cc7557bea757440453d84fecbc5e39b1a1",
+          "sha256": "1b45c8068098c92fa2578e93b2810af4512e6954c35e335590534a8ad32126f0",
+          "sha1": "4086aa4251537e00b789cb64f4a5abe0c28189fa",
+          "md5": "b55daace374075889c2bd6d34d51bd38"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 25,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.integrallis",
+          "module": "vectors-db",
+          "version": {
+            "requires": "0.1.29"
+          }
+        },
+        {
+          "group": "com.integrallis",
+          "module": "vectors-cache-semantic-db",
+          "version": {
+            "requires": "0.1.29"
+          }
+        },
+        {
+          "group": "com.fasterxml.jackson",
+          "module": "jackson-bom",
+          "version": {
+            "requires": "2.22.3"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-bom",
+          "version": {
+            "requires": "2.0.20"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "com.integrallis",
+          "module": "models-api",
+          "version": {
+            "requires": "0.3.58"
+          }
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "commons-codec",
+          "module": "commons-codec",
+          "version": {
+            "requires": "1.22.1"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5-h2",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.client5",
+          "module": "httpclient5",
+          "version": {
+            "requires": "5.6.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "models-embedding-0.3.58.jar",
+          "url": "models-embedding-0.3.58.jar",
+          "size": 4804,
+          "sha512": "671c3879d8e7f7521d272d20c95d867742ed5db5c2783de4634dfe33b75909eebc0709e80c34519902222ae900a669cc7557bea757440453d84fecbc5e39b1a1",
+          "sha256": "1b45c8068098c92fa2578e93b2810af4512e6954c35e335590534a8ad32126f0",
+          "sha1": "4086aa4251537e00b789cb64f4a5abe0c28189fa",
+          "md5": "b55daace374075889c2bd6d34d51bd38"
+        }
+      ]
+    },
+    {
+      "name": "javadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "models-embedding-0.3.58-javadoc.jar",
+          "url": "models-embedding-0.3.58-javadoc.jar",
+          "size": 4149321,
+          "sha512": "502b4764f1d24140b6fc9d55c6f2152c4cf525d81c885a9ffa1c64c441a3bb1c2e9cb7b7490887fd77f70c2856a5878105c450b394b7812ecc685c4c3ae600b7",
+          "sha256": "558eeb7ed2717beee6b05030738b795c283b75945bf0f6f0f048060d13957dbe",
+          "sha1": "62ae33f295437e2b27e3aab6efb35404e03e6fe3",
+          "md5": "5aa15de66fb2a1f4f4da2d62531b5e0c"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "models-embedding-0.3.58-sources.jar",
+          "url": "models-embedding-0.3.58-sources.jar",
+          "size": 4890,
+          "sha512": "cbeeb9d7c948be421b25530ac75c7b74f908a695de4d6fcf9cbf7a1a5503f3355792ba43951c6edf55aaa462b8ea78d86cb2e075e83f24d272e1a58dbc6bcc13",
+          "sha256": "3c900f19a965fb07d68bbb1e514cf3f2177397c0dfec5e9dd9a717e35193c656",
+          "sha1": "6f22064765166ec4713b90c0b14b3e27d36780b7",
+          "md5": "eedaf54fea6f4e9a884b3a8911df73d8"
+        }
+      ]
+    }
+  ]
+}

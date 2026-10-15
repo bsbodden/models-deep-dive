@@ -1,0 +1,7 @@
+$ jbang decisions.java
+WARNING: Using incubator modules: jdk.incubator.vector
+Evidence: I was charged twice for my September subscription and no refund arrived.
+
+  billing?   false        p=0.513  confidence=0.00
+  queue      billing      p=0.716  confidence=0.28
+  urgency    can wait     p=0.537  confidence=0.08

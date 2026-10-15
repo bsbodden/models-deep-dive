@@ -1,0 +1,50 @@
+[
+  {
+    "coordinate": "org.modeljars:modeljars-core:0.1.57",
+    "files": {
+      "jar": "488e38ebb3eab210542942c66e05a5ab99b4e43c901ac6acfa80dbbe15828b16",
+      "pom": "06703cd1a18ed64197205728b82737ba4e53959c76f64cf38e424de43198d0bc",
+      "module": "92d91ab812b0c626ae642ec143b5ba51421dc1230a12703b2b1460bc521d1239"
+    }
+  },
+  {
+    "coordinate": "org.modeljars:modeljars-catalog:0.1.57",
+    "files": {
+      "jar": "e8cb453b56c31b1734da921dbd276a6b0333693c1c4a66cbbabbde207f1abef9",
+      "pom": "f2a33aeab5f73bdf4ae96b51d4f54bc7a8bd2dd668ab3dc89a73209b3a6a946d",
+      "module": "0f97cbaacbd442ccf3296c77f27f46ff1b73106adbe992307e21c884060598e8"
+    }
+  },
+  {
+    "coordinate": "org.modeljars:modeljars-cli:0.1.57",
+    "files": {
+      "jar": "9ed83fe672bf2c737725ffaffe0ffd652245769557070c88312aef8e485a03cc",
+      "pom": "8f5cbb22d1ffd44c165ae9a8762b6eea64d3abbc59e230dd47cc989dde82d7be",
+      "module": "34a57dda1cbb676de1316ff0d2fa475b33dc87faa40770c68f032cb3b0595f01"
+    }
+  },
+  {
+    "coordinate": "org.modeljars:modeljars:0.1.57",
+    "files": {
+      "jar": "658cdaa24857dfd0e11b20e145626cb3abe5c8f18d9f3a8bd0c8c5cd5b4c6b87",
+      "pom": "6c8946a56793985e54564fa8396bd77e76bef1160f02d2bbba5b2aceea9ed5ac",
+      "module": "76dfc0c34d7754f6d7f4fd55b014a461f8b8eb5e24c563eac32ebf566db5176d"
+    }
+  },
+  {
+    "coordinate": "org.modeljars.composite:granite-answerability:0.1.57",
+    "files": {
+      "jar": "143f91bf979b53a23d198a5540c516f883b9ca615b97cabe93e84754e23bbd6e",
+      "pom": "9393fa21ea9d2d6b75ed8676246dcb6ff63086c163a3c898feda50b6c3356e30",
+      "module": "9d4eac916261f21116669dcedd5df9b04e383a359e2ab7275458156bb6758fc2"
+    }
+  },
+  {
+    "coordinate": "org.modeljars.composite:harriet:0.1.57",
+    "files": {
+      "jar": "a314c2493838c0303d649ce7b5b29773c4fddee37e497a7a9f42daa3f3e8be94",
+      "pom": "75768063165db995fae1cbed737e96d8c2b887355fc0397ac49dda3b607f1ace",
+      "module": "909b2a355947e86c6b1540377fcfe8ed817ab39aa6c3023f9272cd290becc0ae"
+    }
+  }
+]

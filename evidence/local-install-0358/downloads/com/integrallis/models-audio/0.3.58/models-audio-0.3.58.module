@@ -1,0 +1,243 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.integrallis",
+    "module": "models-audio",
+    "version": "0.3.58",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.4.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 25,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "com.fasterxml.jackson",
+          "module": "jackson-bom",
+          "version": {
+            "requires": "2.22.3"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-bom",
+          "version": {
+            "requires": "2.0.20"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "com.integrallis",
+          "module": "models-api",
+          "version": {
+            "requires": "0.3.58"
+          }
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "commons-codec",
+          "module": "commons-codec",
+          "version": {
+            "requires": "1.22.1"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5-h2",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.client5",
+          "module": "httpclient5",
+          "version": {
+            "requires": "5.6.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "models-audio-0.3.58.jar",
+          "url": "models-audio-0.3.58.jar",
+          "size": 31669,
+          "sha512": "093bdf6d9b2509658bdef31098697dff9a67b2b58ea5e82f5b8daaddf001441fa7918e6dce42bf189b08d78a0d5da9458af5d178a37cc95e8db9bfe37f8bb7b6",
+          "sha256": "a2169e4d82699073d9af277744d7c42d302faca39fa5ab546a537a5adf284504",
+          "sha1": "7808c97729a0da99db64bc3b338846d295a23bdc",
+          "md5": "ec82b98a58afc043ad64dfaa26cc552b"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 25,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.integrallis",
+          "module": "models-runtime",
+          "version": {
+            "requires": "0.3.58"
+          }
+        },
+        {
+          "group": "com.integrallis",
+          "module": "backend-java",
+          "version": {
+            "requires": "0.3.58"
+          }
+        },
+        {
+          "group": "com.integrallis",
+          "module": "backend-native",
+          "version": {
+            "requires": "0.3.58"
+          }
+        },
+        {
+          "group": "com.fasterxml.jackson",
+          "module": "jackson-bom",
+          "version": {
+            "requires": "2.22.3"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-bom",
+          "version": {
+            "requires": "2.0.20"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "com.integrallis",
+          "module": "models-api",
+          "version": {
+            "requires": "0.3.58"
+          }
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "commons-codec",
+          "module": "commons-codec",
+          "version": {
+            "requires": "1.22.1"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5-h2",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.client5",
+          "module": "httpclient5",
+          "version": {
+            "requires": "5.6.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "models-audio-0.3.58.jar",
+          "url": "models-audio-0.3.58.jar",
+          "size": 31669,
+          "sha512": "093bdf6d9b2509658bdef31098697dff9a67b2b58ea5e82f5b8daaddf001441fa7918e6dce42bf189b08d78a0d5da9458af5d178a37cc95e8db9bfe37f8bb7b6",
+          "sha256": "a2169e4d82699073d9af277744d7c42d302faca39fa5ab546a537a5adf284504",
+          "sha1": "7808c97729a0da99db64bc3b338846d295a23bdc",
+          "md5": "ec82b98a58afc043ad64dfaa26cc552b"
+        }
+      ]
+    },
+    {
+      "name": "javadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "models-audio-0.3.58-javadoc.jar",
+          "url": "models-audio-0.3.58-javadoc.jar",
+          "size": 4153002,
+          "sha512": "3f24fdd0c0756ec00fd02482f4632dfe98708e18c9823bd8af725ba92401276c85524c2cefe9dd611d00c7824e1488acb54787d6436eb5c087ba6741d2ae61b5",
+          "sha256": "5118ab7f1bd8783ea05bc9fb005c5fc05c533defe5a36918ce3bc4c394a783d0",
+          "sha1": "0b3a59576778773e7d5eea0381f38f3867983101",
+          "md5": "2ffc234faae2cbfa80938c9b0876471b"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "models-audio-0.3.58-sources.jar",
+          "url": "models-audio-0.3.58-sources.jar",
+          "size": 19197,
+          "sha512": "6dbcd900a78dc19bd110c47e384d33a37ed5505abd7c54a817ae737d5ea9ecd46eff35c66dc91542a73a23d9275a3537f37c4744a2c3e84addc36c5cf51984b8",
+          "sha256": "2d9bdd9a717ea33e5f8e5f20bae57abfb485c4bb1c0e1b9e8c3a58007b7a2f13",
+          "sha1": "fb21133141ff242c81116e15413944ce2dd56b09",
+          "md5": "7144cbb4a16dac3c2d3efb2f9a69ddd3"
+        }
+      ]
+    }
+  ]
+}

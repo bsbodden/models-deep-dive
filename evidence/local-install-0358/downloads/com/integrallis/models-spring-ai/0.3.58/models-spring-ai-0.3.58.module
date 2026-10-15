@@ -1,0 +1,243 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.integrallis",
+    "module": "models-spring-ai",
+    "version": "0.3.58",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.4.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 25,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "com.fasterxml.jackson",
+          "module": "jackson-bom",
+          "version": {
+            "requires": "2.22.3"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-bom",
+          "version": {
+            "requires": "2.0.20"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "com.integrallis",
+          "module": "models-runtime",
+          "version": {
+            "requires": "0.3.58"
+          }
+        },
+        {
+          "group": "com.integrallis",
+          "module": "models-router",
+          "version": {
+            "requires": "0.3.58"
+          }
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "commons-codec",
+          "module": "commons-codec",
+          "version": {
+            "requires": "1.22.1"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5-h2",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.client5",
+          "module": "httpclient5",
+          "version": {
+            "requires": "5.6.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "models-spring-ai-0.3.58.jar",
+          "url": "models-spring-ai-0.3.58.jar",
+          "size": 52317,
+          "sha512": "c6a369ff32ec4d4a122cfc8bb04aaa283cce4b6fa2d7b4d8abcce61272ed271c4efaf24d10d12397e74ab16fe30145546f1e64f9d123ef7bfa6754f36fd8f065",
+          "sha256": "c0446517a6fa70dffbe3be7b4f8b631f9a50092a5ed2e9688cf0b52b8145c76a",
+          "sha1": "9a2e28fd71862d2cb4aa425b958c679ba3fd2b82",
+          "md5": "3d39fd0ca2c5d96c0251c83557040357"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 25,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.fasterxml.jackson.core",
+          "module": "jackson-databind",
+          "version": {
+            "requires": "2.22.3"
+          }
+        },
+        {
+          "group": "com.fasterxml.jackson",
+          "module": "jackson-bom",
+          "version": {
+            "requires": "2.22.3"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-bom",
+          "version": {
+            "requires": "2.0.20"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "com.integrallis",
+          "module": "models-runtime",
+          "version": {
+            "requires": "0.3.58"
+          }
+        },
+        {
+          "group": "com.integrallis",
+          "module": "models-router",
+          "version": {
+            "requires": "0.3.58"
+          }
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "commons-codec",
+          "module": "commons-codec",
+          "version": {
+            "requires": "1.22.1"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5-h2",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.client5",
+          "module": "httpclient5",
+          "version": {
+            "requires": "5.6.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "models-spring-ai-0.3.58.jar",
+          "url": "models-spring-ai-0.3.58.jar",
+          "size": 52317,
+          "sha512": "c6a369ff32ec4d4a122cfc8bb04aaa283cce4b6fa2d7b4d8abcce61272ed271c4efaf24d10d12397e74ab16fe30145546f1e64f9d123ef7bfa6754f36fd8f065",
+          "sha256": "c0446517a6fa70dffbe3be7b4f8b631f9a50092a5ed2e9688cf0b52b8145c76a",
+          "sha1": "9a2e28fd71862d2cb4aa425b958c679ba3fd2b82",
+          "md5": "3d39fd0ca2c5d96c0251c83557040357"
+        }
+      ]
+    },
+    {
+      "name": "javadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "models-spring-ai-0.3.58-javadoc.jar",
+          "url": "models-spring-ai-0.3.58-javadoc.jar",
+          "size": 4165788,
+          "sha512": "4659c9321268306fb1a11708a98ba57965da2ef4a3af3d6de5ba039baba6e86ac4dc47d25416b8a64a1663a11891698c6456aa5626d76e1f099a3d69ba76e12d",
+          "sha256": "9dad65e6c220de1ce0661024f33a553f35b98092cf50ec5871a68972be81dced",
+          "sha1": "9cd8b113eda856fefcd70217c3174d97c0864901",
+          "md5": "12695f4ccbdd0ef1df91ab7d17700020"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "models-spring-ai-0.3.58-sources.jar",
+          "url": "models-spring-ai-0.3.58-sources.jar",
+          "size": 22519,
+          "sha512": "d024bea5159b27d62113f19c8fc69b548fa4fa65f470205eb68154bcece171861fed8295e4fcfd0af7c4e106deebebb7c7d0099179465e2329257ba471cb802f",
+          "sha256": "8683a5cb4503ef4e9bb53ff8f3c1c72c68595afd25db1962969e9845d0e80e0f",
+          "sha1": "0cfb921d670988157b6c853f0d92cd6b4db8dfde",
+          "md5": "f0ae22fb625a4fdb8b75a412b433fea6"
+        }
+      ]
+    }
+  ]
+}

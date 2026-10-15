@@ -1,0 +1,82 @@
+[jbang] Building jar for composite.java...
+WARNING: Using incubator modules: jdk.incubator.vector
+Question: In which German state is Aachen?
+Documents: [Aachen is a spa city in North Rhine-Westphalia, Germany, near the Belgian and Dutch borders., Aachen Cathedral was consecrated in 805 and became the first German UNESCO World Heritage site in 1978.]
+Oct 10, 2026 6:07:31 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Downloading model ibm_granite_granite_4_1_3b_gguf_q4_k_m (1.96 GiB) to /Users/briansam-bodden/.modeljars/cache/sha256/66/662b0626cd58f443baea23559b469df6576a81d349649c59413b36a9fb32eb29/model.gguf
+Oct 10, 2026 6:07:47 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Downloading ibm_granite_granite_4_1_3b_gguf_q4_k_m: 10% (200.2 MiB of 1.96 GiB)
+Oct 10, 2026 6:08:04 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Downloading ibm_granite_granite_4_1_3b_gguf_q4_k_m: 20% (400.5 MiB of 1.96 GiB)
+Oct 10, 2026 6:08:19 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Downloading ibm_granite_granite_4_1_3b_gguf_q4_k_m: 30% (600.7 MiB of 1.96 GiB)
+Oct 10, 2026 6:08:33 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Downloading ibm_granite_granite_4_1_3b_gguf_q4_k_m: 40% (800.9 MiB of 1.96 GiB)
+Oct 10, 2026 6:08:46 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Downloading ibm_granite_granite_4_1_3b_gguf_q4_k_m: 50% (1001.1 MiB of 1.96 GiB)
+Oct 10, 2026 6:08:59 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Downloading ibm_granite_granite_4_1_3b_gguf_q4_k_m: 60% (1.17 GiB of 1.96 GiB)
+Oct 10, 2026 6:09:10 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Downloading ibm_granite_granite_4_1_3b_gguf_q4_k_m: 70% (1.37 GiB of 1.96 GiB)
+Oct 10, 2026 6:09:26 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Downloading ibm_granite_granite_4_1_3b_gguf_q4_k_m: 80% (1.56 GiB of 1.96 GiB)
+Oct 10, 2026 6:09:37 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Downloading ibm_granite_granite_4_1_3b_gguf_q4_k_m: 90% (1.76 GiB of 1.96 GiB)
+Oct 10, 2026 6:09:48 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Downloading ibm_granite_granite_4_1_3b_gguf_q4_k_m: 100% (1.96 GiB of 1.96 GiB)
+Oct 10, 2026 6:09:48 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Download complete; verifying SHA-256 for ibm_granite_granite_4_1_3b_gguf_q4_k_m
+Oct 10, 2026 6:09:56 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Model ready in cache: ibm_granite_granite_4_1_3b_gguf_q4_k_m
+Oct 10, 2026 6:09:56 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Downloading model modeljars_granite_4_1_3b_answerability_alora_integrallis_f32 (118.8 MiB) to /Users/briansam-bodden/.modeljars/cache/sha256/67/67533dff14cd0cfa9ae0d00e83a9955226426ff1f98f1fd28790b2fd8757eea6/adapter_model.safetensors
+Oct 10, 2026 6:09:57 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Downloading modeljars_granite_4_1_3b_answerability_alora_integrallis_f32: 10% (11.9 MiB of 118.8 MiB)
+Oct 10, 2026 6:09:58 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Downloading modeljars_granite_4_1_3b_answerability_alora_integrallis_f32: 20% (23.8 MiB of 118.8 MiB)
+Oct 10, 2026 6:09:59 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Downloading modeljars_granite_4_1_3b_answerability_alora_integrallis_f32: 30% (35.7 MiB of 118.8 MiB)
+Oct 10, 2026 6:09:59 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Downloading modeljars_granite_4_1_3b_answerability_alora_integrallis_f32: 40% (47.5 MiB of 118.8 MiB)
+Oct 10, 2026 6:10:00 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Downloading modeljars_granite_4_1_3b_answerability_alora_integrallis_f32: 50% (59.4 MiB of 118.8 MiB)
+Oct 10, 2026 6:10:00 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Downloading modeljars_granite_4_1_3b_answerability_alora_integrallis_f32: 60% (71.3 MiB of 118.8 MiB)
+Oct 10, 2026 6:10:01 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Downloading modeljars_granite_4_1_3b_answerability_alora_integrallis_f32: 70% (83.2 MiB of 118.8 MiB)
+Oct 10, 2026 6:10:02 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Downloading modeljars_granite_4_1_3b_answerability_alora_integrallis_f32: 80% (95.1 MiB of 118.8 MiB)
+Oct 10, 2026 6:10:02 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Downloading modeljars_granite_4_1_3b_answerability_alora_integrallis_f32: 90% (106.9 MiB of 118.8 MiB)
+Oct 10, 2026 6:10:03 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Downloading modeljars_granite_4_1_3b_answerability_alora_integrallis_f32: 100% (118.8 MiB of 118.8 MiB)
+Oct 10, 2026 6:10:03 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Download complete; verifying SHA-256 for modeljars_granite_4_1_3b_answerability_alora_integrallis_f32
+Oct 10, 2026 6:10:04 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Downloading model modeljars_granite_4_1_3b_answerability_alora_integrallis_f32 (1.9 KiB) to /Users/briansam-bodden/.modeljars/cache/sha256/67/67533dff14cd0cfa9ae0d00e83a9955226426ff1f98f1fd28790b2fd8757eea6/models-activated-lora.json
+Oct 10, 2026 6:10:04 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Downloading modeljars_granite_4_1_3b_answerability_alora_integrallis_f32: 100% (1.9 KiB of 1.9 KiB)
+Oct 10, 2026 6:10:04 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Download complete; verifying SHA-256 for modeljars_granite_4_1_3b_answerability_alora_integrallis_f32
+Oct 10, 2026 6:10:04 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Downloading model modeljars_granite_4_1_3b_answerability_alora_integrallis_f32 (1.1 KiB) to /Users/briansam-bodden/.modeljars/cache/sha256/67/67533dff14cd0cfa9ae0d00e83a9955226426ff1f98f1fd28790b2fd8757eea6/NOTICE
+Oct 10, 2026 6:10:04 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Downloading modeljars_granite_4_1_3b_answerability_alora_integrallis_f32: 100% (1.1 KiB of 1.1 KiB)
+Oct 10, 2026 6:10:04 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Download complete; verifying SHA-256 for modeljars_granite_4_1_3b_answerability_alora_integrallis_f32
+Oct 10, 2026 6:10:04 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Downloading model modeljars_granite_4_1_3b_answerability_alora_integrallis_f32 (10.5 KiB) to /Users/briansam-bodden/.modeljars/cache/sha256/67/67533dff14cd0cfa9ae0d00e83a9955226426ff1f98f1fd28790b2fd8757eea6/LICENSE
+Oct 10, 2026 6:10:05 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Downloading modeljars_granite_4_1_3b_answerability_alora_integrallis_f32: 100% (10.5 KiB of 10.5 KiB)
+Oct 10, 2026 6:10:05 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Download complete; verifying SHA-256 for modeljars_granite_4_1_3b_answerability_alora_integrallis_f32
+Oct 10, 2026 6:10:05 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Model ready in cache: modeljars_granite_4_1_3b_answerability_alora_integrallis_f32
+Oct 10, 2026 6:10:05 PM com.integrallis.vectors.core.PanamaVectorUtilSupportProvider create
+INFO: vectors-core: Using Panama Vector API SIMD provider (vector bits: 256)
+Oct 10, 2026 6:10:05 PM com.integrallis.vectors.core.VectorizationProvider logActiveToggles
+INFO: vectors-core: provider=PanamaVectorUtilSupport panama=true maxBits=256 preferredBits=256 fastVectorFMA=true fastScalarFMA=true sve=false ggufParallel=true ggufParallelThreshold=1048576 ggufExecutor=persistent ggufThreads=12 ggufChunksPerThread=2 mappedKQuantLongOffsets=auto(q4=true,q5=false,q6=false) q4ShortPairwiseSupported=true q4UnsignedPairwiseSupported=true toggles=[(defaults — no -Dvectors.* overrides)]
+Answerability: ANSWERABLE
+Raw output: "answerable"
+Physical prefix sharing: true
+Shared prefix tokens: 182

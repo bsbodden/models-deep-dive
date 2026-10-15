@@ -1,0 +1,12 @@
+{
+  "validatedAt": "2026-10-11T18:21:15.829Z",
+  "parser": "mermaid 11.12.0",
+  "dom": "jsdom 26.1.0",
+  "result": "all 4 diagrams parsed",
+  "files": {
+    "loading.mmd": "666eebd08f624a33891c212b4f0728cc1c534ed6588b80f1317a165906699a65",
+    "native-boundary.mmd": "6c3ba5fd22a172da53c4eed05071aef49c4691a6cebc65b17d66d1df03cfa453",
+    "rag.mmd": "65b36d082840498c8c671f3d83ea62fe9b69716d873b42fb8d67dd1301ba239a",
+    "stack.mmd": "5dc42f568e33cfc1cedf5439c09e5d3be372963d5feee338c920f2f093a17895"
+  }
+}

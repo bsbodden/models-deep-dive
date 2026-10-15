@@ -1,1 +1,54 @@
-# models-deep-dive
+# Models and ModelJars deep dive
+
+A hundred models published as Maven artifacts, the router that chooses between them, and a runnable
+fleet that keeps most of the traffic on local weights.
+
+Start with **[the article](article.md)**. Every figure in it was read from the live catalog at
+modeljars.org or printed by a script in [`code/`](code/) on the host named in
+[the run record](evidence/fleet-routing/RESULTS.md).
+
+The libraries it exercises are public: [integrallis/models](https://github.com/integrallis/models),
+[integrallis/vectors](https://github.com/integrallis/vectors) and
+[ModelJars/modeljars](https://github.com/ModelJars/modeljars).
+
+- [Runnable JBang walkthrough](code/README.md)
+- [Routing fleet run record and the two defects it found](evidence/fleet-routing/RESULTS.md)
+- [Mermaid sources](diagrams/)
+- [Latest model onboarding and release report](evidence/onboarding-release-report.md)
+- [Initial article correction report](evidence/release-report.md)
+- [Sources and validation boundaries](evidence/sources.md)
+- [Released walkthrough results](evidence/walkthrough-results.md)
+- [Defects found and corrected](evidence/article-findings.md)
+- [Playable walkthroughs](recordings/index.html) and [recording workflow](recordings/README.md)
+
+The Java and Mermaid files are the authoritative sources. Inline excerpts omit JDK/dependency declarations and show `<model-version>` placeholders, while the downloadable scripts retain tested pins. The synchronization tool applies that presentation rule consistently.
+
+A script may be embedded with a `<!-- snippet:name -->` marker or linked from the walkthrough table. Every embedded snippet must resolve to a real file, and every script must be either embedded or linked, so none can drift from its source or be silently orphaned. Requiring all fourteen inline is what made the earlier draft unreadable. After changing either:
+
+```bash
+python3 tools/sync_article.py
+python3 tools/sync_article.py --check
+```
+
+To check diagram syntax without adding JavaScript dependencies to the libraries:
+
+```bash
+npm install --prefix /private/tmp/models-article-mermaid --no-package-lock mermaid@11.12.0 jsdom@26.1.0
+node tools/check_mermaid.mjs /private/tmp/models-article-mermaid/node_modules
+```
+
+The article is a local draft. Repository fixes and library publication are tracked separately
+from publishing the prose. Recordings retain original terminal casts as well as edited video exports.
+
+SVG and PNG exports sit beside each `.mmd` source. Their render hashes are recorded in
+[evidence/diagram-renders.json](evidence/diagram-renders.json); the visual theme is
+[diagrams/render-config.json](diagrams/render-config.json). They were rendered with
+`@mermaid-js/mermaid-cli@11.12.0` and local Chrome. Keep the Mermaid source when preparing
+Medium exports so later corrections remain editable.
+
+To regenerate the diagram exports with an installed Chrome executable:
+
+```bash
+PUPPETEER_SKIP_DOWNLOAD=true npm install --prefix /private/tmp/models-article-mermaid --no-package-lock @mermaid-js/mermaid-cli@11.12.0
+python3 tools/render_diagrams.py --mmdc /private/tmp/models-article-mermaid/node_modules/.bin/mmdc --chrome '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+```

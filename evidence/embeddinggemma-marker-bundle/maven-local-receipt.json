@@ -1,0 +1,26 @@
+{
+  "verifiedAt": "2026-10-11T18:18:07.421443+00:00",
+  "source": "Maven Central; bytes match signed CI bundle",
+  "files": [
+    {
+      "file": "/Users/briansam-bodden/.m2/repository/org/modeljars/huggingface/ggml-org.embeddinggemma-2-gguf.q8_0/2.0.0-q8_0.1/ggml-org.embeddinggemma-2-gguf.q8_0-2.0.0-q8_0.1-javadoc.jar",
+      "sha256": "498c97f51bf8d6cefdc6b68c65b057913ad83cc49c0f245efaafe5a804af22ee",
+      "previousSha256": null
+    },
+    {
+      "file": "/Users/briansam-bodden/.m2/repository/org/modeljars/huggingface/ggml-org.embeddinggemma-2-gguf.q8_0/2.0.0-q8_0.1/ggml-org.embeddinggemma-2-gguf.q8_0-2.0.0-q8_0.1-sources.jar",
+      "sha256": "9947921fa1f354e88ebe5baec6afdfec73d674ec6be212bb7f5c5fc8ef428f0b",
+      "previousSha256": null
+    },
+    {
+      "file": "/Users/briansam-bodden/.m2/repository/org/modeljars/huggingface/ggml-org.embeddinggemma-2-gguf.q8_0/2.0.0-q8_0.1/ggml-org.embeddinggemma-2-gguf.q8_0-2.0.0-q8_0.1.jar",
+      "sha256": "411094219973ede7c5905fe1ae6fb28984dc0e3a2a544e01624c768d72bd6d34",
+      "previousSha256": null
+    },
+    {
+      "file": "/Users/briansam-bodden/.m2/repository/org/modeljars/huggingface/ggml-org.embeddinggemma-2-gguf.q8_0/2.0.0-q8_0.1/ggml-org.embeddinggemma-2-gguf.q8_0-2.0.0-q8_0.1.pom",
+      "sha256": "017410292bd1ce79f0f56ea414f6899369fb94e0604cda71f317f121f881b317",
+      "previousSha256": null
+    }
+  ]
+}

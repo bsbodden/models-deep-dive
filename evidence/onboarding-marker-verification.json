@@ -1,0 +1,219 @@
+{
+  "conclusion": "success",
+  "databaseId": 38161431087,
+  "headSha": "3fe35f3eb1970e3aeb971864bc3fa719c857fee9",
+  "jobs": [
+    {
+      "completedAt": "2026-10-11T17:52:25Z",
+      "conclusion": "success",
+      "databaseId": 114534991005,
+      "name": "Plan immutable model publications",
+      "startedAt": "2026-10-11T17:52:13Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-11T17:52:15Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-11T17:52:14Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:52:17Z",
+          "conclusion": "success",
+          "name": "Checkout",
+          "number": 2,
+          "startedAt": "2026-10-11T17:52:15Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:52:19Z",
+          "conclusion": "success",
+          "name": "Set up Node",
+          "number": 3,
+          "startedAt": "2026-10-11T17:52:17Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:52:19Z",
+          "conclusion": "success",
+          "name": "Install catalog tooling",
+          "number": 4,
+          "startedAt": "2026-10-11T17:52:19Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:52:20Z",
+          "conclusion": "success",
+          "name": "Verify qualified composition evidence",
+          "number": 5,
+          "startedAt": "2026-10-11T17:52:19Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:52:20Z",
+          "conclusion": "success",
+          "name": "Verify qualified component evidence",
+          "number": 6,
+          "startedAt": "2026-10-11T17:52:20Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:52:20Z",
+          "conclusion": "success",
+          "name": "Resolve model publication plan",
+          "number": 7,
+          "startedAt": "2026-10-11T17:52:20Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:52:20Z",
+          "conclusion": "success",
+          "name": "Summarize plan",
+          "number": 8,
+          "startedAt": "2026-10-11T17:52:20Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:52:21Z",
+          "conclusion": "success",
+          "name": "Post Set up Node",
+          "number": 15,
+          "startedAt": "2026-10-11T17:52:20Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:52:21Z",
+          "conclusion": "success",
+          "name": "Post Checkout",
+          "number": 16,
+          "startedAt": "2026-10-11T17:52:21Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:52:21Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 17,
+          "startedAt": "2026-10-11T17:52:21Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/ModelJars/modeljars/actions/runs/38161431087/job/114534991005"
+    },
+    {
+      "completedAt": "2026-10-11T17:53:39Z",
+      "conclusion": "success",
+      "databaseId": 114535040349,
+      "name": "Verify selected model artifacts",
+      "startedAt": "2026-10-11T17:52:27Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-11T17:52:29Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-11T17:52:28Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:52:30Z",
+          "conclusion": "success",
+          "name": "Checkout",
+          "number": 2,
+          "startedAt": "2026-10-11T17:52:29Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:52:33Z",
+          "conclusion": "success",
+          "name": "Set up Java",
+          "number": 3,
+          "startedAt": "2026-10-11T17:52:30Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:52:34Z",
+          "conclusion": "success",
+          "name": "Set up Node",
+          "number": 4,
+          "startedAt": "2026-10-11T17:52:33Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:52:35Z",
+          "conclusion": "success",
+          "name": "Install catalog tooling",
+          "number": 5,
+          "startedAt": "2026-10-11T17:52:34Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:53:37Z",
+          "conclusion": "success",
+          "name": "Test publication policy and generated artifacts",
+          "number": 6,
+          "startedAt": "2026-10-11T17:52:35Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:53:37Z",
+          "conclusion": "success",
+          "name": "Post Set up Node",
+          "number": 10,
+          "startedAt": "2026-10-11T17:53:37Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:53:37Z",
+          "conclusion": "success",
+          "name": "Post Set up Java",
+          "number": 11,
+          "startedAt": "2026-10-11T17:53:37Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:53:38Z",
+          "conclusion": "success",
+          "name": "Post Checkout",
+          "number": 12,
+          "startedAt": "2026-10-11T17:53:37Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:53:38Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 13,
+          "startedAt": "2026-10-11T17:53:38Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/ModelJars/modeljars/actions/runs/38161431087/job/114535040349"
+    },
+    {
+      "completedAt": "2026-10-11T17:53:39Z",
+      "conclusion": "skipped",
+      "databaseId": 114535295321,
+      "name": "Publish ${{ matrix.id }} to GitHub Packages",
+      "startedAt": "2026-10-11T17:53:39Z",
+      "status": "completed",
+      "steps": [],
+      "url": "https://github.com/ModelJars/modeljars/actions/runs/38161431087/job/114535295321"
+    },
+    {
+      "completedAt": "2026-10-11T17:53:39Z",
+      "conclusion": "skipped",
+      "databaseId": 114535295346,
+      "name": "Stage ${{ matrix.id }} for Maven Central",
+      "startedAt": "2026-10-11T17:53:39Z",
+      "status": "completed",
+      "steps": [],
+      "url": "https://github.com/ModelJars/modeljars/actions/runs/38161431087/job/114535295346"
+    }
+  ],
+  "status": "completed",
+  "url": "https://github.com/ModelJars/modeljars/actions/runs/38161431087"
+}

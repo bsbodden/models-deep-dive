@@ -1,0 +1,53 @@
+{
+  "shortName": "embeddinggemma-2",
+  "alias": "ggml_org_embeddinggemma_2_gguf_q8_0",
+  "name": "EmbeddingGemma 2 text Q8_0",
+  "coordinate": "org.modeljars.huggingface:ggml-org.embeddinggemma-2-gguf.q8_0:2.0.0-q8_0.1",
+  "source": "hf://ggml-org/embeddinggemma-2-GGUF",
+  "sourceUri": "https://huggingface.co/ggml-org/embeddinggemma-2-GGUF",
+  "downloadUri": "https://huggingface.co/ggml-org/embeddinggemma-2-GGUF/resolve/bfcd298762cc34d0357ece5ebdd31791a3a374d8/embeddinggemma-2-Q8_0.gguf",
+  "revision": "bfcd298762cc34d0357ece5ebdd31791a3a374d8",
+  "format": "gguf",
+  "architecture": "gemma-embedding2",
+  "quantization": "Q8_0",
+  "sizeBytes": 309855456,
+  "sha256": "2188ac1deca4b77dffefd603c2776a9d76d9d74ec01841392982ebb840b09135",
+  "license": "Apache-2.0",
+  "capabilities": [
+    "semantic-search",
+    "text-embedding"
+  ],
+  "features": [
+    "bidirectional-attention",
+    "mean-pooling",
+    "per-layer-input",
+    "pinned-revision",
+    "q8-0",
+    "symmetric-sliding-window",
+    "text-only",
+    "verified-sha256"
+  ],
+  "domains": [
+    "embeddings",
+    "retrieval"
+  ],
+  "publishedAt": "2026-10-11T17:11:50Z",
+  "backends": {
+    "pure-java": true,
+    "llama.cpp": true
+  },
+  "dimensions": {
+    "parameterCount": 271002648,
+    "contextLength": 262144,
+    "embeddingLength": 512,
+    "blockCount": 24,
+    "attentionHeadCount": 4,
+    "keyValueHeadCount": null,
+    "feedForwardLength": 2048,
+    "expertCount": null,
+    "expertUsedCount": null
+  },
+  "kind": "model",
+  "status": "cached",
+  "cachePath": "/Users/briansam-bodden/.modeljars/cache/sha256/21/2188ac1deca4b77dffefd603c2776a9d76d9d74ec01841392982ebb840b09135/model.gguf"
+}

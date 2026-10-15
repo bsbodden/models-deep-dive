@@ -1,0 +1,72 @@
+[
+  {
+    "script": "chat.java",
+    "sha256": "6cf83976925cc0a6d69b5adf088a00ce60796233be6a975684f26f7b577dac55",
+    "startedAt": "2026-10-11T00:53:09.367060+00:00",
+    "exitCode": 0,
+    "log": "run-chat.log"
+  },
+  {
+    "script": "safetensors.java",
+    "sha256": "d765d5785e19d0cff1f736233b25b2be0fabb3bb1076efcbf9120933d399a805",
+    "startedAt": "2026-10-11T00:53:17.046032+00:00",
+    "exitCode": 0,
+    "log": "run-safetensors.log"
+  },
+  {
+    "script": "embed.java",
+    "sha256": "15b5b7c9262bf6395831dc8e0db38ac069694eeb687423bcab10924cd60efe47",
+    "startedAt": "2026-10-11T00:54:45.678383+00:00",
+    "exitCode": 1,
+    "log": "run-embed.log"
+  },
+  {
+    "script": "rerank.java",
+    "sha256": "e38ae34db0dcdf3538cdaf8f98d14bb86a322ea77d94453e91f845548fdc1727",
+    "startedAt": "2026-10-11T00:55:14.373599+00:00",
+    "exitCode": 0,
+    "log": "run-rerank.log"
+  },
+  {
+    "script": "tools.java",
+    "sha256": "9cc2140fe384f9e7cc650620628f03900d5639570b34ef6e77e6c06200f7074b",
+    "startedAt": "2026-10-11T00:55:22.351153+00:00",
+    "exitCode": 0,
+    "log": "run-tools.log"
+  },
+  {
+    "script": "speech.java",
+    "sha256": "d26c51fa9d7ad71253e61d75e713b4a2f1beb327818d36bd2d1bd18f57411506",
+    "startedAt": "2026-10-11T00:55:41.012428+00:00",
+    "exitCode": 0,
+    "log": "run-speech.log"
+  },
+  {
+    "script": "decisions.java",
+    "sha256": "744718f258de26294ff1d9ff647e4db9dc2b6498e346f7ce4b24265e0972dfef",
+    "startedAt": "2026-10-11T00:56:07.417001+00:00",
+    "exitCode": 0,
+    "log": "run-decisions.log"
+  },
+  {
+    "script": "spring.java",
+    "sha256": "ceef365ea17d130d977b55dd854743096fcb9e6c56e7cac17c39f39f4cd91051",
+    "startedAt": "2026-10-11T00:56:28.536594+00:00",
+    "exitCode": 0,
+    "log": "run-spring.log"
+  },
+  {
+    "script": "route.java",
+    "sha256": "729efed556a969cefef0f826c258261c7f2548271f706395dc0d853a9a6e96c3",
+    "startedAt": "2026-10-11T00:56:36.984713+00:00",
+    "exitCode": 0,
+    "log": "run-route.log"
+  },
+  {
+    "script": "rag.java",
+    "sha256": "8554d380d91757b2ae61074c6523047b1d8ece4d217cbb4e7ceace894ec629a2",
+    "startedAt": "2026-10-11T00:56:39.910647+00:00",
+    "exitCode": 0,
+    "log": "run-rag.log"
+  }
+]

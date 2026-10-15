@@ -1,0 +1,11 @@
+flowchart TD
+  N["One operation currently routed<br/>to a Models Rust shim"]
+  N --> J["Implement its Java equivalent"]
+  J --> C{"Correctness and<br/>numeric contract pass?"}
+  C -->|no| KEEP["Keep the current Rust route;<br/>retain the experiment's evidence"]
+  C -->|yes| B["Measure Java against the Rust route<br/>on the same host and workload"]
+  B --> G{"Kernel and whole-model<br/>performance gates pass?"}
+  G -->|no| KEEP
+  G -->|yes| P{"Pass across the supported<br/>hosts, artifacts and workloads?"}
+  P -->|no| KEEP
+  P -->|yes| R["Route this operation to Java;<br/>remove native code only when unused"]

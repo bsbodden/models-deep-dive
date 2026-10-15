@@ -1,0 +1,66 @@
+{
+  "updatedAt": "2026-10-11T18:42:45.521289+00:00",
+  "models": {
+    "version": "0.3.58",
+    "releaseRun": 38156648214,
+    "status": "published; all 16 modules verified and installed locally",
+    "releaseCommit": "fab199754d219f53623e7810ccc05be68f8186df",
+    "evidenceCommit": "96965f151a516b96eb2dc23fc3e0f3767d96e7a3",
+    "bonsaiEvidenceCommit": "3490dff4b848eb6221b47cbf5a81d247709c05aa"
+  },
+  "modeljars": {
+    "version": "0.1.57",
+    "pr": 216,
+    "mergeCommit": "3fe35f3eb1970e3aeb971864bc3fa719c857fee9",
+    "status": "published, all platforms/package managers passed, installed locally, live site verified",
+    "pushMarkersRun": 38161173789,
+    "pushLibraryVerificationRun": 38161173803,
+    "pushValidationRun": 38161173798,
+    "deferredPagesRun": 38161173768,
+    "pushMarkersStatus": "success: one new marker published to GitHub Packages",
+    "markerVerificationRun": 38161431087,
+    "markerVerificationStatus": "success",
+    "markerStagingRun": 38161679662,
+    "pushLibraryVerificationStatus": "success",
+    "libraryStagingRun": 38161725739,
+    "markerStagingStatus": "success; exactly one stage job completed",
+    "libraryStagingStatus": "success; signed deployment uploaded",
+    "markerFinalizationRun": 38161923252,
+    "libraryFinalizationRun": 38162460229,
+    "pushValidationStatus": "success",
+    "markerCentralStatus": "actual POM and all JARs downloaded, match signed bundle, installed in Maven Local",
+    "libraryCentralStatus": "all six JAR/POM/module publications match signed bundle and are installed in Maven Local",
+    "markerFinalizationStatus": "success",
+    "libraryFinalizationStatus": "success",
+    "centralConsumers": "all six Maven and six Gradle consumers pass; graphs match",
+    "release": "https://github.com/ModelJars/modeljars/releases/tag/v0.1.57",
+    "cliReleaseRun": 38164174238,
+    "cliReleaseStatus": "success; five platform builds, Homebrew, Scoop and executable JAR; SDKMAN remains disabled",
+    "pagesRun": 38164748406,
+    "pagesStatus": "success; live catalog and dependency snippets verified",
+    "installedCli": "0.1.57; published checksum matches; Homebrew test and generated real-weight demo pass"
+  },
+  "bonsai": {
+    "status": "completed nine-case source-runtime smoke; released eight-token demo passed",
+    "productionQualified": false,
+    "modelAnswers": 4,
+    "extractiveFallbacks": 4,
+    "abstentions": 1,
+    "allChecksPass": true,
+    "evidencePr": 265,
+    "evidencePrStatus": "merged after all checks passed"
+  },
+  "diagram": {
+    "status": "fixed; one connected figure with plain-text labels",
+    "source": "../diagrams/native-boundary.mmd",
+    "nodes": 17
+  },
+  "article": {
+    "successfulScripts": 13,
+    "versionNeutralProseAndDiagrams": true,
+    "diagramRenders": "four PNG/SVG pairs verified",
+    "videoExports": "all thirteen exported and verified",
+    "status": "complete local draft; 13 successful examples and video pairs, 4 PNG/SVG diagrams, no release numbers in prose/figures",
+    "publishedToMedium": false
+  }
+}

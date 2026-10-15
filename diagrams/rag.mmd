@@ -1,0 +1,11 @@
+flowchart TD
+  D["Documents"] --> E["Models embedding runtime"]
+  E --> V["Vectors collection"]
+  Q["Question"] --> QE["Same embedding model"]
+  QE --> V
+  V --> H["Retrieved text and source IDs"]
+  H --> P["Grounding preflight"]
+  P -->|enough evidence| G["Models generation runtime"]
+  P -->|insufficient evidence| A["Abstain"]
+  G --> C["Grounded answer policy"]
+  C --> O["Answer plus outcome:<br/>model, abstention or extractive fallback"]

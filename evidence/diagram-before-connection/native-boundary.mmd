@@ -1,0 +1,10 @@
+flowchart TD
+  APP["Application task"] --> JAVA["Java owns parsing, tokenization,<br/>model graph, cache lifetime and sampling"]
+  JAVA --> V["Java / Vectors kernels"]
+  JAVA --> FFM["Java FFM"]
+  FFM --> CPU["Models-owned Rust CPU library<br/>ABI 6, capability-checked operations"]
+  FFM --> DRIVER["Optional CUDA driver calls"]
+  DRIVER --> PTX["Models-owned Rust compiled to PTX<br/>supported GPU operations"]
+  APP -.-> APPLE["Separate optional Apple integration"]
+  APPLE --> SWIFT["FFM to Swift bridge"]
+  SWIFT --> AFM["Apple Foundation Models framework"]

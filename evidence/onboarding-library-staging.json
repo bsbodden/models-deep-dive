@@ -1,0 +1,348 @@
+{
+  "conclusion": "success",
+  "databaseId": 38161725739,
+  "headSha": "3fe35f3eb1970e3aeb971864bc3fa719c857fee9",
+  "jobs": [
+    {
+      "completedAt": "2026-10-11T18:03:11Z",
+      "conclusion": "success",
+      "databaseId": 114535870725,
+      "name": "Build release artifacts",
+      "startedAt": "2026-10-11T17:56:31Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-11T17:56:33Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-11T17:56:32Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:56:34Z",
+          "conclusion": "success",
+          "name": "Checkout",
+          "number": 2,
+          "startedAt": "2026-10-11T17:56:33Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:56:38Z",
+          "conclusion": "success",
+          "name": "Set up Java",
+          "number": 3,
+          "startedAt": "2026-10-11T17:56:34Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:56:41Z",
+          "conclusion": "success",
+          "name": "Set up Node",
+          "number": 4,
+          "startedAt": "2026-10-11T17:56:38Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:56:43Z",
+          "conclusion": "success",
+          "name": "Install catalog tooling",
+          "number": 5,
+          "startedAt": "2026-10-11T17:56:41Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:58:20Z",
+          "conclusion": "success",
+          "name": "Test catalog and dependency guards",
+          "number": 6,
+          "startedAt": "2026-10-11T17:56:43Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:58:21Z",
+          "conclusion": "success",
+          "name": "Verify qualified composition evidence",
+          "number": 7,
+          "startedAt": "2026-10-11T17:58:20Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:58:21Z",
+          "conclusion": "success",
+          "name": "Verify qualified component evidence",
+          "number": 8,
+          "startedAt": "2026-10-11T17:58:21Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:59:19Z",
+          "conclusion": "success",
+          "name": "Verify exact GGUF dimensions",
+          "number": 9,
+          "startedAt": "2026-10-11T17:58:21Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T18:01:06Z",
+          "conclusion": "success",
+          "name": "Exercise embedding and composition loaders with real weights",
+          "number": 10,
+          "startedAt": "2026-10-11T17:59:19Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T18:03:08Z",
+          "conclusion": "success",
+          "name": "Build and verify",
+          "number": 11,
+          "startedAt": "2026-10-11T18:01:06Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T18:03:09Z",
+          "conclusion": "success",
+          "name": "Post Set up Node",
+          "number": 20,
+          "startedAt": "2026-10-11T18:03:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T18:03:09Z",
+          "conclusion": "success",
+          "name": "Post Set up Java",
+          "number": 21,
+          "startedAt": "2026-10-11T18:03:09Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T18:03:09Z",
+          "conclusion": "success",
+          "name": "Post Checkout",
+          "number": 22,
+          "startedAt": "2026-10-11T18:03:09Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T18:03:09Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 23,
+          "startedAt": "2026-10-11T18:03:09Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/ModelJars/modeljars/actions/runs/38161725739/job/114535870725"
+    },
+    {
+      "completedAt": "2026-10-11T17:56:38Z",
+      "conclusion": "success",
+      "databaseId": 114535870986,
+      "name": "Resolve release version",
+      "startedAt": "2026-10-11T17:56:32Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-11T17:56:33Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-11T17:56:33Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:56:36Z",
+          "conclusion": "success",
+          "name": "Checkout",
+          "number": 2,
+          "startedAt": "2026-10-11T17:56:33Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:56:36Z",
+          "conclusion": "success",
+          "name": "Resolve version from the latest release tag",
+          "number": 3,
+          "startedAt": "2026-10-11T17:56:36Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:56:36Z",
+          "conclusion": "success",
+          "name": "Post Checkout",
+          "number": 6,
+          "startedAt": "2026-10-11T17:56:36Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:56:36Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 7,
+          "startedAt": "2026-10-11T17:56:36Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/ModelJars/modeljars/actions/runs/38161725739/job/114535870986"
+    },
+    {
+      "completedAt": "2026-10-11T18:06:50Z",
+      "conclusion": "success",
+      "databaseId": 114537239243,
+      "name": "Publish to Maven Central",
+      "startedAt": "2026-10-11T18:04:13Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-11T18:04:16Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-11T18:04:14Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T18:04:17Z",
+          "conclusion": "success",
+          "name": "Checkout",
+          "number": 2,
+          "startedAt": "2026-10-11T18:04:16Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T18:04:21Z",
+          "conclusion": "success",
+          "name": "Set up Java",
+          "number": 3,
+          "startedAt": "2026-10-11T18:04:17Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T18:04:22Z",
+          "conclusion": "success",
+          "name": "Set up Node",
+          "number": 4,
+          "startedAt": "2026-10-11T18:04:21Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T18:04:25Z",
+          "conclusion": "success",
+          "name": "Install catalog tooling",
+          "number": 5,
+          "startedAt": "2026-10-11T18:04:22Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T18:04:26Z",
+          "conclusion": "success",
+          "name": "Verify qualified composition evidence",
+          "number": 6,
+          "startedAt": "2026-10-11T18:04:25Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T18:04:26Z",
+          "conclusion": "success",
+          "name": "Verify qualified component evidence",
+          "number": 7,
+          "startedAt": "2026-10-11T18:04:26Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T18:04:26Z",
+          "conclusion": "success",
+          "name": "Verify release credentials",
+          "number": 8,
+          "startedAt": "2026-10-11T18:04:26Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T18:04:38Z",
+          "conclusion": "success",
+          "name": "Clean release workspace",
+          "number": 9,
+          "startedAt": "2026-10-11T18:04:26Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T18:06:40Z",
+          "conclusion": "success",
+          "name": "Build signed Central bundle",
+          "number": 10,
+          "startedAt": "2026-10-11T18:04:38Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T18:06:45Z",
+          "conclusion": "success",
+          "name": "Attest Central bundle",
+          "number": 11,
+          "startedAt": "2026-10-11T18:06:40Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T18:06:47Z",
+          "conclusion": "success",
+          "name": "Retain verified Central bundle",
+          "number": 12,
+          "startedAt": "2026-10-11T18:06:45Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T18:06:49Z",
+          "conclusion": "success",
+          "name": "Upload USER_MANAGED deployment",
+          "number": 13,
+          "startedAt": "2026-10-11T18:06:47Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T18:06:49Z",
+          "conclusion": "success",
+          "name": "Post Set up Node",
+          "number": 24,
+          "startedAt": "2026-10-11T18:06:49Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T18:06:49Z",
+          "conclusion": "success",
+          "name": "Post Set up Java",
+          "number": 25,
+          "startedAt": "2026-10-11T18:06:49Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T18:06:49Z",
+          "conclusion": "success",
+          "name": "Post Checkout",
+          "number": 26,
+          "startedAt": "2026-10-11T18:06:49Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T18:06:49Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 27,
+          "startedAt": "2026-10-11T18:06:49Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/ModelJars/modeljars/actions/runs/38161725739/job/114537239243"
+    },
+    {
+      "completedAt": "2026-10-11T18:03:11Z",
+      "conclusion": "skipped",
+      "databaseId": 114537240402,
+      "name": "Publish invited preview to GitHub Packages",
+      "startedAt": "2026-10-11T18:03:11Z",
+      "status": "completed",
+      "steps": [],
+      "url": "https://github.com/ModelJars/modeljars/actions/runs/38161725739/job/114537240402"
+    }
+  ],
+  "status": "completed",
+  "url": "https://github.com/ModelJars/modeljars/actions/runs/38161725739"
+}

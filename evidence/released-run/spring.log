@@ -1,0 +1,11 @@
+$ jbang spring.java
+WARNING: Using incubator modules: jdk.incubator.vector
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+Input:  What is the capital of France? Reply with only the city name.
+Output: Paris
+
+Load:      2,678 ms
+Execution: 3,143 ms
+Tokens:    26 prompt + 1 completion

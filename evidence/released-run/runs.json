@@ -1,0 +1,243 @@
+[
+  {
+    "script": "chat.java",
+    "sha256": "aaf1c7590f8d6829b738b2fdd0281f11fb74a448b03cd59b806df589cc64484c",
+    "command": [
+      "jbang",
+      "chat.java"
+    ],
+    "startedAt": "2026-10-11T02:10:00.058540+00:00",
+    "finishedAt": "2026-10-11T02:10:05.976374+00:00",
+    "exitCode": 0,
+    "log": "chat.log",
+    "dependencies": [
+      "org.modeljars:modeljars:0.1.56",
+      "org.modeljars.huggingface:ggml-org.qwen3-0.6b-gguf.q4_0:3.0.0-q4_0.1"
+    ],
+    "cast": "01-chat.cast",
+    "castSha256": "a5d16878c0d9bacd17053568ca38416a437ed8da9ec30de4e713411abf359b8b"
+  },
+  {
+    "script": "safetensors.java",
+    "sha256": "636ad27d1f897c04ae08ac8f13614b7d4cf074abec89bca487d4b6a7095a23f8",
+    "command": [
+      "jbang",
+      "safetensors.java"
+    ],
+    "startedAt": "2026-10-11T02:10:05.977028+00:00",
+    "finishedAt": "2026-10-11T02:10:14.270065+00:00",
+    "exitCode": 0,
+    "log": "safetensors.log",
+    "dependencies": [
+      "org.modeljars:modeljars:0.1.56",
+      "org.modeljars.huggingface:qwen.qwen2.5-0.5b-instruct.bf16:2.5.0-bf16.2"
+    ],
+    "cast": "02-safetensors.cast",
+    "castSha256": "ebe252990c1b7446b0ddb7ef81d7a7d50b4b4ed92be0d1651ac981d7e3e6a6b8"
+  },
+  {
+    "script": "embed.java",
+    "sha256": "2233ec333b493d3d20e6d6893576311721a672719a427e34c991374af57a2501",
+    "command": [
+      "jbang",
+      "embed.java"
+    ],
+    "startedAt": "2026-10-11T02:10:14.270681+00:00",
+    "finishedAt": "2026-10-11T02:10:17.498149+00:00",
+    "exitCode": 0,
+    "log": "embed.log",
+    "dependencies": [
+      "org.modeljars:modeljars:0.1.56",
+      "org.modeljars.huggingface:liquidai.lfm2.5-embedding-350m-gguf.q4_0:2.5.0-q4_0.1"
+    ],
+    "cast": "03-embed.cast",
+    "castSha256": "d4e47a787fe0047b8fbfb22e68a41d9b334da153f8637ed5e526d024e5c24def"
+  },
+  {
+    "script": "rerank.java",
+    "sha256": "f3e93b51dc6f684419708cf477ea2d58cd779775a9b697817c4a47bf043d9215",
+    "command": [
+      "jbang",
+      "rerank.java"
+    ],
+    "startedAt": "2026-10-11T02:10:17.498762+00:00",
+    "finishedAt": "2026-10-11T02:10:20.375796+00:00",
+    "exitCode": 0,
+    "log": "rerank.log",
+    "dependencies": [
+      "org.modeljars:modeljars:0.1.56",
+      "org.modeljars.huggingface:cstr.ms-marco-minilm-l-6-v2-gguf.q4_k_imatrix_g7c_f7:2.0.0-q4_k_imatrix_g7c_f7.2"
+    ],
+    "cast": "04-rerank.cast",
+    "castSha256": "b2c69644ebc3074d61aa252ebd9c4a464f17db325d468e345c7e309c8d9e0bb9"
+  },
+  {
+    "script": "tools.java",
+    "sha256": "3ac67b6c1423a6b63f00ebbb7138de618d2c529030dd03bee535730d69b84f8b",
+    "command": [
+      "jbang",
+      "tools.java"
+    ],
+    "startedAt": "2026-10-11T02:10:20.376400+00:00",
+    "finishedAt": "2026-10-11T02:10:35.933169+00:00",
+    "exitCode": 0,
+    "log": "tools.log",
+    "dependencies": [
+      "org.modeljars:modeljars:0.1.56",
+      "org.modeljars.huggingface:cactus-compute.needle2-cact.cq2_mixed:2.0.0-cq2_mixed.2",
+      "com.fasterxml.jackson.core:jackson-databind:2.22.3"
+    ],
+    "cast": "05-tools.cast",
+    "castSha256": "eeab3f721000258a62c64ea64c37ba960223946fd8f40071366b1a0261d2b229"
+  },
+  {
+    "script": "composite.java",
+    "sha256": "4a7627939412ab3159df33ce6d032c3b92d665330d4a41ae0de08b1869c667ad",
+    "command": [
+      "jbang",
+      "composite.java"
+    ],
+    "startedAt": "2026-10-11T02:10:35.933864+00:00",
+    "finishedAt": "2026-10-11T02:11:00.951813+00:00",
+    "exitCode": 0,
+    "log": "composite.log",
+    "dependencies": [
+      "org.modeljars.composite:granite-answerability:0.1.56"
+    ],
+    "cast": "06-composite.cast",
+    "castSha256": "04d039ef8d77d4607b337d1df2a012bf7fad99e5fc81d2b185ee4d9e7933b2a0"
+  },
+  {
+    "script": "decisions.java",
+    "sha256": "3b8bc0c77b6ee8c49b744798e7f69b45909996ca412ddfc7f46c02d86693725d",
+    "command": [
+      "jbang",
+      "decisions.java"
+    ],
+    "startedAt": "2026-10-11T02:11:00.952486+00:00",
+    "finishedAt": "2026-10-11T02:11:18.965991+00:00",
+    "exitCode": 0,
+    "log": "decisions.log",
+    "dependencies": [
+      "org.modeljars.composite:harriet:0.1.56"
+    ],
+    "cast": "07-decisions.cast",
+    "castSha256": "5e9c14021dfa118947f1c4bfb7282aa359df8c70b65fb4a3e01038aed3cf181c"
+  },
+  {
+    "script": "speech.java",
+    "sha256": "f0849576514cc09c99f706a0cea247349bc7f6e3d9d3be23121bc76be8753089",
+    "command": [
+      "jbang",
+      "speech.java"
+    ],
+    "startedAt": "2026-10-11T02:11:18.966734+00:00",
+    "finishedAt": "2026-10-11T02:11:27.113850+00:00",
+    "exitCode": 0,
+    "log": "speech.log",
+    "dependencies": [
+      "org.modeljars:modeljars:0.1.56",
+      "org.modeljars.huggingface:walkingcat.soprano-1.1-80m-gguf.bf16:1.1.0-bf16.1"
+    ],
+    "cast": "08-speech.cast",
+    "castSha256": "5cd76a7991b541e35ceed26337b643fe596603cb9ef67201eb1f87822a965388"
+  },
+  {
+    "script": "spring.java",
+    "sha256": "3f38b4b6af3ea6d9e7d263b3ff5d18038130430978f8370d38059141fdc0ab8f",
+    "command": [
+      "jbang",
+      "spring.java"
+    ],
+    "startedAt": "2026-10-11T02:11:27.115279+00:00",
+    "finishedAt": "2026-10-11T02:11:34.498009+00:00",
+    "exitCode": 0,
+    "log": "spring.log",
+    "dependencies": [
+      "org.springframework.ai:spring-ai-bom:2.0.0@pom",
+      "org.springframework.ai:spring-ai-client-chat",
+      "com.integrallis:models-spring-ai:0.3.57",
+      "org.modeljars:modeljars:0.1.56",
+      "org.modeljars.huggingface:ggml-org.qwen3-0.6b-gguf.q4_0:3.0.0-q4_0.1"
+    ],
+    "cast": "09-spring.cast",
+    "castSha256": "355231243a475abd2a0d8b5695d623a99f393d87f0cbdbfb11eb0d52ea254e60"
+  },
+  {
+    "script": "route.java",
+    "sha256": "f6202787f7a5b3a47e3aa2e137885f71ce3135b37adb765a92bf89564059b320",
+    "command": [
+      "jbang",
+      "route.java"
+    ],
+    "startedAt": "2026-10-11T02:11:34.498693+00:00",
+    "finishedAt": "2026-10-11T02:11:35.954819+00:00",
+    "exitCode": 0,
+    "log": "route.log",
+    "dependencies": [
+      "org.modeljars:modeljars:0.1.56",
+      "com.integrallis:models-router:0.3.57",
+      "org.modeljars.huggingface:ggml-org.qwen3-0.6b-gguf.q4_0:3.0.0-q4_0.1",
+      "org.modeljars.huggingface:qwen.qwen2.5-0.5b-instruct.bf16:2.5.0-bf16.2"
+    ],
+    "cast": "10-route.cast",
+    "castSha256": "ec08f94b2b1527a4165253f9781c4f097051e1f6339f32f18a6b0e45defed9ef"
+  },
+  {
+    "script": "rag.java",
+    "sha256": "85b35961d91cac64ddd956457472603c90fa60d6ab5566d37b83fb7fa1e0d311",
+    "command": [
+      "jbang",
+      "rag.java"
+    ],
+    "startedAt": "2026-10-11T02:11:35.955498+00:00",
+    "finishedAt": "2026-10-11T02:11:52.919560+00:00",
+    "exitCode": 0,
+    "log": "rag.log",
+    "dependencies": [
+      "org.modeljars:modeljars:0.1.56",
+      "com.integrallis:vectors-db:0.1.29",
+      "com.integrallis:models-rag:0.3.57",
+      "org.modeljars.huggingface:second-state.all-minilm-l6-v2-embedding-gguf.q4_k_m:2.0.0-q4_k_m.2",
+      "org.modeljars.huggingface:ggml-org.qwen3-0.6b-gguf.q4_0:3.0.0-q4_0.1"
+    ],
+    "cast": "11-rag.cast",
+    "castSha256": "50c15313652ff237ac85643e972ac56915f6ab683960752fe9fd4c70d3242748"
+  },
+  {
+    "script": "gemma.java",
+    "sha256": "4d20b46e445ccfdc92e538079b04b02f97e10698595a4c05bec6402b4ad741ec",
+    "command": [
+      "jbang",
+      "gemma.java"
+    ],
+    "startedAt": "2026-10-11T18:30:15.803625+00:00",
+    "finishedAt": "2026-10-11T18:30:25.085798+00:00",
+    "exitCode": 0,
+    "log": "gemma.log",
+    "dependencies": [
+      "org.modeljars:modeljars:0.1.57",
+      "org.modeljars.huggingface:ggml-org.embeddinggemma-2-gguf.q8_0:2.0.0-q8_0.1"
+    ],
+    "cast": "12-gemma.cast",
+    "castSha256": "9f5b5851780041ca10933514651960c6506b53bf845ab473ec406c6b4ac2dc5c"
+  },
+  {
+    "script": "bonsai.java",
+    "sha256": "e0509505eee002d10ecb6a6779950aa95b5febb844e3661a5002a1dd630c4b7c",
+    "command": [
+      "jbang",
+      "bonsai.java"
+    ],
+    "startedAt": "2026-10-11T17:17:08.971433+00:00",
+    "finishedAt": "2026-10-11T17:19:56.632215+00:00",
+    "exitCode": 0,
+    "log": "bonsai.log",
+    "dependencies": [
+      "com.integrallis:models:0.3.58",
+      "com.integrallis:backend-java:0.3.58"
+    ],
+    "cast": "13-bonsai.cast",
+    "castSha256": "74b6517bc10849be3a1d23b0d97156143915eaa1afd56107faffb815bd4c697c"
+  }
+]

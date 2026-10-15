@@ -1,0 +1,10 @@
+{
+  "verifiedAt": "2026-10-11T18:42:45.521289+00:00",
+  "vectorDimensions": 768,
+  "finite": true,
+  "l2Norm": 1.0000000013558696,
+  "sourceSha256": "53f294a2d3a6319dc1199ef424a54832fcdbe0a5ee04fa01f8244817beb254d1",
+  "logSha256": "5b1c6a2fda07f90e81fa31d204dd0d602326f361dba929a713e45e4866f23e24",
+  "nativeCliVersion": "0.1.57",
+  "generatedDemoExitCode": 0
+}

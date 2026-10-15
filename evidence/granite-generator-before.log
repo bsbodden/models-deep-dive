@@ -1,0 +1,15 @@
+[jbang] Resolving dependencies...
+[jbang]    org.modeljars.composite:granite-answerability:0.1.55
+[jbang] Dependencies resolved
+[jbang] Building jar for granite-before.java...
+/private/tmp/granite-before.java:11: error: package org.modeljars.composite.qwen3 does not exist
+import org.modeljars.composite.qwen3.Qwen3ChatTools;
+                                    ^
+/private/tmp/granite-before.java:20: error: cannot find symbol
+    try (var hybrid = Qwen3ChatTools.open();
+                      ^
+  symbol:   variable Qwen3ChatTools
+  location: class ModelJarsDemo
+2 errors
+[jbang] [ERROR] Error during compile
+[jbang] Run with --verbose or -x for more details. The --verbose or -x must be placed before the jbang command. I.e. jbang --verbose run [...]

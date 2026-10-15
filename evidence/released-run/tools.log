@@ -1,0 +1,22 @@
+$ jbang tools.java
+WARNING: Using incubator modules: jdk.incubator.vector
+Request:      Dim the bedroom lights to 20 percent and lock the front door.
+Model output: <think>
+'bedroom' -> room 'bedroom'; 'dim' -> action 'dim'; '20 percent' -> brightness 20. 'front door' -> door 'front door'; 'lock' -> action 'lock'.
+</think>
+<tool_call>[{"name":"set_lights","arguments":{"room":"bedroom","brightness":20}},{"name":"lock_door","arguments":{"door":"front door"}}]</tool_call>
+Tool calls:   2
+  set_lights {"room":"bedroom","brightness":20}
+  lock_door {"door":"front door"}
+Home state:
+  Lights:       {bedroom=20}
+  Locked doors: [front door]
+
+Metrics:
+  Load                 620 ms
+  Tokenization         21 ms
+  Prompt preparation   0 ms
+  Prefill              7,863 ms
+  TTFT                 7,902 ms
+  Decode               5,751 ms (14.6 tokens/s)
+  Tokens               123 prompt + 85 completion

@@ -1,0 +1,11 @@
+flowchart BT
+  V["Vectors<br/>SIMD math, quantized operations, vector collections"]
+  M["Models<br/>loaders, tokenizers, model graphs, generation and task APIs"]
+  J["ModelJars<br/>pinned identity, qualification, verified loading"]
+  A["Your JVM application<br/>plain Java, Spring AI or LangChain4j"]
+  C["modeljars.org and CLI<br/>discover, inspect, prefetch, generate examples"]
+  V -->|used by| M
+  M -->|used by| J
+  J -->|used by| A
+  C -.->|selects the same model coordinates| J
+  V -->|retrieval collections| A

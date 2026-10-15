@@ -1,0 +1,13 @@
+$ jbang chat.java
+WARNING: Using incubator modules: jdk.incubator.vector
+Input:  What is the capital of France? Reply with only the city name.
+Output: Paris
+
+Metrics:
+  Load                 2,440 ms
+  Tokenization         5 ms
+  Prompt preparation   0 ms
+  Prefill              2,206 ms
+  TTFT                 2,221 ms
+  Decode               232 ms (0.0 tokens/s)
+  Tokens               26 prompt + 1 completion

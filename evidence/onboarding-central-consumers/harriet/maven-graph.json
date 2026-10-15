@@ -1,0 +1,147 @@
+{
+  "groupId": "release.consumer",
+  "artifactId": "harriet-consumer",
+  "version": "1",
+  "type": "jar",
+  "scope": "",
+  "classifier": "",
+  "optional": "false",
+  "children": [
+    {
+      "groupId": "org.modeljars.composite",
+      "artifactId": "harriet",
+      "version": "0.1.57",
+      "type": "jar",
+      "scope": "compile",
+      "classifier": "",
+      "optional": "false",
+      "children": [
+        {
+          "groupId": "org.modeljars",
+          "artifactId": "modeljars",
+          "version": "0.1.57",
+          "type": "jar",
+          "scope": "compile",
+          "classifier": "",
+          "optional": "false",
+          "children": [
+            {
+              "groupId": "org.modeljars",
+              "artifactId": "modeljars-core",
+              "version": "0.1.57",
+              "type": "jar",
+              "scope": "compile",
+              "classifier": "",
+              "optional": "false"
+            },
+            {
+              "groupId": "com.integrallis",
+              "artifactId": "models",
+              "version": "0.3.58",
+              "type": "jar",
+              "scope": "compile",
+              "classifier": "",
+              "optional": "false",
+              "children": [
+                {
+                  "groupId": "com.integrallis",
+                  "artifactId": "models-runtime",
+                  "version": "0.3.58",
+                  "type": "jar",
+                  "scope": "compile",
+                  "classifier": "",
+                  "optional": "false"
+                }
+                ]
+            },
+            {
+              "groupId": "com.integrallis",
+              "artifactId": "backend-java",
+              "version": "0.3.58",
+              "type": "jar",
+              "scope": "compile",
+              "classifier": "",
+              "optional": "false",
+              "children": [
+                {
+                  "groupId": "com.integrallis",
+                  "artifactId": "models-api",
+                  "version": "0.3.58",
+                  "type": "jar",
+                  "scope": "compile",
+                  "classifier": "",
+                  "optional": "false"
+                },
+                {
+                  "groupId": "com.integrallis",
+                  "artifactId": "vectors-core",
+                  "version": "0.1.29",
+                  "type": "jar",
+                  "scope": "runtime",
+                  "classifier": "",
+                  "optional": "false",
+                  "children": [
+                    {
+                      "groupId": "org.slf4j",
+                      "artifactId": "slf4j-api",
+                      "version": "2.0.20",
+                      "type": "jar",
+                      "scope": "runtime",
+                      "classifier": "",
+                      "optional": "false"
+                    }
+                    ]
+                },
+                {
+                  "groupId": "com.fasterxml.jackson.core",
+                  "artifactId": "jackson-core",
+                  "version": "2.22.3",
+                  "type": "jar",
+                  "scope": "runtime",
+                  "classifier": "",
+                  "optional": "false"
+                }
+                ]
+            },
+            {
+              "groupId": "com.integrallis",
+              "artifactId": "backend-native",
+              "version": "0.3.58",
+              "type": "jar",
+              "scope": "compile",
+              "classifier": "",
+              "optional": "false"
+            },
+            {
+              "groupId": "com.integrallis",
+              "artifactId": "models-audio",
+              "version": "0.3.58",
+              "type": "jar",
+              "scope": "compile",
+              "classifier": "",
+              "optional": "false"
+            },
+            {
+              "groupId": "com.integrallis",
+              "artifactId": "models-decisions",
+              "version": "0.3.58",
+              "type": "jar",
+              "scope": "compile",
+              "classifier": "",
+              "optional": "false"
+            }
+            ]
+        },
+        {
+          "groupId": "org.modeljars.huggingface",
+          "artifactId": "unsloth.qwen3.5-4b-gguf.q4_k_m",
+          "version": "3.5.0-q4_k_m.2",
+          "type": "jar",
+          "scope": "runtime",
+          "classifier": "",
+          "optional": "false"
+        }
+        ]
+    }
+    ]
+}

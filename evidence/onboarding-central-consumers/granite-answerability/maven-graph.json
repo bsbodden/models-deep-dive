@@ -1,0 +1,156 @@
+{
+  "groupId": "release.consumer",
+  "artifactId": "granite-answerability-consumer",
+  "version": "1",
+  "type": "jar",
+  "scope": "",
+  "classifier": "",
+  "optional": "false",
+  "children": [
+    {
+      "groupId": "org.modeljars.composite",
+      "artifactId": "granite-answerability",
+      "version": "0.1.57",
+      "type": "jar",
+      "scope": "compile",
+      "classifier": "",
+      "optional": "false",
+      "children": [
+        {
+          "groupId": "org.modeljars",
+          "artifactId": "modeljars",
+          "version": "0.1.57",
+          "type": "jar",
+          "scope": "compile",
+          "classifier": "",
+          "optional": "false",
+          "children": [
+            {
+              "groupId": "org.modeljars",
+              "artifactId": "modeljars-core",
+              "version": "0.1.57",
+              "type": "jar",
+              "scope": "compile",
+              "classifier": "",
+              "optional": "false"
+            },
+            {
+              "groupId": "com.integrallis",
+              "artifactId": "models",
+              "version": "0.3.58",
+              "type": "jar",
+              "scope": "compile",
+              "classifier": "",
+              "optional": "false",
+              "children": [
+                {
+                  "groupId": "com.integrallis",
+                  "artifactId": "models-runtime",
+                  "version": "0.3.58",
+                  "type": "jar",
+                  "scope": "compile",
+                  "classifier": "",
+                  "optional": "false"
+                }
+                ]
+            },
+            {
+              "groupId": "com.integrallis",
+              "artifactId": "backend-java",
+              "version": "0.3.58",
+              "type": "jar",
+              "scope": "compile",
+              "classifier": "",
+              "optional": "false",
+              "children": [
+                {
+                  "groupId": "com.integrallis",
+                  "artifactId": "models-api",
+                  "version": "0.3.58",
+                  "type": "jar",
+                  "scope": "compile",
+                  "classifier": "",
+                  "optional": "false"
+                },
+                {
+                  "groupId": "com.integrallis",
+                  "artifactId": "vectors-core",
+                  "version": "0.1.29",
+                  "type": "jar",
+                  "scope": "runtime",
+                  "classifier": "",
+                  "optional": "false",
+                  "children": [
+                    {
+                      "groupId": "org.slf4j",
+                      "artifactId": "slf4j-api",
+                      "version": "2.0.20",
+                      "type": "jar",
+                      "scope": "runtime",
+                      "classifier": "",
+                      "optional": "false"
+                    }
+                    ]
+                },
+                {
+                  "groupId": "com.fasterxml.jackson.core",
+                  "artifactId": "jackson-core",
+                  "version": "2.22.3",
+                  "type": "jar",
+                  "scope": "runtime",
+                  "classifier": "",
+                  "optional": "false"
+                }
+                ]
+            },
+            {
+              "groupId": "com.integrallis",
+              "artifactId": "backend-native",
+              "version": "0.3.58",
+              "type": "jar",
+              "scope": "compile",
+              "classifier": "",
+              "optional": "false"
+            },
+            {
+              "groupId": "com.integrallis",
+              "artifactId": "models-audio",
+              "version": "0.3.58",
+              "type": "jar",
+              "scope": "compile",
+              "classifier": "",
+              "optional": "false"
+            },
+            {
+              "groupId": "com.integrallis",
+              "artifactId": "models-decisions",
+              "version": "0.3.58",
+              "type": "jar",
+              "scope": "compile",
+              "classifier": "",
+              "optional": "false"
+            }
+            ]
+        },
+        {
+          "groupId": "org.modeljars.huggingface",
+          "artifactId": "ibm-granite.granite-4.1-3b-gguf.q4_k_m",
+          "version": "4.1.0-q4_k_m.2",
+          "type": "jar",
+          "scope": "runtime",
+          "classifier": "",
+          "optional": "false"
+        },
+        {
+          "groupId": "org.modeljars.github",
+          "artifactId": "modeljars.activated-adapters.granite-4.1-3b-answerability-alora-integrallis.f32",
+          "version": "1.0.0-f32.2",
+          "type": "jar",
+          "scope": "runtime",
+          "classifier": "",
+          "optional": "false"
+        }
+        ]
+    }
+    ]
+}

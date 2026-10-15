@@ -1,0 +1,21 @@
+flowchart TD
+  APP["Application task"] --> JAVA["Java: model graph, state and sampling"]
+  JAVA --> V["Java and Vectors kernels"]
+  JAVA --> FFM["Java FFM"]
+  FFM --> CPU["Models Rust CPU kernels"]
+  FFM --> DRIVER["Optional CUDA driver calls"]
+  DRIVER --> PTX["Models Rust kernels compiled to PTX"]
+  APP -.-> APPLE["Optional Apple integration"]
+  APPLE --> SWIFT["FFM to Swift bridge"]
+  SWIFT --> AFM["Apple Foundation Models"]
+
+  CPU -. evaluate a replacement .-> J["Java candidate for one routed operation"]
+  PTX -. evaluate a replacement .-> J
+  J --> C{"Same numeric contract?"}
+  C -->|no| KEEP["Keep current route and record evidence"]
+  C -->|yes| B["Measure candidate against current route on the same host"]
+  B --> G{"Kernel and whole-model gates pass?"}
+  G -->|no| KEEP
+  G -->|yes| P{"Supported hosts and workloads pass?"}
+  P -->|no| KEEP
+  P -->|yes| R["Route this operation to Java; remove unused native code"]

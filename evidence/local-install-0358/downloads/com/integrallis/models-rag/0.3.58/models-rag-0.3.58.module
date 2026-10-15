@@ -1,0 +1,208 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.integrallis",
+    "module": "models-rag",
+    "version": "0.3.58",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.4.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 25,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "com.fasterxml.jackson",
+          "module": "jackson-bom",
+          "version": {
+            "requires": "2.22.3"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-bom",
+          "version": {
+            "requires": "2.0.20"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "commons-codec",
+          "module": "commons-codec",
+          "version": {
+            "requires": "1.22.1"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5-h2",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.client5",
+          "module": "httpclient5",
+          "version": {
+            "requires": "5.6.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "models-rag-0.3.58.jar",
+          "url": "models-rag-0.3.58.jar",
+          "size": 24371,
+          "sha512": "ff0857d71ec23eb5e0dd722f57716f4c8c563ba119b5ed6af64c9b26cfaac31012d157d5ada70220bf1454c3ba977043a06853a567fe24323f90d1fcbcb93e50",
+          "sha256": "0c8037dd5745c1b7a9962cbe93a5fd3905651e9982fc77587e61379b3566efd3",
+          "sha1": "73efa8849ebeb31a66ffa6a67c60b1548021c6f7",
+          "md5": "c75b96e87b5a5442b8c48566ec46d5a5"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 25,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.fasterxml.jackson",
+          "module": "jackson-bom",
+          "version": {
+            "requires": "2.22.3"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-bom",
+          "version": {
+            "requires": "2.0.20"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "commons-codec",
+          "module": "commons-codec",
+          "version": {
+            "requires": "1.22.1"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5-h2",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.client5",
+          "module": "httpclient5",
+          "version": {
+            "requires": "5.6.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "models-rag-0.3.58.jar",
+          "url": "models-rag-0.3.58.jar",
+          "size": 24371,
+          "sha512": "ff0857d71ec23eb5e0dd722f57716f4c8c563ba119b5ed6af64c9b26cfaac31012d157d5ada70220bf1454c3ba977043a06853a567fe24323f90d1fcbcb93e50",
+          "sha256": "0c8037dd5745c1b7a9962cbe93a5fd3905651e9982fc77587e61379b3566efd3",
+          "sha1": "73efa8849ebeb31a66ffa6a67c60b1548021c6f7",
+          "md5": "c75b96e87b5a5442b8c48566ec46d5a5"
+        }
+      ]
+    },
+    {
+      "name": "javadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "models-rag-0.3.58-javadoc.jar",
+          "url": "models-rag-0.3.58-javadoc.jar",
+          "size": 4176356,
+          "sha512": "37498c280e22907c6652aad9a84ff37b6190e765f92a07ef6f55c2103b35936edbbb499911f1ae048d3d8919efdae0c4988b7260094fb174bdb333b44b493a0b",
+          "sha256": "516a9271689ad06701c92510328d845aff2ca5fbec7f6717682046cacc83bee6",
+          "sha1": "a72a1aec714e9a4e85708832c9696d1b350dca4b",
+          "md5": "05f41ca5175950ca5afd89bd56434eb9"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "models-rag-0.3.58-sources.jar",
+          "url": "models-rag-0.3.58-sources.jar",
+          "size": 15214,
+          "sha512": "ffbc8590d37405be9f7bbb081da84ee75903312fc4c30191327596093df7f697386e1ece472c928cba3cbf538a5e7417e75ae49a561cfebc212f48a75acacd37",
+          "sha256": "987b9ad462caaa54e639f9da5f490b0761d4aae965ce8b288585677d590f5319",
+          "sha1": "e454facfe8e72d02b972018922338c5eb2e7684a",
+          "md5": "4483bce6c78d6ab990a3a72c7b250b18"
+        }
+      ]
+    }
+  ]
+}

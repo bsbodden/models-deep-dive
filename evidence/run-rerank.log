@@ -1,0 +1,18 @@
+[jbang] Resolving dependencies...
+[jbang]    org.modeljars:modeljars:0.1.55
+[jbang]    org.modeljars.huggingface:cstr.ms-marco-minilm-l-6-v2-gguf.q4_k_imatrix_g7c_f7:2.0.0-q4_k_imatrix_g7c_f7.2
+[jbang] Dependencies resolved
+[jbang] Building jar for rerank.java...
+WARNING: Using incubator modules: jdk.incubator.vector
+Oct 10, 2026 5:55:20 PM com.integrallis.vectors.core.PanamaVectorUtilSupportProvider create
+INFO: vectors-core: Using Panama Vector API SIMD provider (vector bits: 256)
+Oct 10, 2026 5:55:21 PM com.integrallis.vectors.core.VectorizationProvider logActiveToggles
+INFO: vectors-core: provider=PanamaVectorUtilSupport panama=true maxBits=256 preferredBits=256 fastVectorFMA=true fastScalarFMA=true sve=false ggufParallel=true ggufParallelThreshold=1048576 ggufExecutor=persistent ggufThreads=12 ggufChunksPerThread=2 mappedKQuantLongOffsets=auto(q4=true,q5=false,q6=false) q4ShortPairwiseSupported=true q4UnsignedPairwiseSupported=true toggles=[(defaults — no -Dvectors.* overrides)]
+Query: How many people live in Berlin?
+Rank  Score       Document
+   1    8.708755  Berlin has a population of 3,520,031 registered inhabitants.
+   2   -3.362205  Berlin is well known for its museums and metropolitan area.
+   3  -10.987034  Paris is the capital and most populous city of France.
+
+Load:      4,452 ms
+Execution: 1,379 ms

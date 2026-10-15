@@ -1,0 +1,15 @@
+{
+  "verifiedAt": "2026-10-11T02:19:57.510174+00:00",
+  "path": "/usr/local/bin/modeljars",
+  "resolvedPath": "/usr/local/Cellar/modeljars/0.1.56/bin/modeljars",
+  "version": "0.1.56",
+  "sha256": "f06c5d38e3e6066a957114c9c9353e72e0f762ae02cf07e07d0b2875872eb1ac",
+  "matchesReleaseAsset": true,
+  "release": "https://github.com/ModelJars/modeljars/releases/tag/v0.1.56",
+  "asset": "modeljars-macos-x86_64",
+  "installation": "brew upgrade integrallis/tap/modeljars",
+  "smokeTest": {
+    "command": "brew test integrallis/tap/modeljars",
+    "exitCode": 0
+  }
+}

@@ -1,0 +1,18 @@
+[jbang] Resolving dependencies...
+[jbang]    org.modeljars:modeljars:0.1.55
+[jbang]    org.modeljars.huggingface:liquidai.lfm2.5-embedding-350m-gguf.q4_0:2.5.0-q4_0.1
+[jbang] Dependencies resolved
+[jbang] Building jar for embed.java...
+WARNING: Using incubator modules: jdk.incubator.vector
+Oct 10, 2026 5:55:14 PM com.integrallis.vectors.core.PanamaVectorUtilSupportProvider create
+INFO: vectors-core: Using Panama Vector API SIMD provider (vector bits: 256)
+Oct 10, 2026 5:55:14 PM com.integrallis.vectors.core.VectorizationProvider logActiveToggles
+INFO: vectors-core: provider=PanamaVectorUtilSupport panama=true maxBits=256 preferredBits=256 fastVectorFMA=true fastScalarFMA=true sve=false ggufParallel=true ggufParallelThreshold=1048576 ggufExecutor=persistent ggufThreads=12 ggufChunksPerThread=2 mappedKQuantLongOffsets=auto(q4=true,q5=false,q6=false) q4ShortPairwiseSupported=true q4UnsignedPairwiseSupported=true toggles=[(defaults — no -Dvectors.* overrides)]
+Exception in thread "main" org.modeljars.ModelJarException: Unsupported qualified embedding pooling: cls
+	at org.modeljars.ModelJars.loadEmbeddingBackend(ModelJars.java:1478)
+	at org.modeljars.ModelJars.loadEmbeddingRuntime(ModelJars.java:1033)
+	at org.modeljars.ModelJars.openEmbeddingRuntime(ModelJars.java:607)
+	at org.modeljars.ModelJars.openEmbeddingRuntime(ModelJars.java:594)
+	at org.modeljars.ModelJars.openEmbedding(ModelJars.java:573)
+	at org.modeljars.ModelJars.openEmbedding(ModelJars.java:617)
+	at embed.main(embed.java:19)

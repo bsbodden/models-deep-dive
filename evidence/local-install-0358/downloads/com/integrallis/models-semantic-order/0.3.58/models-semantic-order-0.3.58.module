@@ -1,0 +1,208 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.integrallis",
+    "module": "models-semantic-order",
+    "version": "0.3.58",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.4.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 25,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "com.fasterxml.jackson",
+          "module": "jackson-bom",
+          "version": {
+            "requires": "2.22.3"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-bom",
+          "version": {
+            "requires": "2.0.20"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "commons-codec",
+          "module": "commons-codec",
+          "version": {
+            "requires": "1.22.1"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5-h2",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.client5",
+          "module": "httpclient5",
+          "version": {
+            "requires": "5.6.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "models-semantic-order-0.3.58.jar",
+          "url": "models-semantic-order-0.3.58.jar",
+          "size": 11252,
+          "sha512": "07e7a8f6519e28fb26c0f69aaabbabda426d6c0be3ecfac290bc9e3f893b75b11c14c6f7a7f9104f874d2466147063bbf8a9d9ad4c6b7119901cdbc4401c0b0c",
+          "sha256": "e80d71b6f5876599979e18e9fca932f842082070aab9c2956d8ca5d219acdbe9",
+          "sha1": "147bf0005cb28f4b9491ca422726bb81c596603a",
+          "md5": "0e56bfbdb0dbe5a2eb1774008ee0016b"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 25,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.fasterxml.jackson",
+          "module": "jackson-bom",
+          "version": {
+            "requires": "2.22.3"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-bom",
+          "version": {
+            "requires": "2.0.20"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "commons-codec",
+          "module": "commons-codec",
+          "version": {
+            "requires": "1.22.1"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5-h2",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.client5",
+          "module": "httpclient5",
+          "version": {
+            "requires": "5.6.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "models-semantic-order-0.3.58.jar",
+          "url": "models-semantic-order-0.3.58.jar",
+          "size": 11252,
+          "sha512": "07e7a8f6519e28fb26c0f69aaabbabda426d6c0be3ecfac290bc9e3f893b75b11c14c6f7a7f9104f874d2466147063bbf8a9d9ad4c6b7119901cdbc4401c0b0c",
+          "sha256": "e80d71b6f5876599979e18e9fca932f842082070aab9c2956d8ca5d219acdbe9",
+          "sha1": "147bf0005cb28f4b9491ca422726bb81c596603a",
+          "md5": "0e56bfbdb0dbe5a2eb1774008ee0016b"
+        }
+      ]
+    },
+    {
+      "name": "javadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "models-semantic-order-0.3.58-javadoc.jar",
+          "url": "models-semantic-order-0.3.58-javadoc.jar",
+          "size": 4162701,
+          "sha512": "912f4c098e6c1d28ddf6c5cdbd44e5144886186aef7e25ac9d845336890d49d4b043fc5e3a3839b245dbc88684e4131fc377f67fed010d0d3dc8500a1d66b7ad",
+          "sha256": "689a62a7b202b43bbc98dbc22ac9fffeb212c1256b7d9523d9d8fd13364c2fc0",
+          "sha1": "1f8e921cc42e4eac011898f543cb46a891e0af77",
+          "md5": "a750f7a4e8e447e5ad6725fa1661e7a6"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "models-semantic-order-0.3.58-sources.jar",
+          "url": "models-semantic-order-0.3.58-sources.jar",
+          "size": 7972,
+          "sha512": "edcf9fca8d8f40f99aef1d0b7fd21e54b7ccb4a02c1d532a6121168e25c0db24f8d9952f89528a43b1506a1a7922cc89840f000eb488d7223a497a53b0b2459f",
+          "sha256": "15b55ef3cb8198b913125da01afd88b538033c6146a2fcc1a838b8d732f3ff35",
+          "sha1": "878d67d22ab6094ab5c29adb69c5e79d70fdc9fd",
+          "md5": "f8ef03d9248d0ec08f3fef8af7c34533"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,236 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.integrallis",
+    "module": "backend-native",
+    "version": "0.3.58",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.4.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 25,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "com.fasterxml.jackson",
+          "module": "jackson-bom",
+          "version": {
+            "requires": "2.22.3"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-bom",
+          "version": {
+            "requires": "2.0.20"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "com.integrallis",
+          "module": "models-api",
+          "version": {
+            "requires": "0.3.58"
+          }
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "commons-codec",
+          "module": "commons-codec",
+          "version": {
+            "requires": "1.22.1"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5-h2",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.client5",
+          "module": "httpclient5",
+          "version": {
+            "requires": "5.6.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "backend-native-0.3.58.jar",
+          "url": "backend-native-0.3.58.jar",
+          "size": 1202238,
+          "sha512": "c86e432d4d584fd9097cadadbe66f7a5a91a5b70c94b67465ac229ea3a8158eaf52b74b8e92583e6348aee93ca54db68caa77a5aca69d6665ab2a5af71e44b94",
+          "sha256": "f33512a5de32bd8eb9e212969e76630358c1357bf57abacedfa5a9a499c58cb5",
+          "sha1": "cfebbc58b7c70601fcf9c42afb1c808d1695e51f",
+          "md5": "465c9caa242771c9fb3b40212bfd2c71"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 25,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.integrallis",
+          "module": "backend-java",
+          "version": {
+            "requires": "0.3.58"
+          }
+        },
+        {
+          "group": "com.integrallis",
+          "module": "vectors-core",
+          "version": {
+            "requires": "0.1.29"
+          }
+        },
+        {
+          "group": "com.fasterxml.jackson",
+          "module": "jackson-bom",
+          "version": {
+            "requires": "2.22.3"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.slf4j",
+          "module": "slf4j-bom",
+          "version": {
+            "requires": "2.0.20"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "com.integrallis",
+          "module": "models-api",
+          "version": {
+            "requires": "0.3.58"
+          }
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "commons-codec",
+          "module": "commons-codec",
+          "version": {
+            "requires": "1.22.1"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.core5",
+          "module": "httpcore5-h2",
+          "version": {
+            "requires": "5.4.4"
+          }
+        },
+        {
+          "group": "org.apache.httpcomponents.client5",
+          "module": "httpclient5",
+          "version": {
+            "requires": "5.6.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "backend-native-0.3.58.jar",
+          "url": "backend-native-0.3.58.jar",
+          "size": 1202238,
+          "sha512": "c86e432d4d584fd9097cadadbe66f7a5a91a5b70c94b67465ac229ea3a8158eaf52b74b8e92583e6348aee93ca54db68caa77a5aca69d6665ab2a5af71e44b94",
+          "sha256": "f33512a5de32bd8eb9e212969e76630358c1357bf57abacedfa5a9a499c58cb5",
+          "sha1": "cfebbc58b7c70601fcf9c42afb1c808d1695e51f",
+          "md5": "465c9caa242771c9fb3b40212bfd2c71"
+        }
+      ]
+    },
+    {
+      "name": "javadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "backend-native-0.3.58-javadoc.jar",
+          "url": "backend-native-0.3.58-javadoc.jar",
+          "size": 4181716,
+          "sha512": "cb1756def4d8838c216a1e2bc489002affb183bb14e3ac0a63fd457062b53585be2ab327904e9dbe4c83495c3cff92cec372b89b078a124b089cb090f976c911",
+          "sha256": "6606a974afa074bea2018004bea3e0d69a8f911136d054634ec822ebcdf4b3e1",
+          "sha1": "e278392dc0a34163d451985167ae053801cd805d",
+          "md5": "d35520fbf2fdcf103f8e3b20322baf79"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "backend-native-0.3.58-sources.jar",
+          "url": "backend-native-0.3.58-sources.jar",
+          "size": 30907,
+          "sha512": "77ec6742d4d3cc04ceee516a01bdf45292218e3411dc420533980582ecd08583384bf05a16a2d92065db15632507973ff0b74040b606a8a007f5dc54dc0379fa",
+          "sha256": "0dc70105f019c1813e1f5b99b63e2d72d20a6384ada682a5efe1ac4cce43fde8",
+          "sha1": "0bde3110f73e2a58741ba2a5848434cf862fd816",
+          "md5": "fe6e9655b6b4ca6ee5848d42650e2e3a"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.modeljars.huggingface</groupId>
+  <artifactId>ggml-org.embeddinggemma-2-gguf.q8_0</artifactId>
+  <version>2.0.0-q8_0.1</version>
+  <name>EmbeddingGemma 2 text Q8_0</name>
+  <description>EmbeddingGemma 2 text encoder with 768-dimensional output and distinct query/document prefixes. Image, audio, and video towers are separate artifacts.</description>
+  <url>https://huggingface.co/ggml-org/embeddinggemma-2-GGUF</url>
+  <licenses>
+    <license>
+      <name>Apache-2.0</name>
+      <url>https://huggingface.co/ggml-org/embeddinggemma-2-GGUF</url>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>modeljars-maintainers</id>
+      <name>ModelJars maintainers</name>
+      <organization>ModelJars</organization>
+      <organizationUrl>https://modeljars.org</organizationUrl>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:https://github.com/ModelJars/modeljars.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/ModelJars/modeljars.git</developerConnection>
+    <url>https://github.com/ModelJars/modeljars</url>
+  </scm>
+</project>

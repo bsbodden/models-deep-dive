@@ -1,0 +1,52 @@
+{
+  "conclusion": "success",
+  "databaseId": 38161923252,
+  "headSha": "3fe35f3eb1970e3aeb971864bc3fa719c857fee9",
+  "jobs": [
+    {
+      "completedAt": "2026-10-11T18:17:56Z",
+      "conclusion": "success",
+      "databaseId": 114536461044,
+      "name": "Validate and publish exact Central deployments",
+      "startedAt": "2026-10-11T17:59:52Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-11T17:59:53Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-11T17:59:53Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T17:59:53Z",
+          "conclusion": "success",
+          "name": "Verify release credentials",
+          "number": 2,
+          "startedAt": "2026-10-11T17:59:53Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T18:17:54Z",
+          "conclusion": "success",
+          "name": "Publish validated deployments and await Maven Central",
+          "number": 3,
+          "startedAt": "2026-10-11T17:59:53Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-11T18:17:54Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 4,
+          "startedAt": "2026-10-11T18:17:54Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/ModelJars/modeljars/actions/runs/38161923252/job/114536461044"
+    }
+  ],
+  "status": "completed",
+  "url": "https://github.com/ModelJars/modeljars/actions/runs/38161923252"
+}

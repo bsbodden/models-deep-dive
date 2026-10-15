@@ -1,0 +1,1111 @@
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by net.rubygrapefruit.platform.internal.NativeLibraryLoader in an unnamed module (file:/Users/briansam-bodden/.gradle/wrapper/dists/gradle-9.4.1-all/eckclv9s5vi9exbmnyvpg2a3h/gradle-9.4.1/lib/native-platform-0.22-milestone-29.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.4.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :modeljars-composite-qwen3-chat-tools:processResources NO-SOURCE
+> Task :modeljars-composite-granite-answerability:processTestResources NO-SOURCE
+> Task :modeljars-composite-harriet:processTestResources NO-SOURCE
+> Task :modeljars:generateRuntimeQualificationResources UP-TO-DATE
+> Task :spotlessInternalRegisterDependencies UP-TO-DATE
+> Task :modeljars-composite-harriet:sourcesJar UP-TO-DATE
+> Task :modeljars-composite-granite-answerability:sourcesJar UP-TO-DATE
+> Task :compileJava NO-SOURCE
+> Task :processResources NO-SOURCE
+> Task :classes UP-TO-DATE
+> Task :compileTestJava NO-SOURCE
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+> Task :modeljars-cli:generateSpringIntegrationVersions
+> Task :test NO-SOURCE
+> Task :writeReleaseDependencyManifest UP-TO-DATE
+> Task :testCatalogIntegerValidation
+> Task :testCatalogReportPathValidation
+> Task :modeljars-core:compileJava UP-TO-DATE
+> Task :modeljars-composite-qwen3-chat-tools:processTestResources NO-SOURCE
+> Task :modeljars-catalog:generateMarkerReferenceSources UP-TO-DATE
+> Task :modeljars-catalog:spotlessJava UP-TO-DATE
+> Task :modeljars-catalog:spotlessJavaCheck UP-TO-DATE
+> Task :modeljars-catalog:spotlessCheck UP-TO-DATE
+> Task :modeljars-composite-harriet:spotlessJava UP-TO-DATE
+> Task :modeljars-composite-qwen3-chat-tools:spotlessJava UP-TO-DATE
+> Task :modeljars-composite-harriet:spotlessJavaCheck UP-TO-DATE
+> Task :modeljars-composite-qwen3-chat-tools:spotlessJavaCheck UP-TO-DATE
+> Task :modeljars-composite-qwen3-chat-tools:spotlessCheck UP-TO-DATE
+> Task :modeljars-composite-harriet:spotlessCheck UP-TO-DATE
+> Task :modeljars-core:spotlessJava UP-TO-DATE
+> Task :modeljars-core:spotlessJavaCheck UP-TO-DATE
+> Task :modeljars-composite-harriet:processResources UP-TO-DATE
+> Task :modeljars-core:spotlessCheck UP-TO-DATE
+> Task :modeljars-composite-granite-answerability:spotlessJava UP-TO-DATE
+> Task :modeljars-composite-granite-answerability:spotlessJavaCheck UP-TO-DATE
+> Task :modeljars-composite-granite-answerability:spotlessCheck UP-TO-DATE
+> Task :modeljars-core:processResources UP-TO-DATE
+> Task :modeljars-core:classes UP-TO-DATE
+> Task :modeljars-composite-granite-answerability:processResources UP-TO-DATE
+> Task :modeljars-core:jar UP-TO-DATE
+> Task :modeljars-core:javadoc UP-TO-DATE
+> Task :modeljars-core:javadocJar UP-TO-DATE
+> Task :modeljars-core:sourcesJar UP-TO-DATE
+> Task :modeljars:sourcesJar
+> Task :modeljars-catalog:compileJava UP-TO-DATE
+> Task :modeljars-catalog:generateCatalogResources UP-TO-DATE
+> Task :modeljars-catalog:processResources UP-TO-DATE
+> Task :modeljars-catalog:classes UP-TO-DATE
+> Task :modeljars-core:compileTestJava UP-TO-DATE
+> Task :modeljars-catalog:jar UP-TO-DATE
+> Task :modeljars-catalog:javadoc UP-TO-DATE
+> Task :modeljars-catalog:javadocJar UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiCodegemma7bItGgufQ4KM
+> Task :modeljars-catalog:markerJarBartowskiCodegemma7bItGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiCodegemma7bItGgufQ4KS
+> Task :modeljars-catalog:markerJarBartowskiCodegemma7bItGgufQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiCodegemma7bItGgufQ5KS
+> Task :modeljars-catalog:markerJarBartowskiCodegemma7bItGgufQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiCodestral22bV01GgufQ4KM
+> Task :modeljars-catalog:markerJarBartowskiCodestral22bV01GgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiDeepseekCoderV2LiteInstructGgufQ4KM
+> Task :modeljars-catalog:markerJarBartowskiDeepseekCoderV2LiteInstructGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiDeepseekR1DistillLlama70bGgufQ4KM
+> Task :modeljars-catalog:markerJarBartowskiDeepseekR1DistillLlama70bGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiDeepseekR1DistillLlama8bGgufQ40
+> Task :modeljars-catalog:markerJarBartowskiDeepseekR1DistillLlama8bGgufQ40 UP-TO-DATE
+> Task :modeljars:spotlessJava
+> Task :modeljars:spotlessJavaCheck
+> Task :modeljars:spotlessCheck
+> Task :modeljars-catalog:generateMarkerBartowskiDeepseekR1DistillLlama8bGgufQ4KM
+> Task :modeljars-catalog:markerJarBartowskiDeepseekR1DistillLlama8bGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiDeepseekR1DistillLlama8bGgufQ4KS
+> Task :modeljars:compileJava UP-TO-DATE
+> Task :modeljars:processResources UP-TO-DATE
+> Task :modeljars-catalog:markerJarBartowskiDeepseekR1DistillLlama8bGgufQ4KS UP-TO-DATE
+> Task :modeljars:classes UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiDeepseekR1DistillLlama8bGgufQ5KM
+> Task :modeljars-composite-qwen3-chat-tools:compileJava UP-TO-DATE
+> Task :modeljars-composite-qwen3-chat-tools:classes UP-TO-DATE
+> Task :modeljars-catalog:markerJarBartowskiDeepseekR1DistillLlama8bGgufQ5KM UP-TO-DATE
+> Task :modeljars-cli:spotlessJava
+> Task :modeljars-cli:spotlessJavaCheck
+> Task :modeljars-cli:spotlessCheck
+> Task :modeljars:jar
+> Task :modeljars-composite-qwen3-chat-tools:compileTestJava UP-TO-DATE
+> Task :modeljars-composite-qwen3-chat-tools:testClasses UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiDeepseekR1DistillLlama8bGgufQ5KS
+> Task :modeljars-catalog:markerJarBartowskiDeepseekR1DistillLlama8bGgufQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiDeepseekR1DistillQwen14bGgufQ4KM
+> Task :modeljars-catalog:markerJarBartowskiDeepseekR1DistillQwen14bGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiDeepseekR1DistillQwen15bGgufF16
+> Task :modeljars-catalog:markerJarBartowskiDeepseekR1DistillQwen15bGgufF16 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiDeepseekR1DistillQwen15bGgufQ40
+> Task :modeljars-catalog:markerJarBartowskiDeepseekR1DistillQwen15bGgufQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiDeepseekR1DistillQwen15bGgufQ4KM
+> Task :modeljars-catalog:markerJarBartowskiDeepseekR1DistillQwen15bGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiDeepseekR1DistillQwen15bGgufQ4KS
+> Task :modeljars-catalog:markerJarBartowskiDeepseekR1DistillQwen15bGgufQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiDeepseekR1DistillQwen15bGgufQ5KM
+> Task :modeljars-catalog:markerJarBartowskiDeepseekR1DistillQwen15bGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiDeepseekR1DistillQwen15bGgufQ5KS
+> Task :modeljars-catalog:markerJarBartowskiDeepseekR1DistillQwen15bGgufQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiDeepseekR1DistillQwen15bGgufQ6K
+> Task :modeljars-catalog:markerJarBartowskiDeepseekR1DistillQwen15bGgufQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiDeepseekR1DistillQwen15bGgufQ80
+> Task :modeljars-catalog:markerJarBartowskiDeepseekR1DistillQwen15bGgufQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiDeepseekR1DistillQwen32bGgufQ4KM
+> Task :modeljars-catalog:markerJarBartowskiDeepseekR1DistillQwen32bGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiGemma22bItGgufQ4KM
+> Task :modeljars-catalog:markerJarBartowskiGemma22bItGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiGemma22bItGgufQ4KS
+> Task :modeljars-catalog:markerJarBartowskiGemma22bItGgufQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiGemma22bItGgufQ5KM
+> Task :modeljars-catalog:markerJarBartowskiGemma22bItGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiGemma22bItGgufQ5KS
+> Task :modeljars-core:generateCandidateTestCatalog
+> Task :modeljars-catalog:markerJarBartowskiGemma22bItGgufQ5KS UP-TO-DATE
+> Task :modeljars-core:prepareCandidateTestPayloadWordtourGlove6b300dOptimal
+> Task :modeljars-core:processTestResources UP-TO-DATE
+> Task :modeljars-core:testClasses UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiGemma22bItGgufQ6K
+> Task :modeljars-catalog:markerJarBartowskiGemma22bItGgufQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiGemma22bItGgufQ80
+> Task :modeljars-core:test UP-TO-DATE
+> Task :modeljars-catalog:markerJarBartowskiGemma22bItGgufQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiGemma29bItGgufQ4KM
+> Task :modeljars-catalog:markerJarBartowskiGemma29bItGgufQ4KM UP-TO-DATE
+> Task :modeljars-core:generateMetadataFileForMavenPublication
+> Task :modeljars-catalog:generateMarkerBartowskiGemma29bItGgufQ4KS
+> Task :modeljars-catalog:markerJarBartowskiGemma29bItGgufQ4KS UP-TO-DATE
+> Task :modeljars-core:generatePomFileForMavenPublication
+> Task :modeljars-core:signMavenPublication SKIPPED
+> Task :modeljars-catalog:generateMarkerBartowskiGoogleGemma312bItGgufQ4KM
+> Task :modeljars-catalog:markerJarBartowskiGoogleGemma312bItGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiGoogleGemma31bItGgufBf16
+> Task :modeljars-catalog:markerJarBartowskiGoogleGemma31bItGgufBf16 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiGoogleGemma31bItGgufQ40
+> Task :modeljars-catalog:markerJarBartowskiGoogleGemma31bItGgufQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiGoogleGemma31bItGgufQ4KM
+> Task :modeljars-catalog:markerJarBartowskiGoogleGemma31bItGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiGoogleGemma31bItGgufQ4KS
+> Task :modeljars-catalog:markerJarBartowskiGoogleGemma31bItGgufQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiGoogleGemma31bItGgufQ5KM
+> Task :modeljars-catalog:markerJarBartowskiGoogleGemma31bItGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiGoogleGemma31bItGgufQ5KS
+> Task :modeljars-catalog:markerJarBartowskiGoogleGemma31bItGgufQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiGoogleGemma31bItGgufQ6K
+> Task :modeljars-catalog:markerJarBartowskiGoogleGemma31bItGgufQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiGoogleGemma31bItGgufQ80
+> Task :modeljars-catalog:markerJarBartowskiGoogleGemma31bItGgufQ80 UP-TO-DATE
+
+> Task :verifyComponentEvidence
+Validated 1 qualified component evidence report(s)
+
+> Task :modeljars-catalog:generateMarkerBartowskiGoogleGemma327bItGgufQ4KM
+> Task :modeljars-catalog:markerJarBartowskiGoogleGemma327bItGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiGoogleGemma34bItGgufQ40
+> Task :modeljars-catalog:markerJarBartowskiGoogleGemma34bItGgufQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiGoogleGemma34bItGgufQ4KM
+> Task :modeljars-catalog:markerJarBartowskiGoogleGemma34bItGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiGoogleGemma34bItGgufQ4KS
+> Task :modeljars-catalog:markerJarBartowskiGoogleGemma34bItGgufQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiGoogleGemma34bItGgufQ5KM
+> Task :modeljars-catalog:markerJarBartowskiGoogleGemma34bItGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiGoogleGemma34bItGgufQ5KS
+> Task :modeljars-catalog:markerJarBartowskiGoogleGemma34bItGgufQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiGoogleGemma34bItGgufQ6K
+> Task :modeljars-catalog:markerJarBartowskiGoogleGemma34bItGgufQ6K UP-TO-DATE
+> Task :generateSiteCatalog
+> Task :modeljars-catalog:generateMarkerBartowskiGoogleGemma34bItGgufQ80
+> Task :modeljars-catalog:markerJarBartowskiGoogleGemma34bItGgufQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiGraniteEmbedding107mMultilingualGgufF16
+> Task :modeljars-catalog:markerJarBartowskiGraniteEmbedding107mMultilingualGgufF16 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiGraniteEmbedding107mMultilingualGgufQ40
+> Task :modeljars-catalog:markerJarBartowskiGraniteEmbedding107mMultilingualGgufQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiGraniteEmbedding107mMultilingualGgufQ4KM
+> Task :modeljars-catalog:markerJarBartowskiGraniteEmbedding107mMultilingualGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiGraniteEmbedding107mMultilingualGgufQ4KS
+> Task :modeljars-catalog:markerJarBartowskiGraniteEmbedding107mMultilingualGgufQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiGraniteEmbedding107mMultilingualGgufQ5KM
+> Task :modeljars-catalog:markerJarBartowskiGraniteEmbedding107mMultilingualGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiGraniteEmbedding107mMultilingualGgufQ5KS
+> Task :modeljars-catalog:markerJarBartowskiGraniteEmbedding107mMultilingualGgufQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiGraniteEmbedding107mMultilingualGgufQ6K
+> Task :modeljars-catalog:markerJarBartowskiGraniteEmbedding107mMultilingualGgufQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiGraniteEmbedding107mMultilingualGgufQ80
+> Task :modeljars-catalog:markerJarBartowskiGraniteEmbedding107mMultilingualGgufQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiKwaipilotKatCoderV25DevGgufQ4KM
+> Task :modeljars-catalog:markerJarBartowskiKwaipilotKatCoderV25DevGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiLlama321bInstructGgufF16
+> Task :modeljars-catalog:markerJarBartowskiLlama321bInstructGgufF16 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiLlama321bInstructGgufQ40
+> Task :modeljars-catalog:markerJarBartowskiLlama321bInstructGgufQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiLlama321bInstructGgufQ4KM
+> Task :modeljars-catalog:markerJarBartowskiLlama321bInstructGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiLlama321bInstructGgufQ4KS
+> Task :modeljars-catalog:markerJarBartowskiLlama321bInstructGgufQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiLlama321bInstructGgufQ5KM
+> Task :modeljars-catalog:markerJarBartowskiLlama321bInstructGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiLlama321bInstructGgufQ5KS
+> Task :modeljars-catalog:markerJarBartowskiLlama321bInstructGgufQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiLlama321bInstructGgufQ6K
+> Task :modeljars-catalog:markerJarBartowskiLlama321bInstructGgufQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiLlama321bInstructGgufQ80
+> Task :modeljars-catalog:markerJarBartowskiLlama321bInstructGgufQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiLlama323bInstructGgufQ40
+> Task :modeljars-catalog:markerJarBartowskiLlama323bInstructGgufQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiLlama323bInstructGgufQ4KM
+> Task :modeljars-catalog:markerJarBartowskiLlama323bInstructGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiLlama323bInstructGgufQ4KS
+> Task :modeljars-catalog:markerJarBartowskiLlama323bInstructGgufQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiLlama323bInstructGgufQ5KM
+> Task :modeljars-catalog:markerJarBartowskiLlama323bInstructGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiLlama323bInstructGgufQ5KS
+> Task :modeljars-catalog:markerJarBartowskiLlama323bInstructGgufQ5KS UP-TO-DATE
+> Task :generateSite
+> Task :modeljars-catalog:generateMarkerBartowskiLlama323bInstructGgufQ6K
+> Task :modeljars-catalog:markerJarBartowskiLlama323bInstructGgufQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiLlama323bInstructGgufQ80
+> Task :modeljars-catalog:markerJarBartowskiLlama323bInstructGgufQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiLlama3370bInstructGgufQ4KM
+> Task :modeljars-catalog:markerJarBartowskiLlama3370bInstructGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiMathstral7bV01GgufQ4KM
+> Task :modeljars-catalog:markerJarBartowskiMathstral7bV01GgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiMathstral7bV01GgufQ4KS
+> Task :modeljars-catalog:markerJarBartowskiMathstral7bV01GgufQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiMathstral7bV01GgufQ5KM
+> Task :modeljars-catalog:markerJarBartowskiMathstral7bV01GgufQ5KM UP-TO-DATE
+> Task :modeljars-composite-qwen3-chat-tools:test
+> Task :modeljars-catalog:generateMarkerBartowskiMathstral7bV01GgufQ5KS
+> Task :modeljars-catalog:markerJarBartowskiMathstral7bV01GgufQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiMathstral7bV01GgufQ6K
+> Task :modeljars-catalog:markerJarBartowskiMathstral7bV01GgufQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiMinistral8bInstruct2410GgufQ40
+> Task :modeljars-catalog:markerJarBartowskiMinistral8bInstruct2410GgufQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiMinistral8bInstruct2410GgufQ4KM
+> Task :modeljars-catalog:markerJarBartowskiMinistral8bInstruct2410GgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiMinistral8bInstruct2410GgufQ4KS
+> Task :modeljars-catalog:markerJarBartowskiMinistral8bInstruct2410GgufQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiMinistral8bInstruct2410GgufQ5KM
+> Task :modeljars-catalog:markerJarBartowskiMinistral8bInstruct2410GgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiMinistral8bInstruct2410GgufQ5KS
+> Task :modeljars-catalog:markerJarBartowskiMinistral8bInstruct2410GgufQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiMistralNemoInstruct2407GgufQ4KM
+> Task :modeljars-catalog:markerJarBartowskiMistralNemoInstruct2407GgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiMistralSmall24bInstruct2501GgufQ4KM
+> Task :modeljars-catalog:markerJarBartowskiMistralSmall24bInstruct2501GgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiPhi35MiniInstructGgufQ40
+> Task :modeljars-catalog:markerJarBartowskiPhi35MiniInstructGgufQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiPhi35MiniInstructGgufQ4KM
+> Task :modeljars-catalog:markerJarBartowskiPhi35MiniInstructGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiPhi35MiniInstructGgufQ4KS
+> Task :modeljars-catalog:markerJarBartowskiPhi35MiniInstructGgufQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiPhi35MiniInstructGgufQ5KM
+> Task :modeljars-catalog:markerJarBartowskiPhi35MiniInstructGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiPhi35MiniInstructGgufQ5KS
+> Task :modeljars-catalog:markerJarBartowskiPhi35MiniInstructGgufQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiPhi35MiniInstructGgufQ6K
+> Task :modeljars-catalog:markerJarBartowskiPhi35MiniInstructGgufQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiPhi35MiniInstructGgufQ80
+> Task :modeljars-catalog:markerJarBartowskiPhi35MiniInstructGgufQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiPhi3Mini4kInstructGgufQ4KM
+> Task :modeljars-catalog:markerJarBartowskiPhi3Mini4kInstructGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiPhi3Mini4kInstructGgufQ4KS
+> Task :modeljars-catalog:markerJarBartowskiPhi3Mini4kInstructGgufQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiPhi3Mini4kInstructGgufQ5KM
+> Task :modeljars-catalog:markerJarBartowskiPhi3Mini4kInstructGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiPhi3Mini4kInstructGgufQ5KS
+> Task :modeljars-catalog:markerJarBartowskiPhi3Mini4kInstructGgufQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiPhi3Mini4kInstructGgufQ6K
+> Task :modeljars-catalog:markerJarBartowskiPhi3Mini4kInstructGgufQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiPhi3Mini4kInstructGgufQ80
+> Task :modeljars-catalog:markerJarBartowskiPhi3Mini4kInstructGgufQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiQwen2514bInstructGgufQ4KM
+> Task :modeljars-catalog:markerJarBartowskiQwen2514bInstructGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiQwen2532bInstructGgufQ4KM
+> Task :modeljars-catalog:markerJarBartowskiQwen2532bInstructGgufQ4KM UP-TO-DATE
+
+> Task :verifyCompositionEvidence
+Validated 2 qualified composition evidence report(s)
+
+> Task :testRagLaunchQualificationPolicy
+Verified three accepted latency tiers and 15 rejected qualification mutations
+
+> Task :verifyLaunchQualifications
+Verified 65 production-usable artifacts from 52 upstream models across 12 architectures and 10 domains
+
+> Task :modeljars-catalog:generateMarkerBartowskiQwen25Math7bInstructGgufQ40
+> Task :modeljars-catalog:markerJarBartowskiQwen25Math7bInstructGgufQ40 UP-TO-DATE
+> Task :invalidateReleaseDependencyReceipt
+> Task :verifyReleaseVersion
+> Task :modeljars-catalog:generateMarkerBartowskiQwen25Math7bInstructGgufQ4KM
+> Task :modeljars-catalog:markerJarBartowskiQwen25Math7bInstructGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiQwen25Math7bInstructGgufQ4KS
+> Task :modeljars-catalog:markerJarBartowskiQwen25Math7bInstructGgufQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiQwen25Math7bInstructGgufQ5KM
+> Task :modeljars-catalog:markerJarBartowskiQwen25Math7bInstructGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiQwen25Math7bInstructGgufQ5KS
+> Task :modeljars-catalog:markerJarBartowskiQwen25Math7bInstructGgufQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiYiCoder15bChatGgufF16
+> Task :modeljars-catalog:markerJarBartowskiYiCoder15bChatGgufF16 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiYiCoder15bChatGgufQ40
+> Task :modeljars-catalog:markerJarBartowskiYiCoder15bChatGgufQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiYiCoder15bChatGgufQ4KM
+> Task :modeljars-catalog:markerJarBartowskiYiCoder15bChatGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiYiCoder15bChatGgufQ4KS
+> Task :modeljars-catalog:markerJarBartowskiYiCoder15bChatGgufQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiYiCoder15bChatGgufQ5KM
+> Task :modeljars-catalog:markerJarBartowskiYiCoder15bChatGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiYiCoder15bChatGgufQ5KS
+> Task :modeljars-catalog:markerJarBartowskiYiCoder15bChatGgufQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiYiCoder15bChatGgufQ6K
+> Task :modeljars-catalog:markerJarBartowskiYiCoder15bChatGgufQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerBartowskiYiCoder15bChatGgufQ80
+> Task :modeljars-catalog:markerJarBartowskiYiCoder15bChatGgufQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerCactusComputeNeedle2CactCq2Mixed
+> Task :modeljars-catalog:markerJarCactusComputeNeedle2CactCq2Mixed UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerCstrMsMarcoMinilmL6V2GgufQ4KImatrixG7cF7
+> Task :modeljars-catalog:markerJarCstrMsMarcoMinilmL6V2GgufQ4KImatrixG7cF7 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerCstrMsMarcoMinilmL6V2GgufQ80
+> Task :modeljars-catalog:markerJarCstrMsMarcoMinilmL6V2GgufQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerDeepreinforceAiOrnith1035bGgufQ4KM
+> Task :modeljars-catalog:markerJarDeepreinforceAiOrnith1035bGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerDeepreinforceAiOrnith109bGgufQ4KM
+> Task :modeljars-catalog:markerJarDeepreinforceAiOrnith109bGgufQ4KM UP-TO-DATE
+> Task :modeljars-core:verifyDependencyPolicy
+> Task :modeljars-catalog:generateMarkerDeepseekCoder13bInstructQ40
+> Task :modeljars-catalog:markerJarDeepseekCoder13bInstructQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerDeepseekCoder13bInstructQ4KM
+> Task :modeljars-catalog:markerJarDeepseekCoder13bInstructQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerDeepseekCoder13bInstructQ4KS
+> Task :modeljars-catalog:markerJarDeepseekCoder13bInstructQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerDeepseekCoder13bInstructQ50
+> Task :modeljars-catalog:markerJarDeepseekCoder13bInstructQ50 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerDeepseekCoder13bInstructQ5KM
+> Task :modeljars-catalog:markerJarDeepseekCoder13bInstructQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerDeepseekCoder13bInstructQ5KS
+> Task :modeljars-catalog:markerJarDeepseekCoder13bInstructQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerDeepseekCoder13bInstructQ6K
+> Task :modeljars-catalog:markerJarDeepseekCoder13bInstructQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerDeepseekCoder13bInstructQ80
+> Task :modeljars-catalog:markerJarDeepseekCoder13bInstructQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerDeepseekCoder67bInstructQ40
+> Task :modeljars-catalog:markerJarDeepseekCoder67bInstructQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerDeepseekCoder67bInstructQ4KM
+> Task :modeljars-catalog:markerJarDeepseekCoder67bInstructQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerDeepseekCoder67bInstructQ4KS
+> Task :modeljars-catalog:markerJarDeepseekCoder67bInstructQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerDeepseekCoder67bInstructQ50
+> Task :modeljars-catalog:markerJarDeepseekCoder67bInstructQ50 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerDeepseekCoder67bInstructQ5KM
+> Task :modeljars-catalog:markerJarDeepseekCoder67bInstructQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerDeepseekCoder67bInstructQ5KS
+> Task :modeljars-catalog:markerJarDeepseekCoder67bInstructQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerDeepseekCoder67bInstructQ6K
+> Task :modeljars-catalog:markerJarDeepseekCoder67bInstructQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerDeepseekR1DistillQwen7bQ40
+> Task :modeljars:javadoc
+> Task :modeljars-catalog:markerJarDeepseekR1DistillQwen7bQ40 UP-TO-DATE
+> Task :modeljars:javadocJar UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerDeepseekR1DistillQwen7bQ4KM
+> Task :modeljars-catalog:markerJarDeepseekR1DistillQwen7bQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerDeepseekR1DistillQwen7bQ4KS
+> Task :modeljars-catalog:markerJarDeepseekR1DistillQwen7bQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerDeepseekR1DistillQwen7bQ5KM
+> Task :modeljars-catalog:markerJarDeepseekR1DistillQwen7bQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerDeepseekR1DistillQwen7bQ5KS
+> Task :modeljars-catalog:markerJarDeepseekR1DistillQwen7bQ5KS UP-TO-DATE
+> Task :modeljars:compileTestJava UP-TO-DATE
+> Task :modeljars:processTestResources UP-TO-DATE
+> Task :modeljars:testClasses UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerDotsStudioDotsTtsMfBf16
+> Task :modeljars-catalog:markerJarDotsStudioDotsTtsMfBf16 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerEurollm17bInstructF16
+> Task :modeljars-catalog:markerJarEurollm17bInstructF16 UP-TO-DATE
+> Task :modeljars-composite-harriet:generatePomFileForMavenPublication
+> Task :modeljars-catalog:generateMarkerEurollm17bInstructQ4KM
+> Task :modeljars-catalog:markerJarEurollm17bInstructQ4KM UP-TO-DATE
+> Task :modeljars-composite-harriet:compileJava UP-TO-DATE
+> Task :modeljars-composite-harriet:classes UP-TO-DATE
+> Task :modeljars-composite-harriet:jar UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerEurollm17bInstructQ4KS
+> Task :modeljars-catalog:markerJarEurollm17bInstructQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerEurollm17bInstructQ5KM
+> Task :modeljars-composite-granite-answerability:generatePomFileForMavenPublication
+> Task :modeljars-catalog:markerJarEurollm17bInstructQ5KM UP-TO-DATE
+> Task :modeljars-composite-granite-answerability:compileJava UP-TO-DATE
+> Task :modeljars-composite-granite-answerability:classes UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerEurollm17bInstructQ5KS
+> Task :modeljars-composite-granite-answerability:jar UP-TO-DATE
+> Task :modeljars-catalog:markerJarEurollm17bInstructQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerEurollm17bInstructQ6K
+> Task :modeljars-catalog:markerJarEurollm17bInstructQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerEurollm17bInstructQ80
+> Task :modeljars-catalog:markerJarEurollm17bInstructQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerFacebookMobilemoeSQatInt4G32
+> Task :modeljars-catalog:markerJarFacebookMobilemoeSQatInt4G32 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerFinR17bQ40
+> Task :modeljars-catalog:markerJarFinR17bQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerFinR17bQ4KM
+> Task :modeljars-catalog:markerJarFinR17bQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerFinR17bQ4KS
+> Task :modeljars-catalog:markerJarFinR17bQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerFinR17bQ5KM
+> Task :modeljars-catalog:markerJarFinR17bQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerFinR17bQ5KS
+> Task :modeljars-catalog:markerJarFinR17bQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerGemma3nE2bItQ80
+> Task :modeljars-catalog:markerJarGemma3nE2bItQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerGemma4E4bItQ40
+> Task :modeljars-catalog:markerJarGemma4E4bItQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerGgmlOrgEmbeddinggemma300mGgufQ80
+> Task :modeljars-catalog:markerJarGgmlOrgEmbeddinggemma300mGgufQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerGgmlOrgGemma426bA4bItGgufQ4KM
+> Task :modeljars-catalog:markerJarGgmlOrgGemma426bA4bItGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerGranite418bQ40
+> Task :modeljars-catalog:markerJarGranite418bQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerGranite418bQ4KM
+> Task :modeljars-catalog:markerJarGranite418bQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerGranite418bQ4KS
+> Task :modeljars-catalog:markerJarGranite418bQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerGsmsBIndianLegalQwen253bGgufQ4KM
+> Task :modeljars-catalog:markerJarGsmsBIndianLegalQwen253bGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerH2oaiH2oDanube218bChatGgufBf16
+> Task :modeljars-catalog:markerJarH2oaiH2oDanube218bChatGgufBf16 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerH2oaiH2oDanube218bChatGgufF16
+> Task :modeljars-catalog:markerJarH2oaiH2oDanube218bChatGgufF16 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerH2oaiH2oDanube218bChatGgufQ4KM
+> Task :modeljars-catalog:markerJarH2oaiH2oDanube218bChatGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerH2oaiH2oDanube218bChatGgufQ4KS
+> Task :modeljars-catalog:markerJarH2oaiH2oDanube218bChatGgufQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerH2oaiH2oDanube218bChatGgufQ5KM
+> Task :modeljars-catalog:markerJarH2oaiH2oDanube218bChatGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerH2oaiH2oDanube218bChatGgufQ5KS
+> Task :modeljars-catalog:markerJarH2oaiH2oDanube218bChatGgufQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerH2oaiH2oDanube218bChatGgufQ6K
+> Task :modeljars-catalog:markerJarH2oaiH2oDanube218bChatGgufQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerH2oaiH2oDanube218bChatGgufQ80
+> Task :modeljars-catalog:markerJarH2oaiH2oDanube218bChatGgufQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerH2oaiH2oDanube3500mChatGgufF16
+> Task :modeljars-catalog:markerJarH2oaiH2oDanube3500mChatGgufF16 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerH2oaiH2oDanube3500mChatGgufQ4KM
+> Task :modeljars-catalog:markerJarH2oaiH2oDanube3500mChatGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerH2oaiH2oDanube3500mChatGgufQ5KM
+> Task :modeljars-catalog:markerJarH2oaiH2oDanube3500mChatGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerH2oaiH2oDanube3500mChatGgufQ6K
+> Task :modeljars-catalog:markerJarH2oaiH2oDanube3500mChatGgufQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerH2oaiH2oDanube3500mChatGgufQ80
+> Task :modeljars-catalog:markerJarH2oaiH2oDanube3500mChatGgufQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerHuatuogptO17bQ40
+> Task :modeljars-catalog:markerJarHuatuogptO17bQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerHuatuogptO17bQ4KM
+> Task :modeljars-catalog:markerJarHuatuogptO17bQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerHuatuogptO17bQ4KS
+> Task :modeljars-catalog:markerJarHuatuogptO17bQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerHuatuogptO17bQ5KM
+> Task :modeljars-catalog:markerJarHuatuogptO17bQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerHuatuogptO17bQ5KS
+> Task :modeljars-catalog:markerJarHuatuogptO17bQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerHuggingfacetbSmollm217bInstructGgufQ4KM
+> Task :modeljars-catalog:markerJarHuggingfacetbSmollm217bInstructGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerIbmGraniteGranite4130bGgufQ4KM
+> Task :modeljars-catalog:markerJarIbmGraniteGranite4130bGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerIbmGraniteGranite413bGgufQ40
+> Task :modeljars-catalog:markerJarIbmGraniteGranite413bGgufQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerIbmGraniteGranite413bGgufQ4KM
+> Task :modeljars-catalog:markerJarIbmGraniteGranite413bGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerIbmGraniteGranite413bGgufQ4KS
+> Task :modeljars-catalog:markerJarIbmGraniteGranite413bGgufQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerIbmGraniteGranite413bGgufQ50
+> Task :modeljars-catalog:markerJarIbmGraniteGranite413bGgufQ50 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerIbmGraniteGranite413bGgufQ5KM
+> Task :modeljars-catalog:markerJarIbmGraniteGranite413bGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerIbmGraniteGranite413bGgufQ5KS
+> Task :modeljars-catalog:markerJarIbmGraniteGranite413bGgufQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerIbmGraniteGranite413bGgufQ6K
+> Task :modeljars-catalog:markerJarIbmGraniteGranite413bGgufQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerIbmGraniteGranite413bGgufQ80
+> Task :modeljars-catalog:markerJarIbmGraniteGranite413bGgufQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerJanhqJanV354bGgufQ40
+> Task :modeljars-catalog:markerJarJanhqJanV354bGgufQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerJanhqJanV354bGgufQ4KM
+> Task :modeljars-catalog:markerJarJanhqJanV354bGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerJanhqJanV354bGgufQ4KS
+> Task :modeljars-catalog:markerJarJanhqJanV354bGgufQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerJanhqJanV354bGgufQ50
+> Task :modeljars-catalog:markerJarJanhqJanV354bGgufQ50 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerJanhqJanV354bGgufQ5KM
+> Task :modeljars-catalog:markerJarJanhqJanV354bGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerJanhqJanV354bGgufQ5KS
+> Task :modeljars-catalog:markerJarJanhqJanV354bGgufQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerJanhqJanV354bGgufQ6K
+> Task :modeljars-catalog:markerJarJanhqJanV354bGgufQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerJanhqJanV354bGgufQ80
+> Task :modeljars-catalog:markerJarJanhqJanV354bGgufQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerKing3djblNexusFinanceGgufF16
+> Task :modeljars-catalog:markerJarKing3djblNexusFinanceGgufF16 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerKing3djblNexusFinanceGgufQ40
+> Task :modeljars-catalog:markerJarKing3djblNexusFinanceGgufQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerKing3djblNexusFinanceGgufQ4KM
+> Task :modeljars-catalog:markerJarKing3djblNexusFinanceGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerKing3djblNexusFinanceGgufQ4KS
+> Task :modeljars-catalog:markerJarKing3djblNexusFinanceGgufQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerKing3djblNexusFinanceGgufQ5KM
+> Task :modeljars-catalog:markerJarKing3djblNexusFinanceGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerKing3djblNexusFinanceGgufQ5KS
+> Task :modeljars-catalog:markerJarKing3djblNexusFinanceGgufQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerKing3djblNexusFinanceGgufQ6K
+> Task :modeljars-catalog:markerJarKing3djblNexusFinanceGgufQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerKing3djblNexusFinanceGgufQ80
+> Task :modeljars-catalog:markerJarKing3djblNexusFinanceGgufQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerKing3djblNexusLegalGgufF16
+> Task :modeljars-catalog:markerJarKing3djblNexusLegalGgufF16 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerKing3djblNexusLegalGgufQ4KM
+> Task :modeljars-catalog:markerJarKing3djblNexusLegalGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerKing3djblNexusLegalGgufQ4KS
+> Task :modeljars-catalog:markerJarKing3djblNexusLegalGgufQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerKing3djblNexusLegalGgufQ5KM
+> Task :modeljars-catalog:markerJarKing3djblNexusLegalGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerKing3djblNexusLegalGgufQ5KS
+> Task :modeljars-catalog:markerJarKing3djblNexusLegalGgufQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerKing3djblNexusLegalGgufQ6K
+> Task :modeljars-catalog:markerJarKing3djblNexusLegalGgufQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerKing3djblNexusLegalGgufQ80
+> Task :modeljars-catalog:markerJarKing3djblNexusLegalGgufQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerKing3djblNexusMedicalGgufF16
+> Task :modeljars-catalog:markerJarKing3djblNexusMedicalGgufF16 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerKing3djblNexusMedicalGgufQ40
+> Task :modeljars-catalog:markerJarKing3djblNexusMedicalGgufQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerKing3djblNexusMedicalGgufQ4KM
+> Task :modeljars-catalog:markerJarKing3djblNexusMedicalGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerKing3djblNexusMedicalGgufQ4KS
+> Task :modeljars-catalog:markerJarKing3djblNexusMedicalGgufQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerKing3djblNexusMedicalGgufQ5KM
+> Task :modeljars-catalog:markerJarKing3djblNexusMedicalGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerKing3djblNexusMedicalGgufQ5KS
+> Task :modeljars-catalog:markerJarKing3djblNexusMedicalGgufQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerKing3djblNexusMedicalGgufQ6K
+> Task :modeljars-catalog:markerJarKing3djblNexusMedicalGgufQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerKing3djblNexusMedicalGgufQ80
+> Task :modeljars-catalog:markerJarKing3djblNexusMedicalGgufQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerKing3djblNexusScienceGgufQ4KM
+> Task :modeljars-catalog:markerJarKing3djblNexusScienceGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerKing3djblNexusSecurityGgufQ4KM
+> Task :modeljars-catalog:markerJarKing3djblNexusSecurityGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerLiquidaiLfm2512bInstructGgufBf16
+> Task :modeljars-catalog:markerJarLiquidaiLfm2512bInstructGgufBf16 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerLiquidaiLfm2512bInstructGgufF16
+> Task :modeljars-catalog:markerJarLiquidaiLfm2512bInstructGgufF16 UP-TO-DATE
+> Task :modeljars-cli:compileJava
+> Task :modeljars-catalog:generateMarkerLiquidaiLfm2512bInstructGgufQ40
+> Task :modeljars-catalog:markerJarLiquidaiLfm2512bInstructGgufQ40 UP-TO-DATE
+> Task :modeljars-cli:processResources UP-TO-DATE
+> Task :modeljars-cli:classes
+> Task :modeljars-catalog:generateMarkerLiquidaiLfm2512bInstructGgufQ4KM
+> Task :modeljars-catalog:markerJarLiquidaiLfm2512bInstructGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerLiquidaiLfm2512bInstructGgufQ5KM
+> Task :modeljars-catalog:markerJarLiquidaiLfm2512bInstructGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerLiquidaiLfm2512bInstructGgufQ6K
+> Task :modeljars-catalog:markerJarLiquidaiLfm2512bInstructGgufQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerLiquidaiLfm2512bInstructGgufQ80
+> Task :modeljars-catalog:markerJarLiquidaiLfm2512bInstructGgufQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerLiquidaiLfm25Embedding350mGgufBf16
+> Task :modeljars-catalog:markerJarLiquidaiLfm25Embedding350mGgufBf16 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerLiquidaiLfm25Embedding350mGgufF16
+> Task :modeljars-catalog:markerJarLiquidaiLfm25Embedding350mGgufF16 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerLiquidaiLfm25Embedding350mGgufQ40
+> Task :modeljars-catalog:markerJarLiquidaiLfm25Embedding350mGgufQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerLiquidaiLfm25Embedding350mGgufQ4KM
+> Task :modeljars-catalog:markerJarLiquidaiLfm25Embedding350mGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerLiquidaiLfm25Embedding350mGgufQ5KM
+> Task :modeljars-catalog:markerJarLiquidaiLfm25Embedding350mGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerLiquidaiLfm25Embedding350mGgufQ6K
+> Task :modeljars-catalog:markerJarLiquidaiLfm25Embedding350mGgufQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerLiquidaiLfm25Embedding350mGgufQ80
+> Task :modeljars-catalog:markerJarLiquidaiLfm25Embedding350mGgufQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerLlama318bInstructQ4KM
+> Task :modeljars-catalog:markerJarLlama318bInstructQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerLlama318bInstructQ4KS
+> Task :modeljars-catalog:markerJarLlama318bInstructQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerLlama318bInstructQ5KM
+> Task :modeljars-catalog:markerJarLlama318bInstructQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerLlama318bInstructQ5KS
+> Task :modeljars-catalog:markerJarLlama318bInstructQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerLmstudioCommunityDeepseekR10528Qwen38bGgufQ4KM
+> Task :modeljars-catalog:markerJarLmstudioCommunityDeepseekR10528Qwen38bGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerLmstudioCommunityGemma4E2bItGgufQ4KM
+> Task :modeljars-catalog:markerJarLmstudioCommunityGemma4E2bItGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerLmstudioCommunityGemma4E2bItGgufQ6K
+> Task :modeljars-catalog:markerJarLmstudioCommunityGemma4E2bItGgufQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerLmstudioCommunityGemma4E2bItGgufQ80
+> Task :modeljars-catalog:markerJarLmstudioCommunityGemma4E2bItGgufQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerMaziyarpanahiMetaLlama38bInstructGgufQ4KM
+> Task :modeljars-catalog:markerJarMaziyarpanahiMetaLlama38bInstructGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerMaziyarpanahiMetaLlama38bInstructGgufQ4KS
+> Task :modeljars-catalog:markerJarMaziyarpanahiMetaLlama38bInstructGgufQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerMaziyarpanahiMetaLlama38bInstructGgufQ5KM
+> Task :modeljars-catalog:markerJarMaziyarpanahiMetaLlama38bInstructGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerMaziyarpanahiMetaLlama38bInstructGgufQ5KS
+> Task :modeljars-catalog:markerJarMaziyarpanahiMetaLlama38bInstructGgufQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerMaziyarpanahiMistral7bInstructV03GgufQ4KM
+> Task :modeljars-catalog:markerJarMaziyarpanahiMistral7bInstructV03GgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerMaziyarpanahiMistral7bInstructV03GgufQ4KS
+> Task :modeljars-catalog:markerJarMaziyarpanahiMistral7bInstructV03GgufQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerMaziyarpanahiMistral7bInstructV03GgufQ5KM
+> Task :modeljars-catalog:markerJarMaziyarpanahiMistral7bInstructV03GgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerMaziyarpanahiMistral7bInstructV03GgufQ5KS
+> Task :modeljars-catalog:markerJarMaziyarpanahiMistral7bInstructV03GgufQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerMaziyarpanahiMistral7bInstructV03GgufQ6K
+> Task :modeljars-catalog:markerJarMaziyarpanahiMistral7bInstructV03GgufQ6K UP-TO-DATE
+> Task :modeljars-composite-harriet:javadoc
+> Task :modeljars-composite-harriet:javadocJar UP-TO-DATE
+> Task :modeljars-composite-harriet:compileTestJava NO-SOURCE
+> Task :modeljars-composite-harriet:testClasses UP-TO-DATE
+> Task :modeljars-composite-harriet:test NO-SOURCE
+> Task :modeljars-catalog:generateMarkerMinicpm51bF16
+> Task :modeljars-catalog:markerJarMinicpm51bF16 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerMinicpm51bQ4KM
+> Task :modeljars-catalog:markerJarMinicpm51bQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerMinicpm51bQ80
+> Task :modeljars-catalog:markerJarMinicpm51bQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerMinistral33bInstruct2512Q4KM
+> Task :modeljars-catalog:markerJarMinistral33bInstruct2512Q4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerMinistral33bInstruct2512Q5KM
+> Task :modeljars-catalog:markerJarMinistral33bInstruct2512Q5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerMinistral33bInstruct2512Q80
+> Task :modeljars-catalog:markerJarMinistral33bInstruct2512Q80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerMistralaiDevstralSmall2507GgufQ4KM
+> Task :modeljars-catalog:markerJarMistralaiDevstralSmall2507GgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerMixedbreadAiMxbaiRerankXsmallV1F16
+> Task :modeljars-catalog:markerJarMixedbreadAiMxbaiRerankXsmallV1F16 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerModeljarsGranite413bAnswerabilityAloraF32
+> Task :modeljars-catalog:markerJarModeljarsGranite413bAnswerabilityAloraF32 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerModeljarsGranite413bAnswerabilityAloraIntegrallisF32
+> Task :modeljars-catalog:markerJarModeljarsGranite413bAnswerabilityAloraIntegrallisF32 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerMradermacherFinancegemmaE4bGgufQ4KM
+> Task :modeljars-catalog:markerJarMradermacherFinancegemmaE4bGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerMradermacherFinancegemmaE4bGgufQ4KS
+> Task :modeljars-catalog:markerJarMradermacherFinancegemmaE4bGgufQ4KS UP-TO-DATE
+> Task :modeljars-composite-harriet:verifyDependencyPolicy
+> Task :modeljars-catalog:generateMarkerMradermacherFinancegemmaE4bGgufQ5KM
+> Task :modeljars-catalog:markerJarMradermacherFinancegemmaE4bGgufQ5KM UP-TO-DATE
+> Task :modeljars-composite-harriet:generateMetadataFileForMavenPublication
+> Task :modeljars-composite-harriet:signMavenPublication SKIPPED
+> Task :modeljars-catalog:generateMarkerMradermacherFinancegemmaE4bGgufQ5KS
+> Task :modeljars-catalog:markerJarMradermacherFinancegemmaE4bGgufQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerMradermacherMixtureSummarizerQwen352bGgufQ4KM
+> Task :modeljars-catalog:markerJarMradermacherMixtureSummarizerQwen352bGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerMradermacherPopitQwen34bMedicalSft1128GgufQ4KM
+> Task :modeljars-catalog:markerJarMradermacherPopitQwen34bMedicalSft1128GgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerMradermacherPopitQwen34bMedicalSft1128GgufQ4KS
+> Task :modeljars-catalog:markerJarMradermacherPopitQwen34bMedicalSft1128GgufQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerMradermacherPopitQwen34bMedicalSft1128GgufQ5KM
+> Task :modeljars-catalog:markerJarMradermacherPopitQwen34bMedicalSft1128GgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerMradermacherPopitQwen34bMedicalSft1128GgufQ5KS
+> Task :modeljars-catalog:markerJarMradermacherPopitQwen34bMedicalSft1128GgufQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerMradermacherPopitQwen34bMedicalSft1128GgufQ6K
+> Task :modeljars-catalog:markerJarMradermacherPopitQwen34bMedicalSft1128GgufQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerMradermacherPopitQwen34bMedicalSft1128GgufQ80
+> Task :modeljars-catalog:markerJarMradermacherPopitQwen34bMedicalSft1128GgufQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerMungertHunyuanMt7bGgufQ40
+> Task :modeljars-catalog:markerJarMungertHunyuanMt7bGgufQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerMungertHunyuanMt7bGgufQ4KM
+> Task :modeljars-catalog:markerJarMungertHunyuanMt7bGgufQ4KM UP-TO-DATE
+> Task :modeljars-composite-granite-answerability:javadoc
+> Task :modeljars-composite-granite-answerability:javadocJar UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerMungertHunyuanMt7bGgufQ4KS
+> Task :modeljars-catalog:markerJarMungertHunyuanMt7bGgufQ4KS UP-TO-DATE
+> Task :modeljars-composite-granite-answerability:compileTestJava UP-TO-DATE
+> Task :modeljars-composite-granite-answerability:testClasses UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerMungertHunyuanMt7bGgufQ50
+> Task :modeljars-catalog:markerJarMungertHunyuanMt7bGgufQ50 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerMungertHunyuanMt7bGgufQ5KM
+> Task :modeljars-catalog:markerJarMungertHunyuanMt7bGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerPhi4MiniInstructQ40
+> Task :modeljars-catalog:markerJarPhi4MiniInstructQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerPhi4MiniInstructQ4KM
+> Task :modeljars-catalog:markerJarPhi4MiniInstructQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerPhi4MiniInstructQ4KS
+> Task :modeljars-catalog:markerJarPhi4MiniInstructQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerPhi4MiniInstructQ5KM
+> Task :modeljars-catalog:markerJarPhi4MiniInstructQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerPhi4MiniInstructQ5KS
+> Task :modeljars-catalog:markerJarPhi4MiniInstructQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerPhi4MiniInstructQ6K
+> Task :modeljars-catalog:markerJarPhi4MiniInstructQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerPhi4MiniInstructQ80
+> Task :modeljars-catalog:markerJarPhi4MiniInstructQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen25Coder05bInstructQ40
+> Task :modeljars-catalog:markerJarQwen25Coder05bInstructQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen25Coder05bInstructQ4KM
+> Task :modeljars-catalog:markerJarQwen25Coder05bInstructQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen25Coder05bInstructQ50
+> Task :modeljars-catalog:markerJarQwen25Coder05bInstructQ50 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen25Coder05bInstructQ5KM
+> Task :modeljars-catalog:markerJarQwen25Coder05bInstructQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen25Coder05bInstructQ6K
+> Task :modeljars-catalog:markerJarQwen25Coder05bInstructQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen25Coder05bInstructQ80
+> Task :modeljars-catalog:markerJarQwen25Coder05bInstructQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen25Coder15bInstructQ40
+> Task :modeljars-catalog:markerJarQwen25Coder15bInstructQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen25Coder15bInstructQ4KM
+> Task :modeljars-catalog:markerJarQwen25Coder15bInstructQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen25Coder15bInstructQ50
+> Task :modeljars-catalog:markerJarQwen25Coder15bInstructQ50 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen25Coder15bInstructQ5KM
+> Task :modeljars-catalog:markerJarQwen25Coder15bInstructQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen25Coder15bInstructQ6K
+> Task :modeljars-catalog:markerJarQwen25Coder15bInstructQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen25Coder15bInstructQ80
+> Task :modeljars-catalog:markerJarQwen25Coder15bInstructQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen25Coder3bInstructQ40
+> Task :modeljars-catalog:markerJarQwen25Coder3bInstructQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen25Coder3bInstructQ4KM
+> Task :modeljars-catalog:markerJarQwen25Coder3bInstructQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen25Coder3bInstructQ50
+> Task :modeljars-catalog:markerJarQwen25Coder3bInstructQ50 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen25Coder3bInstructQ5KM
+> Task :modeljars-catalog:markerJarQwen25Coder3bInstructQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen25Coder3bInstructQ6K
+> Task :modeljars-catalog:markerJarQwen25Coder3bInstructQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen25Coder3bInstructQ80
+> Task :modeljars-catalog:markerJarQwen25Coder3bInstructQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen25Coder7bInstructQ40
+> Task :modeljars-catalog:markerJarQwen25Coder7bInstructQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen25Coder7bInstructQ4KM
+> Task :modeljars-catalog:markerJarQwen25Coder7bInstructQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen25Coder7bInstructQ5KM
+> Task :modeljars-catalog:markerJarQwen25Coder7bInstructQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen25Math15bInstructF16
+> Task :modeljars-catalog:markerJarQwen25Math15bInstructF16 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen25Math15bInstructQ40
+> Task :modeljars-catalog:markerJarQwen25Math15bInstructQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen25Math15bInstructQ4KM
+> Task :modeljars-catalog:markerJarQwen25Math15bInstructQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen25Math15bInstructQ4KS
+> Task :modeljars-catalog:markerJarQwen25Math15bInstructQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen25Math15bInstructQ5KM
+> Task :modeljars-catalog:markerJarQwen25Math15bInstructQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen25Math15bInstructQ5KS
+> Task :modeljars-catalog:markerJarQwen25Math15bInstructQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen25Math15bInstructQ6K
+> Task :modeljars-catalog:markerJarQwen25Math15bInstructQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen25Math15bInstructQ80
+> Task :modeljars-catalog:markerJarQwen25Math15bInstructQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen306bF16
+> Task :modeljars-catalog:markerJarQwen306bF16 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen306bQ40
+> Task :modeljars-catalog:markerJarQwen306bQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen306bQ80
+> Task :modeljars-catalog:markerJarQwen306bQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen317bQ80
+> Task :modeljars-cli:jar
+> Task :modeljars-catalog:markerJarQwen317bQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen38bQ4KM
+> Task :modeljars-catalog:markerJarQwen38bQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen38bQ50
+> Task :modeljars-catalog:markerJarQwen38bQ50 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwen38bQ5KM
+> Task :modeljars-catalog:markerJarQwen38bQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen2505bInstructBf16
+> Task :modeljars-catalog:markerJarQwenQwen2505bInstructBf16 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen2505bInstructGgufQ40
+> Task :modeljars-catalog:markerJarQwenQwen2505bInstructGgufQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen2505bInstructGgufQ4KM
+> Task :modeljars-catalog:markerJarQwenQwen2505bInstructGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen2505bInstructGgufQ50
+> Task :modeljars-catalog:markerJarQwenQwen2505bInstructGgufQ50 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen2505bInstructGgufQ5KM
+> Task :modeljars-catalog:markerJarQwenQwen2505bInstructGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen2505bInstructGgufQ6K
+> Task :modeljars-catalog:markerJarQwenQwen2505bInstructGgufQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen2505bInstructGgufQ80
+> Task :modeljars-catalog:markerJarQwenQwen2505bInstructGgufQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen2515bInstructGgufQ40
+> Task :modeljars-catalog:markerJarQwenQwen2515bInstructGgufQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen2515bInstructGgufQ4KM
+> Task :modeljars-catalog:markerJarQwenQwen2515bInstructGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen2515bInstructGgufQ50
+> Task :modeljars-catalog:markerJarQwenQwen2515bInstructGgufQ50 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen2515bInstructGgufQ5KM
+> Task :modeljars-catalog:markerJarQwenQwen2515bInstructGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen2515bInstructGgufQ6K
+> Task :modeljars-catalog:markerJarQwenQwen2515bInstructGgufQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen2515bInstructGgufQ80
+> Task :modeljars-catalog:markerJarQwenQwen2515bInstructGgufQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen253bInstructGgufQ40
+> Task :modeljars-catalog:markerJarQwenQwen253bInstructGgufQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen253bInstructGgufQ4KM
+> Task :modeljars-catalog:markerJarQwenQwen253bInstructGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen253bInstructGgufQ50
+> Task :modeljars-catalog:markerJarQwenQwen253bInstructGgufQ50 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen253bInstructGgufQ5KM
+> Task :modeljars-catalog:markerJarQwenQwen253bInstructGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen253bInstructGgufQ6K
+> Task :modeljars-catalog:markerJarQwenQwen253bInstructGgufQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen253bInstructGgufQ80
+> Task :modeljars-catalog:markerJarQwenQwen253bInstructGgufQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen25Coder14bInstructGgufQ4KM
+> Task :modeljars-catalog:markerJarQwenQwen25Coder14bInstructGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen25Coder32bInstructGgufQ4KM
+> Task :modeljars-catalog:markerJarQwenQwen25Coder32bInstructGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen34bGgufQ4KM
+> Task :modeljars-catalog:markerJarQwenQwen34bGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen34bGgufQ50
+> Task :modeljars-catalog:markerJarQwenQwen34bGgufQ50 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen34bGgufQ5KM
+> Task :modeljars-catalog:markerJarQwenQwen34bGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen34bGgufQ6K
+> Task :modeljars-catalog:markerJarQwenQwen34bGgufQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen34bGgufQ80
+> Task :modeljars-catalog:markerJarQwenQwen34bGgufQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen3Embedding06bGgufF16
+> Task :modeljars-catalog:markerJarQwenQwen3Embedding06bGgufF16 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen3Embedding06bGgufQ80
+> Task :modeljars-catalog:markerJarQwenQwen3Embedding06bGgufQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen3Embedding4bGgufQ4KM
+> Task :modeljars-catalog:markerJarQwenQwen3Embedding4bGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen3Embedding4bGgufQ50
+> Task :modeljars-catalog:markerJarQwenQwen3Embedding4bGgufQ50 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen3Embedding4bGgufQ5KM
+> Task :modeljars-catalog:markerJarQwenQwen3Embedding4bGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen3Embedding4bGgufQ6K
+> Task :modeljars-catalog:markerJarQwenQwen3Embedding4bGgufQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen3Embedding4bGgufQ80
+> Task :modeljars-catalog:markerJarQwenQwen3Embedding4bGgufQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen3Embedding8bGgufQ4KM
+> Task :modeljars-catalog:markerJarQwenQwen3Embedding8bGgufQ4KM UP-TO-DATE
+> Task :modeljars-composite-granite-answerability:test
+> Task :modeljars-catalog:generateMarkerQwenQwen3Embedding8bGgufQ50
+> Task :modeljars-catalog:markerJarQwenQwen3Embedding8bGgufQ50 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen3Embedding8bGgufQ5KM
+> Task :modeljars-catalog:markerJarQwenQwen3Embedding8bGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerQwenQwen3Tts12hz06bCustomvoiceBf16
+> Task :modeljars-catalog:markerJarQwenQwen3Tts12hz06bCustomvoiceBf16 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSecondStateAllMinilmL6V2EmbeddingGgufF16
+> Task :modeljars-catalog:markerJarSecondStateAllMinilmL6V2EmbeddingGgufF16 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSecondStateAllMinilmL6V2EmbeddingGgufQ40
+> Task :modeljars-composite-granite-answerability:verifyDependencyPolicy
+> Task :modeljars-catalog:markerJarSecondStateAllMinilmL6V2EmbeddingGgufQ40 UP-TO-DATE
+> Task :modeljars-composite-granite-answerability:generateMetadataFileForMavenPublication
+> Task :modeljars-composite-granite-answerability:signMavenPublication SKIPPED
+> Task :modeljars-catalog:generateMarkerSecondStateAllMinilmL6V2EmbeddingGgufQ4KM
+> Task :modeljars-catalog:markerJarSecondStateAllMinilmL6V2EmbeddingGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSecondStateAllMinilmL6V2EmbeddingGgufQ4KS
+> Task :modeljars-catalog:markerJarSecondStateAllMinilmL6V2EmbeddingGgufQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSecondStateAllMinilmL6V2EmbeddingGgufQ50
+> Task :modeljars-catalog:markerJarSecondStateAllMinilmL6V2EmbeddingGgufQ50 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSecondStateAllMinilmL6V2EmbeddingGgufQ5KM
+> Task :modeljars-catalog:markerJarSecondStateAllMinilmL6V2EmbeddingGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSecondStateAllMinilmL6V2EmbeddingGgufQ5KS
+> Task :modeljars-catalog:markerJarSecondStateAllMinilmL6V2EmbeddingGgufQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSecondStateAllMinilmL6V2EmbeddingGgufQ6K
+> Task :modeljars-catalog:markerJarSecondStateAllMinilmL6V2EmbeddingGgufQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSecondStateAllMinilmL6V2EmbeddingGgufQ80
+> Task :modeljars-catalog:markerJarSecondStateAllMinilmL6V2EmbeddingGgufQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSecondStateE5Mistral7bInstructEmbeddingGgufQ40
+> Task :modeljars-catalog:markerJarSecondStateE5Mistral7bInstructEmbeddingGgufQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSecondStateE5Mistral7bInstructEmbeddingGgufQ4KM
+> Task :modeljars-catalog:markerJarSecondStateE5Mistral7bInstructEmbeddingGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSecondStateE5Mistral7bInstructEmbeddingGgufQ4KS
+> Task :modeljars-catalog:markerJarSecondStateE5Mistral7bInstructEmbeddingGgufQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSecondStateE5Mistral7bInstructEmbeddingGgufQ50
+> Task :modeljars-catalog:markerJarSecondStateE5Mistral7bInstructEmbeddingGgufQ50 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSecondStateE5Mistral7bInstructEmbeddingGgufQ5KM
+> Task :modeljars-catalog:markerJarSecondStateE5Mistral7bInstructEmbeddingGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSecondStateE5Mistral7bInstructEmbeddingGgufQ5KS
+> Task :modeljars-catalog:markerJarSecondStateE5Mistral7bInstructEmbeddingGgufQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSecondStateE5Mistral7bInstructEmbeddingGgufQ6K
+> Task :modeljars-catalog:markerJarSecondStateE5Mistral7bInstructEmbeddingGgufQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSecondStateJinaEmbeddingsV2BaseCodeGgufF16
+> Task :modeljars-catalog:markerJarSecondStateJinaEmbeddingsV2BaseCodeGgufF16 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSecondStateJinaEmbeddingsV2BaseCodeGgufQ40
+> Task :modeljars-catalog:markerJarSecondStateJinaEmbeddingsV2BaseCodeGgufQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSecondStateJinaEmbeddingsV2BaseCodeGgufQ4KM
+> Task :modeljars-catalog:markerJarSecondStateJinaEmbeddingsV2BaseCodeGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSecondStateJinaEmbeddingsV2BaseCodeGgufQ4KS
+> Task :modeljars-catalog:markerJarSecondStateJinaEmbeddingsV2BaseCodeGgufQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSecondStateJinaEmbeddingsV2BaseCodeGgufQ50
+> Task :modeljars-catalog:markerJarSecondStateJinaEmbeddingsV2BaseCodeGgufQ50 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSecondStateJinaEmbeddingsV2BaseCodeGgufQ5KM
+> Task :modeljars-catalog:markerJarSecondStateJinaEmbeddingsV2BaseCodeGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSecondStateJinaEmbeddingsV2BaseCodeGgufQ5KS
+> Task :modeljars-catalog:markerJarSecondStateJinaEmbeddingsV2BaseCodeGgufQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSecondStateJinaEmbeddingsV2BaseCodeGgufQ6K
+> Task :modeljars-catalog:markerJarSecondStateJinaEmbeddingsV2BaseCodeGgufQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSecondStateJinaEmbeddingsV2BaseCodeGgufQ80
+> Task :modeljars-catalog:markerJarSecondStateJinaEmbeddingsV2BaseCodeGgufQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSecondStateNomicEmbedTextV15EmbeddingGgufF16
+> Task :modeljars-catalog:markerJarSecondStateNomicEmbedTextV15EmbeddingGgufF16 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSecondStateNomicEmbedTextV15EmbeddingGgufQ40
+> Task :modeljars-catalog:markerJarSecondStateNomicEmbedTextV15EmbeddingGgufQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSecondStateNomicEmbedTextV15EmbeddingGgufQ4KM
+> Task :modeljars-catalog:markerJarSecondStateNomicEmbedTextV15EmbeddingGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSecondStateNomicEmbedTextV15EmbeddingGgufQ4KS
+> Task :modeljars-catalog:markerJarSecondStateNomicEmbedTextV15EmbeddingGgufQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSecondStateNomicEmbedTextV15EmbeddingGgufQ50
+> Task :modeljars-catalog:markerJarSecondStateNomicEmbedTextV15EmbeddingGgufQ50 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSecondStateNomicEmbedTextV15EmbeddingGgufQ5KM
+> Task :modeljars-catalog:markerJarSecondStateNomicEmbedTextV15EmbeddingGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSecondStateNomicEmbedTextV15EmbeddingGgufQ5KS
+> Task :modeljars-catalog:markerJarSecondStateNomicEmbedTextV15EmbeddingGgufQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSecondStateNomicEmbedTextV15EmbeddingGgufQ6K
+> Task :modeljars-catalog:markerJarSecondStateNomicEmbedTextV15EmbeddingGgufQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSecondStateNomicEmbedTextV15EmbeddingGgufQ80
+> Task :modeljars-catalog:markerJarSecondStateNomicEmbedTextV15EmbeddingGgufQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSmollm2360mInstructQ80
+> Task :modeljars-catalog:markerJarSmollm2360mInstructQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSmollm33bQ4KM
+> Task :modeljars-catalog:markerJarSmollm33bQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSmollm33bQ80
+> Task :modeljars-catalog:markerJarSmollm33bQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSqlcoder7b2Q5KM
+> Task :modeljars-catalog:markerJarSqlcoder7b2Q5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSugoitoolkitSugoi14bUltraGgufQ4KM
+> Task :modeljars-catalog:markerJarSugoitoolkitSugoi14bUltraGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerSugoitoolkitSugoi32bUltraGgufQ4KM
+> Task :modeljars-catalog:markerJarSugoitoolkitSugoi32bUltraGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerTheblokeCodellama13bInstructGgufQ4KM
+> Task :modeljars-catalog:markerJarTheblokeCodellama13bInstructGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerTheblokeCodellama34bInstructGgufQ4KM
+> Task :modeljars-catalog:markerJarTheblokeCodellama34bInstructGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerTheblokeCodellama7bInstructGgufQ40
+> Task :modeljars-catalog:markerJarTheblokeCodellama7bInstructGgufQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerTheblokeCodellama7bInstructGgufQ4KM
+> Task :modeljars-catalog:markerJarTheblokeCodellama7bInstructGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerTheblokeCodellama7bInstructGgufQ4KS
+> Task :modeljars-catalog:markerJarTheblokeCodellama7bInstructGgufQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerTheblokeCodellama7bInstructGgufQ50
+> Task :modeljars-catalog:markerJarTheblokeCodellama7bInstructGgufQ50 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerTheblokeCodellama7bInstructGgufQ5KM
+> Task :modeljars-catalog:markerJarTheblokeCodellama7bInstructGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerTheblokeCodellama7bInstructGgufQ5KS
+> Task :modeljars-catalog:markerJarTheblokeCodellama7bInstructGgufQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerTheblokeCodellama7bInstructGgufQ6K
+> Task :modeljars-catalog:markerJarTheblokeCodellama7bInstructGgufQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerTinyllama11bChatV10Q40
+> Task :modeljars-catalog:markerJarTinyllama11bChatV10Q40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerTinyllama11bChatV10Q4KM
+> Task :modeljars-catalog:markerJarTinyllama11bChatV10Q4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerTinyllama11bChatV10Q4KS
+> Task :modeljars-catalog:markerJarTinyllama11bChatV10Q4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerTinyllama11bChatV10Q50
+> Task :modeljars-catalog:markerJarTinyllama11bChatV10Q50 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerTinyllama11bChatV10Q5KM
+> Task :modeljars-catalog:markerJarTinyllama11bChatV10Q5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerTinyllama11bChatV10Q5KS
+> Task :modeljars-catalog:markerJarTinyllama11bChatV10Q5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerTinyllama11bChatV10Q6K
+> Task :modeljars-catalog:markerJarTinyllama11bChatV10Q6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerTinyllama11bChatV10Q80
+> Task :modeljars-catalog:markerJarTinyllama11bChatV10Q80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUmarfarookmUmartransit1bQ4KM
+> Task :modeljars-catalog:markerJarUmarfarookmUmartransit1bQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUmarfarookmUmartransit1bQ80
+> Task :modeljars-catalog:markerJarUmarfarookmUmartransit1bQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothGemma412bItGgufQ4KM
+> Task :modeljars-catalog:markerJarUnslothGemma412bItGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothGemma431bItGgufQ4KM
+> Task :modeljars-catalog:markerJarUnslothGemma431bItGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothGptOss20bGgufQ4KM
+> Task :modeljars-catalog:markerJarUnslothGptOss20bGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen314bGgufQ4KM
+> Task :modeljars-catalog:markerJarUnslothQwen314bGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen330bA3bGgufQ4KM
+> Task :modeljars-catalog:markerJarUnslothQwen330bA3bGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen330bA3bInstruct2507GgufQ4KM
+> Task :modeljars-catalog:markerJarUnslothQwen330bA3bInstruct2507GgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen332bGgufQ4KM
+> Task :modeljars-catalog:markerJarUnslothQwen332bGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen3508bGgufBf16
+> Task :modeljars-catalog:markerJarUnslothQwen3508bGgufBf16 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen3508bGgufQ40
+> Task :modeljars-catalog:markerJarUnslothQwen3508bGgufQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen3508bGgufQ4KM
+> Task :modeljars-catalog:markerJarUnslothQwen3508bGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen3508bGgufQ4KS
+> Task :modeljars-catalog:markerJarUnslothQwen3508bGgufQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen3508bGgufQ5KM
+> Task :modeljars-catalog:markerJarUnslothQwen3508bGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen3508bGgufQ5KS
+> Task :modeljars-catalog:markerJarUnslothQwen3508bGgufQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen3508bGgufQ6K
+> Task :modeljars-catalog:markerJarUnslothQwen3508bGgufQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen3508bGgufQ80
+> Task :modeljars-catalog:markerJarUnslothQwen3508bGgufQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen3527bGgufQ4KM
+> Task :modeljars-catalog:markerJarUnslothQwen3527bGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen352bGgufBf16
+> Task :modeljars-catalog:markerJarUnslothQwen352bGgufBf16 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen352bGgufQ40
+> Task :modeljars-catalog:markerJarUnslothQwen352bGgufQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen352bGgufQ4KM
+> Task :modeljars-catalog:markerJarUnslothQwen352bGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen352bGgufQ4KS
+> Task :modeljars-catalog:markerJarUnslothQwen352bGgufQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen352bGgufQ5KM
+> Task :modeljars-catalog:markerJarUnslothQwen352bGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen352bGgufQ5KS
+> Task :modeljars-catalog:markerJarUnslothQwen352bGgufQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen352bGgufQ6K
+> Task :modeljars-catalog:markerJarUnslothQwen352bGgufQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen352bGgufQ80
+> Task :modeljars-catalog:markerJarUnslothQwen352bGgufQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen3535bA3bGgufQ4KM
+> Task :modeljars-catalog:markerJarUnslothQwen3535bA3bGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen354bGgufQ40
+> Task :modeljars-catalog:markerJarUnslothQwen354bGgufQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen354bGgufQ4KM
+> Task :modeljars-catalog:markerJarUnslothQwen354bGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen354bGgufQ4KS
+> Task :modeljars-catalog:markerJarUnslothQwen354bGgufQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen354bGgufQ5KM
+> Task :modeljars-catalog:markerJarUnslothQwen354bGgufQ5KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen354bGgufQ5KS
+> Task :modeljars-catalog:markerJarUnslothQwen354bGgufQ5KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen354bGgufQ6K
+> Task :modeljars-catalog:markerJarUnslothQwen354bGgufQ6K UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen354bGgufQ80
+> Task :modeljars-catalog:markerJarUnslothQwen354bGgufQ80 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen359bGgufQ40
+> Task :modeljars-catalog:markerJarUnslothQwen359bGgufQ40 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen359bGgufQ4KM
+> Task :modeljars-catalog:markerJarUnslothQwen359bGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen359bGgufQ4KS
+> Task :modeljars-catalog:markerJarUnslothQwen359bGgufQ4KS UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen3627bGgufQ4KM
+> Task :modeljars-catalog:markerJarUnslothQwen3627bGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen3635bA3bGgufUdQ4KM
+> Task :modeljars-catalog:markerJarUnslothQwen3635bA3bGgufUdQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen3Coder30bA3bInstructGgufQ4KM
+> Task :modeljars-catalog:markerJarUnslothQwen3Coder30bA3bInstructGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerUnslothQwen3CoderNextGgufQ4KM
+> Task :modeljars-catalog:markerJarUnslothQwen3CoderNextGgufQ4KM UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerWalkingcatSoprano1180mGgufBf16
+> Task :modeljars-catalog:markerJarWalkingcatSoprano1180mGgufBf16 UP-TO-DATE
+> Task :modeljars-catalog:generateMarkerWalkingcatSoprano1180mGgufQ80
+> Task :modeljars-catalog:markerJarWalkingcatSoprano1180mGgufQ80 UP-TO-DATE
+> Task :modeljars-cli:javadoc
+> Task :modeljars-catalog:generateMarkerWordtourGlove6b300dOptimal
+> Task :modeljars-cli:javadocJar UP-TO-DATE
+> Task :modeljars-catalog:prepareMarkerPayloadWordtourGlove6b300dOptimal
+> Task :modeljars-catalog:markerJarWordtourGlove6b300dOptimal UP-TO-DATE
+> Task :modeljars-cli:sourcesJar
+> Task :modeljars-catalog:sourcesJar UP-TO-DATE
+> Task :modeljars-catalog:compileTestJava NO-SOURCE
+> Task :modeljars-catalog:processTestResources NO-SOURCE
+> Task :modeljars-catalog:testClasses UP-TO-DATE
+> Task :modeljars-catalog:test NO-SOURCE
+> Task :modeljars-catalog:verifyDependencyPolicy
+> Task :modeljars-catalog:generateMetadataFileForMavenPublication
+> Task :modeljars-catalog:generatePomFileForMavenPublication
+> Task :modeljars-catalog:signMavenPublication SKIPPED
+
+> Task :verifyCatalog
+Verified 457 generated ModelJars markers and 100 qualified model artifacts plus 2 qualified compositions
+
+> Task :modeljars-cli:compileTestJava
+> Task :modeljars-cli:processTestResources NO-SOURCE
+> Task :modeljars-cli:testClasses
+> Task :modeljars:test
+> Task :modeljars-cli:test
+> Task :modeljars-cli:verifyDependencyPolicy
+> Task :modeljars-cli:generateMetadataFileForMavenPublication
+> Task :modeljars-cli:generatePomFileForMavenPublication
+> Task :modeljars-cli:signMavenPublication SKIPPED
+> Task :modeljars:writeRuntimeSupportInput
+> Task :modeljars:verifyDependencyPolicy
+> Task :modeljars:generateMetadataFileForMavenPublication
+> Task :modeljars:generatePomFileForMavenPublication
+> Task :modeljars:signMavenPublication SKIPPED
+
+> Task :verifyQualificationRuntimeCompatibility
+103 qualified workload/backend capabilities match the resolved runtime
+
+> Task :verifyResolvedDependencyChain
+> Task :verifySharedDependencyPolicy
+> Task :verifyReleaseTrain
+> Task :prepareReleaseRepository
+> Task :modeljars-core:publishMavenPublicationToReleaseBundleRepository
+> Task :modeljars-catalog:publishMavenPublicationToReleaseBundleRepository
+> Task :modeljars-composite-granite-answerability:publishMavenPublicationToReleaseBundleRepository
+> Task :modeljars-composite-harriet:publishMavenPublicationToReleaseBundleRepository
+> Task :modeljars:publishMavenPublicationToReleaseBundleRepository
+> Task :modeljars-cli:publishMavenPublicationToReleaseBundleRepository
+
+> Task :verifyPublishedConsumerGraph
+modeljars-core: Maven PASS
+modeljars-catalog: Maven PASS
+modeljars-cli: Maven PASS
+modeljars: Maven PASS
+granite-answerability: Maven PASS
+harriet: Maven PASS
+modeljars-core: Gradle PASS; Maven graph matches
+modeljars-catalog: Gradle PASS; Maven graph matches
+modeljars-cli: Gradle PASS; Maven graph matches
+modeljars: Gradle PASS; Maven graph matches
+granite-answerability: Gradle PASS; Maven graph matches
+harriet: Gradle PASS; Maven graph matches
+
+BUILD SUCCESSFUL in 2m 6s
+1026 actionable tasks: 519 executed, 507 up-to-date

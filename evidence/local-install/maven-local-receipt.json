@@ -1,0 +1,127 @@
+{
+  "updatedAt": "2026-10-11T02:08:29.332048+00:00",
+  "repository": "/Users/briansam-bodden/.m2/repository",
+  "source": "Maven Central",
+  "artifacts": [
+    {
+      "coordinate": "org.modeljars.composite:granite-answerability:0.1.56",
+      "files": [
+        {
+          "file": "/Users/briansam-bodden/.m2/repository/org/modeljars/composite/granite-answerability/0.1.56/granite-answerability-0.1.56.jar",
+          "sha256": "95a75f3bbae5b4952d4c0ac327574c645b7e523b45fe3e5bbe9234c89a03c733",
+          "previousSha256": null
+        },
+        {
+          "file": "/Users/briansam-bodden/.m2/repository/org/modeljars/composite/granite-answerability/0.1.56/granite-answerability-0.1.56.pom",
+          "sha256": "8addde6e95b66955e3646869296f48c5355bc41e922f23788e1156d1f3f2d84a",
+          "previousSha256": null
+        },
+        {
+          "file": "/Users/briansam-bodden/.m2/repository/org/modeljars/composite/granite-answerability/0.1.56/granite-answerability-0.1.56.module",
+          "sha256": "9215944b58c9fd197496b9a33c3ab897f3ce375695d06cf4d2b5d0315f8220c2",
+          "previousSha256": null
+        }
+      ]
+    },
+    {
+      "coordinate": "org.modeljars.composite:harriet:0.1.56",
+      "files": [
+        {
+          "file": "/Users/briansam-bodden/.m2/repository/org/modeljars/composite/harriet/0.1.56/harriet-0.1.56.jar",
+          "sha256": "33e2857175ca91e60be3c87ca15e6036d16ccefe719a5fab7b252df471f85ab9",
+          "previousSha256": null
+        },
+        {
+          "file": "/Users/briansam-bodden/.m2/repository/org/modeljars/composite/harriet/0.1.56/harriet-0.1.56.pom",
+          "sha256": "28a64584d0acda68cb9a95f8341ff7e85d4fb2deba580eea897168c6cf93c3f2",
+          "previousSha256": null
+        },
+        {
+          "file": "/Users/briansam-bodden/.m2/repository/org/modeljars/composite/harriet/0.1.56/harriet-0.1.56.module",
+          "sha256": "5b70e555fd35cc3da71afb7010662a72035d2d8703427873624419ff2286916e",
+          "previousSha256": null
+        }
+      ]
+    },
+    {
+      "coordinate": "org.modeljars:modeljars:0.1.56",
+      "files": [
+        {
+          "file": "/Users/briansam-bodden/.m2/repository/org/modeljars/modeljars/0.1.56/modeljars-0.1.56.jar",
+          "sha256": "53d7ce617e5f31c5fd734e88d1ff6a0c08af5c479bbe716a6973a00c84dc3b08",
+          "previousSha256": null
+        },
+        {
+          "file": "/Users/briansam-bodden/.m2/repository/org/modeljars/modeljars/0.1.56/modeljars-0.1.56.pom",
+          "sha256": "2deca28eaa3e15e48e66b75764eee1d55e6221fc43c0efc031da7db8cdedf303",
+          "previousSha256": null
+        },
+        {
+          "file": "/Users/briansam-bodden/.m2/repository/org/modeljars/modeljars/0.1.56/modeljars-0.1.56.module",
+          "sha256": "fa92c7c1d9b23100fe9180a33ceae3dd9c60247f57e634d5cd8d8801e2fbeced",
+          "previousSha256": null
+        }
+      ]
+    },
+    {
+      "coordinate": "org.modeljars:modeljars-catalog:0.1.56",
+      "files": [
+        {
+          "file": "/Users/briansam-bodden/.m2/repository/org/modeljars/modeljars-catalog/0.1.56/modeljars-catalog-0.1.56.jar",
+          "sha256": "5b6b1500c12cb421d0d177ac94eeb41160ba3e30c0ea420f8859e364b403e0fe",
+          "previousSha256": null
+        },
+        {
+          "file": "/Users/briansam-bodden/.m2/repository/org/modeljars/modeljars-catalog/0.1.56/modeljars-catalog-0.1.56.pom",
+          "sha256": "228ec44881e16217ad144844da9e3ff14eadb26d435534c372c378f2ce6df8d6",
+          "previousSha256": null
+        },
+        {
+          "file": "/Users/briansam-bodden/.m2/repository/org/modeljars/modeljars-catalog/0.1.56/modeljars-catalog-0.1.56.module",
+          "sha256": "2e5fa934335c57b4248da29ca455f09761478fc85824e672a10b3310d5cd987e",
+          "previousSha256": null
+        }
+      ]
+    },
+    {
+      "coordinate": "org.modeljars:modeljars-cli:0.1.56",
+      "files": [
+        {
+          "file": "/Users/briansam-bodden/.m2/repository/org/modeljars/modeljars-cli/0.1.56/modeljars-cli-0.1.56.jar",
+          "sha256": "8e3021763810b4709bfb181ac1b3b77d25f1192cadd826f11aed11d73e0aa382",
+          "previousSha256": null
+        },
+        {
+          "file": "/Users/briansam-bodden/.m2/repository/org/modeljars/modeljars-cli/0.1.56/modeljars-cli-0.1.56.pom",
+          "sha256": "ad8db2e9b7743361c0936a09d861ea054006964f06618eb311dd3a684f641ae7",
+          "previousSha256": null
+        },
+        {
+          "file": "/Users/briansam-bodden/.m2/repository/org/modeljars/modeljars-cli/0.1.56/modeljars-cli-0.1.56.module",
+          "sha256": "e7fc07cb2dfa887a8037c65301148312946566a3f797e3a1a93268ee7cf31723",
+          "previousSha256": null
+        }
+      ]
+    },
+    {
+      "coordinate": "org.modeljars:modeljars-core:0.1.56",
+      "files": [
+        {
+          "file": "/Users/briansam-bodden/.m2/repository/org/modeljars/modeljars-core/0.1.56/modeljars-core-0.1.56.jar",
+          "sha256": "61ed9048393c21ae11e295e9e272d5de7df629ebfad7617675a87d1309f1dd9f",
+          "previousSha256": null
+        },
+        {
+          "file": "/Users/briansam-bodden/.m2/repository/org/modeljars/modeljars-core/0.1.56/modeljars-core-0.1.56.pom",
+          "sha256": "68a788f5b46b6c1b7fea98152d2afbe25b887251e6e6396c55caac80d9c9ea54",
+          "previousSha256": null
+        },
+        {
+          "file": "/Users/briansam-bodden/.m2/repository/org/modeljars/modeljars-core/0.1.56/modeljars-core-0.1.56.module",
+          "sha256": "a74da24f3c2750a195c73f5d63de0cfb6df1175376ea0652da91c12ed89e3b56",
+          "previousSha256": null
+        }
+      ]
+    }
+  ]
+}

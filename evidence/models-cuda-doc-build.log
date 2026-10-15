@@ -1,0 +1,887 @@
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by net.rubygrapefruit.platform.internal.NativeLibraryLoader in an unnamed module (file:/Users/briansam-bodden/.gradle/wrapper/dists/gradle-9.4.1-all/eckclv9s5vi9exbmnyvpg2a3h/gradle-9.4.1/lib/native-platform-0.22-milestone-29.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.4.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :spotlessInternalRegisterDependencies UP-TO-DATE
+> Task :backend-apple:spotlessJava UP-TO-DATE
+> Task :backend-apple:spotlessJavaCheck UP-TO-DATE
+> Task :backend-apple:spotlessCheck UP-TO-DATE
+> Task :backend-cuda:spotlessJava UP-TO-DATE
+> Task :backend-cuda:spotlessJavaCheck UP-TO-DATE
+> Task :backend-cuda:spotlessCheck UP-TO-DATE
+> Task :backend-java:spotlessJava UP-TO-DATE
+> Task :backend-java:spotlessJavaCheck UP-TO-DATE
+> Task :backend-java:spotlessCheck UP-TO-DATE
+> Task :backend-native:spotlessJava UP-TO-DATE
+> Task :backend-native:spotlessJavaCheck UP-TO-DATE
+> Task :backend-native:spotlessCheck UP-TO-DATE
+> Task :models:spotlessJava UP-TO-DATE
+> Task :models:spotlessJavaCheck UP-TO-DATE
+> Task :models:spotlessCheck UP-TO-DATE
+> Task :models-accelerator-bench:spotlessJava UP-TO-DATE
+> Task :models-accelerator-bench:spotlessJavaCheck UP-TO-DATE
+> Task :models-accelerator-bench:spotlessCheck UP-TO-DATE
+> Task :models-api:spotlessJava UP-TO-DATE
+> Task :models-api:spotlessJavaCheck UP-TO-DATE
+> Task :models-api:spotlessCheck UP-TO-DATE
+> Task :models-audio:spotlessJava UP-TO-DATE
+> Task :models-audio:spotlessJavaCheck UP-TO-DATE
+> Task :models-audio:spotlessCheck UP-TO-DATE
+> Task :models-backend-onnx:spotlessJava UP-TO-DATE
+> Task :models-backend-onnx:spotlessJavaCheck UP-TO-DATE
+> Task :models-backend-onnx:spotlessCheck UP-TO-DATE
+> Task :models-bench:spotlessJava UP-TO-DATE
+> Task :models-bench:spotlessJavaCheck UP-TO-DATE
+> Task :models-bench:spotlessCheck UP-TO-DATE
+> Task :models-decisions:spotlessJava UP-TO-DATE
+> Task :models-decisions:spotlessJavaCheck UP-TO-DATE
+> Task :models-decisions:spotlessCheck UP-TO-DATE
+> Task :models-embedding:spotlessJava UP-TO-DATE
+> Task :models-embedding:spotlessJavaCheck UP-TO-DATE
+> Task :models-embedding:spotlessCheck UP-TO-DATE
+> Task :models-langchain4j:spotlessJava UP-TO-DATE
+> Task :models-langchain4j:spotlessJavaCheck UP-TO-DATE
+> Task :models-langchain4j:spotlessCheck UP-TO-DATE
+> Task :models-quarkus:spotlessJava UP-TO-DATE
+> Task :models-quarkus:spotlessJavaCheck UP-TO-DATE
+> Task :models-quarkus:spotlessCheck UP-TO-DATE
+> Task :models-rag:spotlessJava UP-TO-DATE
+> Task :models-rag:spotlessJavaCheck UP-TO-DATE
+> Task :models-rag:spotlessCheck UP-TO-DATE
+> Task :models-rag-bench:spotlessJava UP-TO-DATE
+> Task :models-rag-bench:spotlessJavaCheck UP-TO-DATE
+> Task :models-rag-bench:spotlessCheck UP-TO-DATE
+> Task :models-router:spotlessJava UP-TO-DATE
+> Task :models-router:spotlessJavaCheck UP-TO-DATE
+> Task :models-router:spotlessCheck UP-TO-DATE
+> Task :models-runtime:spotlessJava UP-TO-DATE
+> Task :models-runtime:spotlessJavaCheck UP-TO-DATE
+> Task :models-runtime:spotlessCheck UP-TO-DATE
+> Task :models-semantic-kernel:spotlessJava UP-TO-DATE
+> Task :models-semantic-kernel:spotlessJavaCheck UP-TO-DATE
+> Task :models-semantic-kernel:spotlessCheck UP-TO-DATE
+> Task :models-semantic-order:spotlessJava UP-TO-DATE
+> Task :models-semantic-order:spotlessJavaCheck UP-TO-DATE
+> Task :models-semantic-order:spotlessCheck UP-TO-DATE
+> Task :models-spring-ai:spotlessJava UP-TO-DATE
+> Task :models-spring-ai:spotlessJavaCheck UP-TO-DATE
+> Task :models-spring-ai:spotlessCheck UP-TO-DATE
+> Task :models-spring-boot-starter:spotlessJava UP-TO-DATE
+> Task :models-spring-boot-starter:spotlessJavaCheck UP-TO-DATE
+> Task :models-spring-boot-starter:spotlessCheck UP-TO-DATE
+> Task :models-test:spotlessJava UP-TO-DATE
+> Task :models-test:spotlessJavaCheck UP-TO-DATE
+> Task :models-test:spotlessCheck UP-TO-DATE
+> Task :compileJava NO-SOURCE
+> Task :processResources NO-SOURCE
+> Task :classes UP-TO-DATE
+> Task :jar UP-TO-DATE
+> Task :assemble UP-TO-DATE
+> Task :compileTestJava NO-SOURCE
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+> Task :test NO-SOURCE
+> Task :invalidateReleaseDependencyReceipt
+> Task :backend-apple:verifyDependencyPolicy
+> Task :backend-cuda:verifyDependencyPolicy
+> Task :backend-java:verifyDependencyPolicy
+> Task :backend-native:verifyDependencyPolicy
+> Task :models:verifyDependencyPolicy
+> Task :models-api:verifyDependencyPolicy
+> Task :models-audio:verifyDependencyPolicy
+> Task :models-decisions:verifyDependencyPolicy
+> Task :models-embedding:verifyDependencyPolicy
+> Task :models-langchain4j:verifyDependencyPolicy
+> Task :models-rag:verifyDependencyPolicy
+> Task :models-router:verifyDependencyPolicy
+> Task :models-runtime:verifyDependencyPolicy
+> Task :models-semantic-order:verifyDependencyPolicy
+> Task :models-spring-ai:verifyDependencyPolicy
+> Task :models-spring-boot-starter:verifyDependencyPolicy
+> Task :verifyResolvedDependencyChain
+> Task :verifySharedDependencyPolicy
+> Task :check
+> Task :build
+> Task :models-api:compileJava UP-TO-DATE
+> Task :backend-apple:compileJava UP-TO-DATE
+> Task :writeReleaseDependencyManifest UP-TO-DATE
+> Task :backend-apple:processResources UP-TO-DATE
+> Task :backend-apple:classes UP-TO-DATE
+> Task :backend-apple:jar UP-TO-DATE
+> Task :backend-apple:javadoc UP-TO-DATE
+> Task :backend-apple:javadocJar UP-TO-DATE
+> Task :backend-apple:sourcesJar UP-TO-DATE
+> Task :backend-apple:assemble UP-TO-DATE
+> Task :backend-apple:compileTestJava UP-TO-DATE
+> Task :backend-apple:processTestResources NO-SOURCE
+> Task :backend-apple:testClasses UP-TO-DATE
+> Task :models-api:processResources UP-TO-DATE
+> Task :models-api:classes UP-TO-DATE
+> Task :models-api:jar UP-TO-DATE
+> Task :backend-apple:test UP-TO-DATE
+> Task :backend-apple:integrationTest UP-TO-DATE
+> Task :backend-apple:jacocoTestCoverageVerification UP-TO-DATE
+> Task :backend-apple:spotbugsMain UP-TO-DATE
+> Task :backend-apple:spotbugsTest SKIPPED
+> Task :backend-apple:verifyAppleBackendArchives
+> Task :backend-apple:check
+> Task :backend-apple:build
+> Task :backend-java:compileJava UP-TO-DATE
+> Task :backend-cuda:compileJava UP-TO-DATE
+> Task :backend-cuda:verifyRustToolchain
+> Task :backend-cuda:compilePtx UP-TO-DATE
+> Task :backend-cuda:preparePtxResources UP-TO-DATE
+> Task :backend-cuda:processResources UP-TO-DATE
+> Task :backend-cuda:classes UP-TO-DATE
+> Task :backend-cuda:jar UP-TO-DATE
+> Task :backend-cuda:javadoc UP-TO-DATE
+> Task :backend-cuda:javadocJar UP-TO-DATE
+> Task :backend-cuda:sourcesJar UP-TO-DATE
+> Task :backend-cuda:assemble UP-TO-DATE
+
+> Task :backend-cuda:cargoClippy
+    Finished `release` profile [optimized] target(s) in 0.19s
+
+> Task :backend-cuda:cargoTestHost
+    Finished `release` profile [optimized] target(s) in 0.12s
+     Running unittests src/lib.rs (build/rust-target/release/deps/models_cuda_kernels-9dbb737597e028b6)
+
+running 0 tests
+
+     Running tests/attention_parity.rs (build/rust-target/release/deps/attention_parity-ee05e93893debc14)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 12 tests
+test a_single_position_softmaxes_to_exactly_one ... ok
+test expf_handles_the_edges_softmax_can_reach ... ok
+test shape_validation_rejects_what_the_kernel_cannot_serve ... ok
+test softmax_weights_sum_to_one_within_rounding ... ok
+test the_libraries_reduction_constants_are_the_javas_bit_for_bit ... ok
+test expf_is_bit_identical_to_the_cpu_kernels_exp ... ok
+test grouped_query_heads_read_the_kv_head_they_share ... ok
+test the_declared_contract_is_tight_enough_to_catch_a_wrong_kernel ... ok
+test expf_agrees_with_the_platform_exp_over_the_softmax_range ... ok
+test a_head_is_bit_exact_against_the_cpu_kernel ... ok
+test the_device_decomposition_is_bit_exact_with_the_crate_reference ... ok
+test one_head_meets_the_declared_contract_against_the_cpu_kernel ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s
+
+     Running tests/kquant_parity.rs (build/rust-target/release/deps/kquant_parity-7e8a6abf82051026)
+
+running 14 tests
+test an_all_zero_activation_block_produces_a_zero_scale_and_a_zero_dot ... ok
+test batched_rows_select_the_right_activation_plane ... ok
+test q8k_quantisation_keeps_scales_sums_and_quants_consistent ... ok
+test six_bit_scale_and_minimum_unpacking_matches_the_cpu_reference ... ok
+test q4k_row_dot_is_bit_exact_with_the_cpu_reference ... ok
+test q6k_row_dot_is_bit_exact_with_the_cpu_reference ... ok
+test f16_conversion_matches_the_cpu_reference_across_every_bit_pattern ... ok
+test q4k_warp_decomposition_is_bit_exact_for_every_lane_count ... ok
+test the_widest_supported_row_stays_bit_exact ... ok
+test q6k_warp_decomposition_is_bit_exact_for_every_lane_count ... ok
+test both_formats_are_bit_exact_at_every_bisection_width ... ok
+test the_two_cpu_q6k_reductions_do_not_agree_bit_for_bit ... ok
+test q6k_row_dot_is_the_panama_control_and_not_the_eight_lane_fold ... ok
+test q8k_quantisation_round_trips_the_ggml_rounding_rule ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+   Doc-tests models_cuda_kernels
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+> Task :models-runtime:compileJava UP-TO-DATE
+> Task :backend-cuda:compileTestJava UP-TO-DATE
+> Task :backend-cuda:processTestResources NO-SOURCE
+> Task :backend-cuda:testClasses UP-TO-DATE
+> Task :backend-java:processResources UP-TO-DATE
+> Task :backend-java:classes UP-TO-DATE
+> Task :backend-java:jar UP-TO-DATE
+> Task :models-runtime:processResources UP-TO-DATE
+> Task :models-runtime:classes UP-TO-DATE
+> Task :models-runtime:jar UP-TO-DATE
+> Task :backend-cuda:test UP-TO-DATE
+> Task :backend-cuda:jacocoTestCoverageVerification UP-TO-DATE
+> Task :backend-cuda:spotbugsMain UP-TO-DATE
+> Task :backend-cuda:spotbugsTest SKIPPED
+> Task :backend-cuda:verifyPtxArtifact
+> Task :backend-cuda:check
+> Task :backend-cuda:build
+> Task :backend-java:javadoc UP-TO-DATE
+> Task :backend-java:javadocJar UP-TO-DATE
+> Task :backend-java:sourcesJar UP-TO-DATE
+> Task :backend-java:assemble UP-TO-DATE
+> Task :backend-java:compileTestJava UP-TO-DATE
+> Task :backend-java:processTestResources UP-TO-DATE
+> Task :backend-java:testClasses UP-TO-DATE
+> Task :backend-java:test UP-TO-DATE
+> Task :backend-java:jacocoTestCoverageVerification UP-TO-DATE
+> Task :backend-java:spotbugsMain UP-TO-DATE
+> Task :backend-java:spotbugsTest SKIPPED
+> Task :backend-java:check
+> Task :backend-java:build
+> Task :backend-native:compileJava UP-TO-DATE
+> Task :backend-native:processResources UP-TO-DATE
+> Task :backend-native:classes UP-TO-DATE
+> Task :backend-native:jar UP-TO-DATE
+> Task :backend-native:javadoc UP-TO-DATE
+> Task :backend-native:javadocJar UP-TO-DATE
+> Task :backend-native:sourcesJar UP-TO-DATE
+> Task :backend-native:assemble UP-TO-DATE
+
+> Task :backend-native:cargoClippy
+    Finished `release` profile [optimized] target(s) in 0.10s
+
+> Task :backend-native:cargoTest
+    Finished `release` profile [optimized] target(s) in 0.09s
+     Running unittests src/lib.rs (build/rust-target/release/deps/jmodels_kernels-97a5bc4802e1fe53)
+
+running 31 tests
+test tests::batch_scratch_uses_stack_capacity_and_heap_fallback ... ok
+test tests::exports_stable_abi_and_capabilities ... ok
+test tests::completion_poll_observes_finished_workers_without_parking ... ok
+test tests::avx2_q5_0_bit_plane_matches_scalar_kernel ... ok
+test tests::avx2_q5_0_row_reduces_simd_lanes_once ... ok
+test tests::avx2_k_quantized_rows_match_scalar_kernels ... ok
+test tests::avx2_q8_0_quantization_matches_scalar_exactly ... ok
+test tests::avx2_q8_0_row_matches_scalar_ordered_accumulation ... ok
+test tests::batched_k_quantized_rows_decode_each_weight_block_once ... ok
+test tests::half_conversion_preserves_subnormal_boundaries ... ok
+test tests::half_round_trip_matches_known_values ... ok
+test tests::gated_delta_net_matches_pinned_freetoken_recurrence ... ok
+test tests::creates_and_joins_persistent_worker_context ... ok
+test tests::grouped_gated_delta_net_rejects_an_out_of_range_slot ... ok
+test tests::grouped_attention_matches_a_naive_reference_across_two_spans_and_workers ... ok
+test tests::grouped_gated_delta_net_matches_each_row_stepped_alone ... ok
+test tests::grouped_projection_uses_one_worker_generation ... ok
+test tests::chunked_gated_delta_net_matches_the_sequential_recurrence ... ok
+test tests::independent_projections_use_one_worker_generation ... ok
+test tests::a_published_job_partitions_across_the_active_pool_and_leaves_the_gate_alone ... ok
+test tests::prefill_budget ... ignored
+test tests::q5_1_grouping_is_refused_rather_than_given_empty_activations ... ok
+test tests::persistent_context_reuses_activation_workspace ... ok
+test tests::partition_count_bounds_the_rows_a_worker_takes ... ok
+test tests::q5_1_unpack_matches_the_block_layout ... ok
+test tests::q5_1_scalar_and_avx2_rows_agree_exactly ... ok
+test tests::rejects_invalid_dimensions_without_dereferencing_buffers ... ok
+test tests::worker_poll_observes_a_published_generation_without_parking ... ok
+test tests::worker_accounts_for_a_published_generation_without_a_job ... ok
+test tests::active_count_changes_keep_every_generation_completing ... ok
+test tests::persistent_workers_complete_repeated_generations ... ok
+
+test result: ok. 30 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+
+> Task :backend-native:cargoBuildRelease UP-TO-DATE
+> Task :backend-native:compileTestJava UP-TO-DATE
+> Task :backend-native:verifyNativeBuildPlatform
+> Task :backend-native:prepareNativePlatformResources UP-TO-DATE
+> Task :backend-native:nativePlatformJar UP-TO-DATE
+> Task :backend-native:processTestResources NO-SOURCE
+> Task :backend-native:testClasses UP-TO-DATE
+> Task :backend-native:test UP-TO-DATE
+> Task :backend-native:jacocoTestCoverageVerification UP-TO-DATE
+> Task :backend-native:spotbugsMain UP-TO-DATE
+> Task :backend-native:spotbugsTest SKIPPED
+> Task :backend-native:verifyNativePlatformJar
+> Task :backend-native:check
+> Task :backend-native:build
+> Task :docs:cleanGeneratedSite
+> Task :docs:nodeSetup UP-TO-DATE
+> Task :docs:npmSetup UP-TO-DATE
+> Task :docs:installAntora UP-TO-DATE
+> Task :cleanCollectedJavadocs
+> Task :models-audio:compileJava UP-TO-DATE
+> Task :models-decisions:compileJava UP-TO-DATE
+> Task :models-embedding:compileJava UP-TO-DATE
+> Task :models-router:compileJava UP-TO-DATE
+> Task :models-langchain4j:compileJava UP-TO-DATE
+> Task :models-rag:compileJava UP-TO-DATE
+> Task :models-semantic-order:compileJava UP-TO-DATE
+> Task :models-spring-ai:compileJava UP-TO-DATE
+> Task :models-spring-boot-starter:compileJava UP-TO-DATE
+
+> Task :aggregateJavadoc
+warning: [incubating] using incubating module(s): jdk.incubator.vector
+warning: [incubating] using incubating module(s): jdk.incubator.vector
+2 warnings
+
+> Task :copyJavadoc_backend-apple
+> Task :copyJavadoc_backend-cuda
+> Task :copyJavadoc_backend-java
+> Task :copyJavadoc_backend-native
+> Task :models-api:javadoc UP-TO-DATE
+> Task :copyJavadoc_models-api
+> Task :models-audio:processResources UP-TO-DATE
+> Task :models-audio:classes UP-TO-DATE
+> Task :models-audio:javadoc UP-TO-DATE
+> Task :copyJavadoc_models-audio
+> Task :models-decisions:processResources UP-TO-DATE
+> Task :models-decisions:classes UP-TO-DATE
+> Task :models-decisions:javadoc UP-TO-DATE
+> Task :copyJavadoc_models-decisions
+> Task :models-embedding:processResources UP-TO-DATE
+> Task :models-embedding:classes UP-TO-DATE
+> Task :models-embedding:javadoc UP-TO-DATE
+> Task :copyJavadoc_models-embedding
+> Task :models-langchain4j:processResources UP-TO-DATE
+> Task :models-langchain4j:classes UP-TO-DATE
+> Task :models-langchain4j:javadoc UP-TO-DATE
+> Task :copyJavadoc_models-langchain4j
+> Task :models-rag:processResources UP-TO-DATE
+> Task :models-rag:classes UP-TO-DATE
+> Task :models-rag:javadoc UP-TO-DATE
+> Task :copyJavadoc_models-rag
+> Task :models-router:processResources UP-TO-DATE
+> Task :models-router:classes UP-TO-DATE
+> Task :models-router:javadoc UP-TO-DATE
+> Task :copyJavadoc_models-router
+> Task :models-runtime:javadoc UP-TO-DATE
+> Task :copyJavadoc_models-runtime
+> Task :models-semantic-order:processResources UP-TO-DATE
+> Task :models-semantic-order:classes UP-TO-DATE
+> Task :models-semantic-order:javadoc UP-TO-DATE
+> Task :copyJavadoc_models-semantic-order
+> Task :models-spring-ai:processResources UP-TO-DATE
+> Task :models-spring-ai:classes UP-TO-DATE
+> Task :models-spring-ai:javadoc UP-TO-DATE
+> Task :copyJavadoc_models-spring-ai
+> Task :models-spring-boot-starter:processResources UP-TO-DATE
+> Task :models-spring-boot-starter:classes UP-TO-DATE
+> Task :models-spring-boot-starter:javadoc UP-TO-DATE
+> Task :copyJavadoc_models-spring-boot-starter
+> Task :generateModuleJavadocs
+> Task :docs:copyJavadocs UP-TO-DATE
+> Task :docs:verifyJavadocAttachments
+> Task :docs:generateSite
+> Task :docs:assemble
+> Task :docs:check UP-TO-DATE
+> Task :docs:verifyGeneratedSite
+> Task :docs:build
+> Task :models:compileJava NO-SOURCE
+> Task :models:processResources UP-TO-DATE
+> Task :models:classes UP-TO-DATE
+> Task :models:jar UP-TO-DATE
+> Task :models:javadoc NO-SOURCE
+> Task :models:javadocJar UP-TO-DATE
+> Task :models:sourcesJar UP-TO-DATE
+> Task :models:assemble UP-TO-DATE
+> Task :models:compileTestJava NO-SOURCE
+> Task :models:processTestResources NO-SOURCE
+> Task :models:testClasses UP-TO-DATE
+> Task :models:test NO-SOURCE
+> Task :models:jacocoTestCoverageVerification SKIPPED
+> Task :models:spotbugsMain NO-SOURCE
+> Task :models:spotbugsTest SKIPPED
+> Task :models:verifyFacadeRuntimeFootprint
+> Task :models:check
+> Task :models:build
+> Task :models-accelerator-bench:compileJava UP-TO-DATE
+> Task :models-accelerator-bench:processResources NO-SOURCE
+> Task :models-accelerator-bench:classes UP-TO-DATE
+> Task :models-accelerator-bench:jar UP-TO-DATE
+> Task :models-accelerator-bench:startScripts UP-TO-DATE
+> Task :models-accelerator-bench:distTar UP-TO-DATE
+> Task :models-accelerator-bench:distZip UP-TO-DATE
+> Task :models-accelerator-bench:assemble UP-TO-DATE
+> Task :models-accelerator-bench:spotbugsMain UP-TO-DATE
+> Task :models-accelerator-bench:compileTestJava UP-TO-DATE
+> Task :models-accelerator-bench:processTestResources NO-SOURCE
+> Task :models-accelerator-bench:testClasses UP-TO-DATE
+> Task :models-accelerator-bench:spotbugsTest SKIPPED
+> Task :models-accelerator-bench:test UP-TO-DATE
+> Task :models-accelerator-bench:check UP-TO-DATE
+> Task :models-accelerator-bench:build UP-TO-DATE
+> Task :models-api:javadocJar UP-TO-DATE
+> Task :models-api:sourcesJar UP-TO-DATE
+> Task :models-api:assemble UP-TO-DATE
+> Task :models-api:compileTestJava UP-TO-DATE
+> Task :models-api:processTestResources NO-SOURCE
+> Task :models-api:testClasses UP-TO-DATE
+> Task :models-api:test UP-TO-DATE
+> Task :models-api:jacocoTestCoverageVerification UP-TO-DATE
+> Task :models-api:spotbugsMain UP-TO-DATE
+> Task :models-api:spotbugsTest SKIPPED
+> Task :models-api:check
+> Task :models-api:build
+> Task :models-audio:jar UP-TO-DATE
+> Task :models-audio:javadocJar UP-TO-DATE
+> Task :models-audio:sourcesJar UP-TO-DATE
+> Task :models-audio:assemble UP-TO-DATE
+> Task :models-audio:compileTestJava UP-TO-DATE
+> Task :models-audio:processTestResources UP-TO-DATE
+> Task :models-audio:testClasses UP-TO-DATE
+> Task :models-audio:test UP-TO-DATE
+> Task :models-audio:jacocoTestCoverageVerification UP-TO-DATE
+> Task :models-audio:spotbugsMain UP-TO-DATE
+> Task :models-audio:spotbugsTest SKIPPED
+> Task :models-audio:check
+> Task :models-audio:build
+> Task :models-backend-onnx:compileJava UP-TO-DATE
+> Task :models-backend-onnx:processResources NO-SOURCE
+> Task :models-backend-onnx:classes UP-TO-DATE
+> Task :models-backend-onnx:jar UP-TO-DATE
+> Task :models-backend-onnx:javadoc SKIPPED
+> Task :models-backend-onnx:javadocJar UP-TO-DATE
+> Task :models-backend-onnx:sourcesJar UP-TO-DATE
+> Task :models-backend-onnx:assemble UP-TO-DATE
+> Task :models-backend-onnx:spotbugsMain NO-SOURCE
+> Task :models-backend-onnx:compileTestJava NO-SOURCE
+> Task :models-backend-onnx:processTestResources NO-SOURCE
+> Task :models-backend-onnx:testClasses UP-TO-DATE
+> Task :models-backend-onnx:spotbugsTest SKIPPED
+> Task :models-backend-onnx:test NO-SOURCE
+> Task :models-backend-onnx:check UP-TO-DATE
+> Task :models-backend-onnx:build UP-TO-DATE
+> Task :models-bench:compileJava UP-TO-DATE
+> Task :models-bench:processResources UP-TO-DATE
+> Task :models-bench:classes UP-TO-DATE
+> Task :models-bench:jar UP-TO-DATE
+> Task :models-router:jar UP-TO-DATE
+> Task :models-bench:startScripts UP-TO-DATE
+> Task :models-bench:distTar UP-TO-DATE
+> Task :models-bench:distZip UP-TO-DATE
+> Task :models-bench:assemble UP-TO-DATE
+> Task :models-bench:compileTestJava UP-TO-DATE
+> Task :models-bench:processTestResources UP-TO-DATE
+> Task :models-bench:testClasses UP-TO-DATE
+> Task :models-bench:compileJmhJava UP-TO-DATE
+> Task :models-bench:processJmhResources NO-SOURCE
+> Task :models-bench:jmhClasses UP-TO-DATE
+> Task :models-bench:spotbugsJmh UP-TO-DATE
+> Task :models-bench:spotbugsMain UP-TO-DATE
+> Task :models-bench:spotbugsTest SKIPPED
+> Task :models-bench:test UP-TO-DATE
+> Task :models-bench:check UP-TO-DATE
+> Task :models-bench:build UP-TO-DATE
+> Task :models-decisions:jar UP-TO-DATE
+> Task :models-decisions:javadocJar UP-TO-DATE
+> Task :models-decisions:sourcesJar UP-TO-DATE
+> Task :models-decisions:assemble UP-TO-DATE
+> Task :models-decisions:compileTestJava UP-TO-DATE
+> Task :models-decisions:processTestResources NO-SOURCE
+> Task :models-decisions:testClasses UP-TO-DATE
+> Task :models-decisions:test UP-TO-DATE
+> Task :models-decisions:jacocoTestCoverageVerification UP-TO-DATE
+> Task :models-decisions:spotbugsMain UP-TO-DATE
+> Task :models-decisions:spotbugsTest SKIPPED
+> Task :models-decisions:check
+> Task :models-decisions:build
+> Task :models-embedding:jar UP-TO-DATE
+> Task :models-embedding:javadocJar UP-TO-DATE
+> Task :models-embedding:sourcesJar UP-TO-DATE
+> Task :models-embedding:assemble UP-TO-DATE
+> Task :models-embedding:compileTestJava UP-TO-DATE
+> Task :models-embedding:processTestResources NO-SOURCE
+> Task :models-embedding:testClasses UP-TO-DATE
+> Task :models-embedding:test UP-TO-DATE
+> Task :models-embedding:jacocoTestCoverageVerification UP-TO-DATE
+> Task :models-embedding:spotbugsMain UP-TO-DATE
+> Task :models-embedding:spotbugsTest SKIPPED
+> Task :models-embedding:check
+> Task :models-embedding:build
+> Task :models-langchain4j:jar UP-TO-DATE
+> Task :models-langchain4j:javadocJar UP-TO-DATE
+> Task :models-langchain4j:sourcesJar UP-TO-DATE
+> Task :models-langchain4j:assemble UP-TO-DATE
+> Task :models-langchain4j:compileTestJava UP-TO-DATE
+> Task :models-langchain4j:processTestResources NO-SOURCE
+> Task :models-langchain4j:testClasses UP-TO-DATE
+> Task :models-langchain4j:test UP-TO-DATE
+> Task :models-langchain4j:jacocoTestCoverageVerification UP-TO-DATE
+> Task :models-langchain4j:spotbugsMain UP-TO-DATE
+> Task :models-langchain4j:spotbugsTest SKIPPED
+> Task :models-langchain4j:check
+> Task :models-langchain4j:build
+> Task :models-quarkus:compileJava UP-TO-DATE
+> Task :models-quarkus:processResources NO-SOURCE
+> Task :models-quarkus:classes UP-TO-DATE
+> Task :models-quarkus:jar UP-TO-DATE
+> Task :models-quarkus:javadoc SKIPPED
+> Task :models-quarkus:javadocJar UP-TO-DATE
+> Task :models-quarkus:sourcesJar UP-TO-DATE
+> Task :models-quarkus:assemble UP-TO-DATE
+> Task :models-quarkus:spotbugsMain NO-SOURCE
+> Task :models-quarkus:compileTestJava NO-SOURCE
+> Task :models-quarkus:processTestResources NO-SOURCE
+> Task :models-quarkus:testClasses UP-TO-DATE
+> Task :models-quarkus:spotbugsTest SKIPPED
+> Task :models-quarkus:test NO-SOURCE
+> Task :models-quarkus:check UP-TO-DATE
+> Task :models-quarkus:build UP-TO-DATE
+> Task :models-rag:jar UP-TO-DATE
+> Task :models-rag:javadocJar UP-TO-DATE
+> Task :models-rag:sourcesJar UP-TO-DATE
+> Task :models-rag:assemble UP-TO-DATE
+> Task :models-rag:compileTestJava UP-TO-DATE
+> Task :models-rag:processTestResources NO-SOURCE
+> Task :models-rag:testClasses UP-TO-DATE
+> Task :models-rag:test UP-TO-DATE
+> Task :models-rag:jacocoTestCoverageVerification UP-TO-DATE
+> Task :models-rag:spotbugsMain UP-TO-DATE
+> Task :models-rag:spotbugsTest SKIPPED
+> Task :models-rag:check
+> Task :models-rag:build
+> Task :models-rag-bench:compileJava UP-TO-DATE
+> Task :models-rag-bench:processResources UP-TO-DATE
+> Task :models-rag-bench:classes UP-TO-DATE
+> Task :models-rag-bench:jar UP-TO-DATE
+> Task :models-spring-ai:jar UP-TO-DATE
+> Task :models-rag-bench:startScripts UP-TO-DATE
+> Task :models-rag-bench:distTar UP-TO-DATE
+> Task :models-rag-bench:distZip UP-TO-DATE
+> Task :models-rag-bench:assemble UP-TO-DATE
+> Task :models-rag-bench:spotbugsMain UP-TO-DATE
+> Task :models-rag-bench:compileTestJava UP-TO-DATE
+> Task :models-rag-bench:processTestResources NO-SOURCE
+> Task :models-rag-bench:testClasses UP-TO-DATE
+> Task :models-rag-bench:spotbugsTest SKIPPED
+> Task :models-rag-bench:test UP-TO-DATE
+> Task :models-rag-bench:check UP-TO-DATE
+> Task :models-rag-bench:build UP-TO-DATE
+> Task :models-router:javadocJar UP-TO-DATE
+> Task :models-router:sourcesJar UP-TO-DATE
+> Task :models-router:assemble UP-TO-DATE
+> Task :models-router:compileTestJava UP-TO-DATE
+> Task :models-router:processTestResources NO-SOURCE
+> Task :models-router:testClasses UP-TO-DATE
+> Task :models-router:test UP-TO-DATE
+> Task :models-router:jacocoTestCoverageVerification UP-TO-DATE
+> Task :models-router:spotbugsMain UP-TO-DATE
+> Task :models-router:spotbugsTest SKIPPED
+> Task :models-router:check
+> Task :models-router:build
+> Task :models-runtime:javadocJar UP-TO-DATE
+> Task :models-runtime:sourcesJar UP-TO-DATE
+> Task :models-runtime:assemble UP-TO-DATE
+> Task :models-runtime:compileTestJava UP-TO-DATE
+> Task :models-runtime:processTestResources NO-SOURCE
+> Task :models-runtime:testClasses UP-TO-DATE
+> Task :models-runtime:test UP-TO-DATE
+> Task :models-runtime:jacocoTestCoverageVerification UP-TO-DATE
+> Task :models-runtime:spotbugsMain UP-TO-DATE
+> Task :models-runtime:spotbugsTest SKIPPED
+> Task :models-runtime:check
+> Task :models-runtime:build
+> Task :models-semantic-kernel:compileJava UP-TO-DATE
+> Task :models-semantic-kernel:processResources NO-SOURCE
+> Task :models-semantic-kernel:classes UP-TO-DATE
+> Task :models-semantic-kernel:jar UP-TO-DATE
+> Task :models-semantic-kernel:javadoc SKIPPED
+> Task :models-semantic-kernel:javadocJar UP-TO-DATE
+> Task :models-semantic-kernel:sourcesJar UP-TO-DATE
+> Task :models-semantic-kernel:assemble UP-TO-DATE
+> Task :models-semantic-kernel:spotbugsMain NO-SOURCE
+> Task :models-semantic-kernel:compileTestJava NO-SOURCE
+> Task :models-semantic-kernel:processTestResources NO-SOURCE
+> Task :models-semantic-kernel:testClasses UP-TO-DATE
+> Task :models-semantic-kernel:spotbugsTest SKIPPED
+> Task :models-semantic-kernel:test NO-SOURCE
+> Task :models-semantic-kernel:check UP-TO-DATE
+> Task :models-semantic-kernel:build UP-TO-DATE
+> Task :models-semantic-order:jar UP-TO-DATE
+> Task :models-semantic-order:javadocJar UP-TO-DATE
+> Task :models-semantic-order:sourcesJar UP-TO-DATE
+> Task :models-semantic-order:assemble UP-TO-DATE
+> Task :models-semantic-order:compileTestJava UP-TO-DATE
+> Task :models-semantic-order:processTestResources NO-SOURCE
+> Task :models-semantic-order:testClasses UP-TO-DATE
+> Task :models-semantic-order:test UP-TO-DATE
+> Task :models-semantic-order:jacocoTestCoverageVerification UP-TO-DATE
+> Task :models-semantic-order:spotbugsMain UP-TO-DATE
+> Task :models-semantic-order:spotbugsTest SKIPPED
+> Task :models-semantic-order:check
+> Task :models-semantic-order:build
+> Task :models-spring-ai:javadocJar UP-TO-DATE
+> Task :models-spring-ai:sourcesJar UP-TO-DATE
+> Task :models-spring-ai:assemble UP-TO-DATE
+> Task :models-spring-ai:compileTestJava UP-TO-DATE
+> Task :models-spring-ai:processTestResources NO-SOURCE
+> Task :models-spring-ai:testClasses UP-TO-DATE
+> Task :models-spring-ai:test UP-TO-DATE
+> Task :models-spring-ai:jacocoTestCoverageVerification UP-TO-DATE
+> Task :models-spring-ai:spotbugsMain UP-TO-DATE
+> Task :models-spring-ai:spotbugsTest SKIPPED
+> Task :models-spring-ai:check
+> Task :models-spring-ai:build
+> Task :models-spring-boot-starter:jar UP-TO-DATE
+> Task :models-spring-boot-starter:javadocJar UP-TO-DATE
+> Task :models-spring-boot-starter:sourcesJar UP-TO-DATE
+> Task :models-spring-boot-starter:assemble UP-TO-DATE
+> Task :models-spring-boot-starter:compileTestJava UP-TO-DATE
+> Task :models-spring-boot-starter:processTestResources NO-SOURCE
+> Task :models-spring-boot-starter:testClasses UP-TO-DATE
+> Task :models-spring-boot-starter:test UP-TO-DATE
+> Task :models-spring-boot-starter:jacocoTestCoverageVerification UP-TO-DATE
+> Task :models-spring-boot-starter:spotbugsMain UP-TO-DATE
+> Task :models-spring-boot-starter:spotbugsTest SKIPPED
+> Task :models-spring-boot-starter:check
+> Task :models-spring-boot-starter:build
+> Task :models-test:compileJava UP-TO-DATE
+> Task :models-test:processResources NO-SOURCE
+> Task :models-test:classes UP-TO-DATE
+> Task :models-test:jar UP-TO-DATE
+> Task :models-test:javadoc SKIPPED
+> Task :models-test:javadocJar UP-TO-DATE
+> Task :models-test:sourcesJar UP-TO-DATE
+> Task :models-test:assemble UP-TO-DATE
+> Task :models-test:spotbugsMain UP-TO-DATE
+> Task :models-test:compileTestJava UP-TO-DATE
+> Task :models-test:processTestResources NO-SOURCE
+> Task :models-test:testClasses UP-TO-DATE
+> Task :models-test:spotbugsTest SKIPPED
+> Task :models-test:test UP-TO-DATE
+> Task :models-test:check UP-TO-DATE
+> Task :models-test:build UP-TO-DATE
+> Task :verifyArchitectureBoundaries
+> Task :verifyDocumentation
+
+> Task :verifyGithubWorkflows
+  Workflow: ci.yml
+  Workflow: docs.yml
+  Workflow: scorecard.yml
+  Workflow: codeql.yml
+  Workflow: mfcqi.yml
+  Workflow: release.yml
+  Workflow: native-kernels.yml
+  Workflow: apple-bridge.yml
+  Workflow: framework-compat.yml
+
+> Task :verifyGovernanceFiles
+  SECURITY.md exists (4173 bytes)
+  CONTRIBUTING.md exists (3816 bytes)
+
+> Task :verifyLockfiles
+  Lockfile: backend-apple
+  Lockfile: backend-cuda
+  Lockfile: backend-java
+  Lockfile: backend-native
+  Lockfile: models
+  Lockfile: models-api
+  Lockfile: models-audio
+  Lockfile: models-backend-onnx
+  Lockfile: models-decisions
+  Lockfile: models-embedding
+  Lockfile: models-langchain4j
+  Lockfile: models-quarkus
+  Lockfile: models-rag
+  Lockfile: models-router
+  Lockfile: models-runtime
+  Lockfile: models-semantic-kernel
+  Lockfile: models-semantic-order
+  Lockfile: models-spring-ai
+  Lockfile: models-spring-boot-starter
+  Lockfile: models-test
+
+> Task :verifyNotebookDocker
+
+> Task :verifyNotebooks
+  Notebook: 01_getting_started.ipynb
+  Notebook: 02_framework_adapters.ipynb
+  Notebook: 03_guarded_rag.ipynb
+
+> Task :verifyReleaseVersion
+> Task :verifyReleaseTrain
+> Task :backend-apple:generateMetadataFileForMavenPublication
+> Task :backend-apple:generatePomFileForMavenPublication
+> Task :backend-apple:publishMavenPublicationToStagingRepository
+> Task :backend-cuda:generateMetadataFileForMavenPublication
+> Task :backend-cuda:generatePomFileForMavenPublication
+> Task :backend-cuda:publishMavenPublicationToStagingRepository
+> Task :backend-java:generateMetadataFileForMavenPublication
+> Task :backend-java:generatePomFileForMavenPublication
+> Task :backend-java:publishMavenPublicationToStagingRepository
+> Task :backend-native:generateMetadataFileForMavenPublication
+> Task :backend-native:generatePomFileForMavenPublication
+> Task :backend-native:publishMavenPublicationToStagingRepository
+> Task :models:generateMetadataFileForMavenPublication
+> Task :models:generatePomFileForMavenPublication
+> Task :models:publishMavenPublicationToStagingRepository
+> Task :models-api:generateMetadataFileForMavenPublication
+> Task :models-api:generatePomFileForMavenPublication
+> Task :models-api:publishMavenPublicationToStagingRepository
+> Task :models-audio:generateMetadataFileForMavenPublication
+> Task :models-audio:generatePomFileForMavenPublication
+> Task :models-audio:publishMavenPublicationToStagingRepository
+> Task :models-decisions:generateMetadataFileForMavenPublication
+> Task :models-decisions:generatePomFileForMavenPublication
+> Task :models-decisions:publishMavenPublicationToStagingRepository
+> Task :models-embedding:generateMetadataFileForMavenPublication
+> Task :models-embedding:generatePomFileForMavenPublication
+> Task :models-embedding:publishMavenPublicationToStagingRepository
+> Task :models-langchain4j:generateMetadataFileForMavenPublication
+> Task :models-langchain4j:generatePomFileForMavenPublication
+> Task :models-langchain4j:publishMavenPublicationToStagingRepository
+> Task :models-rag:generateMetadataFileForMavenPublication
+> Task :models-rag:generatePomFileForMavenPublication
+> Task :models-rag:publishMavenPublicationToStagingRepository
+> Task :models-router:generateMetadataFileForMavenPublication
+> Task :models-router:generatePomFileForMavenPublication
+> Task :models-router:publishMavenPublicationToStagingRepository
+> Task :models-runtime:generateMetadataFileForMavenPublication
+> Task :models-runtime:generatePomFileForMavenPublication
+> Task :models-runtime:publishMavenPublicationToStagingRepository
+> Task :models-semantic-order:generateMetadataFileForMavenPublication
+> Task :models-semantic-order:generatePomFileForMavenPublication
+> Task :models-semantic-order:publishMavenPublicationToStagingRepository
+> Task :models-spring-ai:generateMetadataFileForMavenPublication
+> Task :models-spring-ai:generatePomFileForMavenPublication
+> Task :models-spring-ai:publishMavenPublicationToStagingRepository
+> Task :models-spring-boot-starter:generateMetadataFileForMavenPublication
+> Task :models-spring-boot-starter:generatePomFileForMavenPublication
+> Task :models-spring-boot-starter:publishMavenPublicationToStagingRepository
+
+> Task :verifyStagedPublications
+  Staged publication valid: backend-apple
+  Staged publication valid: backend-cuda
+  Staged publication valid: backend-java
+  Staged publication valid: backend-native
+  Staged publication valid: models
+  Staged publication valid: models-api
+  Staged publication valid: models-audio
+  Staged publication valid: models-decisions
+  Staged publication valid: models-embedding
+  Staged publication valid: models-langchain4j
+  Staged publication valid: models-rag
+  Staged publication valid: models-router
+  Staged publication valid: models-runtime
+  Staged publication valid: models-semantic-order
+  Staged publication valid: models-spring-ai
+  Staged publication valid: models-spring-boot-starter
+
+> Task :verifyPublishedConsumerGraph
+backend-apple: Maven PASS
+backend-cuda: Maven PASS
+backend-java: Maven PASS
+backend-native: Maven PASS
+models: Maven PASS
+models-api: Maven PASS
+models-audio: Maven PASS
+models-decisions: Maven PASS
+models-embedding: Maven PASS
+models-langchain4j: Maven PASS
+models-rag: Maven PASS
+models-router: Maven PASS
+models-runtime: Maven PASS
+models-semantic-order: Maven PASS
+models-spring-ai: Maven PASS
+models-spring-boot-starter: Maven PASS
+backend-apple: Gradle PASS; Maven graph matches
+backend-cuda: Gradle PASS; Maven graph matches
+backend-java: Gradle PASS; Maven graph matches
+backend-native: Gradle PASS; Maven graph matches
+models: Gradle PASS; Maven graph matches
+models-api: Gradle PASS; Maven graph matches
+models-audio: Gradle PASS; Maven graph matches
+models-decisions: Gradle PASS; Maven graph matches
+models-embedding: Gradle PASS; Maven graph matches
+models-langchain4j: Gradle PASS; Maven graph matches
+models-rag: Gradle PASS; Maven graph matches
+models-router: Gradle PASS; Maven graph matches
+models-runtime: Gradle PASS; Maven graph matches
+models-semantic-order: Gradle PASS; Maven graph matches
+models-spring-ai: Gradle PASS; Maven graph matches
+models-spring-boot-starter: Gradle PASS; Maven graph matches
+
+> Task :verifyPublishingConfigured
+  Maven publication configured: backend-apple
+  Maven publication configured: backend-cuda
+  Maven publication configured: backend-java
+  Maven publication configured: backend-native
+  Maven publication configured: models
+  Maven publication configured: models-api
+  Maven publication configured: models-audio
+  Maven publication configured: models-decisions
+  Maven publication configured: models-embedding
+  Maven publication configured: models-langchain4j
+  Maven publication configured: models-rag
+  Maven publication configured: models-router
+  Maven publication configured: models-runtime
+  Maven publication configured: models-semantic-order
+  Maven publication configured: models-spring-ai
+  Maven publication configured: models-spring-boot-starter
+
+> Task :verifyReleaseDependencies
+  Released Vectors dependency: com.integrallis:vectors-cache-semantic-db:0.1.29
+  Released Vectors dependency: com.integrallis:vectors-core:0.1.29
+  Released Vectors dependency: com.integrallis:vectors-db:0.1.29
+
+> Task :verifyReleaseMetadata
+
+> Task :verifyReproducibleBuild
+  Reproducible JARs: backend-apple
+  Reproducible JARs: backend-cuda
+  Reproducible JARs: backend-java
+  Reproducible JARs: backend-native
+  Reproducible JARs: models
+  Reproducible JARs: models-api
+  Reproducible JARs: models-audio
+  Reproducible JARs: models-backend-onnx
+  Reproducible JARs: models-decisions
+  Reproducible JARs: models-embedding
+  Reproducible JARs: models-langchain4j
+  Reproducible JARs: models-quarkus
+  Reproducible JARs: models-rag
+  Reproducible JARs: models-router
+  Reproducible JARs: models-runtime
+  Reproducible JARs: models-semantic-kernel
+  Reproducible JARs: models-semantic-order
+  Reproducible JARs: models-spring-ai
+  Reproducible JARs: models-spring-boot-starter
+  Reproducible JARs: models-test
+
+> Task :backend-apple:cyclonedxDirectBom UP-TO-DATE
+> Task :backend-cuda:cyclonedxDirectBom UP-TO-DATE
+> Task :backend-java:cyclonedxDirectBom UP-TO-DATE
+> Task :backend-native:cyclonedxDirectBom UP-TO-DATE
+> Task :models:cyclonedxDirectBom UP-TO-DATE
+> Task :models-api:cyclonedxDirectBom UP-TO-DATE
+> Task :models-audio:cyclonedxDirectBom UP-TO-DATE
+> Task :models-decisions:cyclonedxDirectBom UP-TO-DATE
+> Task :models-embedding:cyclonedxDirectBom UP-TO-DATE
+> Task :models-langchain4j:cyclonedxDirectBom UP-TO-DATE
+> Task :models-rag:cyclonedxDirectBom UP-TO-DATE
+> Task :models-router:cyclonedxDirectBom UP-TO-DATE
+> Task :models-runtime:cyclonedxDirectBom UP-TO-DATE
+> Task :models-semantic-order:cyclonedxDirectBom UP-TO-DATE
+> Task :models-spring-ai:cyclonedxDirectBom UP-TO-DATE
+> Task :models-spring-boot-starter:cyclonedxDirectBom UP-TO-DATE
+
+> Task :verifySbom
+  SBOM valid: backend-apple (CycloneDX 1.6)
+  SBOM valid: backend-cuda (CycloneDX 1.6)
+  SBOM valid: backend-java (CycloneDX 1.6)
+  SBOM valid: backend-native (CycloneDX 1.6)
+  SBOM valid: models (CycloneDX 1.6)
+  SBOM valid: models-api (CycloneDX 1.6)
+  SBOM valid: models-audio (CycloneDX 1.6)
+  SBOM valid: models-decisions (CycloneDX 1.6)
+  SBOM valid: models-embedding (CycloneDX 1.6)
+  SBOM valid: models-langchain4j (CycloneDX 1.6)
+  SBOM valid: models-rag (CycloneDX 1.6)
+  SBOM valid: models-router (CycloneDX 1.6)
+  SBOM valid: models-runtime (CycloneDX 1.6)
+  SBOM valid: models-semantic-order (CycloneDX 1.6)
+  SBOM valid: models-spring-ai (CycloneDX 1.6)
+  SBOM valid: models-spring-boot-starter (CycloneDX 1.6)
+
+> Task :complianceCheck
+
+[Incubating] Problems report is available at: file:///Users/briansam-bodden/Code/java-ai/projects/models/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.4.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 2m 20s
+391 actionable tasks: 112 executed, 279 up-to-date

@@ -1,0 +1,41 @@
+{
+  "verifiedAt": "2026-10-11T18:37:03.356742+00:00",
+  "checkouts": [
+    {
+      "project": "vectors",
+      "path": "/Users/briansam-bodden/Code/java-ai/projects/vectors",
+      "branch": "main",
+      "head": "7e77a637d74350dca3fb5cc0e01401a08f26f27a",
+      "originMain": "7e77a637d74350dca3fb5cc0e01401a08f26f27a",
+      "clean": true,
+      "branches": [
+        "continue/construction-validation",
+        "main"
+      ]
+    },
+    {
+      "project": "models",
+      "path": "/Users/briansam-bodden/Code/java-ai/projects/models",
+      "branch": "main",
+      "head": "3490dff4b848eb6221b47cbf5a81d247709c05aa",
+      "originMain": "3490dff4b848eb6221b47cbf5a81d247709c05aa",
+      "clean": true,
+      "branches": [
+        "continue/router-measurements",
+        "main"
+      ]
+    },
+    {
+      "project": "model-jars",
+      "path": "/Users/briansam-bodden/Code/java-ai/projects/model-jars",
+      "branch": "main",
+      "head": "3fe35f3eb1970e3aeb971864bc3fa719c857fee9",
+      "originMain": "3fe35f3eb1970e3aeb971864bc3fa719c857fee9",
+      "clean": true,
+      "branches": [
+        "continue/catalog-research",
+        "main"
+      ]
+    }
+  ]
+}
