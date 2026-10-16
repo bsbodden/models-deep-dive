@@ -13,7 +13,7 @@ to charge its budget.
 
 ## What the catalog holds today
 
-As of 15 October 2026 the published catalog has **103 entries** drawn from **67 upstream
+As of the fall of 2026 the published catalog has **103 entries** drawn from **67 upstream
 repositories**, totalling 167.2 GB. The smallest is 13.7 MB and the largest 16.8 GB; the median
 entry is 0.91 GB, which is the real centre of gravity — most of this catalog runs on a laptop.
 
@@ -28,22 +28,14 @@ Entries are not all the same kind of thing:
 | Domain | general (54), retrieval (34), embeddings (31), coding (10), reasoning (7), then legal, healthcare, finance, speech and mathematics in twos and threes |
 | License | 77 Apache-2.0, 6 Gemma, 5 MIT, 5 Llama-3.2, 4 LFM-1.0, and 3 single-model terms including one non-commercial |
 
-That license column matters more than it looks. Three entries carry single-model terms —
-`LicenseRef-Mistral-Research`, `LicenseRef-DeepSeek` and `fair-noncommercial-research-license` —
-and the last of those is non-commercial on its face. Fifteen more sit under Gemma (6), Llama-3.2 (5) or
-LFM-1.0 (4) terms rather than a plain OSI license. The catalog records the license per entry, so this
-is a query rather than an archaeology project.
-
 Qualification is tracked per entry and per task, not as a single badge: 65 entries carry RAG
 qualifications, 31 carry embedding qualifications, 29 have a performance profile measured on
-specific hardware, 3 carry tool qualifications and 2 carry speech. An entry with no profile for
-your machine says so rather than guessing.
+specific hardware, 3 carry tool qualifications and 2 carry speech. 
 
 ### The models people actually pull
 
 Popularity is not something the catalog invents; it comes from upstream. These are the catalog's
-busiest upstream repositories by HuggingFace 30-day downloads, read from the HuggingFace API on
-15 October 2026. Across the 64 repositories that report counts, the total is 15,143,513 downloads
+busiest upstream repositories by HuggingFace 30-day downloads, read from the HuggingFace API on October 2026. Across the 64 repositories that report counts, the total is 15,143,513 downloads
 in thirty days.
 
 | Upstream repository | 30-day downloads | Catalog entry |
@@ -66,6 +58,10 @@ Note the seventh row. `embeddinggemma-300m` is a 334 MB embedding model, and it 
 the router's task classifier runs on — which is where this turns from a catalog into a system.
 
 <!-- diagram:stack -->
+![Vectors supplies SIMD math and vector collections; Models builds inference on it; ModelJars adds pinned identity and qualification; applications and the CLI sit on top](diagrams/stack.png)
+
+<sub>[Mermaid source](diagrams/stack.mmd) · [SVG](diagrams/stack.svg) · the block below is the same diagram</sub>
+
 ```mermaid
 flowchart BT
   V["Vectors<br/>SIMD math, quantized operations, vector collections"]
@@ -811,6 +807,10 @@ identical to one that nearly matched. The numbers say what is really going on: a
 honestly instead of guessing a task and silently applying the wrong quality column.
 
 <!-- diagram:rag -->
+![Retrieval-augmented generation: embed the question, search the collection, ground the prompt in the retrieved documents, then generate or abstain](diagrams/rag.png)
+
+<sub>[Mermaid source](diagrams/rag.mmd) · [SVG](diagrams/rag.svg) · the block below is the same diagram</sub>
+
 ```mermaid
 flowchart TD
   D["Documents"] --> E["Models embedding runtime"]
@@ -970,6 +970,10 @@ The run record carries all four with their numbers.
 Two diagrams for the parts underneath. Opening a model is resolution, verification and mapping:
 
 <!-- diagram:loading -->
+![Opening a model: resolve the coordinate, verify the artifact digest, map the weights, initialise the tokenizer, then build the model graph](diagrams/loading.png)
+
+<sub>[Mermaid source](diagrams/loading.mmd) · [SVG](diagrams/loading.svg) · the block below is the same diagram</sub>
+
 ```mermaid
 sequenceDiagram
   participant App as Application
@@ -997,6 +1001,10 @@ And the boundary between Java and the native kernels, which is where the arithme
 actually runs:
 
 <!-- diagram:native-boundary -->
+![Where Java calls the native kernels: the graph and session state stay in Java while matmul and activation kernels cross the FFM boundary](diagrams/native-boundary.png)
+
+<sub>[Mermaid source](diagrams/native-boundary.mmd) · [SVG](diagrams/native-boundary.svg) · the block below is the same diagram</sub>
+
 ```mermaid
 flowchart TD
   APP["Application task"] --> JAVA["Java: model graph, state and sampling"]

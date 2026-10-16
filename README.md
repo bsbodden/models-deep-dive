@@ -23,7 +23,9 @@ The libraries it exercises are public: [integrallis/models](https://github.com/i
 
 The Java and Mermaid files are the authoritative sources. Inline excerpts omit JDK/dependency declarations and show `<model-version>` placeholders, while the downloadable scripts retain tested pins. The synchronization tool applies that presentation rule consistently.
 
-A script may be embedded with a `<!-- snippet:name -->` marker or linked from the walkthrough table. Every embedded snippet must resolve to a real file, and every script must be either embedded or linked, so none can drift from its source or be silently orphaned. Requiring all fourteen inline is what made the earlier draft unreadable. After changing either:
+A script may be embedded with a `<!-- snippet:name -->` marker or linked from the walkthrough table. Every embedded snippet must resolve to a real file, and every script must be either embedded or linked, so none can drift from its source or be silently orphaned. Requiring all fourteen inline is what made the earlier draft unreadable.
+
+Each `<!-- diagram:name -->` marker expands to the PNG export first, then the Mermaid source. The PNG is what readers get wherever Mermaid is not rendered — Medium, PDF, most feed readers — and the source keeps the diagram editable and renders live on GitHub. Alt text lives in `CAPTIONS` in the sync tool, because a diagram that cannot be seen needs a sentence rather than a filename. The tool refuses to run if a diagram is missing its `.png` or `.svg`, so the article cannot ship an image reference that resolves to nothing. After changing either:
 
 ```bash
 python3 tools/sync_article.py

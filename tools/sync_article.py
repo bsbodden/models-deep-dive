@@ -11,6 +11,20 @@ root = Path(__file__).resolve().parents[1]
 article = root / "article.md"
 original = article.read_text()
 pattern = re.compile(r"<!-- (snippet|diagram):([a-z-]+) -->(?:\n.*?<!-- end:\1:\2 -->)?", re.S)
+# Alt text per diagram. A diagram that cannot be seen needs a sentence, not a filename, and the
+# PNG is what readers get wherever Mermaid is not rendered.
+CAPTIONS = {
+    "stack": "Vectors supplies SIMD math and vector collections; Models builds inference on it; "
+             "ModelJars adds pinned identity and qualification; applications and the CLI sit on top",
+    "loading": "Opening a model: resolve the coordinate, verify the artifact digest, map the "
+               "weights, initialise the tokenizer, then build the model graph",
+    "native-boundary": "Where Java calls the native kernels: the graph and session state stay in "
+                       "Java while matmul and activation kernels cross the FFM boundary",
+    "rag": "Retrieval-augmented generation: embed the question, search the collection, ground the "
+           "prompt in the retrieved documents, then generate or abstain",
+}
+
+
 def expand(match):
     kind, name = match.group(1, 2)
     directory, extension, language = (("code", ".java", "java") if kind == "snippet"
@@ -22,7 +36,19 @@ def expand(match):
                            if not line.startswith(("//JAVA ", "//DEPS ")))
         source = re.sub(r"(org\.modeljars\.huggingface:[^:\s\"]+:)[^\s\"]+",
                         r"\1<model-version>", source)
-    return f"<!-- {kind}:{name} -->\n```{language}\n{source}\n```\n<!-- end:{kind}:{name} -->"
+        body = f"```{language}\n{source}\n```"
+    else:
+        # The PNG leads, because Mermaid is not rendered on every destination this article reaches.
+        # The source follows so the diagram stays editable and renders live where it is supported.
+        caption = CAPTIONS.get(name, name.replace("-", " "))
+        for export in (f"{name}.png", f"{name}.svg"):
+            if not (root / "diagrams" / export).exists():
+                raise SystemExit(f"diagram {name} is missing {export}; run tools/render_diagrams.py")
+        body = (f"![{caption}](diagrams/{name}.png)\n\n"
+                f"<sub>[Mermaid source](diagrams/{name}.mmd) · "
+                f"[SVG](diagrams/{name}.svg) · the block below is the same diagram</sub>\n\n"
+                f"```{language}\n{source}\n```")
+    return f"<!-- {kind}:{name} -->\n{body}\n<!-- end:{kind}:{name} -->"
 updated = pattern.sub(expand, original)
 # Every embedded snippet must resolve to a real file, so an excerpt cannot drift from its source.
 # A script may be linked rather than embedded: the article carries a table of the walkthrough, and
