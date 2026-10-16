@@ -1,0 +1,709 @@
+{
+  "readAt": "2026-10-16T22:20:19.200674+00:00",
+  "repositories": [
+    {
+      "sourceId": "hf://Cactus-Compute/needle2",
+      "repo": "Cactus-Compute/needle2",
+      "catalogEntries": [
+        "cactus_compute_needle2_cact_cq2_mixed"
+      ],
+      "downloads": 4096,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://GSMS-B/Indian-Legal-Qwen2.5-3B-GGUF",
+      "repo": "GSMS-B/Indian-Legal-Qwen2.5-3B-GGUF",
+      "catalogEntries": [
+        "gsms_b_indian_legal_qwen2_5_3b_gguf_q4_k_m"
+      ],
+      "downloads": 864,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://HuggingFaceTB/SmolLM2-1.7B-Instruct-GGUF",
+      "repo": "HuggingFaceTB/SmolLM2-1.7B-Instruct-GGUF",
+      "catalogEntries": [
+        "huggingfacetb_smollm2_1_7b_instruct_gguf_q4_k_m"
+      ],
+      "downloads": 9568,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://HuggingFaceTB/SmolLM2-360M-Instruct-GGUF",
+      "repo": "HuggingFaceTB/SmolLM2-360M-Instruct-GGUF",
+      "catalogEntries": [
+        "smollm2_360m_instruct_q8_0"
+      ],
+      "downloads": 16412,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://King3Djbl/nexus-finance-GGUF",
+      "repo": "King3Djbl/nexus-finance-GGUF",
+      "catalogEntries": [
+        "king3djbl_nexus_finance_gguf_q4_k_m",
+        "king3djbl_nexus_finance_gguf_q5_k_s"
+      ],
+      "downloads": 3458,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://King3Djbl/nexus-legal-GGUF",
+      "repo": "King3Djbl/nexus-legal-GGUF",
+      "catalogEntries": [
+        "king3djbl_nexus_legal_gguf_q4_k_m",
+        "king3djbl_nexus_legal_gguf_q5_k_m"
+      ],
+      "downloads": 2908,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://King3Djbl/nexus-medical-GGUF",
+      "repo": "King3Djbl/nexus-medical-GGUF",
+      "catalogEntries": [
+        "king3djbl_nexus_medical_gguf_q4_k_m"
+      ],
+      "downloads": 2766,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://LiquidAI/LFM2.5-Embedding-350M-GGUF",
+      "repo": "LiquidAI/LFM2.5-Embedding-350M-GGUF",
+      "catalogEntries": [
+        "liquidai_lfm2_5_embedding_350m_gguf_bf16",
+        "liquidai_lfm2_5_embedding_350m_gguf_f16",
+        "liquidai_lfm2_5_embedding_350m_gguf_q4_0",
+        "liquidai_lfm2_5_embedding_350m_gguf_q8_0"
+      ],
+      "downloads": 5526,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://MaziyarPanahi/Meta-Llama-3-8B-Instruct-GGUF",
+      "repo": "MaziyarPanahi/Meta-Llama-3-8B-Instruct-GGUF",
+      "catalogEntries": [
+        "maziyarpanahi_meta_llama_3_8b_instruct_gguf_q4_k_m"
+      ],
+      "downloads": 118827,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://MaziyarPanahi/Mistral-7B-Instruct-v0.3-GGUF",
+      "repo": "MaziyarPanahi/Mistral-7B-Instruct-v0.3-GGUF",
+      "catalogEntries": [
+        "maziyarpanahi_mistral_7b_instruct_v0_3_gguf_q4_k_m"
+      ],
+      "downloads": 111391,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://Qwen/Qwen2.5-0.5B-Instruct",
+      "repo": "Qwen/Qwen2.5-0.5B-Instruct",
+      "catalogEntries": [
+        "qwen_qwen2_5_0_5b_instruct_bf16"
+      ],
+      "downloads": 5973624,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://Qwen/Qwen2.5-0.5B-Instruct-GGUF",
+      "repo": "Qwen/Qwen2.5-0.5B-Instruct-GGUF",
+      "catalogEntries": [
+        "qwen_qwen2_5_0_5b_instruct_gguf_q4_k_m",
+        "qwen_qwen2_5_0_5b_instruct_gguf_q6_k"
+      ],
+      "downloads": 279396,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://Qwen/Qwen2.5-1.5B-Instruct-GGUF",
+      "repo": "Qwen/Qwen2.5-1.5B-Instruct-GGUF",
+      "catalogEntries": [
+        "qwen_qwen2_5_1_5b_instruct_gguf_q4_k_m"
+      ],
+      "downloads": 338149,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://Qwen/Qwen2.5-3B-Instruct-GGUF",
+      "repo": "Qwen/Qwen2.5-3B-Instruct-GGUF",
+      "catalogEntries": [
+        "qwen_qwen2_5_3b_instruct_gguf_q4_k_m"
+      ],
+      "downloads": 215224,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://Qwen/Qwen2.5-Coder-0.5B-Instruct-GGUF",
+      "repo": "Qwen/Qwen2.5-Coder-0.5B-Instruct-GGUF",
+      "catalogEntries": [
+        "qwen2_5_coder_0_5b_instruct_q4_0",
+        "qwen2_5_coder_0_5b_instruct_q8_0"
+      ],
+      "downloads": 23836,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://Qwen/Qwen2.5-Coder-1.5B-Instruct-GGUF",
+      "repo": "Qwen/Qwen2.5-Coder-1.5B-Instruct-GGUF",
+      "catalogEntries": [
+        "qwen2_5_coder_1_5b_instruct_q4_0",
+        "qwen2_5_coder_1_5b_instruct_q4_k_m",
+        "qwen2_5_coder_1_5b_instruct_q8_0"
+      ],
+      "downloads": 209588,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://Qwen/Qwen3-1.7B-GGUF",
+      "repo": "Qwen/Qwen3-1.7B-GGUF",
+      "catalogEntries": [
+        "qwen3_1_7b_q8_0"
+      ],
+      "downloads": 153670,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://Qwen/Qwen3-8B-GGUF",
+      "repo": "Qwen/Qwen3-8B-GGUF",
+      "catalogEntries": [
+        "qwen3_8b_q4_k_m"
+      ],
+      "downloads": 581959,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://Qwen/Qwen3-Embedding-0.6B-GGUF",
+      "repo": "Qwen/Qwen3-Embedding-0.6B-GGUF",
+      "catalogEntries": [
+        "qwen_qwen3_embedding_0_6b_gguf_f16",
+        "qwen_qwen3_embedding_0_6b_gguf_q8_0"
+      ],
+      "downloads": 168833,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://Qwen/Qwen3-Embedding-4B-GGUF",
+      "repo": "Qwen/Qwen3-Embedding-4B-GGUF",
+      "catalogEntries": [
+        "qwen_qwen3_embedding_4b_gguf_q5_0"
+      ],
+      "downloads": 49459,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF",
+      "repo": "TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF",
+      "catalogEntries": [
+        "tinyllama_1_1b_chat_v1_0_q4_0"
+      ],
+      "downloads": 79142,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://TheBloke/deepseek-coder-1.3b-instruct-GGUF",
+      "repo": "TheBloke/deepseek-coder-1.3b-instruct-GGUF",
+      "catalogEntries": [
+        "deepseek_coder_1_3b_instruct_q4_k_m"
+      ],
+      "downloads": 14307,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://WalkingCat/Soprano-1.1-80M-GGUF",
+      "repo": "WalkingCat/Soprano-1.1-80M-GGUF",
+      "catalogEntries": [
+        "walkingcat_soprano_1_1_80m_gguf_bf16",
+        "walkingcat_soprano_1_1_80m_gguf_q8_0"
+      ],
+      "downloads": 55327,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://bartowski/DeepSeek-R1-Distill-Qwen-1.5B-GGUF",
+      "repo": "bartowski/DeepSeek-R1-Distill-Qwen-1.5B-GGUF",
+      "catalogEntries": [
+        "bartowski_deepseek_r1_distill_qwen_1_5b_gguf_q4_k_m",
+        "bartowski_deepseek_r1_distill_qwen_1_5b_gguf_q4_k_s"
+      ],
+      "downloads": 29777,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://bartowski/HuatuoGPT-o1-7B-GGUF",
+      "repo": "bartowski/HuatuoGPT-o1-7B-GGUF",
+      "catalogEntries": [
+        "huatuogpt_o1_7b_q4_k_m"
+      ],
+      "downloads": 2808,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://bartowski/Llama-3.2-1B-Instruct-GGUF",
+      "repo": "bartowski/Llama-3.2-1B-Instruct-GGUF",
+      "catalogEntries": [
+        "bartowski_llama_3_2_1b_instruct_gguf_q4_k_m",
+        "bartowski_llama_3_2_1b_instruct_gguf_q4_k_s",
+        "bartowski_llama_3_2_1b_instruct_gguf_q5_k_m",
+        "bartowski_llama_3_2_1b_instruct_gguf_q5_k_s"
+      ],
+      "downloads": 154930,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://bartowski/Llama-3.2-3B-Instruct-GGUF",
+      "repo": "bartowski/Llama-3.2-3B-Instruct-GGUF",
+      "catalogEntries": [
+        "bartowski_llama_3_2_3b_instruct_gguf_q4_k_m"
+      ],
+      "downloads": 168863,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://bartowski/Meta-Llama-3.1-8B-Instruct-GGUF",
+      "repo": "bartowski/Meta-Llama-3.1-8B-Instruct-GGUF",
+      "catalogEntries": [
+        "llama_3_1_8b_instruct_q4_k_m"
+      ],
+      "downloads": 499927,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://bartowski/Ministral-8B-Instruct-2410-GGUF",
+      "repo": "bartowski/Ministral-8B-Instruct-2410-GGUF",
+      "catalogEntries": [
+        "bartowski_ministral_8b_instruct_2410_gguf_q4_k_m"
+      ],
+      "downloads": 4654,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://bartowski/Mistral-Nemo-Instruct-2407-GGUF",
+      "repo": "bartowski/Mistral-Nemo-Instruct-2407-GGUF",
+      "catalogEntries": [
+        "bartowski_mistral_nemo_instruct_2407_gguf_q4_k_m"
+      ],
+      "downloads": 21378,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://bartowski/Phi-3.5-mini-instruct-GGUF",
+      "repo": "bartowski/Phi-3.5-mini-instruct-GGUF",
+      "catalogEntries": [
+        "bartowski_phi_3_5_mini_instruct_gguf_q4_k_m"
+      ],
+      "downloads": 47278,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://bartowski/Qwen2.5-Math-1.5B-Instruct-GGUF",
+      "repo": "bartowski/Qwen2.5-Math-1.5B-Instruct-GGUF",
+      "catalogEntries": [
+        "qwen2_5_math_1_5b_instruct_q4_k_m"
+      ],
+      "downloads": 26181,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://bartowski/Yi-Coder-1.5B-Chat-GGUF",
+      "repo": "bartowski/Yi-Coder-1.5B-Chat-GGUF",
+      "catalogEntries": [
+        "bartowski_yi_coder_1_5b_chat_gguf_q4_k_m"
+      ],
+      "downloads": 8097,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://bartowski/gemma-2-9b-it-GGUF",
+      "repo": "bartowski/gemma-2-9b-it-GGUF",
+      "catalogEntries": [
+        "bartowski_gemma_2_9b_it_gguf_q4_k_m"
+      ],
+      "downloads": 30554,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://bartowski/google_gemma-3-12b-it-GGUF",
+      "repo": "bartowski/google_gemma-3-12b-it-GGUF",
+      "catalogEntries": [
+        "bartowski_google_gemma_3_12b_it_gguf_q4_k_m"
+      ],
+      "downloads": 14619,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://bartowski/google_gemma-3-1b-it-GGUF",
+      "repo": "bartowski/google_gemma-3-1b-it-GGUF",
+      "catalogEntries": [
+        "bartowski_google_gemma_3_1b_it_gguf_q4_k_m",
+        "bartowski_google_gemma_3_1b_it_gguf_q8_0"
+      ],
+      "downloads": 13127,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://bartowski/google_gemma-3-4b-it-GGUF",
+      "repo": "bartowski/google_gemma-3-4b-it-GGUF",
+      "catalogEntries": [
+        "bartowski_google_gemma_3_4b_it_gguf_q4_k_m"
+      ],
+      "downloads": 32760,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://bartowski/granite-embedding-107m-multilingual-GGUF",
+      "repo": "bartowski/granite-embedding-107m-multilingual-GGUF",
+      "catalogEntries": [
+        "bartowski_granite_embedding_107m_multilingual_gguf_f16",
+        "bartowski_granite_embedding_107m_multilingual_gguf_q4_0",
+        "bartowski_granite_embedding_107m_multilingual_gguf_q4_k_m",
+        "bartowski_granite_embedding_107m_multilingual_gguf_q4_k_s",
+        "bartowski_granite_embedding_107m_multilingual_gguf_q5_k_m",
+        "bartowski_granite_embedding_107m_multilingual_gguf_q5_k_s",
+        "bartowski_granite_embedding_107m_multilingual_gguf_q6_k",
+        "bartowski_granite_embedding_107m_multilingual_gguf_q8_0"
+      ],
+      "downloads": 10606,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://bartowski/mathstral-7B-v0.1-GGUF",
+      "repo": "bartowski/mathstral-7B-v0.1-GGUF",
+      "catalogEntries": [
+        "bartowski_mathstral_7b_v0_1_gguf_q4_k_m"
+      ],
+      "downloads": 3158,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://cstr/ms-marco-MiniLM-L-6-v2-GGUF",
+      "repo": "cstr/ms-marco-MiniLM-L-6-v2-GGUF",
+      "catalogEntries": [
+        "cstr_ms_marco_minilm_l6_v2_gguf_q4_k_imatrix_g7c_f7"
+      ],
+      "downloads": 1075,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://deepreinforce-ai/Ornith-1.0-9B-GGUF",
+      "repo": "deepreinforce-ai/Ornith-1.0-9B-GGUF",
+      "catalogEntries": [
+        "deepreinforce_ai_ornith_1_0_9b_gguf_q4_k_m"
+      ],
+      "downloads": 2324254,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://facebook/MobileMoE-S-QAT",
+      "repo": "facebook/MobileMoE-S-QAT",
+      "catalogEntries": [
+        "facebook_mobilemoe_s_qat_int4_g32"
+      ],
+      "downloads": 190,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://ggml-org/Qwen3-0.6B-GGUF",
+      "repo": "ggml-org/Qwen3-0.6B-GGUF",
+      "catalogEntries": [
+        "qwen3_0_6b_q4_0"
+      ],
+      "downloads": 40592,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://ggml-org/SmolLM3-3B-GGUF",
+      "repo": "ggml-org/SmolLM3-3B-GGUF",
+      "catalogEntries": [
+        "smollm3_3b_q4_k_m"
+      ],
+      "downloads": 21665,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://ggml-org/embeddinggemma-2-GGUF",
+      "repo": "ggml-org/embeddinggemma-2-GGUF",
+      "catalogEntries": [
+        "ggml_org_embeddinggemma_2_gguf_q8_0"
+      ],
+      "downloads": 57826,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://ggml-org/embeddinggemma-300M-GGUF",
+      "repo": "ggml-org/embeddinggemma-300M-GGUF",
+      "catalogEntries": [
+        "ggml_org_embeddinggemma_300m_gguf_q8_0"
+      ],
+      "downloads": 373740,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://ggml-org/gemma-4-26B-A4B-it-GGUF",
+      "repo": "ggml-org/gemma-4-26B-A4B-it-GGUF",
+      "catalogEntries": [
+        "ggml_org_gemma_4_26b_a4b_it_gguf_q4_k_m"
+      ],
+      "downloads": 326911,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://h2oai/h2o-danube2-1.8b-chat-GGUF",
+      "repo": "h2oai/h2o-danube2-1.8b-chat-GGUF",
+      "catalogEntries": [
+        "h2oai_h2o_danube2_1_8b_chat_gguf_q4_k_m"
+      ],
+      "downloads": 892,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://ibm-granite/granite-4.1-3b-GGUF",
+      "repo": "ibm-granite/granite-4.1-3b-GGUF",
+      "catalogEntries": [
+        "ibm_granite_granite_4_1_3b_gguf_q4_k_m"
+      ],
+      "downloads": 7088,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://ibm-granite/granite-4.1-8b-GGUF",
+      "repo": "ibm-granite/granite-4.1-8b-GGUF",
+      "catalogEntries": [
+        "granite_4_1_8b_q4_k_m"
+      ],
+      "downloads": 5892,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://janhq/Jan-v3.5-4B-gguf",
+      "repo": "janhq/Jan-v3.5-4B-gguf",
+      "catalogEntries": [
+        "janhq_jan_v3_5_4b_gguf_q4_k_m"
+      ],
+      "downloads": 303066,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://lmstudio-community/gemma-4-E2B-it-GGUF",
+      "repo": "lmstudio-community/gemma-4-E2B-it-GGUF",
+      "catalogEntries": [
+        "lmstudio_community_gemma_4_e2b_it_gguf_q4_k_m"
+      ],
+      "downloads": 97162,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://mistralai/Ministral-3-3B-Instruct-2512-GGUF",
+      "repo": "mistralai/Ministral-3-3B-Instruct-2512-GGUF",
+      "catalogEntries": [
+        "ministral_3_3b_instruct_2512_q4_k_m"
+      ],
+      "downloads": 41340,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://mixedbread-ai/mxbai-rerank-xsmall-v1",
+      "repo": "mixedbread-ai/mxbai-rerank-xsmall-v1",
+      "catalogEntries": [
+        "mixedbread_ai_mxbai_rerank_xsmall_v1_f16"
+      ],
+      "downloads": 681103,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://mradermacher/EuroLLM-1.7B-Instruct-GGUF",
+      "repo": "mradermacher/EuroLLM-1.7B-Instruct-GGUF",
+      "catalogEntries": [
+        "eurollm_1_7b_instruct_q4_k_m"
+      ],
+      "downloads": 4685,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://mradermacher/PopiT-Qwen3-4B-Medical-SFT-1128-GGUF",
+      "repo": "mradermacher/PopiT-Qwen3-4B-Medical-SFT-1128-GGUF",
+      "catalogEntries": [
+        "mradermacher_popit_qwen3_4b_medical_sft_1128_gguf_q4_k_m"
+      ],
+      "downloads": 1718,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://openbmb/MiniCPM5-1B-GGUF",
+      "repo": "openbmb/MiniCPM5-1B-GGUF",
+      "catalogEntries": [
+        "minicpm5_1b_q4_k_m"
+      ],
+      "downloads": 45783,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://second-state/All-MiniLM-L6-v2-Embedding-GGUF",
+      "repo": "second-state/All-MiniLM-L6-v2-Embedding-GGUF",
+      "catalogEntries": [
+        "second_state_all_minilm_l6_v2_embedding_gguf_f16",
+        "second_state_all_minilm_l6_v2_embedding_gguf_q4_0",
+        "second_state_all_minilm_l6_v2_embedding_gguf_q4_k_m",
+        "second_state_all_minilm_l6_v2_embedding_gguf_q4_k_s",
+        "second_state_all_minilm_l6_v2_embedding_gguf_q5_0",
+        "second_state_all_minilm_l6_v2_embedding_gguf_q6_k",
+        "second_state_all_minilm_l6_v2_embedding_gguf_q8_0"
+      ],
+      "downloads": 140431,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://second-state/E5-Mistral-7B-Instruct-Embedding-GGUF",
+      "repo": "second-state/E5-Mistral-7B-Instruct-Embedding-GGUF",
+      "catalogEntries": [
+        "second_state_e5_mistral_7b_instruct_embedding_gguf_q4_k_m"
+      ],
+      "downloads": 3809,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://second-state/Nomic-embed-text-v1.5-Embedding-GGUF",
+      "repo": "second-state/Nomic-embed-text-v1.5-Embedding-GGUF",
+      "catalogEntries": [
+        "second_state_nomic_embed_text_v1_5_embedding_gguf_f16",
+        "second_state_nomic_embed_text_v1_5_embedding_gguf_q5_0",
+        "second_state_nomic_embed_text_v1_5_embedding_gguf_q5_k_m",
+        "second_state_nomic_embed_text_v1_5_embedding_gguf_q5_k_s",
+        "second_state_nomic_embed_text_v1_5_embedding_gguf_q6_k",
+        "second_state_nomic_embed_text_v1_5_embedding_gguf_q8_0"
+      ],
+      "downloads": 3438,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://umarfarookm/UmarTransit-1B",
+      "repo": "umarfarookm/UmarTransit-1B",
+      "catalogEntries": [
+        "umarfarookm_umartransit_1b_q4_k_m"
+      ],
+      "downloads": 1161,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://unsloth/Qwen3.5-0.8B-GGUF",
+      "repo": "unsloth/Qwen3.5-0.8B-GGUF",
+      "catalogEntries": [
+        "unsloth_qwen3_5_0_8b_gguf_q4_k_m",
+        "unsloth_qwen3_5_0_8b_gguf_q5_k_m",
+        "unsloth_qwen3_5_0_8b_gguf_q6_k"
+      ],
+      "downloads": 233031,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://unsloth/Qwen3.5-2B-GGUF",
+      "repo": "unsloth/Qwen3.5-2B-GGUF",
+      "catalogEntries": [
+        "unsloth_qwen3_5_2b_gguf_q4_k_m"
+      ],
+      "downloads": 393552,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://unsloth/Qwen3.5-4B-GGUF",
+      "repo": "unsloth/Qwen3.5-4B-GGUF",
+      "catalogEntries": [
+        "unsloth_qwen3_5_4b_gguf_q4_k_m"
+      ],
+      "downloads": 1228761,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "hf://unsloth/gemma-4-12b-it-GGUF",
+      "repo": "unsloth/gemma-4-12b-it-GGUF",
+      "catalogEntries": [
+        "unsloth_gemma_4_12b_it_gguf_q4_k_m"
+      ],
+      "downloads": 1615593,
+      "downloadsAllTime": null,
+      "status": 200
+    },
+    {
+      "sourceId": "modeljars://granite-answerability",
+      "repo": "modeljars://granite-answerability",
+      "catalogEntries": [
+        "granite_4_1_3b_answerability_hybrid"
+      ],
+      "downloads": null,
+      "status": 404
+    },
+    {
+      "sourceId": "modeljars://harriet",
+      "repo": "modeljars://harriet",
+      "catalogEntries": [
+        "harriet_qwen3_5_4b_decisions"
+      ],
+      "downloads": null,
+      "status": 404
+    }
+  ]
+}

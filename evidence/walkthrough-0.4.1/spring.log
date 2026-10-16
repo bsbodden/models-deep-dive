@@ -1,5 +1,5 @@
 [jbang] Resolving dependencies...
-[jbang]    com.integrallis:models-spring-ai:0.4.0
+[jbang]    com.integrallis:models-spring-ai:0.4.1
 [jbang]    org.modeljars:modeljars:0.1.60
 [jbang]    org.modeljars.huggingface:ggml-org.qwen3-0.6b-gguf.q4_0:3.0.0-q4_0.1
 [jbang]    org.springframework.ai:spring-ai-bom:2.0.0@pom
@@ -13,6 +13,6 @@ SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
 Input:  What is the capital of France? Reply with only the city name.
 Output: Paris
 
-Load:      2,307 ms
-Execution: 2,518 ms
+Load:      2,223 ms
+Execution: 2,294 ms
 Tokens:    26 prompt + 1 completion

@@ -1,0 +1,17 @@
+read at 2026-10-16T22:20:19.200674+00:00
+67 repositories; 65 reported, 2 did not
+total across reporting repositories: 17,441,805
+
+not reporting:
+  modeljars://granite-answerability  (status 404)  entries=['granite_4_1_3b_answerability_hybrid']
+  modeljars://harriet  (status 404)  entries=['harriet_qwen3_5_4b_decisions']
+
+| Upstream repository | 30-day downloads | Catalog entry |
+| --- | --- | --- |
+| Qwen/Qwen2.5-0.5B-Instruct | 5,973,624 | `qwen_qwen2_5_0_5b_instruct_bf16` |
+| deepreinforce-ai/Ornith-1.0-9B-GGUF | 2,324,254 | `deepreinforce_ai_ornith_1_0_9b_gguf_q4_k_m` |
+| unsloth/gemma-4-12b-it-GGUF | 1,615,593 | `unsloth_gemma_4_12b_it_gguf_q4_k_m` |
+| unsloth/Qwen3.5-4B-GGUF | 1,228,761 | `unsloth_qwen3_5_4b_gguf_q4_k_m` |
+| mixedbread-ai/mxbai-rerank-xsmall-v1 | 681,103 | `mixedbread_ai_mxbai_rerank_xsmall_v1_f16` |
+| Qwen/Qwen3-8B-GGUF | 581,959 | `qwen3_8b_q4_k_m` |
+| bartowski/Meta-Llama-3.1-8B-Instruct-GGUF | 499,927 | `llama_3_1_8b_instruct_q4_k_m` |

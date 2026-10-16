@@ -6,8 +6,8 @@
       "jbang",
       "chat.java"
     ],
-    "startedAt": "2026-10-16T18:23:24.280034+00:00",
-    "finishedAt": "2026-10-16T18:23:31.117648+00:00",
+    "startedAt": "2026-10-16T22:59:42.137720+00:00",
+    "finishedAt": "2026-10-16T22:59:48.040066+00:00",
     "exitCode": 0,
     "log": "chat.log",
     "dependencies": [
@@ -22,8 +22,8 @@
       "jbang",
       "safetensors.java"
     ],
-    "startedAt": "2026-10-16T18:23:31.118453+00:00",
-    "finishedAt": "2026-10-16T18:23:40.156027+00:00",
+    "startedAt": "2026-10-16T22:59:48.040957+00:00",
+    "finishedAt": "2026-10-16T22:59:56.084636+00:00",
     "exitCode": 0,
     "log": "safetensors.log",
     "dependencies": [
@@ -38,8 +38,8 @@
       "jbang",
       "embed.java"
     ],
-    "startedAt": "2026-10-16T18:23:40.156841+00:00",
-    "finishedAt": "2026-10-16T18:23:44.731764+00:00",
+    "startedAt": "2026-10-16T22:59:56.085369+00:00",
+    "finishedAt": "2026-10-16T22:59:59.767660+00:00",
     "exitCode": 0,
     "log": "embed.log",
     "dependencies": [
@@ -54,8 +54,8 @@
       "jbang",
       "rerank.java"
     ],
-    "startedAt": "2026-10-16T18:23:44.732464+00:00",
-    "finishedAt": "2026-10-16T18:23:48.806764+00:00",
+    "startedAt": "2026-10-16T22:59:59.768566+00:00",
+    "finishedAt": "2026-10-16T23:00:02.669914+00:00",
     "exitCode": 0,
     "log": "rerank.log",
     "dependencies": [
@@ -70,8 +70,8 @@
       "jbang",
       "tools.java"
     ],
-    "startedAt": "2026-10-16T18:23:48.807451+00:00",
-    "finishedAt": "2026-10-16T18:24:05.103379+00:00",
+    "startedAt": "2026-10-16T23:00:02.670564+00:00",
+    "finishedAt": "2026-10-16T23:00:19.032849+00:00",
     "exitCode": 0,
     "log": "tools.log",
     "dependencies": [
@@ -87,8 +87,8 @@
       "jbang",
       "composite.java"
     ],
-    "startedAt": "2026-10-16T18:24:05.104147+00:00",
-    "finishedAt": "2026-10-16T18:24:32.216966+00:00",
+    "startedAt": "2026-10-16T23:00:19.033758+00:00",
+    "finishedAt": "2026-10-16T23:00:44.534076+00:00",
     "exitCode": 0,
     "log": "composite.log",
     "dependencies": [
@@ -102,8 +102,8 @@
       "jbang",
       "decisions.java"
     ],
-    "startedAt": "2026-10-16T18:24:32.217772+00:00",
-    "finishedAt": "2026-10-16T18:24:57.886278+00:00",
+    "startedAt": "2026-10-16T23:00:44.534884+00:00",
+    "finishedAt": "2026-10-16T23:01:09.279477+00:00",
     "exitCode": 0,
     "log": "decisions.log",
     "dependencies": [
@@ -117,8 +117,8 @@
       "jbang",
       "speech.java"
     ],
-    "startedAt": "2026-10-16T18:24:57.887118+00:00",
-    "finishedAt": "2026-10-16T18:25:05.135987+00:00",
+    "startedAt": "2026-10-16T23:01:09.280198+00:00",
+    "finishedAt": "2026-10-16T23:01:14.777068+00:00",
     "exitCode": 0,
     "log": "speech.log",
     "dependencies": [
@@ -128,56 +128,56 @@
   },
   {
     "script": "spring.java",
-    "sha256": "e7d7f69727df8c810794104908461b115d72243ad579cd7da680b83a7a994de7",
+    "sha256": "95857836a20451dbad321bf69a1d919ff614b73cb33733cfef545396955e51e8",
     "command": [
       "jbang",
       "spring.java"
     ],
-    "startedAt": "2026-10-16T18:25:05.136733+00:00",
-    "finishedAt": "2026-10-16T18:25:13.794767+00:00",
+    "startedAt": "2026-10-16T23:01:14.777819+00:00",
+    "finishedAt": "2026-10-16T23:01:23.627556+00:00",
     "exitCode": 0,
     "log": "spring.log",
     "dependencies": [
       "org.springframework.ai:spring-ai-bom:2.0.0@pom",
       "org.springframework.ai:spring-ai-client-chat",
-      "com.integrallis:models-spring-ai:0.4.0",
+      "com.integrallis:models-spring-ai:0.4.1",
       "org.modeljars:modeljars:0.1.60",
       "org.modeljars.huggingface:ggml-org.qwen3-0.6b-gguf.q4_0:3.0.0-q4_0.1"
     ]
   },
   {
     "script": "route.java",
-    "sha256": "9fe3b1bee1f8d5220518ed6b8b5d0204be322a797842c4c133f84423341cb777",
+    "sha256": "c28f5ff28fd30523e3002dfff6d8fbea83c8be0d13a38aa3c5660a7013501ef9",
     "command": [
       "jbang",
       "route.java"
     ],
-    "startedAt": "2026-10-16T18:25:13.795626+00:00",
-    "finishedAt": "2026-10-16T18:25:16.420615+00:00",
+    "startedAt": "2026-10-16T23:01:23.628477+00:00",
+    "finishedAt": "2026-10-16T23:01:26.420590+00:00",
     "exitCode": 0,
     "log": "route.log",
     "dependencies": [
       "org.modeljars:modeljars:0.1.60",
-      "com.integrallis:models-router:0.4.0",
+      "com.integrallis:models-router:0.4.1",
       "org.modeljars.huggingface:ggml-org.qwen3-0.6b-gguf.q4_0:3.0.0-q4_0.1",
       "org.modeljars.huggingface:qwen.qwen2.5-0.5b-instruct.bf16:2.5.0-bf16.2"
     ]
   },
   {
     "script": "rag.java",
-    "sha256": "b2174a5d020b9be0b65e7e194536c31406af03f12e2b7d13e50b2fcc85f0399f",
+    "sha256": "0f593b13f5c20c826cee1ad43506d70e822de4f8428f56574184c2dba2e4d9a6",
     "command": [
       "jbang",
       "rag.java"
     ],
-    "startedAt": "2026-10-16T18:25:16.421566+00:00",
-    "finishedAt": "2026-10-16T18:25:32.344951+00:00",
+    "startedAt": "2026-10-16T23:01:26.421409+00:00",
+    "finishedAt": "2026-10-16T23:01:42.918796+00:00",
     "exitCode": 0,
     "log": "rag.log",
     "dependencies": [
       "org.modeljars:modeljars:0.1.60",
       "com.integrallis:vectors-db:0.1.30",
-      "com.integrallis:models-rag:0.4.0",
+      "com.integrallis:models-rag:0.4.1",
       "org.modeljars.huggingface:second-state.all-minilm-l6-v2-embedding-gguf.q4_k_m:2.0.0-q4_k_m.2",
       "org.modeljars.huggingface:ggml-org.qwen3-0.6b-gguf.q4_0:3.0.0-q4_0.1"
     ]
@@ -189,8 +189,8 @@
       "jbang",
       "gemma.java"
     ],
-    "startedAt": "2026-10-16T18:25:32.345873+00:00",
-    "finishedAt": "2026-10-16T18:25:37.908077+00:00",
+    "startedAt": "2026-10-16T23:01:42.920203+00:00",
+    "finishedAt": "2026-10-16T23:01:47.143173+00:00",
     "exitCode": 0,
     "log": "gemma.log",
     "dependencies": [
@@ -200,18 +200,18 @@
   },
   {
     "script": "bonsai.java",
-    "sha256": "5eed3efa9b9834f5386f8c63af8f85b9491c6ea62a69d18a2cd32bd4f43075a9",
+    "sha256": "d2064fb6f838f481c604f0473b4b05d5194703e76cde84dab5415467d5295bd3",
     "command": [
       "jbang",
       "bonsai.java"
     ],
-    "startedAt": "2026-10-16T18:25:37.908923+00:00",
-    "finishedAt": "2026-10-16T18:27:12.333668+00:00",
+    "startedAt": "2026-10-16T23:01:47.144047+00:00",
+    "finishedAt": "2026-10-16T23:03:04.058218+00:00",
     "exitCode": 0,
     "log": "bonsai.log",
     "dependencies": [
-      "com.integrallis:models:0.4.0",
-      "com.integrallis:backend-java:0.4.0"
+      "com.integrallis:models:0.4.1",
+      "com.integrallis:backend-java:0.4.1"
     ]
   }
 ]

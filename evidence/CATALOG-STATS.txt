@@ -1,0 +1,21 @@
+entries: 103
+upstream repositories (distinct sourceId): 67
+total size: 167.2 GB across 101 entries that own their artifact
+sharing another entry's weights: ['granite_4_1_3b_answerability_hybrid', 'harriet_qwen3_5_4b_decisions']
+smallest: 13.7 MB
+largest: 16.8 GB
+median: 0.91 GB
+format: 4 distinct -- gguf (97), safetensors (3), composite (2), cact (1)
+capability: 27 distinct -- text-generation (67), chat (67), text-embedding (31), semantic-search (31), code-completion (9), reasoning (7), tool-calling (3), math (2), reranking (2), text-ranking (2), text-to-speech (2), audio-generation (2), streaming (2), code-generation (1), structured-output (1), fim (1), translation (1), multilingual (1), medical-reasoning (1), bilingual (1), tool-integrated-reasoning (1), answerability-classification (1), typed-decision (1), calibrated-probability (1), binary-judgment (1), categorical-choice (1), ordinal-score (1)
+architecture: 21 distinct -- qwen2 (21), llama (20), bert (16), qwen3 (8), qwen35 (7), nomic-bert (6), gemma3 (4), lfm2 (4), gemma4 (3), granite (2), soprano (2), gemma2 (1), phi3 (1), needle2 (1), mobilemoe (1), gemma-embedding (1), mistral3 (1), deberta-v2 (1), smollm3 (1), gemma-embedding2 (1), hybrid (1)
+quantization: 14 distinct -- Q4_K_M (49), Q8_0 (13), Q4_0 (7), F16 (6), Q5_K_M (5), Q6_K (5), Q4_K_S (4), Q5_K_S (4), BF16 (3), Q5_0 (3), CQ2_MIXED (1), Q4_K (1), INT4_G32 (1), MIXED (1)
+license: 11 distinct -- Apache-2.0 (77), LicenseRef-Gemma (6), MIT (5), LicenseRef-Llama-3.2 (5), LicenseRef-LFM-1.0 (4), LicenseRef-Mistral-Research (1), LicenseRef-DeepSeek (1), fair-noncommercial-research-license (1), LicenseRef-Llama-3.1 (1), LicenseRef-Llama-3 (1), LicenseRef-Qwen-Research (1)
+domain: 22 distinct -- general (54), retrieval (34), embeddings (31), coding (10), reasoning (7), rag (3), legal (3), healthcare (3), mathematics (2), reranking (2), search (2), finance (2), speech (2), audio (2), text-to-speech (2), system-1 (2), tool-use (1), translation (1), on-device (1), transportation (1), decisions (1), classification (1)
+single-model licence terms beyond the five named: 6 -- LicenseRef-DeepSeek (1), LicenseRef-Llama-3 (1), LicenseRef-Llama-3.1 (1), LicenseRef-Mistral-Research (1), LicenseRef-Qwen-Research (1), fair-noncommercial-research-license (1); non-commercial among them: 1
+entries carrying RAG qualifications: 65
+entries carrying embedding qualifications: 31
+entries carrying performance profile qualifications: 29
+entries carrying reranking qualifications: 2
+entries carrying speech qualifications: 2
+entries carrying tool qualifications: 3
+entries carrying composition qualifications: 2

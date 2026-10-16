@@ -23,7 +23,9 @@ jbang gemma.java
 jbang bonsai.java
 ```
 
-Run both chat scripts before `route.java`: routing only discovers already cached models.
+`route.java` needs no weights: discovery reads each marker jar's descriptor from the
+classpath, so it can select between models that have never been downloaded. Opening a
+runtime is what fetches.
 Run scripts sequentially; they each allow up to 4 GiB of Java heap, in addition to mapped
 model files and native memory. This walkthrough was exercised on an Intel Mac with 32 GiB
 RAM, Temurin 25.0.3 and JBang 0.141.0. That is a tested configuration, not a minimum-memory claim.

@@ -3,15 +3,16 @@
 Host: Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz, 12 logical CPUs, macOS 26.6.2, x86_64
 Java: openjdk version "25.0.3" 2026-04-21 LTS
 JBang: 0.141.0
-Date: 2026-10-16T18:04Z (routed arm), 2026-10-16T18:13Z (all-remote arm)
-Load average at the start of each arm: 3.10 and 2.66
+Date: 2026-10-16, both arms in one session after the host settled
+Load average: 2.77 at the start of the routed arm, 5.42 after it (the fleet's own four resident
+models), 3.71 after the all-remote arm
 OPENAI_API_KEY and ANTHROPIC_API_KEY: present for the keyed runs below
 
 Raw artifacts: `routed.log`, `all-remote.log`. Every derived figure below and in the article comes
 from `tools/derive_fleet_figures.py`, which reads those two logs and `code/fleet.java`; its output
 is `DERIVED.txt`. No figure in either document is hand-computed.
 
-## jbang fleet.java, three remote providers, released 0.1.60 / 0.4.0 / 0.1.30
+## jbang fleet.java, three remote providers, released 0.1.60 / 0.4.1 / 0.1.30
 
 Two OpenAI models and one Anthropic model share the fleet with four local models. Each provider has
 its own endpoint, credential, auth header and response shape; each client normalises its own
@@ -23,18 +24,18 @@ classifier: 10 tasks from google_embeddinggemma_300m_gguf_q8_0, 768-dimensional,
 PROMPT                                               IN  COMPLETION
 ping                                                  7          10
 still there?                                          9          22
-ok                                                    7          19
-I was charged twice for my September order.          15         431
-tell me more                                          9          99
-I was charged twice for my September subscr…         19         404
-When is a refund issued, and to which payme…         18         346
-What happens to a duplicate charge?                  13         346
-Our refund policy promises five business da…         61         501
-Summarise this appendix for the support han…         89          80
+ok                                                    7          24
+I was charged twice for my September order.          15         422
+tell me more                                          9         100
+I was charged twice for my September subscr…         19         813
+When is a refund issued, and to which payme…         18         300
+What happens to a duplicate charge?                  13         476
+Our refund policy promises five business da…         61         437
+Summarise this appendix for the support han…         89          72
 
 == every prompt through gpt-5.1 ==
-provider-reported: 247 input + 2258 completion tokens
-at the declared $1.25/M in, $10.00/M out: $0.022889
+provider-reported: 247 input + 2676 completion tokens
+at the declared $1.25/M in, $10.00/M out: $0.027069
 Floor, not a ceiling: the grounded prompts are sent without their retrieved notes, which a
 real all-remote implementation would have to include in the input.
 ```
@@ -71,23 +72,46 @@ Floor, not a ceiling: the grounded prompts are sent without their retrieved note
 real all-remote implementation would have to include in the input.
 ```
 
-$0.022889 all-remote against $0.006993 as routed: 69.4% less, a factor of 3.27. The eight prompts
-that stayed local would have billed 1,677 completion tokens on gpt-5.1, or $0.016891 -- 73.8% of the
+$0.027069 all-remote against $0.005773 as routed: 78.7% less, a factor of 4.69. The eight prompts
+that stayed local would have billed 2,167 completion tokens on gpt-5.1, or $0.021791 -- 80.5% of the
 whole all-remote bill. Per completion token the two providers that did run differ by twenty times,
-$10.00 against $0.50 per million, and Haiku answered 8.4 times faster than gpt-5.1.
+$10.00 against $0.50 per million, and Haiku answered 5.2 times faster than gpt-5.1.
 
-Completion counts are not deterministic, so these are the figures of the pair of runs measured
-together on the released libraries, not a best case. The 0.1.59 / 0.3.60 pair measured on 2026-10-15
-gave $0.023859 against $0.006123 -- 74.3% and a factor of 3.90 -- on the same prompts and the same
-prices. The spread between those two pairs is the provider's variance in how much reasoning it
-bills, and it is the reason the article states one measured pair rather than an average.
+**These are one measured pair, and the pair moves.** gpt-5.1 bills its reasoning as completion
+tokens and does not spend the same amount twice, which swings both arms. Four pairs measured on the
+same ten prompts at the same declared prices:
+
+| date | versions | all-remote | as routed | saving | factor |
+| --- | --- | --- | --- | --- | --- |
+| 2026-10-15 | 0.1.59 / 0.3.60 | $0.023859 | $0.006123 | 74.3% | 3.90 |
+| 2026-10-16 | 0.1.60 / 0.4.0 | $0.022889 | $0.006993 | 69.4% | 3.27 |
+| 2026-10-16 | 0.1.60 / 0.4.1 | $0.027069 | $0.005773 | 78.7% | 4.69 |
+
+The article quotes the last row, because that is the pair measured together against the released
+libraries. The honest reading of the three is that the saving on this workload is somewhere around
+70-80% and a factor of three to five; a single figure quoted to four decimal places is precise about
+one run and not about the effect. Nothing here is averaged, and no run was selected for being
+favourable -- the middle row is the weakest of the three and is kept.
+
+**The first 0.4.1 attempt was discarded for load contamination, not for its numbers.**
+`bonsai.java` maps a 5.95 GB model and ran immediately before the fleet, leaving the host at load
+average 39.67 with 3,562,206 pageouts. In that run qwen3-0.6b reported 25,163 ms and 21,174 ms
+against 4,057 ms and 2,307 ms here, the warm-up took 35,397 ms against 27,709 ms, and the wall clock
+was 150,222 ms of which only 50.3% was inside model calls -- the process was starved. The cost
+figures from that run were unaffected, since token counts come from the provider, but a published
+pair should be measured under one condition, so both arms were re-run after the machine settled
+below load 3.5. The discarded run's own tell is the model-call share: a starved run still prints a
+complete and plausible table.
 
 ## Walkthrough re-verified on the released libraries
 
-Every script in `code/` was repinned to ModelJars 0.1.60, Models 0.4.0 and Vectors 0.1.30 and re-run
-on the host above on 2026-10-16. All fourteen completed; the thirteen non-keyed ones were run by
-`tools/run_examples.py`, whose per-script logs, source hashes, resolved dependency coordinates and
-exit codes are in `evidence/walkthrough-0.4.0/` (`runs.json`, `environment.json`).
+Every script in `code/` was repinned to ModelJars 0.1.60, Models 0.4.1 and Vectors 0.1.30 and re-run
+on the host above on 2026-10-16, after `~/.m2/repository/com/integrallis/*/0.4.1` was deleted so
+nothing could resolve to the copy published locally during development. All fourteen completed; the
+thirteen non-keyed ones were run by `tools/run_examples.py`, whose per-script logs, source hashes,
+resolved dependency coordinates and exit codes are in `evidence/walkthrough-0.4.1/`
+(`runs.json`, `environment.json`). `runs.json` records the resolved coordinates, which read
+`com.integrallis:models:0.4.1` and the rest.
 
 | script | outcome |
 | --- | --- |
@@ -98,7 +122,7 @@ exit codes are in `evidence/walkthrough-0.4.0/` (`runs.json`, `environment.json`
 | tools.java | two tool calls applied: bedroom light 20, front door locked |
 | composite.java | ANSWERABLE; physical prefix sharing true, 182 shared prefix tokens |
 | decisions.java | billing? true p=0.920 c=0.60; queue billing p=0.991 c=0.95; urgency today p=0.389 c=0.02 |
-| speech.java | 1,920 ms of audio at 32 kHz, RTF 1.361 |
+| speech.java | 1,856 ms of audio at 32 kHz, RTF 1.378 |
 | spring.java | "Paris" through the Spring AI adapter |
 | route.java | discovery found 2 cached chat models and selected qwen3_0_6b_q4_0 at score 0.684 |
 | rag.java | retrieved doc-0 at 0.8581 and doc-1 at 0.6651; policy returned EXTRACTIVE_FALLBACK |
@@ -106,9 +130,12 @@ exit codes are in `evidence/walkthrough-0.4.0/` (`runs.json`, `environment.json`
 | bonsai.java | verified 5.95 GB PTQ1_0 artifact; completion produced |
 | fleet.java | routing ledger above, both arms |
 
-Two figures moved from the 0.1.58 / 0.3.59 run of 2026-10-15 and are restated above: the speech
-sample is 1,920 ms at RTF 1.361 rather than 1,728 ms at RTF 1.433, and `decisions.java` reports its
-urgency confidence, which the earlier table omitted. Nothing else changed.
+The speech sample is the one entry that moves between runs: 1,728 ms at RTF 1.433 on 2026-10-15,
+1,920 ms at RTF 1.361 on 0.4.0, and 1,856 ms at RTF 1.378 here. It is a synthesis length, not a
+fixed property, so the article quotes the run rather than the model. Every other outcome -- the
+rerank ordering and its 8.708755, the 182 shared prefix tokens, the two retrieved documents and
+their scores, the three calibrated verdicts, the 1,024- and 768-dimensional vectors, the 5.95 GB
+artifact -- is identical across all three runs.
 
 ### Three defects found by running them
 
@@ -183,6 +210,142 @@ threshold order whatever order they were declared in, and two may not start at t
 Scoring normalises cost across the eligible candidates, so a rate that moved with prompt size would
 make a candidate's score jump at its threshold and its rank non-monotonic in the size of the
 request. Accounting is where the tier has to be right.
+
+**5. Discovery had no derivation, so the demo stopped discovering (fixed in 0.4.1).**
+`CatalogDiscovery`'s own javadoc states its purpose: it exists "so that using the router does not
+begin with writing out every model's price, latency and per-task quality by hand -- figures a caller
+has no way to know and would have to invent." Probed against the released 0.1.60 catalog with the
+fleet's four model jars on the classpath, it returns for SmolLM2:
+
+```
+smollm2_360m_instruct_q8_0
+  local=true capabilities=[chat] contextWindow=8192
+  ttft=72ms tok/s=20.70 quality={}
+```
+
+Of the seven builder calls the first version of `fleet.java` wrote for that model, four were already
+there (`local`, `contextWindow`, and throughput as an estimate), one was half there (`chat` yes,
+the application's own `liveness` no), and one -- per-task `quality` -- genuinely was not.
+
+It wrote all seven anyway, and the reason is a missing API rather than carelessness about typing.
+`ModelCandidate` is a record of thirteen components with no derivation, so adding one capability to
+a discovered candidate meant restating the other twelve by hand and keeping that copy in step. That
+costs more than declaring the model from scratch, so the rational response was not to discover --
+and the invented figures then drifted from the artifacts: qwen3-0.6b was declared with a
+32,768-token context window where its GGUF says 40,960.
+
+`ModelCandidate.toBuilder()` returns a builder initialised from every component, and
+`Builder.addCapabilities(String...)` adds names to the ones already set rather than replacing them.
+Capabilities carry over as an explicit choice, so a later `tags(...)` on a derived builder cannot
+silently discard what the application just added -- on a fresh builder `tags` seeds `capabilities`,
+and on a derived one that would be a loss. Seven tests, each checked against a deliberately broken
+implementation; one fixture had to be changed because it held `contextWindow` at the builder's own
+default, where dropping the copy could not fail it.
+
+**6. The demo was passing a filter it had silently disabled (no library change).** Rewriting
+`fleet.java` to discover made its fifth prompt unroutable:
+
+```
+NoEligibleModelException: no model declares the summarization tag;
+no model declares required capabilities [chat]; policy is local-only
+```
+
+`ModelRouter.eligible` filters on
+`taskType != null && !candidate.tags().isEmpty() && !candidate.tags().contains(taskType)`. A
+hand-written candidate never called `tags(...)`, so its tag set was empty and that clause never
+fired. Discovered candidates carry the catalog's `tags=[chat]`, which switches it on, and
+`tell me more` -- the only prompt in this conversation that clears the 0.60 similarity floor, as
+`summarization` -- then matches no local model.
+
+This is the library behaving as written: a non-empty tag set is a hard task filter, and an empty one
+opts out. The defect is the demo's, and it is worth recording because of how it hid. The program was
+not exercising the filter and said nothing about it; a reader would have concluded the fleet was
+tag-filtered correctly. It is now cleared deliberately, with the reason in the code, which is the
+same behaviour arrived at as a decision instead of an accident. Nothing found it except fixing an
+unrelated defect.
+
+**7. "Discovery only finds cached models" was never true (three documents corrected).** The
+article, `code/README.md` and `route.java` all stated that discovery reports only models whose
+weights are already downloaded. That claim was never tested; it was assumed, repeated, and
+published.
+
+Measured two ways on this host. Hiding a cached GGUF
+(`~/.modeljars/cache/sha256/48ab.../model.gguf`) changed nothing: both models were still reported,
+with the same ids, locality and context windows. Removing the local registry
+(`~/.modeljars/catalog/registry.properties`, 6,585 lines) changed nothing either. Discovery is
+driven entirely by the classpath -- a marker jar carries its model's descriptor -- and weights are
+fetched when a runtime is opened, not when a model is discovered. That is why `route.java` can
+select between models that have never been downloaded, which is a better story than the one the
+article was telling.
+
+The claim surfaced because it predicted a bug: if discovery needed cached weights, `fleet.java`
+building its fleet before warming its models would fail on any machine that had not run it before.
+The prediction was wrong because the premise was, and a reordering made on that premise was
+reverted. Worth recording as the general case: an unverified claim is not merely unsupported, it
+produces confident reasoning that is wrong in a direction nothing in the output reveals.
+
+**8. A policy comment claimed an outcome nobody had routed (corrected).** `fleet.java` explained
+its choice of `BALANCED` by saying `LOCAL_FIRST` "would weight locality at 0.35 and latency enough
+that the 360M model wins ordinary chat on speed". `LOCAL_FIRST` weights latency at **0.10**, lower
+than `BALANCED`'s 0.15, so the stated mechanism could not produce the stated outcome.
+
+Routed for real, selection only, on the customer's question:
+
+```
+BALANCED     -> qwen3_0_6b_q4_0             {quality=0.271, latency=0.150, locality=0.056, cost=0.333}
+LOCAL_FIRST  -> qwen3_0_6b_q4_0             {quality=0.193, latency=0.094, locality=0.368, cost=0.211}
+FASTEST      -> smollm2_360m_instruct_q8_0  {quality=0.071, latency=0.737, locality=0.053, cost=0.053}
+```
+
+`LOCAL_FIRST` picks the same model `BALANCED` does: every local arm scores identical locality, so a
+0.35 thumb on it separates nothing between them. `FASTEST` is the policy that hands ordinary chat
+to the 360M model. The comment now says that, and says it because it was measured.
+
+**9. The catalog and popularity sections had no provenance at all (now generated).** The project
+rule is that analysis tables are produced by scripts from committed artifacts and never typed by
+hand. That section of the article was typed by hand: no artifact in `evidence/`, no generator.
+Re-derived from `modeljars.org/catalog.json`, committed as `evidence/modeljars-catalog.json` and
+reduced by `tools/catalog_stats.py` (output in `evidence/CATALOG-STATS.txt`).
+
+Most figures survived verification exactly: 103 entries, 67 upstream repositories, 167.2 GB, 13.7 MB
+smallest, 16.8 GB largest, 0.91 GB median, the format split, the architecture families, the
+quantization and domain counts, and the qualification counts (65 RAG, 31 embedding, 29 performance
+profiles). The size figures are decimal GB; computed as GiB they read 155.7 / 13.1 / 15.6 / 0.85,
+and the script now states which it uses.
+
+One figure was wrong. The licence row said "3 single-model terms including one non-commercial".
+There are **6**: Mistral-Research, DeepSeek, Qwen-Research, Llama-3.1, Llama-3 and one
+`fair-noncommercial-research-license`. Corrected. Two entries also declare `requiredWeightBytes`
+rather than `sizeBytes` -- the composites, whose weights are another catalogued model's -- so the
+total covers 101 entries and the article now says so instead of implying 103.
+
+**10. The popularity table quoted download counts with no snapshot (now committed).** A 30-day
+download count is a moving number, and the article quoted seven of them plus a 15,143,513 total
+against "64 repositories that report counts", with nothing recorded about when they were read.
+
+Re-read from the HuggingFace API on 2026-10-16 and committed as
+`evidence/huggingface-downloads.json` by `tools/fetch_downloads.py`. The totals had moved:
+**65** repositories report, totalling **17,441,805**. Only two of the 67 do not report, and neither
+is a HuggingFace repository -- the first-party compositions carry `modeljars://` source ids. The
+article's claim that "one upstream GGUF conversion" also failed to report is no longer true.
+
+The ordering moved too: `deepreinforce-ai/Ornith-1.0-9B-GGUF` is now second at 2,324,254, and
+`ggml-org/embeddinggemma-300M-GGUF` has dropped to ninth, which broke a sentence that pointed at
+"the seventh row". The table is now rendered by `tools/downloads_table.py` from the snapshot, and
+the article states the read date beside the figures.
+
+**11. Three counting and scope errors in the prose (corrected).** Found by counting the thing
+rather than re-reading the sentence.
+
+- "The five requirement objects are the whole routing policy" -- there are **six**
+  (`liveness`, `chatHere`, `grounded`, `decision`, `synthesis`, `longContext`).
+- "One fleet, seven models, three vendors" -- seven models is right, but there are **two** vendors,
+  OpenAI and Anthropic. The body of the article said "at two vendors" twice; only the heading
+  disagreed.
+- "There is no classifier branch, no keyword matching, no prompt inspection" -- the classifier does
+  inspect the prompt; that is its job. What is true is that nothing *branches* on what it reports:
+  the task type feeds the quality term in scoring, and eligibility is settled by the requirement
+  objects alone. Restated to say that.
 
 ### Where the other implementations on this machine put this line
 

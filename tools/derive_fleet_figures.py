@@ -28,13 +28,24 @@ def section(text: str, header: str) -> str:
 
 
 def routed_prompt_rows(text: str) -> list[tuple[str, str, int, int]]:
-    """(prompt, selected, tokens, ms) for each prompt, from the routing table."""
+    """(prompt, selected, tokens, ms) for each prompt, from the routing table.
+
+    Column positions are read from the header rather than hard-coded, so widening a column in
+    fleet.java does not silently reduce this to zero rows and a wrong comparison.
+    """
     body = text[text.index("PROMPT ") : text.index("== timing")]
+    lines = body.splitlines()
+    header = lines[0]
+    selected_at = header.index("SELECTED")
     rows = []
-    for line in body.splitlines()[1:]:
-        m = re.match(r"^(.{41})(.{21})(\S+)\s+(\d+)\s+(\d+)\s*$", line)
+    for line in lines[1:]:
+        if len(line) <= selected_at or not line[:1].strip():
+            continue
+        m = re.match(r"^(\S+)\s+(\d+)\s+(\d+)\s*$", line[selected_at:])
         if m:
-            rows.append((m.group(1).strip(), m.group(3), int(m.group(4)), int(m.group(5))))
+            rows.append(
+                (line[: header.index("CLASSIFIED")].strip(), m.group(1), int(m.group(2)), int(m.group(3)))
+            )
     return rows
 
 

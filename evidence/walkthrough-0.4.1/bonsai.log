@@ -1,6 +1,6 @@
 [jbang] Resolving dependencies...
-[jbang]    com.integrallis:models:0.4.0
-[jbang]    com.integrallis:backend-java:0.4.0
+[jbang]    com.integrallis:models:0.4.1
+[jbang]    com.integrallis:backend-java:0.4.1
 [jbang] Dependencies resolved
 [jbang] Building jar for bonsai.java...
 WARNING: Using incubator modules: jdk.incubator.vector

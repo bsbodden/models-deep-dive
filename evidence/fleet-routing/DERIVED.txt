@@ -1,10 +1,10 @@
 prompts: 10, answered locally: 8, escalated: 2
-all-remote: 247 input + 2258 completion = $0.022889
-as routed:  204 input + 789 completion = $0.006993
-saved: $0.015896 -- 69.4% less, a factor of 3.27
-the 8 locally answered prompts would have billed 1677 completion tokens on gpt-5.1, or $0.016891 -- 73.8% of the all-remote bill
-  gpt-5.1: 61 in + 685 completion = $0.006926
-  claude-haiku-5-5: 143 in + 104 completion = $0.000066
+all-remote: 247 input + 2676 completion = $0.027069
+as routed:  204 input + 668 completion = $0.005773
+saved: $0.021296 -- 78.7% less, a factor of 4.69
+the 8 locally answered prompts would have billed 2167 completion tokens on gpt-5.1, or $0.021791 -- 80.5% of the all-remote bill
+  gpt-5.1: 61 in + 563 completion = $0.005706
+  claude-haiku-5-5: 143 in + 105 completion = $0.000067
 declared list prices per million tokens, from code/fleet.java:
   PREMIUM_IN = 1.25
   PREMIUM_OUT = 10.00
@@ -15,5 +15,5 @@ declared list prices per million tokens, from code/fleet.java:
   HAIKU_HIGH_IN = 0.50
   HAIKU_HIGH_OUT = 2.50
 on completion, PREMIUM_OUT is 20 times HAIKU_OUT ($10.00 against $0.50 per million)
-gpt-5.1 mean 11268 ms vs claude-haiku-5-5 mean 1340 ms: Haiku 8.4 times faster
-wall clock 41985 ms, 36928 ms (88.0%) in model calls; one-off load 30944 ms
+gpt-5.1 mean 6873 ms vs claude-haiku-5-5 mean 1312 ms: Haiku 5.2 times faster
+wall clock 36452 ms, 31508 ms (86.4%) in model calls; one-off load 27709 ms

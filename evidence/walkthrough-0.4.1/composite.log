@@ -1,27 +1,23 @@
-[jbang] Resolving dependencies...
-[jbang]    org.modeljars.composite:granite-answerability:0.1.60
-[jbang] Dependencies resolved
-[jbang] Building jar for composite.java...
 WARNING: Using incubator modules: jdk.incubator.vector
 Question: In which German state is Aachen?
 Documents: [Aachen is a spa city in North Rhine-Westphalia, Germany, near the Belgian and Dutch borders., Aachen Cathedral was consecrated in 805 and became the first German UNESCO World Heritage site in 1978.]
-Oct 16, 2026 11:24:08 AM org.modeljars.ModelJarInstaller reportProgress
+Oct 16, 2026 4:00:20 PM org.modeljars.ModelJarInstaller reportProgress
 INFO: Verifying cached model ibm_granite_granite_4_1_3b_gguf_q4_k_m (1.96 GiB) at /Users/briansam-bodden/.modeljars/cache/sha256/66/662b0626cd58f443baea23559b469df6576a81d349649c59413b36a9fb32eb29/model.gguf
-Oct 16, 2026 11:24:15 AM org.modeljars.ModelJarInstaller reportProgress
+Oct 16, 2026 4:00:27 PM org.modeljars.ModelJarInstaller reportProgress
 INFO: Model cache verified: ibm_granite_granite_4_1_3b_gguf_q4_k_m
-Oct 16, 2026 11:24:15 AM org.modeljars.ModelJarInstaller reportProgress
+Oct 16, 2026 4:00:27 PM org.modeljars.ModelJarInstaller reportProgress
 INFO: Verifying cached model modeljars_granite_4_1_3b_answerability_alora_integrallis_f32 (118.8 MiB) at /Users/briansam-bodden/.modeljars/cache/sha256/67/67533dff14cd0cfa9ae0d00e83a9955226426ff1f98f1fd28790b2fd8757eea6/adapter_model.safetensors
-Oct 16, 2026 11:24:16 AM org.modeljars.ModelJarInstaller reportProgress
+Oct 16, 2026 4:00:28 PM org.modeljars.ModelJarInstaller reportProgress
 INFO: Verifying cached model modeljars_granite_4_1_3b_answerability_alora_integrallis_f32 (1.9 KiB) at /Users/briansam-bodden/.modeljars/cache/sha256/67/67533dff14cd0cfa9ae0d00e83a9955226426ff1f98f1fd28790b2fd8757eea6/models-activated-lora.json
-Oct 16, 2026 11:24:16 AM org.modeljars.ModelJarInstaller reportProgress
+Oct 16, 2026 4:00:28 PM org.modeljars.ModelJarInstaller reportProgress
 INFO: Verifying cached model modeljars_granite_4_1_3b_answerability_alora_integrallis_f32 (1.1 KiB) at /Users/briansam-bodden/.modeljars/cache/sha256/67/67533dff14cd0cfa9ae0d00e83a9955226426ff1f98f1fd28790b2fd8757eea6/NOTICE
-Oct 16, 2026 11:24:16 AM org.modeljars.ModelJarInstaller reportProgress
+Oct 16, 2026 4:00:28 PM org.modeljars.ModelJarInstaller reportProgress
 INFO: Verifying cached model modeljars_granite_4_1_3b_answerability_alora_integrallis_f32 (10.5 KiB) at /Users/briansam-bodden/.modeljars/cache/sha256/67/67533dff14cd0cfa9ae0d00e83a9955226426ff1f98f1fd28790b2fd8757eea6/LICENSE
-Oct 16, 2026 11:24:16 AM org.modeljars.ModelJarInstaller reportProgress
+Oct 16, 2026 4:00:28 PM org.modeljars.ModelJarInstaller reportProgress
 INFO: Model cache verified: modeljars_granite_4_1_3b_answerability_alora_integrallis_f32
-Oct 16, 2026 11:24:16 AM com.integrallis.vectors.core.PanamaVectorUtilSupportProvider create
+Oct 16, 2026 4:00:28 PM com.integrallis.vectors.core.PanamaVectorUtilSupportProvider create
 INFO: vectors-core: Using Panama Vector API SIMD provider (vector bits: 256)
-Oct 16, 2026 11:24:16 AM com.integrallis.vectors.core.VectorizationProvider logActiveToggles
+Oct 16, 2026 4:00:28 PM com.integrallis.vectors.core.VectorizationProvider logActiveToggles
 INFO: vectors-core: provider=PanamaVectorUtilSupport panama=true maxBits=256 preferredBits=256 fastVectorFMA=true fastScalarFMA=true sve=false ggufParallel=true ggufParallelThreshold=1048576 ggufExecutor=persistent ggufThreads=12 ggufChunksPerThread=2 mappedKQuantLongOffsets=auto(q4=true,q5=false,q6=false) q4ShortPairwiseSupported=true q4UnsignedPairwiseSupported=true toggles=[(defaults — no -Dvectors.* overrides)]
 Answerability: ANSWERABLE
 Raw output: "answerable"

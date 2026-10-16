@@ -7,7 +7,7 @@
 // Three threads each shares the twelve this host has.
 //RUNTIME_OPTIONS -Dmodels.native.kernels.threads=3
 //DEPS org.modeljars:modeljars:0.1.60
-//DEPS com.integrallis:models-router:0.4.0
+//DEPS com.integrallis:models-router:0.4.1
 //DEPS com.integrallis:vectors-db:0.1.30
 //DEPS com.fasterxml.jackson.core:jackson-databind:2.22.3
 //DEPS org.modeljars.composite:harriet:0.1.60
@@ -70,10 +70,6 @@ class fleet {
   static final double HAIKU_HIGH_OUT = 2.50;
   static final int HAIKU_CAP = 1024;
 
-  static final String REMOTE_MODEL = PREMIUM;
-  static final double REMOTE_INPUT_PER_M = PREMIUM_IN;
-  static final double REMOTE_OUTPUT_PER_M = PREMIUM_OUT;
-
   static final String EMBEDDER =
       "org.modeljars.huggingface:ggml-org.embeddinggemma-300m-gguf.q8_0:3.0.0-q8_0.1";
   static final String TINY =
@@ -82,6 +78,14 @@ class fleet {
       "org.modeljars.huggingface:ggml-org.qwen3-0.6b-gguf.q4_0:3.0.0-q4_0.1";
   static final String GROUNDER =
       "org.modeljars.huggingface:bartowski.llama-3.2-1b-instruct-gguf.q4_k_m:3.2.0-q4_k_m.1";
+
+  // The same four models as the catalog names them. A coordinate is what you depend on; a catalog
+  // id is what discovery reports and what the router then routes to, so the ledger below is keyed
+  // on the second. Harriet's composite contributes its base weights under the fourth id.
+  static final String TINY_ID = "smollm2_360m_instruct_q8_0";
+  static final String SMALL_ID = "qwen3_0_6b_q4_0";
+  static final String GROUNDER_ID = "bartowski_llama_3_2_1b_instruct_gguf_q4_k_m";
+  static final String HARRIET_ID = "unsloth_qwen3_5_4b_gguf_q4_k_m";
 
   /** A fleet client is whatever the application can call. Here: text in, text out. */
   interface Responder {
@@ -147,24 +151,24 @@ class fleet {
     long localCompletionTokens = 0;
     // Cold load dominates a first call -- Harriet maps 2.7 GB -- so the local arms are opened and
     // exercised once before anything is timed. Otherwise every per-call figure below would be
-    // reporting a one-off startup cost as if it were routing latency. The remote arm is not warmed,
-    // because warming it would cost money for no local benefit.
-    System.out.printf("%n%-20s %9s%n", "WARMING", "LOAD MS");
+    // reporting a one-off startup cost as if it were routing latency. The remote arms are not
+    // warmed, because warming them would cost money for no local benefit.
+    System.out.printf("%n%-32s %9s%n", "WARMING", "LOAD MS");
     long warmTotal = 0;
     var warmers = new LinkedHashMap<String, Responder>();
-    warmers.put("smollm2-360m", text -> acknowledge(TINY, text));
-    warmers.put("qwen3-0.6b", text -> complete(SMALL, List.of(ChatMessage.user(text)), 8));
-    warmers.put("llama-3.2-1b", text -> complete(GROUNDER, List.of(ChatMessage.user(text)), 8));
+    warmers.put(TINY_ID, text -> acknowledge(TINY, text));
+    warmers.put(SMALL_ID, text -> complete(SMALL, List.of(ChatMessage.user(text)), 8));
+    warmers.put(GROUNDER_ID, text -> complete(GROUNDER, List.of(ChatMessage.user(text)), 8));
     // A lambda, not a method reference: the local fleet variable shadows this class's own name.
-    warmers.put("harriet-decisions", text -> decide(text));
+    warmers.put(HARRIET_ID, text -> decide(text));
     for (var warm : warmers.entrySet()) {
       long began = System.nanoTime();
       warm.getValue().respond("ready?");
       long millis = (System.nanoTime() - began) / 1_000_000;
       warmTotal += millis;
-      System.out.printf("%-20s %9d%n", warm.getKey(), millis);
+      System.out.printf("%-32s %9d%n", abbreviate(warm.getKey(), 32), millis);
     }
-    System.out.printf("%-20s %9d%n", "total", warmTotal);
+    System.out.printf("%-32s %9d%n", "total", warmTotal);
 
     long remoteCompletionTokens = 0;
     long localRulerRemote = 0;
@@ -179,7 +183,7 @@ class fleet {
     int escalated = 0;
     var work = prompts();
     System.out.printf(
-        "%n%-40s %-20s %-18s %4s %7s%n", "PROMPT", "CLASSIFIED", "SELECTED", "TOK", "MS");
+        "%n%-32s %-20s %-32s %4s %7s%n", "PROMPT", "CLASSIFIED", "SELECTED", "TOK", "MS");
     for (var prompt : work) {
       lastRemoteUsage = null;
       int tokens = tokenizer.encode(prompt.text()).length;
@@ -233,10 +237,10 @@ class fleet {
               : result.attempts().getLast().duration().toMillis();
       callMillis.computeIfAbsent(chosen.id(), key -> new ArrayList<>()).add(millis);
       System.out.printf(
-          "%-40s %-20s %-18s %4d %7d%n",
-          abbreviate(prompt.text(), 38),
+          "%-32s %-20s %-32s %4d %7d%n",
+          abbreviate(prompt.text(), 30),
           describeClassification(pretrained, prompt.text(), result.decision().taskType()),
-          chosen.id(),
+          abbreviate(chosen.id(), 32),
           tokens,
           millis);
       System.out.printf("    %s%n", abbreviate(String.valueOf(result.value()), 132));
@@ -250,12 +254,12 @@ class fleet {
     long sessionMillis = (System.nanoTime() - sessionStart) / 1_000_000;
 
     System.out.printf("%n== timing, warm ==%n");
-    System.out.printf("%-20s %5s %9s %9s %9s%n", "MODEL", "CALLS", "TOTAL MS", "MEAN MS", "SHARE");
+    System.out.printf("%-32s %5s %9s %9s %9s%n", "MODEL", "CALLS", "TOTAL MS", "MEAN MS", "SHARE");
     for (var entry : callMillis.entrySet()) {
       long total = entry.getValue().stream().mapToLong(Long::longValue).sum();
       System.out.printf(
-          "%-20s %5d %9d %9d %8.1f%%%n",
-          entry.getKey(),
+          "%-32s %5d %9d %9d %8.1f%%%n",
+          abbreviate(entry.getKey(), 32),
           entry.getValue().size(),
           total,
           total / entry.getValue().size(),
@@ -286,7 +290,7 @@ class fleet {
         localRulerRemote, allTokens, 100.0 * localRulerRemote / allTokens);
     System.out.printf(
         "provider ruler (%s reported): %d input + %d completion tokens billed%n",
-        REMOTE_MODEL, remoteTokens, remoteCompletionTokens);
+        PREMIUM, remoteTokens, remoteCompletionTokens);
     System.out.printf(
         "  the same prompt measured %d tokens locally, so the two rulers differ by %d%n",
         localRulerRemote, remoteTokens - localRulerRemote);
@@ -342,47 +346,56 @@ class fleet {
   }
 
   /**
-   * Four local families and one remote provider.
+   * Four local models discovered from the catalog, three remote providers declared.
    *
-   * <p>Only the remote candidate claims {@code reasoning}; only the grounder claims {@code
+   * <p>Only a remote candidate claims {@code reasoning}; only the grounder claims {@code
    * grounding}; only Harriet claims {@code decision}. The capability filter therefore settles
    * eligibility before any score is compared.
    */
   static ModelFleet<Responder> buildFleet(TaskClassifier classifier, VectorCollection retrieval) {
     // region: locals
+    // Identity, locality, the context window read from the artifact and this host's throughput all
+    // come from the catalog. Hand-writing them is how this demo once had qwen3-0.6b at a 32,768
+    // token window when the file says 40,960.
+    var catalog = new LinkedHashMap<String, ModelCandidate>();
+    for (var found : CatalogDiscovery.discover()) {
+      catalog.put(found.id(), found);
+    }
+
+    // Only what a catalog cannot know is written here: `liveness` and `grounding` are names this
+    // application invented, and the quality weights are its judgement. `toBuilder` keeps the rest.
+    //
+    // Clearing tags is the subtle part. A non-empty tag set is a hard filter on the classifier's
+    // task type, so a model tagged `chat` is refused outright for a prompt classified
+    // `summarization`. The catalog tags these `chat` to describe the weights; this fleet selects on
+    // capability and quality instead.
     var tiny =
-        ModelCandidate.builder("smollm2-360m")
-            .local(true)
-            .capabilities(Set.of("chat", "liveness"))
-            .contextWindow(8192)
-            .timeToFirstTokenMillis(90)
-            .tokensPerSecond(55)
+        discovered(catalog, TINY_ID)
+            .tags(Set.of())
+            .addCapabilities("liveness")
             .quality(Map.of("chat", 0.45))
             .build();
     var small =
-        ModelCandidate.builder("qwen3-0.6b")
-            .local(true)
-            .capabilities(Set.of("chat", "summarization"))
-            .contextWindow(32768)
-            .timeToFirstTokenMillis(140)
-            .tokensPerSecond(40)
+        discovered(catalog, SMALL_ID)
+            .tags(Set.of())
+            .addCapabilities("summarization")
             .quality(Map.of("chat", 0.60, "summarization", 0.62))
             .build();
     var grounder =
-        ModelCandidate.builder("llama-3.2-1b")
-            .local(true)
-            .capabilities(Set.of("chat", "grounding"))
-            .contextWindow(131072)
-            .timeToFirstTokenMillis(210)
-            .tokensPerSecond(28)
+        discovered(catalog, GROUNDER_ID)
+            .tags(Set.of())
+            .addCapabilities("grounding")
             .quality(Map.of("chat", 0.66, "grounding", 0.70))
             .build();
+    // Harriet is where derivation stops. The catalog reports the composite's base weights as a chat
+    // model, true of the weights and wrong about this arm: three typed questions, three forward
+    // passes, no generated prose. So `capabilities` replaces rather than adds -- a decision arm
+    // claiming `chat` would be eligible for a customer's real question -- and tokens-per-second is
+    // overridden because it does not describe this cost. The window carries through.
     var decisions =
-        ModelCandidate.builder("harriet-decisions")
-            .local(true)
+        discovered(catalog, HARRIET_ID)
+            .tags(Set.of())
             .capabilities(Set.of("decision"))
-            .contextWindow(32768)
-            .timeToFirstTokenMillis(260)
             .tokensPerSecond(1)
             .quality(Map.of("decision", 0.90))
             .build();
@@ -436,10 +449,11 @@ class fleet {
     // region: wiring
     return ModelFleet.<Responder>builder()
         .classifier(classifier)
-        // BALANCED weights quality at 0.40 and latency at 0.15. LOCAL_FIRST would weight
-        // locality at 0.35 and latency enough that the 360M model wins ordinary chat on speed,
-        // which is the wrong trade for a customer's actual question. The LOCAL_ONLY boundary on
-        // those requests already keeps them on this machine, so locality needs no thumb here.
+        // BALANCED weights quality 0.40 and latency 0.15, and picks qwen3-0.6b for a customer's
+        // question. LOCAL_FIRST picks it too: every local arm scores identical locality, so a 0.35
+        // thumb there separates nothing between them, and the LOCAL_ONLY boundary already keeps
+        // these requests on this machine. FASTEST is the policy that changes the answer -- it
+        // hands ordinary chat to the 360M model on latency alone, which is the wrong trade here.
         .policy(RoutingPolicy.BALANCED)
         .model(tiny, prompt -> acknowledge(TINY, prompt))
         .model(small, prompt -> chat(SMALL, prompt, 80))
@@ -452,6 +466,26 @@ class fleet {
         .model(haiku, prompt -> callAnthropic(HAIKU, HAIKU_CAP, prompt))
         .build();
     // endregion
+  }
+
+  /**
+   * The discovered candidate for one catalog id, as a builder ready to be adjusted.
+   *
+   * <p>Discovery is driven by the classpath: a marker jar carries its model's descriptor, so a
+   * model is reported whether or not its weights have been downloaded. An absent id therefore
+   * means a missing dependency, not a cold cache.
+   */
+  static ModelCandidate.Builder discovered(Map<String, ModelCandidate> catalog, String id) {
+    var found = catalog.get(id);
+    if (found == null) {
+      throw new IllegalStateException(
+          "no catalog entry for "
+              + id
+              + "; discovery found "
+              + catalog.keySet()
+              + ". Check the //DEPS marker jars at the top of this file.");
+    }
+    return found.toBuilder();
   }
 
   record Prompt(String text, RoutingRequirements requirements, String session) {}
@@ -531,13 +565,20 @@ class fleet {
           lastRemoteUsage.inputTokens(),
           lastRemoteUsage.outputTokens());
     }
-    double cost =
-        (REMOTE_INPUT_PER_M * input + REMOTE_OUTPUT_PER_M * output) / 1_000_000.0;
-    System.out.printf("%n== every prompt through %s ==%n", REMOTE_MODEL);
+    // Priced by the same ModelCandidate.costOf the routed ledger uses, rather than by a second
+    // copy of the formula that could drift from it.
+    var premium =
+        ModelCandidate.builder(PREMIUM)
+            .local(false)
+            .costPerMillionTokens(PREMIUM_IN, PREMIUM_OUT)
+            .build();
+    System.out.printf("%n== every prompt through %s ==%n", PREMIUM);
     System.out.printf("provider-reported: %d input + %d completion tokens%n", input, output);
     System.out.printf(
-        "at the declared $%.2f/M in, $%.2f/M out: $%.6f%n",
-        REMOTE_INPUT_PER_M, REMOTE_OUTPUT_PER_M, cost);
+        "at the declared $%.2f/M in, $%.2f/M out: $%s%n",
+        PREMIUM_IN,
+        PREMIUM_OUT,
+        premium.costOf(input, output).setScale(6, RoundingMode.HALF_UP).toPlainString());
     System.out.println(
         "Floor, not a ceiling: the grounded prompts are sent without their retrieved notes, which a");
     System.out.println("real all-remote implementation would have to include in the input.");

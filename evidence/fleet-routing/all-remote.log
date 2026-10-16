@@ -3,17 +3,17 @@ classifier: 10 tasks from google_embeddinggemma_300m_gguf_q8_0, 768-dimensional,
 PROMPT                                               IN  COMPLETION
 ping                                                  7          10
 still there?                                          9          22
-ok                                                    7          19
-I was charged twice for my September order.          15         431
-tell me more                                          9          99
-I was charged twice for my September subscr…         19         404
-When is a refund issued, and to which payme…         18         346
-What happens to a duplicate charge?                  13         346
-Our refund policy promises five business da…         61         501
-Summarise this appendix for the support han…         89          80
+ok                                                    7          24
+I was charged twice for my September order.          15         422
+tell me more                                          9         100
+I was charged twice for my September subscr…         19         813
+When is a refund issued, and to which payme…         18         300
+What happens to a duplicate charge?                  13         476
+Our refund policy promises five business da…         61         437
+Summarise this appendix for the support han…         89          72
 
 == every prompt through gpt-5.1 ==
-provider-reported: 247 input + 2258 completion tokens
-at the declared $1.25/M in, $10.00/M out: $0.022889
+provider-reported: 247 input + 2676 completion tokens
+at the declared $1.25/M in, $10.00/M out: $0.027069
 Floor, not a ceiling: the grounded prompts are sent without their retrieved notes, which a
 real all-remote implementation would have to include in the input.
