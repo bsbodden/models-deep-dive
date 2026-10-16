@@ -10,7 +10,38 @@ args = parser.parse_args()
 root = Path(__file__).resolve().parents[1]
 article = root / "article.md"
 original = article.read_text()
-pattern = re.compile(r"<!-- (snippet|diagram):([a-z-]+) -->(?:\n.*?<!-- end:\1:\2 -->)?", re.S)
+# A snippet may name a region: <!-- snippet:fleet#providers --> embeds only the lines between
+# "// region: providers" and "// endregion" in code/fleet.java. Interleaving regions with prose
+# beats dumping a 700-line file into the middle of an article, and the excerpt still cannot drift
+# from the source because it is read from it on every sync.
+pattern = re.compile(
+    # The region group matches empty rather than being optional: an optional group that does not
+    # participate makes the \3 backreference in the end marker unmatchable, so an existing block is
+    # never consumed and every run appends another copy of it.
+    r"<!-- (snippet|diagram):([a-z-]+)(#[a-z-]+|) -->(?:\n.*?<!-- end:\1:\2\3 -->)?", re.S)
+
+
+def region_of(source, name, region):
+    begin = f"// region: {region}"
+    lines = source.splitlines()
+    try:
+        start = next(i for i, line in enumerate(lines) if line.strip() == begin)
+    except StopIteration:
+        raise SystemExit(f"code/{name}.java has no region '{region}'")
+    depth = 0
+    body = []
+    for line in lines[start + 1:]:
+        if line.strip().startswith("// region: "):
+            depth += 1
+        if line.strip() == "// endregion":
+            if depth == 0:
+                # Regions are written at one indent inside the class; strip it uniformly so the
+                # excerpt reads as a block rather than as a fragment hanging off a margin.
+                margin = min((len(l) - len(l.lstrip()) for l in body if l.strip()), default=0)
+                return "\n".join(l[margin:] if l.strip() else "" for l in body).rstrip()
+            depth -= 1
+        body.append(line)
+    raise SystemExit(f"region '{region}' in code/{name}.java is never closed")
 # Alt text per diagram. A diagram that cannot be seen needs a sentence, not a filename, and the
 # PNG is what readers get wherever Mermaid is not rendered.
 CAPTIONS = {
@@ -26,10 +57,13 @@ CAPTIONS = {
 
 
 def expand(match):
-    kind, name = match.group(1, 2)
+    kind, name, region = match.group(1, 2, 3)
+    region = region[1:] if region else None
     directory, extension, language = (("code", ".java", "java") if kind == "snippet"
                                        else ("diagrams", ".mmd", "mermaid"))
     source = (root / directory / (name + extension)).read_text().rstrip()
+    if region:
+        source = region_of(source, name, region)
     if kind == "snippet":
         # Executable companion files retain tested pins; the article shows application code.
         source = "\n".join(line for line in source.splitlines()
@@ -48,13 +82,14 @@ def expand(match):
                 f"<sub>[Mermaid source](diagrams/{name}.mmd) · "
                 f"[SVG](diagrams/{name}.svg) · the block below is the same diagram</sub>\n\n"
                 f"```{language}\n{source}\n```")
-    return f"<!-- {kind}:{name} -->\n{body}\n<!-- end:{kind}:{name} -->"
+    label = f"{name}#{region}" if region else name
+    return f"<!-- {kind}:{label} -->\n{body}\n<!-- end:{kind}:{label} -->"
 updated = pattern.sub(expand, original)
 # Every embedded snippet must resolve to a real file, so an excerpt cannot drift from its source.
 # A script may be linked rather than embedded: the article carries a table of the walkthrough, and
 # requiring all fourteen inline is what made the earlier draft unreadable. Unembedded scripts are
 # reported so they cannot be silently orphaned instead.
-snippet_names = re.findall(r"<!-- snippet:([a-z-]+) -->", updated)
+snippet_names = re.findall(r"<!-- snippet:([a-z-]+)(?:#[a-z-]+)? -->", updated)
 for name in snippet_names:
     if not (root / "code" / (name + ".java")).exists():
         raise SystemExit(f"article embeds code/{name}.java, which does not exist")

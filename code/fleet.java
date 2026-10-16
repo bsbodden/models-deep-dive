@@ -292,6 +292,7 @@ class fleet {
     // ModelCandidate.costOf is new in Models 0.3.60 and is the arithmetic the shared budget
     // charges, so this ledger and the router's cannot drift. It belongs to the candidate that
     // actually ran: with one remote that was a detail, with three it is the whole point.
+    // region: ledger
     if (!remoteSpend.isEmpty()) {
       System.out.printf("%-20s %8s %12s %12s%n", "REMOTE PROVIDER", "IN", "COMPLETION", "COST");
       var total = BigDecimal.ZERO;
@@ -312,6 +313,7 @@ class fleet {
           remoteCompletionTokens,
           "$" + total.setScale(6, RoundingMode.HALF_UP).toPlainString());
     }
+    // endregion
     var premiumCandidate =
         fleet.router().candidates().stream()
             .filter(candidate -> candidate.id().equals(PREMIUM))
@@ -345,6 +347,7 @@ class fleet {
    * eligibility before any score is compared.
    */
   static ModelFleet<Responder> buildFleet(TaskClassifier classifier, VectorCollection retrieval) {
+    // region: locals
     var tiny =
         ModelCandidate.builder("smollm2-360m")
             .local(true)
@@ -381,9 +384,11 @@ class fleet {
             .tokensPerSecond(1)
             .quality(Map.of("decision", 0.90))
             .build();
+    // endregion
     // Three remote providers, not one. Each is an ordinary candidate with its own prices, ceiling
     // and client. Only the premium one claims `reasoning`; all three claim `long-context`, so a
     // long document is decided between them on policy rather than on vendor.
+    // region: providers
     var premium =
         ModelCandidate.builder(PREMIUM)
             .local(false)
@@ -420,7 +425,9 @@ class fleet {
             .tokensPerSecond(120)
             .quality(Map.of("chat", 0.80, "summarization", 0.83))
             .build();
+    // endregion
 
+    // region: wiring
     return ModelFleet.<Responder>builder()
         .classifier(classifier)
         // BALANCED weights quality at 0.40 and latency at 0.15. LOCAL_FIRST would weight
@@ -438,12 +445,14 @@ class fleet {
         .model(economy, prompt -> callOpenAi(ECONOMY, ECONOMY_CAP, prompt))
         .model(haiku, prompt -> callAnthropic(HAIKU, HAIKU_CAP, prompt))
         .build();
+    // endregion
   }
 
   record Prompt(String text, RoutingRequirements requirements, String session) {}
 
   /** One support session: liveness, follow-ups, closed decisions, grounded questions, synthesis. */
   static List<Prompt> prompts() {
+    // region: requirements
     var liveness =
         RoutingRequirements.builder()
             .requireCapability("liveness")
@@ -464,6 +473,7 @@ class fleet {
     // No local model claims long-context, so this must go remote. Which remote is then a policy
     // question among three providers rather than a vendor choice written into the code.
     var longContext = RoutingRequirements.builder().requireCapability("long-context").build();
+    // endregion
     return List.of(
         new Prompt("ping", liveness, null),
         new Prompt("still there?", liveness, null),
@@ -675,6 +685,7 @@ class fleet {
    * A different vendor's client: different endpoint, credential, auth header and response shape.
    * The fleet does not know any of that; it holds a candidate and something callable.
    */
+    // region: anthropic
   static String callAnthropic(String model, int cap, String prompt) throws Exception {
     var key = System.getenv("ANTHROPIC_API_KEY");
     if (key == null || key.isBlank()) {
@@ -723,6 +734,7 @@ class fleet {
     }
     return "[%s returned no text block]".formatted(model);
   }
+    // endregion
 
   // ---- helpers ----------------------------------------------------------------------------
 

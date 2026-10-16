@@ -122,784 +122,276 @@ which provider serves it is a policy question among three, not a vendor decision
 code — and each client normalises its own provider's usage into one `RoutingUsage`, which is the
 only thing the ledger needs.
 
-## One fleet, four local families, one remote provider
+## One fleet, seven models, three vendors
 
-Here is the whole thing. Four local model families, one remote provider, a local classifier, a
-retrieval arm, a decision arm, and a ledger that counts what left the machine.
+The whole program is [`code/fleet.java`](code/fleet.java), and it is worth reading in pieces rather
+than at once, because each piece answers a different question.
 
-<!-- snippet:fleet -->
+### Declaring what the local models are for
+
+A candidate is a description, not a wrapper. It says what the model claims to do, how fast it is,
+how large a prompt it takes, and how good it is at each task. Nothing here opens a file or loads
+weights.
+
+<!-- snippet:fleet#locals -->
 ```java
-//RUNTIME_OPTIONS --add-modules=jdk.incubator.vector
-//RUNTIME_OPTIONS --enable-native-access=ALL-UNNAMED -Xmx6g
-// Four models stay resident, and each native runtime otherwise sizes its persistent worker pool
-// for every logical CPU. Four pools of twelve on twelve cores is oversubscription, and it cost
-// 20x: qwen3-0.6b answered the same prompt in 1,169 ms alone and 23,946 ms beside the others.
-// Three threads each shares the twelve this host has.
-//RUNTIME_OPTIONS -Dmodels.native.kernels.threads=3
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.integrallis.models.api.EmbeddingBackend;
-import com.integrallis.models.api.SamplingOptions;
-import com.integrallis.models.decisions.Verdict;
-import com.integrallis.models.router.*;
-import com.integrallis.models.runtime.chat.ChatMessage;
-import com.integrallis.vectors.core.Document;
-import com.integrallis.vectors.core.SimilarityFunction;
-import com.integrallis.vectors.db.*;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.net.URI;
-import java.net.http.*;
-import java.time.Duration;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.modeljars.ModelJarDecisionRuntime;
-import org.modeljars.ModelJarRuntime;
-import org.modeljars.ModelJars;
-import org.modeljars.composite.harriet.Harriet;
-
-/**
- * One fleet, four local model families, one remote provider, one token ledger.
- *
- * <p>Capabilities are declarations by the operator: a model is eligible only if it claims the
- * capability a request requires. That is what keeps a heartbeat off a frontier model and sends
- * genuine synthesis to one, with no hand-written if-chain over prompt text.
- */
-class fleet {
-  // Declared contract prices, not measurements. Set these to your own agreements.
-  static final String PREMIUM = "gpt-5.1";
-  static final double PREMIUM_IN = 1.25;
-  static final double PREMIUM_OUT = 10.00;
-  static final int PREMIUM_CAP = 2048;
-
-  // A second provider in the same fleet, an order of magnitude cheaper on output.
-  static final String ECONOMY = "gpt-4.1-mini";
-  static final double ECONOMY_IN = 0.40;
-  static final double ECONOMY_OUT = 1.60;
-  static final int ECONOMY_CAP = 1024;
-
-  // A third provider at a different vendor: its own endpoint, credential, auth header and JSON
-  // shape. Anthropic prices Haiku 5.5 in tiers -- $0.10/$0.50 under a 100k-token prompt and
-  // $0.50/$2.50 over it -- and a candidate declares one pair, so this declares the tier these
-  // prompts actually fall in and would misprice a 100k-token request.
-  static final String HAIKU = "claude-haiku-5-5";
-  static final double HAIKU_IN = 0.10;
-  static final double HAIKU_OUT = 0.50;
-  static final int HAIKU_CAP = 1024;
-
-  static final String REMOTE_MODEL = PREMIUM;
-  static final double REMOTE_INPUT_PER_M = PREMIUM_IN;
-  static final double REMOTE_OUTPUT_PER_M = PREMIUM_OUT;
-
-  static final String EMBEDDER =
-      "org.modeljars.huggingface:ggml-org.embeddinggemma-300m-gguf.q8_0:<model-version>";
-  static final String TINY =
-      "org.modeljars.huggingface:huggingfacetb.smollm2-360m-instruct-gguf.q8_0:<model-version>";
-  static final String SMALL =
-      "org.modeljars.huggingface:ggml-org.qwen3-0.6b-gguf.q4_0:<model-version>";
-  static final String GROUNDER =
-      "org.modeljars.huggingface:bartowski.llama-3.2-1b-instruct-gguf.q4_k_m:<model-version>";
-
-  /** A fleet client is whatever the application can call. Here: text in, text out. */
-  interface Responder {
-    String respond(String prompt) throws Exception;
-  }
-
-  static final Map<String, Object> OPEN = new LinkedHashMap<>();
-
-  /** Provider-reported usage for the last remote call, which beats any local estimate. */
-  static RoutingUsage lastRemoteUsage;
-
-  /** One running transcript per session, which is what makes "tell me more" answerable. */
-  static final List<ChatMessage> TRANSCRIPT =
-      new ArrayList<>(
-          List.of(
-              ChatMessage.system(
-                  "You are a terse support assistant for an online store. Answer the customer in"
-                      + " one or two sentences, and never invent policy details.")));
-  static final List<String> NOTES =
-      List.of(
-          "Refunds are issued to the original payment method within five business days.",
-          "A duplicate charge is reversed automatically once billing reconciliation runs nightly.",
-          "Account closures require written confirmation from the account holder.");
-
-  public static void main(String... args) throws Exception {
-    quietLibraries();
-    var embedding = ModelJars.openEmbedding(EMBEDDER);
-    OPEN.put(EMBEDDER, embedding);
-
-    // The shipped task index was built with this same embedding model, already in the cache, so
-    // classification is one local forward pass and no prompt text leaves the machine to be routed.
-    var index = TaskIndexResource.openBundled();
-    var pretrained = PretrainedTaskClassifier.using(index, embedding::embed, 0.60);
-    var classifier = TaskClassifier.local(pretrained);
-    System.out.printf(
-        "classifier: %d tasks from %s, %d-dimensional, similarity floor 0.60%n",
-        index.taskNames().size(), index.embeddingModelId(), index.dimension());
-
-    // "all-remote" measures the counterfactual the ledger cannot compute: what the same workload
-    // costs when every prompt goes to the provider. Output tokens for prompts that never ran there
-    // are not knowable from a local tokenizer, so they are billed by asking.
-    if (args.length > 0 && "all-remote".equals(args[0])) {
-      allRemote();
-      return;
-    }
-
-    var retrieval = buildRetrieval(embedding);
-    var fleet = buildFleet(classifier, retrieval);
-    var tokenizer = runtime(SMALL).pipeline().tokenizer();
-
-    var budget = new RoutingBudget(new BigDecimal("0.05"));
-    var options =
-        RoutingExecutionOptions.builder()
-            .sharedBudget(budget)
-            // The fleet-wide fallback, which now only has to fit the local arms: the remote
-            // candidate declares its own ceiling.
-            .tokenBounds(new RoutingTokenBounds(4096, 512))
-            .timeout(Duration.ofMinutes(3))
-            .build();
-
-    long remoteTokens = 0;
-    long allTokens = 0;
-    long localCompletionTokens = 0;
-    // Cold load dominates a first call -- Harriet maps 2.7 GB -- so the local arms are opened and
-    // exercised once before anything is timed. Otherwise every per-call figure below would be
-    // reporting a one-off startup cost as if it were routing latency. The remote arm is not warmed,
-    // because warming it would cost money for no local benefit.
-    System.out.printf("%n%-20s %9s%n", "WARMING", "LOAD MS");
-    long warmTotal = 0;
-    var warmers = new LinkedHashMap<String, Responder>();
-    warmers.put("smollm2-360m", text -> acknowledge(TINY, text));
-    warmers.put("qwen3-0.6b", text -> complete(SMALL, List.of(ChatMessage.user(text)), 8));
-    warmers.put("llama-3.2-1b", text -> complete(GROUNDER, List.of(ChatMessage.user(text)), 8));
-    // A lambda, not a method reference: the local fleet variable shadows this class's own name.
-    warmers.put("harriet-decisions", text -> decide(text));
-    for (var warm : warmers.entrySet()) {
-      long began = System.nanoTime();
-      warm.getValue().respond("ready?");
-      long millis = (System.nanoTime() - began) / 1_000_000;
-      warmTotal += millis;
-      System.out.printf("%-20s %9d%n", warm.getKey(), millis);
-    }
-    System.out.printf("%-20s %9d%n", "total", warmTotal);
-
-    long remoteCompletionTokens = 0;
-    long localRulerRemote = 0;
-    // Per provider, because there is more than one and they do not cost the same.
-    var remoteSpend = new LinkedHashMap<String, BigDecimal>();
-    var remoteTokensBy = new LinkedHashMap<String, long[]>();
-    // Per-model timing comes from the router's own RoutingAttempt, not a stopwatch wrapped round
-    // the call, so it measures what the router measured.
-    var callMillis = new LinkedHashMap<String, List<Long>>();
-    long sessionStart = System.nanoTime();
-    TRANSCRIPT.subList(1, TRANSCRIPT.size()).clear();
-    int escalated = 0;
-    var work = prompts();
-    System.out.printf(
-        "%n%-40s %-20s %-18s %4s %7s%n", "PROMPT", "CLASSIFIED", "SELECTED", "TOK", "MS");
-    for (var prompt : work) {
-      lastRemoteUsage = null;
-      int tokens = tokenizer.encode(prompt.text()).length;
-      allTokens += tokens;
-      // A session makes the router sticky: it adds a switch margin so a conversation does not
-      // hop between models on a tie. Liveness checks are not conversation turns, so they carry
-      // no session and cannot anchor the session to the smallest model.
-      var builder = RoutingRequest.builder(prompt.text()).estimatedTokens(tokens);
-      if (prompt.session() != null) builder.sessionId(prompt.session());
-      var request = builder.build();
-      RoutedResult<String> result;
-      try {
-        result =
-            fleet.execute(
-                request,
-                prompt.requirements(),
-                RoutingContinuity.none(),
-                options,
-                client -> client.respond(prompt.text()),
-                answer ->
-                    lastRemoteUsage != null
-                        ? lastRemoteUsage
-                        : new RoutingUsage(tokens, estimateOutputTokens(answer)));
-      } catch (RoutingBudgetExceededException denied) {
-        // Reported, not fatal: one refused attempt should not discard the rest of the ledger.
-        System.out.printf(
-            "%-44s %-14s %-18s %d%n", abbreviate(prompt.text(), 42), "-", "refused", tokens);
-        System.out.printf("    refused: %s%n", denied.getMessage());
-        continue;
-      }
-      var chosen = result.decision().selected();
-      if (chosen.local()) {
-        localCompletionTokens += tokenizer.encode(String.valueOf(result.value())).length;
-      } else {
-        // The provider's own count supersedes the local tokenizer for the arm it bills, and the
-        // local count is kept beside it so the share stays measured on one ruler.
-        localRulerRemote += tokens;
-        long in = lastRemoteUsage != null ? lastRemoteUsage.inputTokens() : tokens;
-        long out = lastRemoteUsage != null ? lastRemoteUsage.outputTokens() : 0;
-        remoteTokens += in;
-        remoteCompletionTokens += out;
-        remoteSpend.merge(chosen.id(), chosen.costOf(in, out), BigDecimal::add);
-        remoteTokensBy.computeIfAbsent(chosen.id(), key -> new long[2]);
-        remoteTokensBy.get(chosen.id())[0] += in;
-        remoteTokensBy.get(chosen.id())[1] += out;
-        escalated++;
-      }
-      long millis =
-          result.attempts().isEmpty()
-              ? 0
-              : result.attempts().getLast().duration().toMillis();
-      callMillis.computeIfAbsent(chosen.id(), key -> new ArrayList<>()).add(millis);
-      System.out.printf(
-          "%-40s %-20s %-18s %4d %7d%n",
-          abbreviate(prompt.text(), 38),
-          describeClassification(pretrained, prompt.text(), result.decision().taskType()),
-          chosen.id(),
-          tokens,
-          millis);
-      System.out.printf("    %s%n", abbreviate(String.valueOf(result.value()), 132));
-      // Pass "explain" to see why: the score breakdown names every term, including the
-      // switch-margin a session grants the incumbent model.
-      if (args.length > 0 && "explain".equals(args[0])) {
-        System.out.printf("    %s%n", result.decision().explain().replace("\n", " | "));
-      }
-    }
-
-    long sessionMillis = (System.nanoTime() - sessionStart) / 1_000_000;
-
-    System.out.printf("%n== timing, warm ==%n");
-    System.out.printf("%-20s %5s %9s %9s %9s%n", "MODEL", "CALLS", "TOTAL MS", "MEAN MS", "SHARE");
-    for (var entry : callMillis.entrySet()) {
-      long total = entry.getValue().stream().mapToLong(Long::longValue).sum();
-      System.out.printf(
-          "%-20s %5d %9d %9d %8.1f%%%n",
-          entry.getKey(),
-          entry.getValue().size(),
-          total,
-          total / entry.getValue().size(),
-          100.0 * total / sessionMillis);
-    }
-    long accounted =
-        callMillis.values().stream()
-            .flatMap(List::stream)
-            .mapToLong(Long::longValue)
-            .sum();
-    System.out.printf(
-        "conversation wall clock: %d ms, of which %d ms (%.1f%%) was model calls%n",
-        sessionMillis, accounted, 100.0 * accounted / sessionMillis);
-    System.out.printf(
-        "one-off load of the four local models: %d ms, paid once at startup, not per request%n",
-        warmTotal);
-
-    System.out.printf("%n== ledger ==%n");
-    System.out.printf(
-        "%d prompts, %d escalated to a remote provider, %d answered on local weights%n",
-        work.size(), escalated, work.size() - escalated);
-
-    // Two rulers, kept apart on purpose. The local tokenizer measures every prompt the same way,
-    // which is what makes the share comparable; the provider's own count is what it bills.
-    System.out.printf(
-        "local ruler (qwen3-0.6b tokenizer): %d of %d input tokens were routed off this machine"
-            + " (%.1f%%)%n",
-        localRulerRemote, allTokens, 100.0 * localRulerRemote / allTokens);
-    System.out.printf(
-        "provider ruler (%s reported): %d input + %d completion tokens billed%n",
-        REMOTE_MODEL, remoteTokens, remoteCompletionTokens);
-    System.out.printf(
-        "  the same prompt measured %d tokens locally, so the two rulers differ by %d%n",
-        localRulerRemote, remoteTokens - localRulerRemote);
-    System.out.printf("completions generated on local weights: %d tokens%n", localCompletionTokens);
-    // ModelCandidate.costOf is new in Models 0.3.60 and is the arithmetic the shared budget
-    // charges, so this ledger and the router's cannot drift. It belongs to the candidate that
-    // actually ran: with one remote that was a detail, with three it is the whole point.
-    if (!remoteSpend.isEmpty()) {
-      System.out.printf("%-20s %8s %12s %12s%n", "REMOTE PROVIDER", "IN", "COMPLETION", "COST");
-      var total = BigDecimal.ZERO;
-      for (var entry : remoteSpend.entrySet()) {
-        long[] t = remoteTokensBy.get(entry.getKey());
-        total = total.add(entry.getValue());
-        System.out.printf(
-            "%-20s %8d %12d %12s%n",
-            entry.getKey(),
-            t[0],
-            t[1],
-            "$" + entry.getValue().setScale(6, RoundingMode.HALF_UP).toPlainString());
-      }
-      System.out.printf(
-          "%-20s %8d %12d %12s%n",
-          "total",
-          remoteTokens,
-          remoteCompletionTokens,
-          "$" + total.setScale(6, RoundingMode.HALF_UP).toPlainString());
-    }
-    var premiumCandidate =
-        fleet.router().candidates().stream()
-            .filter(candidate -> candidate.id().equals(PREMIUM))
-            .findFirst()
-            .orElseThrow();
-    System.out.printf(
-        "had every prompt gone to %s: $%s of input alone, plus $%s for the completions this"
-            + " machine produced for nothing%n",
-        PREMIUM,
-        premiumCandidate.costOf(allTokens, 0).setScale(6, RoundingMode.HALF_UP).toPlainString(),
-        premiumCandidate
-            .costOf(0, localCompletionTokens)
-            .setScale(6, RoundingMode.HALF_UP)
-            .toPlainString());
-    System.out.printf(
-        "router-accounted spend: $%s of the $0.05 shared budget%n",
-        budget.snapshot().spent().setScale(6, RoundingMode.HALF_UP).toPlainString());
-
-    for (var open : OPEN.values()) {
-      if (open instanceof AutoCloseable closeable) closeable.close();
-    }
-    retrieval.close();
-    index.close();
-  }
-
-  /**
-   * Four local families and one remote provider.
-   *
-   * <p>Only the remote candidate claims {@code reasoning}; only the grounder claims {@code
-   * grounding}; only Harriet claims {@code decision}. The capability filter therefore settles
-   * eligibility before any score is compared.
-   */
-  static ModelFleet<Responder> buildFleet(TaskClassifier classifier, VectorCollection retrieval) {
-    var tiny =
-        ModelCandidate.builder("smollm2-360m")
-            .local(true)
-            .capabilities(Set.of("chat", "liveness"))
-            .contextWindow(8192)
-            .timeToFirstTokenMillis(90)
-            .tokensPerSecond(55)
-            .quality(Map.of("chat", 0.45))
-            .build();
-    var small =
-        ModelCandidate.builder("qwen3-0.6b")
-            .local(true)
-            .capabilities(Set.of("chat", "summarization"))
-            .contextWindow(32768)
-            .timeToFirstTokenMillis(140)
-            .tokensPerSecond(40)
-            .quality(Map.of("chat", 0.60, "summarization", 0.62))
-            .build();
-    var grounder =
-        ModelCandidate.builder("llama-3.2-1b")
-            .local(true)
-            .capabilities(Set.of("chat", "grounding"))
-            .contextWindow(131072)
-            .timeToFirstTokenMillis(210)
-            .tokensPerSecond(28)
-            .quality(Map.of("chat", 0.66, "grounding", 0.70))
-            .build();
-    var decisions =
-        ModelCandidate.builder("harriet-decisions")
-            .local(true)
-            .capabilities(Set.of("decision"))
-            .contextWindow(32768)
-            .timeToFirstTokenMillis(260)
-            .tokensPerSecond(1)
-            .quality(Map.of("decision", 0.90))
-            .build();
-    // Three remote providers, not one. Each is an ordinary candidate with its own prices, ceiling
-    // and client. Only the premium one claims `reasoning`; all three claim `long-context`, so a
-    // long document is decided between them on policy rather than on vendor.
-    var premium =
-        ModelCandidate.builder(PREMIUM)
-            .local(false)
-            .capabilities(Set.of("chat", "reasoning", "summarization", "long-context"))
-            .costPerMillionTokens(PREMIUM_IN, PREMIUM_OUT)
-            // New in Models 0.3.60. A reasoning model bills its reasoning as completion, so it
-            // cannot share an output ceiling with a model that answers a liveness check in eight
-            // tokens. The execution-wide bound stays small for the local arms.
-            .maxOutputTokens(PREMIUM_CAP)
-            .contextWindow(400000)
-            .timeToFirstTokenMillis(850)
-            .tokensPerSecond(90)
-            .quality(Map.of("chat", 0.95, "reasoning", 0.96, "summarization", 0.94))
-            .build();
-    var economy =
-        ModelCandidate.builder(ECONOMY)
-            .local(false)
-            .capabilities(Set.of("chat", "summarization", "long-context"))
-            .costPerMillionTokens(ECONOMY_IN, ECONOMY_OUT)
-            .maxOutputTokens(ECONOMY_CAP)
-            .contextWindow(1000000)
-            .timeToFirstTokenMillis(400)
-            .tokensPerSecond(140)
-            .quality(Map.of("chat", 0.82, "summarization", 0.86))
-            .build();
-    var haiku =
-        ModelCandidate.builder(HAIKU)
-            .local(false)
-            .capabilities(Set.of("chat", "summarization", "long-context"))
-            .costPerMillionTokens(HAIKU_IN, HAIKU_OUT)
-            .maxOutputTokens(HAIKU_CAP)
-            .contextWindow(200000)
-            .timeToFirstTokenMillis(300)
-            .tokensPerSecond(120)
-            .quality(Map.of("chat", 0.80, "summarization", 0.83))
-            .build();
-
-    return ModelFleet.<Responder>builder()
-        .classifier(classifier)
-        // BALANCED weights quality at 0.40 and latency at 0.15. LOCAL_FIRST would weight
-        // locality at 0.35 and latency enough that the 360M model wins ordinary chat on speed,
-        // which is the wrong trade for a customer's actual question. The LOCAL_ONLY boundary on
-        // those requests already keeps them on this machine, so locality needs no thumb here.
-        .policy(RoutingPolicy.BALANCED)
-        .model(tiny, prompt -> acknowledge(TINY, prompt))
-        .model(small, prompt -> chat(SMALL, prompt, 80))
-        .model(grounder, prompt -> ground(retrieval, prompt))
-        .model(decisions, fleet::decide)
-        // One fleet, three remote clients. Each closure is where a provider's SDK would live, so
-        // models-router never learns any of their names.
-        .model(premium, prompt -> callOpenAi(PREMIUM, PREMIUM_CAP, prompt))
-        .model(economy, prompt -> callOpenAi(ECONOMY, ECONOMY_CAP, prompt))
-        .model(haiku, prompt -> callAnthropic(HAIKU, HAIKU_CAP, prompt))
+var tiny =
+    ModelCandidate.builder("smollm2-360m")
+        .local(true)
+        .capabilities(Set.of("chat", "liveness"))
+        .contextWindow(8192)
+        .timeToFirstTokenMillis(90)
+        .tokensPerSecond(55)
+        .quality(Map.of("chat", 0.45))
         .build();
+var small =
+    ModelCandidate.builder("qwen3-0.6b")
+        .local(true)
+        .capabilities(Set.of("chat", "summarization"))
+        .contextWindow(32768)
+        .timeToFirstTokenMillis(140)
+        .tokensPerSecond(40)
+        .quality(Map.of("chat", 0.60, "summarization", 0.62))
+        .build();
+var grounder =
+    ModelCandidate.builder("llama-3.2-1b")
+        .local(true)
+        .capabilities(Set.of("chat", "grounding"))
+        .contextWindow(131072)
+        .timeToFirstTokenMillis(210)
+        .tokensPerSecond(28)
+        .quality(Map.of("chat", 0.66, "grounding", 0.70))
+        .build();
+var decisions =
+    ModelCandidate.builder("harriet-decisions")
+        .local(true)
+        .capabilities(Set.of("decision"))
+        .contextWindow(32768)
+        .timeToFirstTokenMillis(260)
+        .tokensPerSecond(1)
+        .quality(Map.of("decision", 0.90))
+        .build();
+```
+<!-- end:snippet:fleet#locals -->
+
+The capability sets are the load-bearing part. Only SmolLM2 claims `liveness`, only the Llama arm
+claims `grounding`, only Harriet claims `decision`. That is an operator's declaration about what
+each model is allowed to serve, and the router treats it as a hard filter before any score is
+compared — which is what keeps a liveness check off a 4B decision model without an `if` statement
+anywhere.
+
+### Declaring the remote providers
+
+Three of them, at two vendors. They differ in price by two orders of magnitude on output.
+
+<!-- snippet:fleet#providers -->
+```java
+var premium =
+    ModelCandidate.builder(PREMIUM)
+        .local(false)
+        .capabilities(Set.of("chat", "reasoning", "summarization", "long-context"))
+        .costPerMillionTokens(PREMIUM_IN, PREMIUM_OUT)
+        // New in Models 0.3.60. A reasoning model bills its reasoning as completion, so it
+        // cannot share an output ceiling with a model that answers a liveness check in eight
+        // tokens. The execution-wide bound stays small for the local arms.
+        .maxOutputTokens(PREMIUM_CAP)
+        .contextWindow(400000)
+        .timeToFirstTokenMillis(850)
+        .tokensPerSecond(90)
+        .quality(Map.of("chat", 0.95, "reasoning", 0.96, "summarization", 0.94))
+        .build();
+var economy =
+    ModelCandidate.builder(ECONOMY)
+        .local(false)
+        .capabilities(Set.of("chat", "summarization", "long-context"))
+        .costPerMillionTokens(ECONOMY_IN, ECONOMY_OUT)
+        .maxOutputTokens(ECONOMY_CAP)
+        .contextWindow(1000000)
+        .timeToFirstTokenMillis(400)
+        .tokensPerSecond(140)
+        .quality(Map.of("chat", 0.82, "summarization", 0.86))
+        .build();
+var haiku =
+    ModelCandidate.builder(HAIKU)
+        .local(false)
+        .capabilities(Set.of("chat", "summarization", "long-context"))
+        .costPerMillionTokens(HAIKU_IN, HAIKU_OUT)
+        .maxOutputTokens(HAIKU_CAP)
+        .contextWindow(200000)
+        .timeToFirstTokenMillis(300)
+        .tokensPerSecond(120)
+        .quality(Map.of("chat", 0.80, "summarization", 0.83))
+        .build();
+```
+<!-- end:snippet:fleet#providers -->
+
+Only the premium model claims `reasoning`. All three claim `long-context`, so a request to
+summarise a document is settled among providers on policy rather than by a vendor name written into
+the code. The `maxOutputTokens` on the premium candidate matters more than it looks: a reasoning
+model bills its reasoning as completion tokens, so it cannot share an output ceiling with a model
+that answers a liveness check in eight tokens.
+
+### Binding each candidate to something callable
+
+`ModelFleet<T>` is generic over the client type, and this is where that earns its keep. Each
+provider's closure is where its SDK would live; `models-router` never learns any of their names.
+
+<!-- snippet:fleet#wiring -->
+```java
+return ModelFleet.<Responder>builder()
+    .classifier(classifier)
+    // BALANCED weights quality at 0.40 and latency at 0.15. LOCAL_FIRST would weight
+    // locality at 0.35 and latency enough that the 360M model wins ordinary chat on speed,
+    // which is the wrong trade for a customer's actual question. The LOCAL_ONLY boundary on
+    // those requests already keeps them on this machine, so locality needs no thumb here.
+    .policy(RoutingPolicy.BALANCED)
+    .model(tiny, prompt -> acknowledge(TINY, prompt))
+    .model(small, prompt -> chat(SMALL, prompt, 80))
+    .model(grounder, prompt -> ground(retrieval, prompt))
+    .model(decisions, fleet::decide)
+    // One fleet, three remote clients. Each closure is where a provider's SDK would live, so
+    // models-router never learns any of their names.
+    .model(premium, prompt -> callOpenAi(PREMIUM, PREMIUM_CAP, prompt))
+    .model(economy, prompt -> callOpenAi(ECONOMY, ECONOMY_CAP, prompt))
+    .model(haiku, prompt -> callAnthropic(HAIKU, HAIKU_CAP, prompt))
+    .build();
+```
+<!-- end:snippet:fleet#wiring -->
+
+Two of those closures call OpenAI with different models and ceilings. The third calls Anthropic,
+which needs a different endpoint, a different auth header and a different response shape — and the
+fleet does not know or care.
+
+### Saying what each kind of traffic requires
+
+The five requirement objects are the whole routing policy. There is no classifier branch, no
+keyword matching, no prompt inspection.
+
+<!-- snippet:fleet#requirements -->
+```java
+var liveness =
+    RoutingRequirements.builder()
+        .requireCapability("liveness")
+        .dataBoundary(RoutingDataBoundary.LOCAL_ONLY)
+        .build();
+var chatHere =
+    RoutingRequirements.builder()
+        .requireCapability("chat")
+        .dataBoundary(RoutingDataBoundary.LOCAL_ONLY)
+        .build();
+var grounded =
+    RoutingRequirements.builder()
+        .requireCapability("grounding")
+        .dataBoundary(RoutingDataBoundary.LOCAL_ONLY)
+        .build();
+var decision = RoutingRequirements.builder().requireCapability("decision").build();
+var synthesis = RoutingRequirements.builder().requireCapability("reasoning").build();
+// No local model claims long-context, so this must go remote. Which remote is then a policy
+// question among three providers rather than a vendor choice written into the code.
+var longContext = RoutingRequirements.builder().requireCapability("long-context").build();
+```
+<!-- end:snippet:fleet#requirements -->
+
+A liveness check wants `liveness` and must stay local. A conversation wants `chat` and must stay
+local. A ticket wants `decision`. A grounded question wants `grounding` and must stay local. Only
+synthesis and long-context work may leave the machine, and even then the policy picks which provider.
+
+### Where a second vendor costs more than a config line
+
+This is the part that only shows up when you actually call two providers:
+
+<!-- snippet:fleet#anthropic -->
+```java
+static String callAnthropic(String model, int cap, String prompt) throws Exception {
+  var key = System.getenv("ANTHROPIC_API_KEY");
+  if (key == null || key.isBlank()) {
+    return "[routed to " + model + "; not executed because ANTHROPIC_API_KEY is unset]";
   }
-
-  record Prompt(String text, RoutingRequirements requirements, String session) {}
-
-  /** One support session: liveness, follow-ups, closed decisions, grounded questions, synthesis. */
-  static List<Prompt> prompts() {
-    var liveness =
-        RoutingRequirements.builder()
-            .requireCapability("liveness")
-            .dataBoundary(RoutingDataBoundary.LOCAL_ONLY)
-            .build();
-    var chatHere =
-        RoutingRequirements.builder()
-            .requireCapability("chat")
-            .dataBoundary(RoutingDataBoundary.LOCAL_ONLY)
-            .build();
-    var grounded =
-        RoutingRequirements.builder()
-            .requireCapability("grounding")
-            .dataBoundary(RoutingDataBoundary.LOCAL_ONLY)
-            .build();
-    var decision = RoutingRequirements.builder().requireCapability("decision").build();
-    var synthesis = RoutingRequirements.builder().requireCapability("reasoning").build();
-    // No local model claims long-context, so this must go remote. Which remote is then a policy
-    // question among three providers rather than a vendor choice written into the code.
-    var longContext = RoutingRequirements.builder().requireCapability("long-context").build();
-    return List.of(
-        new Prompt("ping", liveness, null),
-        new Prompt("still there?", liveness, null),
-        new Prompt("ok", liveness, null),
-        new Prompt("I was charged twice for my September order.", chatHere, "s-1"),
-        new Prompt("tell me more", chatHere, "s-1"),
-        new Prompt(
-            "I was charged twice for my September subscription and no refund arrived.",
-            decision,
-            null),
-        new Prompt("When is a refund issued, and to which payment method?", grounded, "s-1"),
-        new Prompt("What happens to a duplicate charge?", grounded, "s-1"),
-        new Prompt(
-            "Our refund policy promises five business days to the original payment method, while"
-                + " duplicate charges reverse automatically on the nightly reconciliation. Those"
-                + " two paths can disagree for a customer who is both refunded and reconciled."
-                + " Work out where they conflict and draft the terms-of-service paragraph that"
-                + " resolves it.",
-            synthesis,
-            "s-1"),
-        new Prompt(
-            "Summarise this appendix for the support handbook, in two sentences. Refunds are"
-                + " issued to the original payment method within five business days. A duplicate"
-                + " charge is reversed automatically once billing reconciliation runs nightly."
-                + " Account closures require written confirmation from the account holder."
-                + " Reconciliation runs at 02:00 UTC and retries twice on failure. A reversal that"
-                + " fails twice is escalated to the billing queue with the original charge id.",
-            longContext,
-            null));
+  var mapper = new ObjectMapper();
+  var message = mapper.createObjectNode().put("role", "user").put("content", prompt);
+  var body =
+      mapper
+          .createObjectNode()
+          .put("model", model)
+          .put("max_tokens", cap)
+          .set("messages", mapper.createArrayNode().add(message));
+  var request =
+      HttpRequest.newBuilder(URI.create("https://api.anthropic.com/v1/messages"))
+          .header("x-api-key", key)
+          .header("anthropic-version", "2023-06-01")
+          .header("Content-Type", "application/json")
+          .timeout(Duration.ofMinutes(2))
+          .POST(HttpRequest.BodyPublishers.ofString(body.toString()))
+          .build();
+  var response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+  JsonNode parsed = mapper.readTree(response.body());
+  if (response.statusCode() != 200) {
+    return "[%s returned HTTP %d: %s]"
+        .formatted(
+            model,
+            response.statusCode(),
+            parsed.path("error").path("message").asText(response.body()));
   }
-
-  /** Sends every prompt to the provider and totals its own reported usage. */
-  static void allRemote() throws Exception {
-    long input = 0;
-    long output = 0;
-    System.out.printf("%n%-46s %8s %11s%n", "PROMPT", "IN", "COMPLETION");
-    for (var prompt : prompts()) {
-      lastRemoteUsage = null;
-      var answer = callOpenAi(PREMIUM, PREMIUM_CAP, prompt.text());
-      if (lastRemoteUsage == null) {
-        System.out.printf("%-46s   no usage reported: %s%n", abbreviate(prompt.text(), 44), answer);
-        continue;
-      }
-      input += lastRemoteUsage.inputTokens();
-      output += lastRemoteUsage.outputTokens();
-      System.out.printf(
-          "%-46s %8d %11d%n",
-          abbreviate(prompt.text(), 44),
-          lastRemoteUsage.inputTokens(),
-          lastRemoteUsage.outputTokens());
+  // Anthropic reports input_tokens and output_tokens where OpenAI reports prompt_ and
+  // completion_. Each client normalises its own provider into one RoutingUsage.
+  var usage = parsed.path("usage");
+  if (usage.hasNonNull("input_tokens")) {
+    lastRemoteUsage =
+        new RoutingUsage(
+            usage.path("input_tokens").asLong(), usage.path("output_tokens").asLong());
+  }
+  // Haiku 5.5 returns a thinking block first and the answer after it, so the text block has to
+  // be found rather than assumed at index zero. Reading content[0] yields an empty answer that
+  // then enters the ledger as a short one.
+  for (JsonNode block : parsed.path("content")) {
+    if ("text".equals(block.path("type").asText())) {
+      return block.path("text").asText("");
     }
-    double cost =
-        (REMOTE_INPUT_PER_M * input + REMOTE_OUTPUT_PER_M * output) / 1_000_000.0;
-    System.out.printf("%n== every prompt through %s ==%n", REMOTE_MODEL);
-    System.out.printf("provider-reported: %d input + %d completion tokens%n", input, output);
-    System.out.printf(
-        "at the declared $%.2f/M in, $%.2f/M out: $%.6f%n",
-        REMOTE_INPUT_PER_M, REMOTE_OUTPUT_PER_M, cost);
-    System.out.println(
-        "Floor, not a ceiling: the grounded prompts are sent without their retrieved notes, which a");
-    System.out.println("real all-remote implementation would have to include in the input.");
   }
-
-  // ---- arms -------------------------------------------------------------------------------
-
-  /**
-   * A liveness check is not a conversation turn: it is answered statelessly and never enters the
-   * transcript, so it cannot teach the conversational model to answer everything with an
-   * acknowledgement.
-   */
-  static String acknowledge(String coordinate, String prompt) {
-    return complete(
-        coordinate,
-        List.of(
-            ChatMessage.system(
-                "You answer liveness checks. Whatever the message says, reply with exactly:"
-                    + " still here."),
-            ChatMessage.user("ping"),
-            ChatMessage.assistant("still here"),
-            ChatMessage.user(prompt)),
-        8);
-  }
-
-  /** Single-shot: used by the grounded arm, which supplies its own retrieved context. */
-  static String generate(String coordinate, String prompt, int maxTokens) {
-    return complete(coordinate, List.of(ChatMessage.user(prompt)), maxTokens);
-  }
-
-  /** Conversational: appends to the session transcript so follow-ups resolve against it. */
-  static String chat(String coordinate, String prompt, int maxTokens) {
-    TRANSCRIPT.add(ChatMessage.user(prompt));
-    var answer = complete(coordinate, List.copyOf(TRANSCRIPT), maxTokens);
-    TRANSCRIPT.add(ChatMessage.assistant(answer));
-    return answer;
-  }
-
-  static String complete(String coordinate, List<ChatMessage> messages, int maxTokens) {
-    var runtime = runtime(coordinate);
-    var rendered = runtime.chatTemplate().render(messages);
-    return runtime
-        .pipeline()
-        .generate(rendered, SamplingOptions.builder().temperature(0).maxTokens(maxTokens).build())
-        .strip();
-  }
-
-  /** Retrieval plus a small local model: the ordinary RAG shape, reachable only via "grounding". */
-  static String ground(VectorCollection retrieval, String prompt) {
-    var embedding = (EmbeddingBackend) OPEN.get(EMBEDDER);
-    var hits = retrieval.search(SearchRequest.builder(embedding.embed(prompt), 2).build()).hits();
-    var context = new StringBuilder();
-    for (var hit : hits) context.append(hit.document().text()).append(' ');
-    return generate(
-        GROUNDER,
-        "Notes: "
-            + context.toString().strip()
-            + "\nUsing only those notes, answer in one sentence. If they do not contain the"
-            + " answer, say that you do not know.\nQuestion: "
-            + prompt,
-        64);
-  }
-
-  /** Closed answer spaces: one forward pass, no generated prose to parse or repair. */
-  static String decide(String evidence) {
-    var harriet = (ModelJarDecisionRuntime) OPEN.computeIfAbsent("harriet", key -> Harriet.open());
-    // Each outcome carries a written rule. The Harriet javadoc records the difference this
-    // makes: accuracy 0.8917 with a rubric against 0.7500 without, measured 2026-09-24 over
-    // 120 JevBench items on the same model and kernel. Without one, the boolean below returns
-    // a 0.50 coin flip on evidence a human reads instantly.
-    var billing =
-        Harriet.noul(
-            harriet,
-            "This ticket is about billing.",
-            "the customer describes a charge, a refund, an invoice or a subscription payment",
-            "the customer describes delivery, product faults, accounts or anything not monetary",
-            evidence);
-    var queue =
-        Harriet.choice(
-            harriet,
-            "Which queue should handle this ticket?",
-            List.of("billing", "technical", "shipping"),
-            Map.of(
-                "billing", "charges, refunds, invoices and subscription payments",
-                "technical", "errors, outages and product faults",
-                "shipping", "delivery, tracking and returns in transit"),
-            evidence);
-    var urgency =
-        Harriet.score(
-            harriet,
-            "How urgent is this ticket?",
-            List.of("can wait", "this week", "today"),
-            Map.of(
-                "can wait", "no money is at stake and nothing is blocked",
-                "this week", "money is at stake but the customer is not blocked",
-                "today", "the customer is blocked or out of pocket with no path forward"),
-            evidence);
-    return "billing=%s queue=%s urgency=%s".formatted(show(billing), show(queue), show(urgency));
-  }
-
-  static String show(Verdict verdict) {
-    return "%s(p=%.2f,c=%.2f)"
-        .formatted(verdict.winner(), verdict.probabilityOf(verdict.winner()), verdict.confidence());
-  }
-
-  /**
-   * One provider's client. Two candidates bind to this with different models, prices and ceilings,
-   * which is all "a second provider" means to the fleet.
-   */
-  static String callOpenAi(String model, int cap, String prompt) throws Exception {
-    var key = System.getenv("OPENAI_API_KEY");
-    if (key == null || key.isBlank()) {
-      return "[routed to " + model + "; not executed because OPENAI_API_KEY is unset]";
-    }
-    var mapper = new ObjectMapper();
-    var message = mapper.createObjectNode().put("role", "user").put("content", prompt);
-    var body =
-        mapper
-            .createObjectNode()
-            .put("model", model)
-            .put("max_completion_tokens", cap)
-            .set("messages", mapper.createArrayNode().add(message));
-    var request =
-        HttpRequest.newBuilder(URI.create("https://api.openai.com/v1/chat/completions"))
-            .header("Authorization", "Bearer " + key)
-            .header("Content-Type", "application/json")
-            .timeout(Duration.ofMinutes(2))
-            .POST(HttpRequest.BodyPublishers.ofString(body.toString()))
-            .build();
-    var response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-    JsonNode parsed = mapper.readTree(response.body());
-    if (response.statusCode() != 200) {
-      // Surfaced rather than swallowed: an empty completion would otherwise look like a short
-      // answer and quietly enter the ledger as one.
-      return "[%s returned HTTP %d: %s]"
-          .formatted(
-              model,
-              response.statusCode(),
-              parsed.path("error").path("message").asText(response.body()));
-    }
-    var usage = parsed.path("usage");
-    if (usage.hasNonNull("prompt_tokens")) {
-      lastRemoteUsage =
-          new RoutingUsage(
-              usage.path("prompt_tokens").asLong(), usage.path("completion_tokens").asLong());
-    }
-    return parsed.path("choices").path(0).path("message").path("content").asText("");
-  }
-
-  /**
-   * A different vendor's client: different endpoint, credential, auth header and response shape.
-   * The fleet does not know any of that; it holds a candidate and something callable.
-   */
-  static String callAnthropic(String model, int cap, String prompt) throws Exception {
-    var key = System.getenv("ANTHROPIC_API_KEY");
-    if (key == null || key.isBlank()) {
-      return "[routed to " + model + "; not executed because ANTHROPIC_API_KEY is unset]";
-    }
-    var mapper = new ObjectMapper();
-    var message = mapper.createObjectNode().put("role", "user").put("content", prompt);
-    var body =
-        mapper
-            .createObjectNode()
-            .put("model", model)
-            .put("max_tokens", cap)
-            .set("messages", mapper.createArrayNode().add(message));
-    var request =
-        HttpRequest.newBuilder(URI.create("https://api.anthropic.com/v1/messages"))
-            .header("x-api-key", key)
-            .header("anthropic-version", "2023-06-01")
-            .header("Content-Type", "application/json")
-            .timeout(Duration.ofMinutes(2))
-            .POST(HttpRequest.BodyPublishers.ofString(body.toString()))
-            .build();
-    var response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-    JsonNode parsed = mapper.readTree(response.body());
-    if (response.statusCode() != 200) {
-      return "[%s returned HTTP %d: %s]"
-          .formatted(
-              model,
-              response.statusCode(),
-              parsed.path("error").path("message").asText(response.body()));
-    }
-    // Anthropic reports input_tokens and output_tokens where OpenAI reports prompt_ and
-    // completion_. Each client normalises its own provider into one RoutingUsage.
-    var usage = parsed.path("usage");
-    if (usage.hasNonNull("input_tokens")) {
-      lastRemoteUsage =
-          new RoutingUsage(
-              usage.path("input_tokens").asLong(), usage.path("output_tokens").asLong());
-    }
-    // Haiku 5.5 returns a thinking block first and the answer after it, so the text block has to
-    // be found rather than assumed at index zero. Reading content[0] yields an empty answer that
-    // then enters the ledger as a short one.
-    for (JsonNode block : parsed.path("content")) {
-      if ("text".equals(block.path("type").asText())) {
-        return block.path("text").asText("");
-      }
-    }
-    return "[%s returned no text block]".formatted(model);
-  }
-
-  // ---- helpers ----------------------------------------------------------------------------
-
-  static ModelJarRuntime runtime(String coordinate) {
-    return (ModelJarRuntime) OPEN.computeIfAbsent(coordinate, ModelJars::openRuntime);
-  }
-
-  static VectorCollection buildRetrieval(EmbeddingBackend embedding) {
-    var probe = embedding.embed(NOTES.get(0));
-    var collection =
-        VectorCollection.builder()
-            .dimension(probe.length)
-            .metric(SimilarityFunction.COSINE)
-            .indexType(IndexType.FLAT)
-            .build();
-    for (int i = 0; i < NOTES.size(); i++) {
-      collection.add(
-          new Document("note-" + i, embedding.embed(NOTES.get(i)), NOTES.get(i), Map.of()));
-    }
-    collection.commit();
-    return collection;
-  }
-
-  /**
-   * What the classifier saw, not merely what it returned.
-   *
-   * <p>`match` is new in Models 0.3.60. `classify` answers with a task or with nothing, so a
-   * conversational prompt unlike every work-shaped exemplar and one that nearly matched both print
-   * as the same dash. The nearest task and its similarity say which happened.
-   */
-  static String describeClassification(
-      PretrainedTaskClassifier classifier, String prompt, String classified) {
-    if (classified != null) return classified;
-    return classifier
-        .match(prompt)
-        .map(match -> "~%s %.2f".formatted(match.task(), match.similarity()))
-        .orElse("-");
-  }
-
-  /** Four characters per token is a declared estimate, used only to charge the budget. */
-  static long estimateOutputTokens(String answer) {
-    return answer == null ? 0 : Math.max(1, answer.length() / 4);
-  }
-
-  static String abbreviate(String text, int limit) {
-    var flat = text.replaceAll("\\s+", " ").strip();
-    return flat.length() <= limit ? flat : flat.substring(0, limit - 1) + "…";
-  }
-
-  static void quietLibraries() {
-    Logger.getLogger("org.modeljars").setLevel(Level.WARNING);
-    Logger.getLogger("com.integrallis").setLevel(Level.WARNING);
-  }
+  return "[%s returned no text block]".formatted(model);
 }
 ```
-<!-- end:snippet:fleet -->
+<!-- end:snippet:fleet#anthropic -->
+
+Anthropic reports `input_tokens` and `output_tokens` where OpenAI reports `prompt_tokens` and
+`completion_tokens`, and it returns `content` as an array whose first block is `thinking` with the
+answer in a later `text` block. Reading `content[0].text` yields an empty string, which then enters
+the ledger as a short answer rather than as an error — it did exactly that on the first run. Each
+client normalises its own provider into one `RoutingUsage`, and that is the only shape the ledger
+needs to know.
+
+### Counting what it cost, per provider
+
+<!-- snippet:fleet#ledger -->
+```java
+if (!remoteSpend.isEmpty()) {
+  System.out.printf("%-20s %8s %12s %12s%n", "REMOTE PROVIDER", "IN", "COMPLETION", "COST");
+  var total = BigDecimal.ZERO;
+  for (var entry : remoteSpend.entrySet()) {
+    long[] t = remoteTokensBy.get(entry.getKey());
+    total = total.add(entry.getValue());
+    System.out.printf(
+        "%-20s %8d %12d %12s%n",
+        entry.getKey(),
+        t[0],
+        t[1],
+        "$" + entry.getValue().setScale(6, RoundingMode.HALF_UP).toPlainString());
+  }
+  System.out.printf(
+      "%-20s %8d %12d %12s%n",
+      "total",
+      remoteTokens,
+      remoteCompletionTokens,
+      "$" + total.setScale(6, RoundingMode.HALF_UP).toPlainString());
+}
+```
+<!-- end:snippet:fleet#ledger -->
+
+`costOf` belongs to the candidate that actually ran. With one remote provider that is a detail; with
+three at different prices it is the difference between a ledger and a guess.
+
+The rest of the file — the warm-up, the routing loop, the local arms and the timing table — is in
+[`code/fleet.java`](code/fleet.java). Run it with Java 25 and JBang from [`code/`](code/README.md).
 
 Run it and the routing table is the output:
 
