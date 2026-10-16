@@ -108,8 +108,19 @@ piece earned its place in the run below:
   `switch-margin` so a conversation does not hop between models on a near-tie.
 
 A fleet binds candidates to whatever your application can call. `ModelFleet<T>` is generic over the
-client type on purpose: one fleet can hold an in-process Models runtime, a Spring AI model and a
-private gateway client without any of their SDKs reaching into `models-router`.
+client type on purpose, and that is what makes **several remote providers ordinary rather than
+special**. A provider is not a mode the router has to support; it is a candidate with its own
+prices, its own context window, its own output ceiling, and a closure that knows how to call it.
+One fleet can hold an in-process Models runtime, two different vendors' hosted APIs and a private
+gateway, and `models-router` never learns any of their names or links any of their SDKs.
+
+The fleet below holds three remote providers alongside the four local models: `gpt-5.1` for work
+that needs reasoning, `gpt-4.1-mini` as a cheaper stablemate, and Anthropic's `claude-haiku-5-5`
+through an entirely separate endpoint, credential and response shape. Only the premium one declares
+`reasoning`; all three declare `long-context`. So when a request needs a long document summarised,
+which provider serves it is a policy question among three, not a vendor decision written into the
+code — and each client normalises its own provider's usage into one `RoutingUsage`, which is the
+only thing the ledger needs.
 
 ## One fleet, four local families, one remote provider
 
@@ -157,11 +168,30 @@ import org.modeljars.composite.harriet.Harriet;
  * genuine synthesis to one, with no hand-written if-chain over prompt text.
  */
 class fleet {
-  // Declared contract prices, not measurements. Set these to your own agreement.
-  static final double REMOTE_INPUT_PER_M = 1.25;
-  static final double REMOTE_OUTPUT_PER_M = 10.00;
-  static final String REMOTE_MODEL = "gpt-5.1";
-  static final int REMOTE_OUTPUT_CAP = 2048;
+  // Declared contract prices, not measurements. Set these to your own agreements.
+  static final String PREMIUM = "gpt-5.1";
+  static final double PREMIUM_IN = 1.25;
+  static final double PREMIUM_OUT = 10.00;
+  static final int PREMIUM_CAP = 2048;
+
+  // A second provider in the same fleet, an order of magnitude cheaper on output.
+  static final String ECONOMY = "gpt-4.1-mini";
+  static final double ECONOMY_IN = 0.40;
+  static final double ECONOMY_OUT = 1.60;
+  static final int ECONOMY_CAP = 1024;
+
+  // A third provider at a different vendor: its own endpoint, credential, auth header and JSON
+  // shape. Anthropic prices Haiku 5.5 in tiers -- $0.10/$0.50 under a 100k-token prompt and
+  // $0.50/$2.50 over it -- and a candidate declares one pair, so this declares the tier these
+  // prompts actually fall in and would misprice a 100k-token request.
+  static final String HAIKU = "claude-haiku-5-5";
+  static final double HAIKU_IN = 0.10;
+  static final double HAIKU_OUT = 0.50;
+  static final int HAIKU_CAP = 1024;
+
+  static final String REMOTE_MODEL = PREMIUM;
+  static final double REMOTE_INPUT_PER_M = PREMIUM_IN;
+  static final double REMOTE_OUTPUT_PER_M = PREMIUM_OUT;
 
   static final String EMBEDDER =
       "org.modeljars.huggingface:ggml-org.embeddinggemma-300m-gguf.q8_0:<model-version>";
@@ -257,6 +287,9 @@ class fleet {
 
     long remoteCompletionTokens = 0;
     long localRulerRemote = 0;
+    // Per provider, because there is more than one and they do not cost the same.
+    var remoteSpend = new LinkedHashMap<String, BigDecimal>();
+    var remoteTokensBy = new LinkedHashMap<String, long[]>();
     // Per-model timing comes from the router's own RoutingAttempt, not a stopwatch wrapped round
     // the call, so it measures what the router measured.
     var callMillis = new LinkedHashMap<String, List<Long>>();
@@ -303,8 +336,14 @@ class fleet {
         // The provider's own count supersedes the local tokenizer for the arm it bills, and the
         // local count is kept beside it so the share stays measured on one ruler.
         localRulerRemote += tokens;
-        remoteTokens += lastRemoteUsage != null ? lastRemoteUsage.inputTokens() : tokens;
-        remoteCompletionTokens += lastRemoteUsage != null ? lastRemoteUsage.outputTokens() : 0;
+        long in = lastRemoteUsage != null ? lastRemoteUsage.inputTokens() : tokens;
+        long out = lastRemoteUsage != null ? lastRemoteUsage.outputTokens() : 0;
+        remoteTokens += in;
+        remoteCompletionTokens += out;
+        remoteSpend.merge(chosen.id(), chosen.costOf(in, out), BigDecimal::add);
+        remoteTokensBy.computeIfAbsent(chosen.id(), key -> new long[2]);
+        remoteTokensBy.get(chosen.id())[0] += in;
+        remoteTokensBy.get(chosen.id())[1] += out;
         escalated++;
       }
       long millis =
@@ -355,8 +394,8 @@ class fleet {
 
     System.out.printf("%n== ledger ==%n");
     System.out.printf(
-        "%d prompts, %d escalated to %s, %d answered on local weights%n",
-        work.size(), escalated, REMOTE_MODEL, work.size() - escalated);
+        "%d prompts, %d escalated to a remote provider, %d answered on local weights%n",
+        work.size(), escalated, work.size() - escalated);
 
     // Two rulers, kept apart on purpose. The local tokenizer measures every prompt the same way,
     // which is what makes the share comparable; the provider's own count is what it bills.
@@ -371,18 +410,43 @@ class fleet {
         "  the same prompt measured %d tokens locally, so the two rulers differ by %d%n",
         localRulerRemote, remoteTokens - localRulerRemote);
     System.out.printf("completions generated on local weights: %d tokens%n", localCompletionTokens);
-    // ModelCandidate.costOf is new in Models 0.3.60 and is the same arithmetic the shared budget
-    // charges, so this ledger and the router's cannot drift. Before it existed this line was a
-    // second copy of the rule.
-    var remote = fleet.router().candidates().stream().filter(c -> !c.local()).findFirst().orElseThrow();
+    // ModelCandidate.costOf is new in Models 0.3.60 and is the arithmetic the shared budget
+    // charges, so this ledger and the router's cannot drift. It belongs to the candidate that
+    // actually ran: with one remote that was a detail, with three it is the whole point.
+    if (!remoteSpend.isEmpty()) {
+      System.out.printf("%-20s %8s %12s %12s%n", "REMOTE PROVIDER", "IN", "COMPLETION", "COST");
+      var total = BigDecimal.ZERO;
+      for (var entry : remoteSpend.entrySet()) {
+        long[] t = remoteTokensBy.get(entry.getKey());
+        total = total.add(entry.getValue());
+        System.out.printf(
+            "%-20s %8d %12d %12s%n",
+            entry.getKey(),
+            t[0],
+            t[1],
+            "$" + entry.getValue().setScale(6, RoundingMode.HALF_UP).toPlainString());
+      }
+      System.out.printf(
+          "%-20s %8d %12d %12s%n",
+          "total",
+          remoteTokens,
+          remoteCompletionTokens,
+          "$" + total.setScale(6, RoundingMode.HALF_UP).toPlainString());
+    }
+    var premiumCandidate =
+        fleet.router().candidates().stream()
+            .filter(candidate -> candidate.id().equals(PREMIUM))
+            .findFirst()
+            .orElseThrow();
     System.out.printf(
-        "at the declared $%.2f/M in, $%.2f/M out: $%s for the one escalation; every input remote"
-            + " would be $%s, and the local completions would have added $%s%n",
-        REMOTE_INPUT_PER_M,
-        REMOTE_OUTPUT_PER_M,
-        remote.costOf(remoteTokens, remoteCompletionTokens).setScale(6, RoundingMode.HALF_UP),
-        remote.costOf(allTokens, 0).setScale(6, RoundingMode.HALF_UP),
-        remote.costOf(0, localCompletionTokens).setScale(6, RoundingMode.HALF_UP));
+        "had every prompt gone to %s: $%s of input alone, plus $%s for the completions this"
+            + " machine produced for nothing%n",
+        PREMIUM,
+        premiumCandidate.costOf(allTokens, 0).setScale(6, RoundingMode.HALF_UP).toPlainString(),
+        premiumCandidate
+            .costOf(0, localCompletionTokens)
+            .setScale(6, RoundingMode.HALF_UP)
+            .toPlainString());
     System.out.printf(
         "router-accounted spend: $%s of the $0.05 shared budget%n",
         budget.snapshot().spent().setScale(6, RoundingMode.HALF_UP).toPlainString());
@@ -438,19 +502,44 @@ class fleet {
             .tokensPerSecond(1)
             .quality(Map.of("decision", 0.90))
             .build();
-    var remote =
-        ModelCandidate.builder(REMOTE_MODEL)
+    // Three remote providers, not one. Each is an ordinary candidate with its own prices, ceiling
+    // and client. Only the premium one claims `reasoning`; all three claim `long-context`, so a
+    // long document is decided between them on policy rather than on vendor.
+    var premium =
+        ModelCandidate.builder(PREMIUM)
             .local(false)
-            .capabilities(Set.of("chat", "reasoning", "summarization"))
-            .costPerMillionTokens(REMOTE_INPUT_PER_M, REMOTE_OUTPUT_PER_M)
+            .capabilities(Set.of("chat", "reasoning", "summarization", "long-context"))
+            .costPerMillionTokens(PREMIUM_IN, PREMIUM_OUT)
             // New in Models 0.3.60. A reasoning model bills its reasoning as completion, so it
             // cannot share an output ceiling with a model that answers a liveness check in eight
-            // tokens. The execution-wide bound below stays small for the local arms.
-            .maxOutputTokens(REMOTE_OUTPUT_CAP)
+            // tokens. The execution-wide bound stays small for the local arms.
+            .maxOutputTokens(PREMIUM_CAP)
             .contextWindow(400000)
             .timeToFirstTokenMillis(850)
             .tokensPerSecond(90)
             .quality(Map.of("chat", 0.95, "reasoning", 0.96, "summarization", 0.94))
+            .build();
+    var economy =
+        ModelCandidate.builder(ECONOMY)
+            .local(false)
+            .capabilities(Set.of("chat", "summarization", "long-context"))
+            .costPerMillionTokens(ECONOMY_IN, ECONOMY_OUT)
+            .maxOutputTokens(ECONOMY_CAP)
+            .contextWindow(1000000)
+            .timeToFirstTokenMillis(400)
+            .tokensPerSecond(140)
+            .quality(Map.of("chat", 0.82, "summarization", 0.86))
+            .build();
+    var haiku =
+        ModelCandidate.builder(HAIKU)
+            .local(false)
+            .capabilities(Set.of("chat", "summarization", "long-context"))
+            .costPerMillionTokens(HAIKU_IN, HAIKU_OUT)
+            .maxOutputTokens(HAIKU_CAP)
+            .contextWindow(200000)
+            .timeToFirstTokenMillis(300)
+            .tokensPerSecond(120)
+            .quality(Map.of("chat", 0.80, "summarization", 0.83))
             .build();
 
     return ModelFleet.<Responder>builder()
@@ -464,7 +553,11 @@ class fleet {
         .model(small, prompt -> chat(SMALL, prompt, 80))
         .model(grounder, prompt -> ground(retrieval, prompt))
         .model(decisions, fleet::decide)
-        .model(remote, fleet::callRemote)
+        // One fleet, three remote clients. Each closure is where a provider's SDK would live, so
+        // models-router never learns any of their names.
+        .model(premium, prompt -> callOpenAi(PREMIUM, PREMIUM_CAP, prompt))
+        .model(economy, prompt -> callOpenAi(ECONOMY, ECONOMY_CAP, prompt))
+        .model(haiku, prompt -> callAnthropic(HAIKU, HAIKU_CAP, prompt))
         .build();
   }
 
@@ -489,6 +582,9 @@ class fleet {
             .build();
     var decision = RoutingRequirements.builder().requireCapability("decision").build();
     var synthesis = RoutingRequirements.builder().requireCapability("reasoning").build();
+    // No local model claims long-context, so this must go remote. Which remote is then a policy
+    // question among three providers rather than a vendor choice written into the code.
+    var longContext = RoutingRequirements.builder().requireCapability("long-context").build();
     return List.of(
         new Prompt("ping", liveness, null),
         new Prompt("still there?", liveness, null),
@@ -508,7 +604,16 @@ class fleet {
                 + " Work out where they conflict and draft the terms-of-service paragraph that"
                 + " resolves it.",
             synthesis,
-            "s-1"));
+            "s-1"),
+        new Prompt(
+            "Summarise this appendix for the support handbook, in two sentences. Refunds are"
+                + " issued to the original payment method within five business days. A duplicate"
+                + " charge is reversed automatically once billing reconciliation runs nightly."
+                + " Account closures require written confirmation from the account holder."
+                + " Reconciliation runs at 02:00 UTC and retries twice on failure. A reversal that"
+                + " fails twice is escalated to the billing queue with the original charge id.",
+            longContext,
+            null));
   }
 
   /** Sends every prompt to the provider and totals its own reported usage. */
@@ -518,7 +623,7 @@ class fleet {
     System.out.printf("%n%-46s %8s %11s%n", "PROMPT", "IN", "COMPLETION");
     for (var prompt : prompts()) {
       lastRemoteUsage = null;
-      var answer = callRemote(prompt.text());
+      var answer = callOpenAi(PREMIUM, PREMIUM_CAP, prompt.text());
       if (lastRemoteUsage == null) {
         System.out.printf("%-46s   no usage reported: %s%n", abbreviate(prompt.text(), 44), answer);
         continue;
@@ -643,19 +748,22 @@ class fleet {
         .formatted(verdict.winner(), verdict.probabilityOf(verdict.winner()), verdict.confidence());
   }
 
-  /** The only arm that leaves the machine, reached only when a request requires reasoning. */
-  static String callRemote(String prompt) throws Exception {
+  /**
+   * One provider's client. Two candidates bind to this with different models, prices and ceilings,
+   * which is all "a second provider" means to the fleet.
+   */
+  static String callOpenAi(String model, int cap, String prompt) throws Exception {
     var key = System.getenv("OPENAI_API_KEY");
     if (key == null || key.isBlank()) {
-      return "[routed to " + REMOTE_MODEL + "; not executed because OPENAI_API_KEY is unset]";
+      return "[routed to " + model + "; not executed because OPENAI_API_KEY is unset]";
     }
     var mapper = new ObjectMapper();
     var message = mapper.createObjectNode().put("role", "user").put("content", prompt);
     var body =
         mapper
             .createObjectNode()
-            .put("model", REMOTE_MODEL)
-            .put("max_completion_tokens", REMOTE_OUTPUT_CAP)
+            .put("model", model)
+            .put("max_completion_tokens", cap)
             .set("messages", mapper.createArrayNode().add(message));
     var request =
         HttpRequest.newBuilder(URI.create("https://api.openai.com/v1/chat/completions"))
@@ -671,16 +779,70 @@ class fleet {
       // answer and quietly enter the ledger as one.
       return "[%s returned HTTP %d: %s]"
           .formatted(
-              REMOTE_MODEL,
+              model,
               response.statusCode(),
               parsed.path("error").path("message").asText(response.body()));
     }
     var usage = parsed.path("usage");
     if (usage.hasNonNull("prompt_tokens")) {
       lastRemoteUsage =
-          new RoutingUsage(usage.path("prompt_tokens").asLong(), usage.path("completion_tokens").asLong());
+          new RoutingUsage(
+              usage.path("prompt_tokens").asLong(), usage.path("completion_tokens").asLong());
     }
     return parsed.path("choices").path(0).path("message").path("content").asText("");
+  }
+
+  /**
+   * A different vendor's client: different endpoint, credential, auth header and response shape.
+   * The fleet does not know any of that; it holds a candidate and something callable.
+   */
+  static String callAnthropic(String model, int cap, String prompt) throws Exception {
+    var key = System.getenv("ANTHROPIC_API_KEY");
+    if (key == null || key.isBlank()) {
+      return "[routed to " + model + "; not executed because ANTHROPIC_API_KEY is unset]";
+    }
+    var mapper = new ObjectMapper();
+    var message = mapper.createObjectNode().put("role", "user").put("content", prompt);
+    var body =
+        mapper
+            .createObjectNode()
+            .put("model", model)
+            .put("max_tokens", cap)
+            .set("messages", mapper.createArrayNode().add(message));
+    var request =
+        HttpRequest.newBuilder(URI.create("https://api.anthropic.com/v1/messages"))
+            .header("x-api-key", key)
+            .header("anthropic-version", "2023-06-01")
+            .header("Content-Type", "application/json")
+            .timeout(Duration.ofMinutes(2))
+            .POST(HttpRequest.BodyPublishers.ofString(body.toString()))
+            .build();
+    var response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+    JsonNode parsed = mapper.readTree(response.body());
+    if (response.statusCode() != 200) {
+      return "[%s returned HTTP %d: %s]"
+          .formatted(
+              model,
+              response.statusCode(),
+              parsed.path("error").path("message").asText(response.body()));
+    }
+    // Anthropic reports input_tokens and output_tokens where OpenAI reports prompt_ and
+    // completion_. Each client normalises its own provider into one RoutingUsage.
+    var usage = parsed.path("usage");
+    if (usage.hasNonNull("input_tokens")) {
+      lastRemoteUsage =
+          new RoutingUsage(
+              usage.path("input_tokens").asLong(), usage.path("output_tokens").asLong());
+    }
+    // Haiku 5.5 returns a thinking block first and the answer after it, so the text block has to
+    // be found rather than assumed at index zero. Reading content[0] yields an empty answer that
+    // then enters the ledger as a short one.
+    for (JsonNode block : parsed.path("content")) {
+      if ("text".equals(block.path("type").asText())) {
+        return block.path("text").asText("");
+      }
+    }
+    return "[%s returned no text block]".formatted(model);
   }
 
   // ---- helpers ----------------------------------------------------------------------------
@@ -743,31 +905,33 @@ Run it and the routing table is the output:
 
 ```
 WARMING                LOAD MS
-smollm2-360m              2064
-qwen3-0.6b                1605
-llama-3.2-1b              2674
-harriet-decisions        18326
-total                    24669
+smollm2-360m              2493
+qwen3-0.6b                2439
+llama-3.2-1b              3478
+harriet-decisions        21685
+total                    30095
 
 PROMPT                                   CLASSIFIED           SELECTED            TOK      MS
-ping                                     ~chat 0.48           smollm2-360m          1     156
+ping                                     ~chat 0.48           smollm2-360m          1     169
     still here
-still there?                             ~summarization 0.50  smollm2-360m          3     153
+still there?                             ~summarization 0.50  smollm2-360m          3     170
     still here
-ok                                       ~reasoning 0.57      smollm2-360m          1     134
+ok                                       ~reasoning 0.57      smollm2-360m          1     149
     still here
-I was charged twice for my September …   ~tool-use 0.46       qwen3-0.6b            9    3457
+I was charged twice for my September …   ~tool-use 0.46       qwen3-0.6b            9    4288
     We'll check the details of your order to confirm if there was any issue with the payment. Let me know how we can assist you.
-tell me more                             summarization        qwen3-0.6b            3    2321
+tell me more                             summarization        qwen3-0.6b            3    2267
     Of course, let me know how we can assist you with the next steps.
-I was charged twice for my September …   ~tool-use 0.49       harriet-decisions    13   11611
+I was charged twice for my September …   ~tool-use 0.49       harriet-decisions    13   13910
     billing=true(p=0.91,c=0.58) queue=billing(p=0.99,c=0.95) urgency=this week(p=0.38,c=0.01)
-When is a refund issued, and to which…   ~tool-use 0.51       llama-3.2-1b         12    1911
+When is a refund issued, and to which…   ~tool-use 0.51       llama-3.2-1b         12    2049
     A refund is issued to the original payment method within five business days.
-What happens to a duplicate charge?      ~code 0.45           llama-3.2-1b          7    1705
+What happens to a duplicate charge?      ~code 0.45           llama-3.2-1b          7    1716
     A duplicate charge is reversed automatically once billing reconciliation runs nightly.
-Our refund policy promises five busin…   ~tool-use 0.52       gpt-5.1              55    6789
-    There are two overlapping paths: 1. **Manual refund path** - You process a refund (e.g., due to an issue raised by the customer). -…
+Our refund policy promises five busin…   ~tool-use 0.52       gpt-5.1              55   10400
+    There are two flows that can collide: 1. **Manual refund path** - You initiate a refund. - Policy promises: “Refund within five bus…
+Summarise this appendix for the suppo…   ~summarization 0.54  claude-haiku-5-5     84    1131
+    Refunds go to the original payment method within five business days, and duplicate charges are reversed automatically by the nightl…
 ```
 
 Five kinds of traffic, five different destinations, no `if` statement over prompt text:
@@ -793,9 +957,11 @@ declining to commit is the feature, not a defect.
 and that arm does retrieval before generation. Both answers come back as one sentence drawn from
 the notes.
 
-**The synthesis prompt** requires `reasoning`, which only the remote candidate declares, so it is
-the one request that leaves the machine. It did leave: the answer in that last row is gpt-5.1's, and
-the tokens it reports are what the ledger below bills.
+**The synthesis prompt** requires `reasoning`, which only `gpt-5.1` declares among the three
+remotes, so it is the one request that can only go there. **The appendix summary** requires
+`long-context`, which no local model claims and all three remotes do, so the policy picks among
+providers — and it picked Anthropic's Haiku, the cheapest and fastest of them. Both calls really
+happened: those answers are the providers', and the tokens they report are what the ledger bills.
 
 The `CLASSIFIED` column repays a second look. Only `tell me more` clears the classifier's 0.60
 similarity floor, as `summarization`. The rest print their nearest task with a tilde and the
@@ -833,104 +999,111 @@ The router times every attempt, so the conversation reports its own latency:
 ```
 == timing, warm ==
 MODEL                CALLS  TOTAL MS   MEAN MS     SHARE
-smollm2-360m             3       443       147      1.4%
-qwen3-0.6b               2      5778      2889     18.4%
-harriet-decisions        1     11611     11611     37.1%
-llama-3.2-1b             2      3616      1808     11.5%
-gpt-5.1                  1      6789      6789     21.7%
-conversation wall clock: 31323 ms, of which 28237 ms (90.1%) was model calls
-one-off load of the four local models: 24669 ms, paid once at startup, not per request
+smollm2-360m             3       488       162      1.2%
+qwen3-0.6b               2      6555      3277     15.9%
+harriet-decisions        1     13910     13910     33.8%
+llama-3.2-1b             2      3765      1882      9.1%
+gpt-5.1                  1     10400     10400     25.3%
+claude-haiku-5-5         1      1131      1131      2.7%
+conversation wall clock: 41152 ms, of which 36249 ms (88.1%) was model calls
+one-off load of the four local models: 30095 ms, paid once at startup, not per request
 ```
 
-A liveness check answers in **147 ms**. The remote call takes **6,789 ms**, forty-six times
-longer. Between them sit the grounded arm at 1.8 seconds, retrieval included, and the
-conversational model at 2.9. Harriet is the slowest local arm at 11.6 seconds, because three
-calibrated verdicts are three forward passes through a 4B model; it buys typed answers, not speed.
+A liveness check answers in **162 ms**. Among the remotes, Anthropic's Haiku returns in **1,131 ms**
+and gpt-5.1 takes **10,400 ms** — nine times longer, for the one request that genuinely needed a
+reasoning model. Between them sit the grounded arm at 1.9 seconds, the conversational model at 3.3,
+and Harriet at 13.9, because three calibrated verdicts are three forward passes through a 4B model.
 
-Those figures hold across three consecutive runs on an unloaded machine: liveness 147–153 ms,
-grounded 1,808–1,827, conversation 2,889–3,093, remote 6,594–6,814, Harriet 11,611–12,603, and a
-wall clock of 31.3 to 32.6 seconds. They do not hold on a busy one. An earlier measurement put the
-conversational model at 18,753 ms, which turned out to be the laptop at load average 20 with three
-and a half million pageouts, not the model.
+Those shapes hold across runs on an unloaded machine; the absolute numbers do not hold on a busy
+one. An earlier measurement put the conversational model at 18,753 ms, which was the laptop at load
+average 20 with three and a half million pageouts, not the model.
 
-The 24.7 seconds of loading above the table is paid once. Four models stay resident for the whole
-conversation, which is what a server does, and a resident fleet needs one explicit decision: each
-native runtime otherwise sizes its worker pool for every logical CPU, so four pools on twelve cores
-oversubscribe badly. The same prompt that qwen3-0.6b answers in 1,169 ms alone took 23,946 ms
-beside the others until the script gave each runtime three threads. One line, and a 75-second
-conversation becomes a 31-second one.
+The 30 seconds of loading above the table is paid once. Four models stay resident, which is what a
+server does, and a resident fleet needs one explicit decision: each native runtime otherwise sizes
+its worker pool for every logical CPU, so four pools on twelve cores oversubscribe badly. The same
+prompt qwen3-0.6b answers in 1,169 ms alone took 23,946 ms beside the others until the script gave
+each runtime three threads.
 
 ## What it cost
 
 ```
 == ledger ==
-9 prompts, 1 escalated to gpt-5.1, 8 answered on local weights
-local ruler (qwen3-0.6b tokenizer): 55 of 104 input tokens were routed off this machine (52.9%)
-provider ruler (gpt-5.1 reported): 61 input + 502 completion tokens billed
-  the same prompt measured 55 tokens locally, so the two rulers differ by 6
+10 prompts, 2 escalated to a remote provider, 8 answered on local weights
+local ruler (qwen3-0.6b tokenizer): 139 of 188 input tokens were routed off this machine (73.9%)
+provider ruler (gpt-5.1 reported): 204 input + 702 completion tokens billed
+  the same prompt measured 139 tokens locally, so the two rulers differ by 65
 completions generated on local weights: 123 tokens
-at the declared $1.25/M in, $10.00/M out: $0.005096 for the one escalation; every input remote would be $0.000130, and the local completions would have added $0.001230
-router-accounted spend: $0.005096 of the $0.05 shared budget
+REMOTE PROVIDER            IN   COMPLETION         COST
+gpt-5.1                    61          598    $0.006056
+claude-haiku-5-5          143          104    $0.000066
+total                     204          702    $0.006123
+had every prompt gone to gpt-5.1: $0.000235 of input alone, plus $0.001230 for the completions this machine produced for nothing
+router-accounted spend: $0.006123 of the $0.05 shared budget
 ```
 
-Eight of nine requests were answered by weights already on disk. The ninth — a real conflict
-between two written policies — went to gpt-5.1 and billed 61 input and 502 completion tokens, which
-at the script's contract prices of $1.25 and $10.00 per million is $0.005096. The ledger prices that
-with `ModelCandidate.costOf`, the same call the router's own budget charges, so the two cannot
-disagree; the budget's accounted spend matches to the last digit.
+Eight of ten requests never left the machine. Of the two that did, the policy conflict went to
+gpt-5.1 and the appendix summary went to Haiku, and the per-provider table is where having more than
+one remote stops being a design note and starts being money: **598 completion tokens on gpt-5.1 cost
+$0.006056, while 104 on Haiku cost $0.000066.** Per completion token that is $10.00 against $0.50 per
+million — a factor of twenty for work that did not need the expensive one. The ledger prices each
+line with `ModelCandidate.costOf` on the candidate that actually ran, which is the only way this
+stays right once a fleet holds several providers, and the router's own accounted spend matches the
+total exactly.
 
-Measured on input tokens alone, routing looks like a coin flip: 55 of 104 left the machine. That is
-true and nearly useless, which took a second measurement to establish. The script's `all-remote`
-mode sends the same nine prompts to the provider and totals what it reports:
+Measured on input tokens alone, routing looks unimpressive: 139 of 188 left the machine, because the
+two escalated prompts are the long ones. The script's `all-remote` mode settles what that is worth
+by sending the same ten prompts to gpt-5.1 and totalling what it reports:
 
 ```
 PROMPT                                               IN  COMPLETION
 ping                                                  7          10
 still there?                                          9          22
-ok                                                    7          19
-I was charged twice for my September order.          15         515
-tell me more                                          9         114
-I was charged twice for my September subscr…         19         635
-When is a refund issued, and to which payme…         18         324
-What happens to a duplicate charge?                  13         380
-Our refund policy promises five business da…         61         414
+ok                                                    7          24
+I was charged twice for my September order.          15         428
+tell me more                                          9         109
+I was charged twice for my September subscr…         19         625
+When is a refund issued, and to which payme…         18         237
+What happens to a duplicate charge?                  13         400
+Our refund policy promises five business da…         61         430
+Summarise this appendix for the support han…         89          70
 
 == every prompt through gpt-5.1 ==
-provider-reported: 158 input + 2433 completion tokens
-at the declared $1.25/M in, $10.00/M out: $0.024528
+provider-reported: 247 input + 2355 completion tokens
+at the declared $1.25/M in, $10.00/M out: $0.023859
 Floor, not a ceiling: the grounded prompts are sent without their retrieved notes, which a
 real all-remote implementation would have to include in the input.
 ```
 
 | | input | completion | cost |
 | --- | --- | --- | --- |
-| Every prompt through gpt-5.1 | 158 | 2,433 | **$0.024528** |
-| As routed | 61 | 502 | **$0.005096** |
+| Every prompt through gpt-5.1 | 247 | 2,355 | **$0.023859** |
+| As routed across three providers | 204 | 702 | **$0.006123** |
 
-**79.2% less, a factor of 4.81.** The shape of that saving is the argument. The one genuinely hard
-prompt accounts for 414 of the 2,433 completion tokens; the other eight account for 2,019, which is
-**82.8% of the entire all-remote bill**. A reasoning model spends 515 completion tokens on "I was
-charged twice for my September order" and 635 on the ticket Harriet settles in three forward passes
-without generating prose at all. Completion costs eight times input at these prices, and 98.5% of
-the one remote call's own bill was its completion.
+**74.3% less, a factor of 3.90.** The shape of it: the eight prompts that stayed local would have
+billed 1,855 completion tokens on gpt-5.1, or **$0.018671 — 78.3% of the entire all-remote bill.** A
+reasoning model spends 428 completion tokens on "I was charged twice for my September order" and 625
+on the ticket Harriet settles in three forward passes without generating prose at all.
 
 So the saving is not in shaving tokens off short prompts. It is in not paying a frontier model to
-generate output for work that does not need generating — and in not waiting seven seconds for an
-answer a 360M model gives in 147 milliseconds.
+generate output that does not need generating, and in not sending to the expensive provider what the
+cheap one answers nine times faster.
 
 ### Where these numbers come from
 
-Token counts are the provider's own report or the qwen3-0.6b tokenizer's, kept apart because they
-disagree: the escalated prompt measured 55 tokens locally and 61 at the provider. Shares are quoted
-on the local ruler, where every prompt is measured identically, and bills on the provider's, where
-they are charged.
+Token counts are each provider's own report or the qwen3-0.6b tokenizer's, kept apart because they
+disagree — the escalated prompts measured 139 tokens locally and 204 at the providers. Shares are
+quoted on the local ruler, where every prompt is measured identically, and bills on the provider's,
+where they are charged.
 
-The prices are the script's inputs, matching published GPT-5.1 rates from third-party trackers in
-September 2026; set them to your own contract. The all-remote figure is a floor, since its two
-grounded prompts were sent without the retrieved notes a real implementation would include. And
-gpt-5.1's completion count varies between runs of the same prompt — 383, 437, 458, 502, 517, 563,
-585, 593 and 611 across nine runs — so the table reports the run where both arms were measured
-together, which puts the ratio between 4.0 and 4.8 rather than at a single value.
+Prices are the script's declared inputs, matching published rates from third-party trackers in
+September and October 2026: $1.25/$10.00 per million for gpt-5.1, $0.40/$1.60 for gpt-4.1-mini, and
+$0.10/$0.50 for Haiku 5.5. Set them to your own contracts. Haiku is additionally tiered — $0.50/$2.50
+above a 100k-token prompt — and a candidate declares a single pair, so this fleet would misprice a
+very long request to it.
+
+The all-remote figure is a floor: its grounded prompts were sent without the retrieved notes a real
+implementation would include. And completion counts are not deterministic, so the table reports the
+run in which both arms were measured together rather than a best case.
 
 ## Four things only a real run would tell you
 

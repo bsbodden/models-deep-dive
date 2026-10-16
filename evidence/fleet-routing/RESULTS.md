@@ -6,72 +6,78 @@ JBang: 0.141.0
 Date: 2026-10-15T15:53:51Z
 OPENAI_API_KEY: present for the keyed run below
 
-## jbang fleet.java, on released ModelJars 0.1.59 / Models 0.3.60 / Vectors 0.1.30
+## jbang fleet.java, three remote providers, released 0.1.59 / 0.3.60 / 0.1.30
+
+Two OpenAI models and one Anthropic model share the fleet with four local models. Each provider has
+its own endpoint, credential, auth header and response shape; each client normalises its own
+provider into one `RoutingUsage`.
 
 ```
 classifier: 10 tasks from google_embeddinggemma_300m_gguf_q8_0, 768-dimensional, similarity floor 0.60
 
 WARMING                LOAD MS
-smollm2-360m              2064
-qwen3-0.6b                1605
-llama-3.2-1b              2674
-harriet-decisions        18326
-total                    24669
+smollm2-360m              2493
+qwen3-0.6b                2439
+llama-3.2-1b              3478
+harriet-decisions        21685
+total                    30095
 
 PROMPT                                   CLASSIFIED           SELECTED            TOK      MS
-ping                                     ~chat 0.48           smollm2-360m          1     156
+ping                                     ~chat 0.48           smollm2-360m          1     169
     still here
-still there?                             ~summarization 0.50  smollm2-360m          3     153
+still there?                             ~summarization 0.50  smollm2-360m          3     170
     still here
-ok                                       ~reasoning 0.57      smollm2-360m          1     134
+ok                                       ~reasoning 0.57      smollm2-360m          1     149
     still here
-I was charged twice for my September …   ~tool-use 0.46       qwen3-0.6b            9    3457
+I was charged twice for my September …   ~tool-use 0.46       qwen3-0.6b            9    4288
     We'll check the details of your order to confirm if there was any issue with the payment. Let me know how we can assist you.
-tell me more                             summarization        qwen3-0.6b            3    2321
+tell me more                             summarization        qwen3-0.6b            3    2267
     Of course, let me know how we can assist you with the next steps.
-I was charged twice for my September …   ~tool-use 0.49       harriet-decisions    13   11611
+I was charged twice for my September …   ~tool-use 0.49       harriet-decisions    13   13910
     billing=true(p=0.91,c=0.58) queue=billing(p=0.99,c=0.95) urgency=this week(p=0.38,c=0.01)
-When is a refund issued, and to which…   ~tool-use 0.51       llama-3.2-1b         12    1911
+When is a refund issued, and to which…   ~tool-use 0.51       llama-3.2-1b         12    2049
     A refund is issued to the original payment method within five business days.
-What happens to a duplicate charge?      ~code 0.45           llama-3.2-1b          7    1705
+What happens to a duplicate charge?      ~code 0.45           llama-3.2-1b          7    1716
     A duplicate charge is reversed automatically once billing reconciliation runs nightly.
-Our refund policy promises five busin…   ~tool-use 0.52       gpt-5.1              55    6789
-    There are two overlapping paths: 1. **Manual refund path** - You process a refund (e.g., due to an issue raised by the customer). -…
+Our refund policy promises five busin…   ~tool-use 0.52       gpt-5.1              55   10400
+    There are two flows that can collide: 1. **Manual refund path** - You initiate a refund. - Policy promises: “Refund within five bus…
+Summarise this appendix for the suppo…   ~summarization 0.54  claude-haiku-5-5     84    1131
+    Refunds go to the original payment method within five business days, and duplicate charges are reversed automatically by the nightl…
 
 == timing, warm ==
 MODEL                CALLS  TOTAL MS   MEAN MS     SHARE
-smollm2-360m             3       443       147      1.4%
-qwen3-0.6b               2      5778      2889     18.4%
-harriet-decisions        1     11611     11611     37.1%
-llama-3.2-1b             2      3616      1808     11.5%
-gpt-5.1                  1      6789      6789     21.7%
-conversation wall clock: 31323 ms, of which 28237 ms (90.1%) was model calls
-one-off load of the four local models: 24669 ms, paid once at startup, not per request
+smollm2-360m             3       488       162      1.2%
+qwen3-0.6b               2      6555      3277     15.9%
+harriet-decisions        1     13910     13910     33.8%
+llama-3.2-1b             2      3765      1882      9.1%
+gpt-5.1                  1     10400     10400     25.3%
+claude-haiku-5-5         1      1131      1131      2.7%
+conversation wall clock: 41152 ms, of which 36249 ms (88.1%) was model calls
+one-off load of the four local models: 30095 ms, paid once at startup, not per request
 
 == ledger ==
-9 prompts, 1 escalated to gpt-5.1, 8 answered on local weights
-local ruler (qwen3-0.6b tokenizer): 55 of 104 input tokens were routed off this machine (52.9%)
-provider ruler (gpt-5.1 reported): 61 input + 502 completion tokens billed
-  the same prompt measured 55 tokens locally, so the two rulers differ by 6
+10 prompts, 2 escalated to a remote provider, 8 answered on local weights
+local ruler (qwen3-0.6b tokenizer): 139 of 188 input tokens were routed off this machine (73.9%)
+provider ruler (gpt-5.1 reported): 204 input + 702 completion tokens billed
+  the same prompt measured 139 tokens locally, so the two rulers differ by 65
 completions generated on local weights: 123 tokens
-at the declared $1.25/M in, $10.00/M out: $0.005096 for the one escalation; every input remote would be $0.000130, and the local completions would have added $0.001230
-router-accounted spend: $0.005096 of the $0.05 shared budget
+REMOTE PROVIDER            IN   COMPLETION         COST
+gpt-5.1                    61          598    $0.006056
+claude-haiku-5-5          143          104    $0.000066
+total                     204          702    $0.006123
+had every prompt gone to gpt-5.1: $0.000235 of input alone, plus $0.001230 for the completions this machine produced for nothing
+router-accounted spend: $0.006123 of the $0.05 shared budget
 ```
 
-### Timing is only meaningful on an unloaded machine
+### What the second vendor's client needed that the first did not
 
-Three consecutive runs with load average under 4: liveness 147/153/153 ms, grounded
-1,808/1,818/1,827, conversation 2,889/3,078/3,093, remote 6,789/6,594/6,814, Harriet
-11,611/12,603/12,397, wall clock 31,323/32,604/32,599 ms. The run above is the first of those.
+Anthropic returns `content` as an array whose first block is `thinking`, with the answer in a later
+`text` block, and reports `input_tokens`/`output_tokens` where OpenAI reports
+`prompt_tokens`/`completion_tokens`. Reading `content[0].text` yields an empty string, which then
+enters the ledger as a short answer rather than as an error. The client scans for the first `text`
+block instead.
 
-A fourth run put the conversational model at 18,753 ms. That was the host at load average 20.65
-with 3,475,270 pageouts, from this session's own Gradle and npm work, not the model: the same model
-answers in 1,169 ms alone. Timings here are only quoted from runs taken below load average 4.
-
-## jbang fleet.java all-remote
-
-The counterfactual the routed ledger cannot compute: every prompt sent to the provider, totalled
-from its own reported usage.
+### The counterfactual, re-measured for ten prompts
 
 ```
 classifier: 10 tasks from google_embeddinggemma_300m_gguf_q8_0, 768-dimensional, similarity floor 0.60
@@ -79,25 +85,26 @@ classifier: 10 tasks from google_embeddinggemma_300m_gguf_q8_0, 768-dimensional,
 PROMPT                                               IN  COMPLETION
 ping                                                  7          10
 still there?                                          9          22
-ok                                                    7          19
-I was charged twice for my September order.          15         515
-tell me more                                          9         114
-I was charged twice for my September subscr…         19         635
-When is a refund issued, and to which payme…         18         324
-What happens to a duplicate charge?                  13         380
-Our refund policy promises five business da…         61         414
+ok                                                    7          24
+I was charged twice for my September order.          15         428
+tell me more                                          9         109
+I was charged twice for my September subscr…         19         625
+When is a refund issued, and to which payme…         18         237
+What happens to a duplicate charge?                  13         400
+Our refund policy promises five business da…         61         430
+Summarise this appendix for the support han…         89          70
 
 == every prompt through gpt-5.1 ==
-provider-reported: 158 input + 2433 completion tokens
-at the declared $1.25/M in, $10.00/M out: $0.024528
+provider-reported: 247 input + 2355 completion tokens
+at the declared $1.25/M in, $10.00/M out: $0.023859
 Floor, not a ceiling: the grounded prompts are sent without their retrieved notes, which a
 real all-remote implementation would have to include in the input.
 ```
 
-At the declared prices: $0.024528 all-remote against $0.006186 as routed, a 74.8% difference and a
-factor of 3.96. The one hard prompt accounts for 414 of the 2,433 completion tokens; the other
-eight account for 2,019, or 82.8% of the all-remote bill. The routed side's completion count varied
-517/563/611 across runs, putting the ratio between 3.96x and 4.68x.
+$0.023859 all-remote against $0.006123 as routed: 74.3% less, a factor of 3.90. The eight prompts
+that stayed local would have billed 1,855 completion tokens on gpt-5.1, or $0.018671 -- 78.3% of the
+whole all-remote bill. Per completion token the two providers that did run differ by twenty times,
+$10.00 against $0.50 per million, and Haiku answered 9.2 times faster than gpt-5.1.
 
 ## Walkthrough re-verified on the released libraries
 
