@@ -55,10 +55,14 @@ first-party compositions `org.modeljars.composite:harriet` and
 history to count. Those two are the catalog's own contributions rather than republished weights.
 
 Note the seventh row. `embeddinggemma-300m` is a 334 MB embedding model, and it is also the model
-the router's task classifier runs on — which is where this turns from a catalog into a system.
+the router's task classifier runs on — which is where this turns from a catalog into a system. The
+router's position in that system is the part worth looking at: it takes its classifier index from
+Vectors and its chat types from Models, it does not depend on ModelJars at all, and ModelJars
+reaches it the other way round, by registering a catalog provider that the router finds through
+`ServiceLoader`.
 
 <!-- diagram:stack -->
-![Vectors supplies SIMD math and vector collections; Models builds inference on it; ModelJars adds pinned identity and qualification; applications and the CLI sit on top](diagrams/stack.png)
+![Vectors supplies SIMD math and vector collections; Models builds inference on it; ModelJars adds pinned identity and qualification; models-router takes the classifier index from Vectors and chat types from Models, and ModelJars registers a catalog provider into it; applications and the CLI sit on top](diagrams/stack.png)
 
 <sub>[Mermaid source](diagrams/stack.mmd) · [SVG](diagrams/stack.svg) · the block below is the same diagram</sub>
 
@@ -67,6 +71,7 @@ flowchart BT
   V["Vectors<br/>SIMD math, quantized operations, vector collections"]
   M["Models<br/>loaders, tokenizers, model graphs, generation and task APIs"]
   J["ModelJars<br/>pinned identity, qualification, verified loading"]
+  R["models-router<br/>pretrained task classifier, policies, budget, fleet"]
   A["Your JVM application<br/>plain Java, Spring AI or LangChain4j"]
   C["modeljars.org and CLI<br/>discover, inspect, prefetch, generate examples"]
   V -->|used by| M
@@ -74,6 +79,10 @@ flowchart BT
   J -->|used by| A
   C -.->|selects the same model coordinates| J
   V -->|retrieval collections| A
+  V -->|classifier index| R
+  M -->|runtime chat types| R
+  R -->|chooses a model per request| A
+  J -.->|registers a catalog provider| R
 ```
 <!-- end:diagram:stack -->
 

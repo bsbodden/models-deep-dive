@@ -46,7 +46,9 @@ def region_of(source, name, region):
 # PNG is what readers get wherever Mermaid is not rendered.
 CAPTIONS = {
     "stack": "Vectors supplies SIMD math and vector collections; Models builds inference on it; "
-             "ModelJars adds pinned identity and qualification; applications and the CLI sit on top",
+             "ModelJars adds pinned identity and qualification; models-router takes the classifier "
+             "index from Vectors and chat types from Models, and ModelJars registers a catalog "
+             "provider into it; applications and the CLI sit on top",
     "loading": "Opening a model: resolve the coordinate, verify the artifact digest, map the "
                "weights, initialise the tokenizer, then build the model graph",
     "native-boundary": "Where Java calls the native kernels: the graph and session state stay in "
