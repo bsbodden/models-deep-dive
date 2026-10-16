@@ -1,0 +1,11 @@
+[jbang] Resolving dependencies...
+[jbang]    com.integrallis:models:0.4.0
+[jbang]    com.integrallis:backend-java:0.4.0
+[jbang] Dependencies resolved
+[jbang] Building jar for bonsai.java...
+WARNING: Using incubator modules: jdk.incubator.vector
+Bonsai 2: verified 5.95 GB PTQ1_0 text artifact
+Runtime compatibility demonstration; production qualification is pending.
+Completion: The quick brown fox jumps over the lazy dog.
+
+The

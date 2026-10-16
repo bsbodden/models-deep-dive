@@ -216,6 +216,10 @@ var haiku =
         .local(false)
         .capabilities(Set.of("chat", "summarization", "long-context"))
         .costPerMillionTokens(HAIKU_IN, HAIKU_OUT)
+        // New in Models 0.4.0. The provider's step is "over 100k", and the threshold is
+        // inclusive, so it is declared one token above. Crossing it reprices the whole
+        // request, output included.
+        .pricingTier(100_001, HAIKU_HIGH_IN, HAIKU_HIGH_OUT)
         .maxOutputTokens(HAIKU_CAP)
         .contextWindow(200000)
         .timeToFirstTokenMillis(300)
@@ -397,40 +401,41 @@ Run it and the routing table is the output:
 
 ```
 WARMING                LOAD MS
-smollm2-360m              2493
-qwen3-0.6b                2439
-llama-3.2-1b              3478
-harriet-decisions        21685
-total                    30095
+smollm2-360m              2888
+qwen3-0.6b                2129
+llama-3.2-1b              3562
+harriet-decisions        22365
+total                    30944
 
 PROMPT                                   CLASSIFIED           SELECTED            TOK      MS
-ping                                     ~chat 0.48           smollm2-360m          1     169
+ping                                     ~chat 0.48           smollm2-360m          1     184
     still here
-still there?                             ~summarization 0.50  smollm2-360m          3     170
+still there?                             ~summarization 0.50  smollm2-360m          3     178
     still here
-ok                                       ~reasoning 0.57      smollm2-360m          1     149
+ok                                       ~reasoning 0.57      smollm2-360m          1     161
     still here
-I was charged twice for my September …   ~tool-use 0.46       qwen3-0.6b            9    4288
+I was charged twice for my September …   ~tool-use 0.46       qwen3-0.6b            9    4183
     We'll check the details of your order to confirm if there was any issue with the payment. Let me know how we can assist you.
-tell me more                             summarization        qwen3-0.6b            3    2267
+tell me more                             summarization        qwen3-0.6b            3    2526
     Of course, let me know how we can assist you with the next steps.
-I was charged twice for my September …   ~tool-use 0.49       harriet-decisions    13   13910
+I was charged twice for my September …   ~tool-use 0.49       harriet-decisions    13   13135
     billing=true(p=0.91,c=0.58) queue=billing(p=0.99,c=0.95) urgency=this week(p=0.38,c=0.01)
-When is a refund issued, and to which…   ~tool-use 0.51       llama-3.2-1b         12    2049
+When is a refund issued, and to which…   ~tool-use 0.51       llama-3.2-1b         12    2102
     A refund is issued to the original payment method within five business days.
-What happens to a duplicate charge?      ~code 0.45           llama-3.2-1b          7    1716
+What happens to a duplicate charge?      ~code 0.45           llama-3.2-1b          7    1851
     A duplicate charge is reversed automatically once billing reconciliation runs nightly.
-Our refund policy promises five busin…   ~tool-use 0.52       gpt-5.1              55   10400
-    There are two flows that can collide: 1. **Manual refund path** - You initiate a refund. - Policy promises: “Refund within five bus…
-Summarise this appendix for the suppo…   ~summarization 0.54  claude-haiku-5-5     84    1131
-    Refunds go to the original payment method within five business days, and duplicate charges are reversed automatically by the nightl…
+Our refund policy promises five busin…   ~tool-use 0.52       gpt-5.1              55   11268
+    There are two relevant flows: 1. **Refund flow (your policy promise)** - “Refunded within five business days to the original paymen…
+Summarise this appendix for the suppo…   ~summarization 0.54  claude-haiku-5-5     84    1340
+    Refunds go back to the original payment method within five business days, and duplicate charges are reversed automatically by the n…
 ```
 
 Five kinds of traffic, five different destinations, no `if` statement over prompt text:
 
 **Heartbeats** (`ping`, `still there?`, `ok`) require a `liveness` capability that only the 360M
-SmolLM2 declares. They are answered statelessly, in 8 tokens, and never enter the conversation
-transcript — because a liveness check is not a conversation turn.
+SmolLM2 declares. They are answered statelessly under an eight-token ceiling — the table shows them
+spending one to three — and never enter the conversation transcript, because a liveness check is not
+a conversation turn.
 
 **The conversation** (`I was charged twice…`, then `tell me more`) requires `chat` with a
 `LOCAL_ONLY` boundary, and carries a session id. The first turn picks qwen3-0.6b on quality; the
@@ -491,20 +496,20 @@ The router times every attempt, so the conversation reports its own latency:
 ```
 == timing, warm ==
 MODEL                CALLS  TOTAL MS   MEAN MS     SHARE
-smollm2-360m             3       488       162      1.2%
-qwen3-0.6b               2      6555      3277     15.9%
-harriet-decisions        1     13910     13910     33.8%
-llama-3.2-1b             2      3765      1882      9.1%
-gpt-5.1                  1     10400     10400     25.3%
-claude-haiku-5-5         1      1131      1131      2.7%
-conversation wall clock: 41152 ms, of which 36249 ms (88.1%) was model calls
-one-off load of the four local models: 30095 ms, paid once at startup, not per request
+smollm2-360m             3       523       174      1.2%
+qwen3-0.6b               2      6709      3354     16.0%
+harriet-decisions        1     13135     13135     31.3%
+llama-3.2-1b             2      3953      1976      9.4%
+gpt-5.1                  1     11268     11268     26.8%
+claude-haiku-5-5         1      1340      1340      3.2%
+conversation wall clock: 41985 ms, of which 36928 ms (88.0%) was model calls
+one-off load of the four local models: 30944 ms, paid once at startup, not per request
 ```
 
-A liveness check answers in **162 ms**. Among the remotes, Anthropic's Haiku returns in **1,131 ms**
-and gpt-5.1 takes **10,400 ms** — nine times longer, for the one request that genuinely needed a
-reasoning model. Between them sit the grounded arm at 1.9 seconds, the conversational model at 3.3,
-and Harriet at 13.9, because three calibrated verdicts are three forward passes through a 4B model.
+A liveness check answers in **174 ms**. Among the remotes, Anthropic's Haiku returns in **1,340 ms**
+and gpt-5.1 takes **11,268 ms** — eight times longer, for the one request that genuinely needed a
+reasoning model. Between them sit the grounded arm at 2.0 seconds, the conversational model at 3.4,
+and Harriet at 13.1, because three calibrated verdicts are three forward passes through a 4B model.
 
 Those shapes hold across runs on an unloaded machine; the absolute numbers do not hold on a busy
 one. An earlier measurement put the conversational model at 18,753 ms, which was the laptop at load
@@ -522,21 +527,21 @@ each runtime three threads.
 == ledger ==
 10 prompts, 2 escalated to a remote provider, 8 answered on local weights
 local ruler (qwen3-0.6b tokenizer): 139 of 188 input tokens were routed off this machine (73.9%)
-provider ruler (gpt-5.1 reported): 204 input + 702 completion tokens billed
+provider ruler (gpt-5.1 reported): 204 input + 789 completion tokens billed
   the same prompt measured 139 tokens locally, so the two rulers differ by 65
 completions generated on local weights: 123 tokens
 REMOTE PROVIDER            IN   COMPLETION         COST
-gpt-5.1                    61          598    $0.006056
+gpt-5.1                    61          685    $0.006926
 claude-haiku-5-5          143          104    $0.000066
-total                     204          702    $0.006123
+total                     204          789    $0.006993
 had every prompt gone to gpt-5.1: $0.000235 of input alone, plus $0.001230 for the completions this machine produced for nothing
-router-accounted spend: $0.006123 of the $0.05 shared budget
+router-accounted spend: $0.006993 of the $0.05 shared budget
 ```
 
 Eight of ten requests never left the machine. Of the two that did, the policy conflict went to
 gpt-5.1 and the appendix summary went to Haiku, and the per-provider table is where having more than
-one remote stops being a design note and starts being money: **598 completion tokens on gpt-5.1 cost
-$0.006056, while 104 on Haiku cost $0.000066.** Per completion token that is $10.00 against $0.50 per
+one remote stops being a design note and starts being money: **685 completion tokens on gpt-5.1 cost
+$0.006926, while 104 on Haiku cost $0.000066.** Per completion token that is $10.00 against $0.50 per
 million — a factor of twenty for work that did not need the expensive one. The ledger prices each
 line with `ModelCandidate.costOf` on the candidate that actually ran, which is the only way this
 stays right once a fleet holds several providers, and the router's own accounted spend matches the
@@ -550,35 +555,35 @@ by sending the same ten prompts to gpt-5.1 and totalling what it reports:
 PROMPT                                               IN  COMPLETION
 ping                                                  7          10
 still there?                                          9          22
-ok                                                    7          24
-I was charged twice for my September order.          15         428
-tell me more                                          9         109
-I was charged twice for my September subscr…         19         625
-When is a refund issued, and to which payme…         18         237
-What happens to a duplicate charge?                  13         400
-Our refund policy promises five business da…         61         430
-Summarise this appendix for the support han…         89          70
+ok                                                    7          19
+I was charged twice for my September order.          15         431
+tell me more                                          9          99
+I was charged twice for my September subscr…         19         404
+When is a refund issued, and to which payme…         18         346
+What happens to a duplicate charge?                  13         346
+Our refund policy promises five business da…         61         501
+Summarise this appendix for the support han…         89          80
 
 == every prompt through gpt-5.1 ==
-provider-reported: 247 input + 2355 completion tokens
-at the declared $1.25/M in, $10.00/M out: $0.023859
+provider-reported: 247 input + 2258 completion tokens
+at the declared $1.25/M in, $10.00/M out: $0.022889
 Floor, not a ceiling: the grounded prompts are sent without their retrieved notes, which a
 real all-remote implementation would have to include in the input.
 ```
 
 | | input | completion | cost |
 | --- | --- | --- | --- |
-| Every prompt through gpt-5.1 | 247 | 2,355 | **$0.023859** |
-| As routed across three providers | 204 | 702 | **$0.006123** |
+| Every prompt through gpt-5.1 | 247 | 2,258 | **$0.022889** |
+| As routed across three providers | 204 | 789 | **$0.006993** |
 
-**74.3% less, a factor of 3.90.** The shape of it: the eight prompts that stayed local would have
-billed 1,855 completion tokens on gpt-5.1, or **$0.018671 — 78.3% of the entire all-remote bill.** A
-reasoning model spends 428 completion tokens on "I was charged twice for my September order" and 625
+**69.4% less, a factor of 3.27.** The shape of it: the eight prompts that stayed local would have
+billed 1,677 completion tokens on gpt-5.1, or **$0.016891 — 73.8% of the entire all-remote bill.** A
+reasoning model spends 431 completion tokens on "I was charged twice for my September order" and 404
 on the ticket Harriet settles in three forward passes without generating prose at all.
 
 So the saving is not in shaving tokens off short prompts. It is in not paying a frontier model to
 generate output that does not need generating, and in not sending to the expensive provider what the
-cheap one answers nine times faster.
+cheap one answers eight times faster.
 
 ### Where these numbers come from
 
@@ -589,9 +594,40 @@ where they are charged.
 
 Prices are the script's declared inputs, matching published rates from third-party trackers in
 September and October 2026: $1.25/$10.00 per million for gpt-5.1, $0.40/$1.60 for gpt-4.1-mini, and
-$0.10/$0.50 for Haiku 5.5. Set them to your own contracts. Haiku is additionally tiered — $0.50/$2.50
-above a 100k-token prompt — and a candidate declares a single pair, so this fleet would misprice a
-very long request to it.
+$0.10/$0.50 for Haiku 5.5. Set them to your own contracts. Haiku is additionally tiered, at
+$0.50/$2.50 from a 100k-token prompt upwards, and the script declares that step with
+`.pricingTier(100_001, 0.50, 2.50)` — new in Models 0.4.0. No prompt in this conversation is
+anywhere near 100k tokens, so the step never fires here and every figure above is the base rate.
+It is declared because a flat pair would have priced a long request to Haiku five-fold low, and
+`RoutingBudget` charges whatever `costOf` reports, so a budget declared flat would have stopped
+spending later than it was told to.
+
+Routing still scores on list price on purpose, and the reason is narrower than it sounds. Scoring
+normalises cost across the eligible candidates into a 0–1 term, so a rate that moved with prompt
+size would move a candidate relative to every other candidate at its own threshold, and its rank
+would stop being monotonic in the size of the request. Accounting is where the real tier has to be
+right.
+
+Reading the other router implementations on this machine rather than their documentation, that
+choice is defensible but not consensus. LiteLLM carries tiered rates as
+`input_cost_per_token_above_{N}k_tokens`, and it is a gateway, so the question of scoring does not
+arise. weave-os/router has the same construct this release added — a threshold with alternate input
+and output rates, and a `ForInputTokens` that swaps them — and applies it when it scores candidates
+as well as when it bills them. It can: it scores on an absolute dollar estimate, where a tier change
+moves the score monotonically with true cost. A router that scores on absolute cost should tier its
+selection. One that normalises, like this one, has a real reason not to. Meanwhile the
+selection-oriented routers skip tiers altogether: vLLM's semantic router carries flat per-million
+rates in operator YAML and uses them as a weight and a ceiling, and RouteLLM has no cost term at all.
+
+The other thing the clones corrected was where prices come from. LiteLLM does not ship a static
+table — it fetches a community-maintained price map over HTTP at import, retries, validates that the
+map has not shrunk suspiciously, and falls back to a packaged copy, with an environment variable to
+force local. weave-os keeps its catalog in source and generates its client artifacts from it.
+TensorZero and the selection routers take operator-declared values. Models is in the last group
+deliberately: a startup fetch trades a network dependency and a third-party trust boundary for
+freshness, and that belongs to a deployment rather than a library. The honest cost is that a
+declared price goes stale silently, which LiteLLM's design avoids and this one does not. Full
+citations are in [the run record](evidence/fleet-routing/RESULTS.md).
 
 The all-remote figure is a floor: its grounded prompts were sent without the retrieved notes a real
 implementation would include. And completion counts are not deterministic, so the table reports the
@@ -697,8 +733,8 @@ flowchart TD
 
 ## The rest of the walkthrough
 
-Every script below runs on ModelJars 0.1.59, Models 0.3.60 and Vectors 0.1.30, all released and
-verified on Maven Central. All fourteen completed on 2026-10-15; outcomes are in
+Every script below runs on ModelJars 0.1.60, Models 0.4.0 and Vectors 0.1.30, all released and
+verified on Maven Central. All fourteen completed on 2026-10-16; outcomes are in
 [the run record](evidence/fleet-routing/RESULTS.md).
 
 | Script | What it shows |
@@ -712,7 +748,7 @@ verified on Maven Central. All fourteen completed on 2026-10-15; outcomes are in
 | [`tools.java`](code/tools.java) | A model proposing tool calls that the JVM executes |
 | [`composite.java`](code/composite.java) | A composition sharing a physical KV prefix, 182 tokens |
 | [`decisions.java`](code/decisions.java) | Typed, calibrated decisions with no generation |
-| [`speech.java`](code/speech.java) | Text to a 32 kHz wav, RTF 1.433 |
+| [`speech.java`](code/speech.java) | Text to a 32 kHz wav, RTF 1.361 |
 | [`spring.java`](code/spring.java) | The same model behind a Spring AI `ChatModel` |
 | [`route.java`](code/route.java) | Discovery over what is already cached, selection only |
 | [`bonsai.java`](code/bonsai.java) | A verified 5.95 GB PTQ1_0 artifact |
@@ -729,5 +765,6 @@ model is allowed to serve, which traffic may leave the machine, what you are wil
 how much better an alternative must be before a conversation switches models mid-flight. Then it
 tells you which rule fired, in numbers, for every request.
 
-Most of the traffic in the run above never needed a frontier model. One request did, and it got
-one. That is the whole argument.
+Most of the traffic in the run above never needed a frontier model. Eight of ten requests never
+left the machine, two did, and exactly one of those needed a reasoning model — which it got. That is
+the whole argument.

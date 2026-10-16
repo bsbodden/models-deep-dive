@@ -6,11 +6,11 @@
 // 20x: qwen3-0.6b answered the same prompt in 1,169 ms alone and 23,946 ms beside the others.
 // Three threads each shares the twelve this host has.
 //RUNTIME_OPTIONS -Dmodels.native.kernels.threads=3
-//DEPS org.modeljars:modeljars:0.1.59
-//DEPS com.integrallis:models-router:0.3.60
+//DEPS org.modeljars:modeljars:0.1.60
+//DEPS com.integrallis:models-router:0.4.0
 //DEPS com.integrallis:vectors-db:0.1.30
 //DEPS com.fasterxml.jackson.core:jackson-databind:2.22.3
-//DEPS org.modeljars.composite:harriet:0.1.59
+//DEPS org.modeljars.composite:harriet:0.1.60
 //DEPS org.modeljars.huggingface:ggml-org.embeddinggemma-300m-gguf.q8_0:3.0.0-q8_0.1
 //DEPS org.modeljars.huggingface:huggingfacetb.smollm2-360m-instruct-gguf.q8_0:2.0.0-q8_0.1
 //DEPS org.modeljars.huggingface:ggml-org.qwen3-0.6b-gguf.q4_0:3.0.0-q4_0.1
@@ -61,11 +61,13 @@ class fleet {
 
   // A third provider at a different vendor: its own endpoint, credential, auth header and JSON
   // shape. Anthropic prices Haiku 5.5 in tiers -- $0.10/$0.50 under a 100k-token prompt and
-  // $0.50/$2.50 over it -- and a candidate declares one pair, so this declares the tier these
-  // prompts actually fall in and would misprice a 100k-token request.
+  // $0.50/$2.50 at or over it -- which Models 0.4.0 can express, so the candidate below declares
+  // both rather than silently pricing a long request at the cheap one.
   static final String HAIKU = "claude-haiku-5-5";
   static final double HAIKU_IN = 0.10;
   static final double HAIKU_OUT = 0.50;
+  static final double HAIKU_HIGH_IN = 0.50;
+  static final double HAIKU_HIGH_OUT = 2.50;
   static final int HAIKU_CAP = 1024;
 
   static final String REMOTE_MODEL = PREMIUM;
@@ -419,6 +421,10 @@ class fleet {
             .local(false)
             .capabilities(Set.of("chat", "summarization", "long-context"))
             .costPerMillionTokens(HAIKU_IN, HAIKU_OUT)
+            // New in Models 0.4.0. The provider's step is "over 100k", and the threshold is
+            // inclusive, so it is declared one token above. Crossing it reprices the whole
+            // request, output included.
+            .pricingTier(100_001, HAIKU_HIGH_IN, HAIKU_HIGH_OUT)
             .maxOutputTokens(HAIKU_CAP)
             .contextWindow(200000)
             .timeToFirstTokenMillis(300)

@@ -1,0 +1,17 @@
+[jbang] Resolving dependencies...
+[jbang]    org.modeljars:modeljars:0.1.60
+[jbang]    org.modeljars.huggingface:ggml-org.qwen3-0.6b-gguf.q4_0:3.0.0-q4_0.1
+[jbang] Dependencies resolved
+[jbang] Building jar for chat.java...
+WARNING: Using incubator modules: jdk.incubator.vector
+Input:  What is the capital of France? Reply with only the city name.
+Output: Paris
+
+Metrics:
+  Load                 2,141 ms
+  Tokenization         6 ms
+  Prompt preparation   0 ms
+  Prefill              2,046 ms
+  TTFT                 2,062 ms
+  Decode               138 ms (0.0 tokens/s)
+  Tokens               26 prompt + 1 completion
