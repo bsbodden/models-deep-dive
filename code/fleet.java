@@ -355,20 +355,19 @@ class fleet {
   static ModelFleet<Responder> buildFleet(TaskClassifier classifier, VectorCollection retrieval) {
     // region: locals
     // Identity, locality, the context window read from the artifact and this host's throughput all
-    // come from the catalog. Hand-writing them is how this demo once had qwen3-0.6b at a 32,768
-    // token window when the file says 40,960.
+    // come from the catalog, so none of them is written here.
     var catalog = new LinkedHashMap<String, ModelCandidate>();
     for (var found : CatalogDiscovery.discover()) {
       catalog.put(found.id(), found);
     }
 
-    // Only what a catalog cannot know is written here: `liveness` and `grounding` are names this
-    // application invented, and the quality weights are its judgement. `toBuilder` keeps the rest.
+    // Only what a catalog cannot know: `liveness` and `grounding` are names this application
+    // invented, and the quality weights are its judgement. `toBuilder` keeps the rest.
     //
-    // Clearing tags is the subtle part. A non-empty tag set is a hard filter on the classifier's
-    // task type, so a model tagged `chat` is refused outright for a prompt classified
-    // `summarization`. The catalog tags these `chat` to describe the weights; this fleet selects on
-    // capability and quality instead.
+    // Tags are a second filter, separate from capabilities and active only when non-empty: a model
+    // tagged `chat` is refused outright for a prompt classified `summarization`. The catalog tags
+    // these `chat` to describe the weights; this fleet selects on capability and quality, so the
+    // tags are cleared.
     var tiny =
         discovered(catalog, TINY_ID)
             .tags(Set.of())
@@ -387,11 +386,11 @@ class fleet {
             .addCapabilities("grounding")
             .quality(Map.of("chat", 0.66, "grounding", 0.70))
             .build();
-    // Harriet is where derivation stops. The catalog reports the composite's base weights as a chat
-    // model, true of the weights and wrong about this arm: three typed questions, three forward
-    // passes, no generated prose. So `capabilities` replaces rather than adds -- a decision arm
-    // claiming `chat` would be eligible for a customer's real question -- and tokens-per-second is
-    // overridden because it does not describe this cost. The window carries through.
+    // Harriet is the exception. The catalog reports the composite's base weights as a chat model,
+    // true of the weights and wrong about this arm: three typed questions, three forward passes, no
+    // generated prose. So `capabilities` replaces rather than adds -- a decision arm claiming `chat`
+    // would be eligible for a customer's real question -- and tokens-per-second is overridden
+    // because it does not describe this cost. The window carries through.
     var decisions =
         discovered(catalog, HARRIET_ID)
             .tags(Set.of())

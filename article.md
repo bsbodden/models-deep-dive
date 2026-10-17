@@ -152,37 +152,32 @@ only thing the ledger needs.
 The whole program is [`code/fleet.java`](code/fleet.java), and it is worth reading in pieces rather
 than at once, because each piece answers a different question.
 
-### Asking the catalog what the local models are, and declaring what they are for
+### Describing the local models
 
 A candidate is a description, not a wrapper: what the model claims to do, how fast it is, how large
-a prompt it takes, how good it is at each task. Most of that is already known. ModelJars registers a
-catalog provider that `CatalogDiscovery` finds through `ServiceLoader`, and every model whose marker
-jar is on the classpath arrives carrying its id, whether it is local, the context window read from
-its artifact, and throughput — measured on this host if it has been benchmarked, and logged as a
-conservative estimate if not.
-
-So none of that is written out below. It is not a matter of typing: a hand-written context window is
-a figure that can be wrong, and in the first version of this program it was. SmolLM2 really does
-have an 8,192-token window, but qwen3-0.6b was declared at 32,768 when its GGUF says **40,960**.
-The catalog had the right answer the whole time.
+a prompt it takes, how good it is at each task. Most of that you do not write. ModelJars registers a
+catalog provider that `CatalogDiscovery` finds through `ServiceLoader`, so every model whose marker
+jar is on the classpath arrives already carrying its id, whether it is local, the context window
+read from its artifact — qwen3-0.6b's GGUF says 40,960 tokens, SmolLM2's says 8,192 — and
+throughput, measured on this host if it has been benchmarked and logged as a conservative estimate
+if not.
 
 <!-- snippet:fleet#locals -->
 ```java
 // Identity, locality, the context window read from the artifact and this host's throughput all
-// come from the catalog. Hand-writing them is how this demo once had qwen3-0.6b at a 32,768
-// token window when the file says 40,960.
+// come from the catalog, so none of them is written here.
 var catalog = new LinkedHashMap<String, ModelCandidate>();
 for (var found : CatalogDiscovery.discover()) {
   catalog.put(found.id(), found);
 }
 
-// Only what a catalog cannot know is written here: `liveness` and `grounding` are names this
-// application invented, and the quality weights are its judgement. `toBuilder` keeps the rest.
+// Only what a catalog cannot know: `liveness` and `grounding` are names this application
+// invented, and the quality weights are its judgement. `toBuilder` keeps the rest.
 //
-// Clearing tags is the subtle part. A non-empty tag set is a hard filter on the classifier's
-// task type, so a model tagged `chat` is refused outright for a prompt classified
-// `summarization`. The catalog tags these `chat` to describe the weights; this fleet selects on
-// capability and quality instead.
+// Tags are a second filter, separate from capabilities and active only when non-empty: a model
+// tagged `chat` is refused outright for a prompt classified `summarization`. The catalog tags
+// these `chat` to describe the weights; this fleet selects on capability and quality, so the
+// tags are cleared.
 var tiny =
     discovered(catalog, TINY_ID)
         .tags(Set.of())
@@ -201,11 +196,11 @@ var grounder =
         .addCapabilities("grounding")
         .quality(Map.of("chat", 0.66, "grounding", 0.70))
         .build();
-// Harriet is where derivation stops. The catalog reports the composite's base weights as a chat
-// model, true of the weights and wrong about this arm: three typed questions, three forward
-// passes, no generated prose. So `capabilities` replaces rather than adds -- a decision arm
-// claiming `chat` would be eligible for a customer's real question -- and tokens-per-second is
-// overridden because it does not describe this cost. The window carries through.
+// Harriet is the exception. The catalog reports the composite's base weights as a chat model,
+// true of the weights and wrong about this arm: three typed questions, three forward passes, no
+// generated prose. So `capabilities` replaces rather than adds -- a decision arm claiming `chat`
+// would be eligible for a customer's real question -- and tokens-per-second is overridden
+// because it does not describe this cost. The window carries through.
 var decisions =
     discovered(catalog, HARRIET_ID)
         .tags(Set.of())
@@ -216,42 +211,32 @@ var decisions =
 ```
 <!-- end:snippet:fleet#locals -->
 
-`discovered(catalog, id)` is a dozen lines in the same file, most of them an error message: it
-looks the id up and, if it is missing, fails naming what *was* found — an absent entry means that model's marker jar is not on the
-classpath, which is a dependency problem and worth saying so rather than routing to a model the
-program knows nothing about.
+What you write is what a catalog cannot know. `liveness` and `grounding` are not properties of the
+weights; they are names this application invented for jobs it has. Per-task quality is a judgement
+about a fleet, not a measurement of a file. `toBuilder()` and `addCapabilities(...)`, both new in
+Models 0.4.1, add those to a discovered candidate without restating the dozen components discovery
+already got right. (`discovered(catalog, id)` is a small helper that looks an id up and fails
+naming what *was* found, since an absent entry means a missing marker jar.)
 
-What is left is what a catalog genuinely cannot know. `liveness` and `grounding` are not properties
-of the weights; they are names this application invented for jobs it has. Per-task quality is a
-judgement about a fleet, not a measurement of a file. Those are added to the discovered candidate
-with `toBuilder()` and `addCapabilities(...)`, both new in Models 0.4.1 — before them, adding one
-capability to a discovered candidate meant restating all thirteen of its components by hand, which
-costs more than declaring the model from scratch and is exactly why the first version of this
-program did not discover at all.
-
-The capability sets are then the load-bearing part. Only SmolLM2 claims `liveness`, only the Llama
-arm claims `grounding`, only Harriet claims `decision`. That is an operator's declaration about what
+The capability sets are the load-bearing part. Only SmolLM2 claims `liveness`, only the Llama arm
+claims `grounding`, only Harriet claims `decision`. That is an operator's declaration about what
 each model is allowed to serve, and the router treats it as a hard filter before any score is
-compared — which is what keeps a liveness check off a 4B decision model without an `if` statement
-anywhere.
+compared — which keeps a liveness check off a 4B decision model without an `if` statement anywhere.
 
-Clearing the tags deserves its own sentence, because it is a trap. Tags and capabilities are
-different axes: a capability is a hard requirement a request asks for, while a **non-empty** tag set
-is a hard filter on the classifier's task type. A model tagged `chat` is refused outright for a
-prompt classified `summarization`, however good it is at summarising. The catalog tags these models
-`chat` because that describes the weights; this fleet routes on capability and quality instead, so
-the tags are cleared deliberately. Leave them in place and `tell me more` — the one prompt in the
-run below that clears the 0.60 similarity floor — becomes unroutable. The first version of this
-program never set tags at all, so the filter silently never applied and the program passed a test it
-had opted out of without knowing.
+Clearing the tags is the line worth pausing on, because tags and capabilities are different axes and
+only one is obvious. A capability is a hard requirement a request asks for. A **non-empty** tag set
+is a *second* hard filter, on the classifier's task type: a model tagged `chat` is refused for a
+prompt classified `summarization`, however good it is at summarising, while an empty tag set
+disables that filter entirely. The catalog tags these models `chat` to describe the weights; this
+fleet routes on capability and quality, so the tags are cleared on purpose. Leave them and
+`tell me more` — the one prompt below that clears the 0.60 similarity floor — matches nothing local.
 
-Harriet is the one arm where derivation stops, and the reason is instructive. The catalog reports
-the composite's base weights as an ordinary chat model with a 262,144-token window. That is true of
-the weights and wrong about the arm: it answers three typed questions in three forward passes and
-generates no prose at all. So its capabilities *replace* rather than add — a decision arm claiming
-`chat` would be eligible for a customer's actual question — and its throughput is overridden,
-because tokens per second does not describe what three forward passes cost. The context window,
-which really is a fact of the weights, carries through untouched.
+Harriet is the exception. The catalog reports the composite's base weights as an ordinary chat model
+with a 262,144-token window: true of the weights, wrong about the arm, which answers three typed
+questions in three forward passes and generates no prose. So its capabilities *replace* rather than
+add — a decision arm claiming `chat` would be eligible for a customer's real question — and its
+throughput is overridden, because tokens per second does not describe what three forward passes
+cost. The context window, which really is a fact of the weights, carries through.
 
 ### Declaring the remote providers
 
@@ -587,13 +572,12 @@ and gpt-5.1 takes **6,873 ms** — five times longer, for the one request that g
 reasoning model. Between them sit the grounded arm at 1.9 seconds, the conversational model at 3.2,
 and Harriet at 12.6, because three calibrated verdicts are three forward passes through a 4B model.
 
-Those shapes hold across runs on an unloaded machine; the absolute numbers do not hold on a busy
-one, and the gap is not subtle. The first attempt at this very run was discarded because
-`bonsai.java` had just mapped a 5.95 GB model: the laptop was at load average 39 with 3.5 million
-pageouts, qwen3-0.6b reported **25,163 ms** against the 4,057 ms above, and only 50.3% of wall clock
-was spent inside model calls at all — the process was starved, not slow. That last figure is the
-tell worth remembering, because a starved run still prints a complete, plausible table. The run
-quoted here was taken after the machine settled below load 3.5.
+Those shapes hold across runs on an unloaded machine. The absolute numbers do not survive a busy
+one: at load average 39, qwen3-0.6b reports **25,163 ms** for the call it answers in 4,057 ms above.
+The tell is the last line of the table. A healthy run spends 86% of its wall clock inside model
+calls; the contended one spent 50.3%, which means the process was starved rather than slow. Measure
+on a quiet machine, and check that share before believing a timing — a starved run still prints a
+complete and plausible table.
 
 The 28 seconds of loading above the table is paid once. Four models stay resident, which is what a
 server does, and a resident fleet needs one explicit decision: each native runtime otherwise sizes
@@ -673,53 +657,34 @@ quoted on the local ruler, where every prompt is measured identically, and bills
 where they are charged.
 
 Prices are the script's declared inputs, matching published rates from third-party trackers in
-September and October 2026: $1.25/$10.00 per million for gpt-5.1, $0.40/$1.60 for gpt-4.1-mini, and
-$0.10/$0.50 for Haiku 5.5. Set them to your own contracts. Haiku is additionally tiered, at
-$0.50/$2.50 from a 100k-token prompt upwards, and the script declares that step with
-`.pricingTier(100_001, 0.50, 2.50)` — new in Models 0.4.0. No prompt in this conversation is
-anywhere near 100k tokens, so the step never fires here and every figure above is the base rate.
-It is declared because a flat pair would have priced a long request to Haiku five-fold low, and
-`RoutingBudget` charges whatever `costOf` reports, so a budget declared flat would have stopped
-spending later than it was told to.
+autumn 2026: $1.25/$10.00 per million for gpt-5.1, $0.40/$1.60 for gpt-4.1-mini, $0.10/$0.50 for
+Haiku 5.5. Set them to your own contracts. Haiku also charges a higher rate above a 100k-token
+prompt, which the script declares as `.pricingTier(100_001, 0.50, 2.50)` — new in Models 0.4.0.
+Nothing here comes close to that threshold, so every figure above is the base rate; it is declared
+because `RoutingBudget` charges whatever `costOf` reports, and a budget told a flat price would
+overshoot by five times on a long request.
 
-Routing still scores on list price on purpose, and the reason is narrower than it sounds. Scoring
-normalises cost across the eligible candidates into a 0–1 term, so a rate that moved with prompt
-size would move a candidate relative to every other candidate at its own threshold, and its rank
-would stop being monotonic in the size of the request. Accounting is where the real tier has to be
-right.
+Scoring, though, still uses list price. Cost is normalised across the eligible candidates into a
+0–1 term, so a rate that moved with prompt size would shift a candidate against all the others at
+its own threshold and make its rank non-monotonic in request size. Accounting is where the tier has
+to be exact. That split is not universal: reading the other routers on this machine rather than
+their documentation, weave-os applies its tier when scoring as well as billing — it can, because it
+scores on an absolute dollar estimate — while vLLM's semantic router and RouteLLM carry no tier
+concept at all, and LiteLLM carries one but is a gateway, so the question does not arise.
 
-Reading the other router implementations on this machine rather than their documentation, that
-choice is defensible but not consensus. LiteLLM carries tiered rates as
-`input_cost_per_token_above_{N}k_tokens`, and it is a gateway, so the question of scoring does not
-arise. weave-os/router has the same construct this release added — a threshold with alternate input
-and output rates, and a `ForInputTokens` that swaps them — and applies it when it scores candidates
-as well as when it bills them. It can: it scores on an absolute dollar estimate, where a tier change
-moves the score monotonically with true cost. A router that scores on absolute cost should tier its
-selection. One that normalises, like this one, has a real reason not to. Meanwhile the
-selection-oriented routers skip tiers altogether: vLLM's semantic router carries flat per-million
-rates in operator YAML and uses them as a weight and a ceiling, and RouteLLM has no cost term at all.
+Where prices come from divides the same field three ways. LiteLLM fetches a community-maintained
+price map over HTTP at startup, validates it, and falls back to a packaged copy. weave-os keeps its
+catalog in source. TensorZero and the selection routers take operator-declared values. Models is in
+the last group deliberately — a startup fetch trades a network dependency and a third-party trust
+boundary for freshness, which is a deployment's call, not a library's — and the cost of that is
+real: a declared price goes stale silently. Citations are in
+[the run record](evidence/fleet-routing/RESULTS.md).
 
-The other thing the clones corrected was where prices come from. LiteLLM does not ship a static
-table — it fetches a community-maintained price map over HTTP at import, retries, validates that the
-map has not shrunk suspiciously, and falls back to a packaged copy, with an environment variable to
-force local. weave-os keeps its catalog in source and generates its client artifacts from it.
-TensorZero and the selection routers take operator-declared values. Models is in the last group
-deliberately: a startup fetch trades a network dependency and a third-party trust boundary for
-freshness, and that belongs to a deployment rather than a library. The honest cost is that a
-declared price goes stale silently, which LiteLLM's design avoids and this one does not. Full
-citations are in [the run record](evidence/fleet-routing/RESULTS.md).
-
-The all-remote figure is a floor: its grounded prompts were sent without the retrieved notes a real
-implementation would include.
-
-And one number deserves more honesty than a bolded percentage allows. gpt-5.1 bills its reasoning as
-completion tokens and does not spend the same amount twice, so both arms move between runs. Three
-pairs measured on these same ten prompts at these same prices came out at 74.3% / factor 3.90,
-69.4% / 3.27, and the 78.7% / 4.69 quoted above. The table reports the last because it is the pair
-measured together against the released libraries, not because it is the best — the weakest of the
-three is kept in [the run record](evidence/fleet-routing/RESULTS.md) beside it. Read the effect as
-roughly 70–80% and a factor of three to five on this workload. A figure quoted to four decimal
-places is precise about one run, not about the effect.
+Two caveats on the comparison itself. The all-remote figure is a floor, because its grounded prompts
+were sent without the retrieved notes a real implementation would include. And the headline
+percentage moves: gpt-5.1 bills its reasoning as completion tokens and does not spend the same
+amount twice, so three pairs on these same prompts at these same prices came out at 74.3%, 69.4% and
+the 78.7% above. Read it as roughly **70–80%, a factor of three to five** on this workload.
 
 ## Five things only a real run would tell you
 
@@ -747,24 +712,20 @@ and an overrun carries `billedResult()`, `billedUsage()` and `billedCost()` so t
 something. The script declares 2,048 on the remote candidate and leaves the fleet-wide bound small
 for the local arms.
 
-**An empty set and an unset one are not the same thing.** Candidates here were originally written
-by hand, and a hand-written candidate never called `tags(...)`, so its tag set was empty. The
-router's task filter reads
-`taskType != null && !candidate.tags().isEmpty() && !candidate.tags().contains(taskType)` — an
-empty tag set opts a candidate out of task filtering entirely. The program therefore passed a filter
-it had silently disabled, and nothing in its output said so. Discovery populates tags from the
-catalog, which switched the filter on and made `tell me more` unroutable on the next run: the one
-prompt that clears the similarity floor, against models the catalog tags `chat`. The fix is to clear
-the tags *deliberately*, which is the same behaviour and a different thing entirely — one is a
-decision, the other was an accident nobody could see. The defect was only ever visible because
-fixing an unrelated one exposed it.
+**An empty set and an unset one are not the same thing.** The router's task filter reads
+`taskType != null && !candidate.tags().isEmpty() && !candidate.tags().contains(taskType)`. An empty
+tag set opts a candidate out of task filtering altogether; a populated one turns it into a hard
+constraint. Discovery populates tags from the catalog, so a fleet that routes on capabilities has to
+clear them — otherwise `tell me more`, the only prompt here that clears the similarity floor, finds
+no model tagged `summarization` and the conversation dies. Nothing in a passing run tells you which
+of the two states you are in, which is the argument for setting the field rather than leaving it.
 
 **A resident fleet has to be told how to share a machine.** Four models held open, each sizing a
 worker pool for all twelve cores, made qwen3-0.6b twenty times slower than it is alone. Three
 threads each fixed it. This is the cost of keeping models warm, and it is worth paying — but only
 once you have said how.
 
-The run record carries all five with their numbers.
+The run record carries all five with their numbers and the runs that produced them.
 
 ## How a model gets from a coordinate to a forward pass
 
