@@ -1,156 +1,197 @@
 # A hundred models, one dependency, and a router that keeps most of them local
 
-ModelJars publishes language models as Maven artifacts. You add a coordinate, and the weights
-arrive through the same resolver that brings you Jackson. Models is the runtime that executes them
-on the JVM. This article is about what the catalog currently contains, and about the piece that
-turns a pile of models into something you can actually operate: the router.
+ModelJars publishes language models as Maven artifacts: you add a coordinate, and the weights arrive
+through the same resolver that brings you Jackson. Models is the runtime that executes them on the
+JVM. `models-router` is the piece that decides, per request, which of them should answer — and keeps
+most requests on the machine they arrived on.
 
-Every number below was either read from the live catalog at `modeljars.org` or printed by a script
-in [`code/`](code/) on the machine named in [the run record](evidence/fleet-routing/RESULTS.md).
-Two figures are not measurements and are labelled where they appear: the remote provider's prices,
-which are declared inputs to the script, and the four-characters-per-token estimate the script uses
-to charge its budget.
+This article leads with a program and its output, then explains how it works. Every number was
+printed by a script in [`code/`](code/) on the machine named in
+[the run record](evidence/fleet-routing/RESULTS.md), or read from the live catalog at
+`modeljars.org`. Two figures are declared rather than measured and are labelled where they appear:
+the remote providers' prices, and the four-characters-per-token estimate the script uses to charge
+its budget.
 
-## What the catalog holds today
+## Ten prompts, seven models, one process
 
-As of the fall of 2026 the published catalog has **103 entries** drawn from **67 upstream
-repositories**, totalling 167.2 GB across the 101 that declare a size. The smallest is 13.7 MB and
-the largest 16.8 GB; the median entry is 0.91 GB, which is the real centre of gravity — most of this
-catalog runs on a laptop. Every figure in this section is derived by
-[`tools/catalog_stats.py`](tools/catalog_stats.py) from
-[the published catalog](evidence/modeljars-catalog.json), the exact body served by
-`modeljars.org/catalog.json`.
+Here is the whole thing working. Ten prompts from one support conversation, seven models, one JVM
+process, no `if` statement anywhere over the text of a prompt:
 
-Entries are not all the same kind of thing:
-
-| Dimension | Breakdown |
-| --- | --- |
-| Format | 97 GGUF, 3 safetensors, 2 composite, 1 CACT |
-| Capability | 67 chat and text-generation, 31 text-embedding and semantic-search, 9 code-completion, 7 reasoning, 3 tool-calling, 2 each reranking, text-to-speech and math |
-| Architecture | 21 distinct families: qwen2 (21), llama (20), bert (16), qwen3 (8), qwen35 (7), nomic-bert (6), gemma3 and lfm2 (4 each), gemma4 (3), granite and soprano (2 each) |
-| Quantization | 14 schemes, led by Q4_K_M (49), Q8_0 (13), Q4_0 (7) and F16 (6) |
-| Domain | general (54), retrieval (34), embeddings (31), coding (10), reasoning (7), then legal, healthcare, finance, speech and mathematics in twos and threes |
-| License | 77 Apache-2.0, 6 Gemma, 5 MIT, 5 Llama-3.2, 4 LFM-1.0, and 6 single-model terms including one non-commercial |
-
-Qualification is tracked per entry and per task, not as a single badge: 65 entries carry RAG
-qualifications, 31 carry embedding qualifications, 29 have a performance profile measured on
-specific hardware, 3 carry tool qualifications and 2 carry speech. 
-
-### The models people actually pull
-
-Popularity is not something the catalog invents; it comes from upstream. These are the catalog's
-busiest upstream repositories by HuggingFace 30-day downloads, read from the HuggingFace API on
-2026-10-16 and committed as [a snapshot](evidence/huggingface-downloads.json), because a
-download count is a moving number and quoting one without saying when it was read is quoting
-nothing. Across the 65 repositories that report counts, the total is 17,441,805 downloads in thirty
-days.
-
-| Upstream repository | 30-day downloads | Catalog entry |
-| --- | --- | --- |
-| Qwen/Qwen2.5-0.5B-Instruct | 5,973,624 | `qwen_qwen2_5_0_5b_instruct_bf16` |
-| deepreinforce-ai/Ornith-1.0-9B-GGUF | 2,324,254 | `deepreinforce_ai_ornith_1_0_9b_gguf_q4_k_m` |
-| unsloth/gemma-4-12b-it-GGUF | 1,615,593 | `unsloth_gemma_4_12b_it_gguf_q4_k_m` |
-| unsloth/Qwen3.5-4B-GGUF | 1,228,761 | `unsloth_qwen3_5_4b_gguf_q4_k_m` |
-| mixedbread-ai/mxbai-rerank-xsmall-v1 | 681,103 | `mixedbread_ai_mxbai_rerank_xsmall_v1_f16` |
-| Qwen/Qwen3-8B-GGUF | 581,959 | `qwen3_8b_q4_k_m` |
-| bartowski/Meta-Llama-3.1-8B-Instruct-GGUF | 499,927 | `llama_3_1_8b_instruct_q4_k_m` |
-
-Two of the 67 report no count, and neither is a HuggingFace repository: the first-party
-compositions `org.modeljars.composite:harriet` and `org.modeljars.composite:granite-answerability`
-carry `modeljars://` source ids, exist only here, and so have no upstream history to count. They are
-the catalog's own contributions rather than republished weights.
-
-Just outside that table, ninth by downloads, sits `ggml-org/embeddinggemma-300M-GGUF` at 373,740
-pulls. It is a 334 MB embedding model, and it is also the model the router's task classifier runs
-on — which is where this turns from a catalog into a system. The
-router's position in that system is the part worth looking at: it takes its classifier index from
-Vectors and its chat types from Models, it does not depend on ModelJars at all, and ModelJars
-reaches it the other way round, by registering a catalog provider that the router finds through
-`ServiceLoader`.
-
-<!-- diagram:stack -->
-![Vectors supplies SIMD math and vector collections; Models builds inference on it; ModelJars adds pinned identity and qualification; models-router takes the classifier index from Vectors and chat types from Models, and ModelJars registers a catalog provider into it; applications and the CLI sit on top](diagrams/stack.png)
-
-<sub>[Mermaid source](diagrams/stack.mmd) · [SVG](diagrams/stack.svg) · the block below is the same diagram</sub>
-
-```mermaid
-flowchart BT
-  V["Vectors<br/>SIMD math, quantized operations, vector collections"]
-  M["Models<br/>loaders, tokenizers, model graphs, generation and task APIs"]
-  J["ModelJars<br/>pinned identity, qualification, verified loading"]
-  R["models-router<br/>pretrained task classifier, policies, budget, fleet"]
-  A["Your JVM application<br/>plain Java, Spring AI or LangChain4j"]
-  C["modeljars.org and CLI<br/>discover, inspect, prefetch, generate examples"]
-  V -->|used by| M
-  M -->|used by| J
-  J -->|used by| A
-  C -.->|selects the same model coordinates| J
-  V -->|retrieval collections| A
-  V -->|classifier index| R
-  M -->|runtime chat types| R
-  R -->|chooses a model per request| A
-  J -.->|registers a catalog provider| R
 ```
-<!-- end:diagram:stack -->
+WARMING                            LOAD MS
+smollm2_360m_instruct_q8_0            2249
+qwen3_0_6b_q4_0                       2043
+bartowski_llama_3_2_1b_instruct…      3221
+unsloth_qwen3_5_4b_gguf_q4_k_m       20196
+total                                27709
 
-## The router is part of the offering
+PROMPT                           CLASSIFIED           SELECTED                          TOK      MS
+ping                             ~chat 0.48           smollm2_360m_instruct_q8_0          1     170
+    still here
+still there?                     ~summarization 0.50  smollm2_360m_instruct_q8_0          3     172
+    still here
+ok                               ~reasoning 0.57      smollm2_360m_instruct_q8_0          1     160
+    still here
+I was charged twice for my Se…   ~tool-use 0.46       qwen3_0_6b_q4_0                     9    4057
+    We'll check the details of your order to confirm if there was any issue with the payment. Let me know how we can assist you.
+tell me more                     summarization        qwen3_0_6b_q4_0                     3    2307
+    Of course, let me know how we can assist you with the next steps.
+I was charged twice for my Se…   ~tool-use 0.49       unsloth_qwen3_5_4b_gguf_q4_k_m     13   12620
+    billing=true(p=0.91,c=0.58) queue=billing(p=0.99,c=0.95) urgency=this week(p=0.38,c=0.01)
+When is a refund issued, and …   ~tool-use 0.51       bartowski_llama_3_2_1b_instruct…   12    2039
+    A refund is issued to the original payment method within five business days.
+What happens to a duplicate c…   ~code 0.45           bartowski_llama_3_2_1b_instruct…    7    1798
+    A duplicate charge is reversed automatically once billing reconciliation runs nightly.
+Our refund policy promises fi…   ~tool-use 0.52       gpt-5.1                            55    6873
+    There are two processes that can affect the same charge: 1. **Refund path** - Trigger: A support rep or system issues a refund. - P…
+Summarise this appendix for t…   ~summarization 0.54  claude-haiku-5-5                   84    1312
+    Refunds go back to the original payment method within five business days, and account closures require written confirmation from th…
+```
 
-`com.integrallis:models-router` ships a pretrained task classifier **inside the jar**: an index of
-1,929 exemplar prompts across ten task types — chat, code, creative, extraction, math, reasoning,
-sql, summarization, tool-use and translation — embedded at 768 dimensions with
-`google_embeddinggemma_300m_gguf_q8_0` and stored SQ4-quantized. Both sides are embedded under the
-prefix `task: classification | query: `, and the index records that prefix so callers do not have
-to know the convention.
+Five kinds of traffic, five different destinations, no `if` statement over prompt text:
 
-The consequence is that classification is one local forward pass on a model already in your cache.
-No prompt text leaves the machine in order to decide where the prompt should go. That is the part
-most routing layers get backwards.
+**Heartbeats** (`ping`, `still there?`, `ok`) require a `liveness` capability that only the 360M
+SmolLM2 declares. They are answered statelessly under an eight-token ceiling — the table shows them
+spending one to three — and never enter the conversation transcript, because a liveness check is not
+a conversation turn.
 
-Around the classifier sits the ordinary machinery, and it is worth naming precisely because each
-piece earned its place in the run below:
+**The conversation** (`I was charged twice…`, then `tell me more`) requires `chat` with a
+`LOCAL_ONLY` boundary, and carries a session id. The first turn picks qwen3-0.6b on quality; the
+follow-up stays there because of the switch margin. `tell me more` only means anything because the
+transcript is real, which is why the arm appends both sides of each turn.
 
-- **Candidates** describe what a model is: `capabilities`, `contextWindow`,
-  `timeToFirstTokenMillis`, `tokensPerSecond`, per-task `quality`, and for remote models
-  `costPerMillionTokens`.
-- **For a local model, most of that is discovered, not written.** ModelJars registers a catalog
-  provider that `CatalogDiscovery` finds through `ServiceLoader`, so a cached model arrives already
-  carrying its id, its context window read from the artifact, and throughput — measured on this host
-  where it has been benchmarked, and logged as a conservative estimate where it has not.
-  `toBuilder()` then adjusts only what the catalog cannot know.
-- **Capabilities are a hard filter.** A model is eligible only if it declares every capability the
-  request requires. This is an operator's declaration, not a measurement.
-- **Tags are a second, separate filter** on the classifier's task type, and only when non-empty: a
-  candidate tagged `chat` is refused for a prompt classified `summarization`, while a candidate with
-  no tags is never filtered on task type at all.
-- **Policies** are weight vectors over cost, quality, latency, availability and locality.
-  `BALANCED` weights quality 0.40 and latency 0.15; `LOCAL_FIRST` weights locality 0.35;
-  `CHEAPEST`, `FASTEST`, `BEST_QUALITY` and `PRIVACY_STRICT` sit where their names suggest.
-- **A data boundary** (`LOCAL_ONLY` or `REMOTE_ALLOWED`) is enforced per request.
-- **A shared budget** charges each attempt from the candidate's declared prices against actual
-  usage. When the budget denies an attempt, the router falls through to the next candidate — so an
-  exhausted budget pushes work local rather than failing the request.
-- **Sessions make routing sticky.** A request carrying a session id gives the incumbent model a
-  `switch-margin` so a conversation does not hop between models on a near-tie.
+**The closed decisions** go to Harriet, which answers three typed questions in three forward
+passes: a boolean, a choice over three queues, and an ordered severity. Nothing is generated, so
+there is no JSON to repair. Each outcome carries a written rule, and that matters: Harriet's own
+javadoc records accuracy **0.8917 with a rubric against 0.7500 without**, measured 2026-09-24 over
+120 JevBench items on the same model and kernel. Note that the model is confident about what the
+ticket is (`p=0.99`) and openly unconfident about its urgency (`c=0.01`) — a calibrated model
+declining to commit is the feature, not a defect.
 
-A fleet binds candidates to whatever your application can call. `ModelFleet<T>` is generic over the
-client type on purpose, and that is what makes **several remote providers ordinary rather than
-special**. A provider is not a mode the router has to support; it is a candidate with its own
-prices, its own context window, its own output ceiling, and a closure that knows how to call it.
-One fleet can hold an in-process Models runtime, two different vendors' hosted APIs and a private
-gateway, and `models-router` never learns any of their names or links any of their SDKs.
+**The grounded questions** require a `grounding` capability that only the Llama-3.2-1B arm declares,
+and that arm does retrieval before generation. Both answers come back as one sentence drawn from
+the notes.
 
-The fleet below holds three remote providers alongside the four local models: `gpt-5.1` for work
-that needs reasoning, `gpt-4.1-mini` as a cheaper stablemate, and Anthropic's `claude-haiku-5-5`
-through an entirely separate endpoint, credential and response shape. Only the premium one declares
-`reasoning`; all three declare `long-context`. So when a request needs a long document summarised,
-which provider serves it is a policy question among three, not a vendor decision written into the
-code — and each client normalises its own provider's usage into one `RoutingUsage`, which is the
-only thing the ledger needs.
+**The synthesis prompt** requires `reasoning`, which only `gpt-5.1` declares among the three
+remotes, so it is the one request that can only go there. **The appendix summary** requires
+`long-context`, which no local model claims and all three remotes do, so the policy picks among
+providers — and it picked Anthropic's Haiku, the cheapest and fastest of them. Both calls really
+happened: those answers are the providers', and the tokens they report are what the ledger bills.
 
-## One fleet, seven models, two vendors
+The `CLASSIFIED` column repays a second look. Only `tell me more` clears the classifier's 0.60
+similarity floor, as `summarization`. The rest print their nearest task with a tilde and the
+similarity that fell short — `ping` is ~chat at 0.48, `ok` is ~reasoning at 0.57, "What happens to a
+duplicate charge?" is ~code at 0.45. That is `PretrainedTaskClassifier.match`, new in Models 0.3.60.
+Before it, every one of those rows was a bare dash, and a prompt unlike every exemplar looked
+identical to one that nearly matched. The numbers say what is really going on: an index built from
+1,929 work-shaped prompts has nothing much to say about conversational filler, and it reports that
+honestly instead of guessing a task and silently applying the wrong quality column.
 
-The whole program is [`code/fleet.java`](code/fleet.java), and it is worth reading in pieces rather
-than at once, because each piece answers a different question.
+
+## What it cost
+
+```
+== ledger ==
+10 prompts, 2 escalated to a remote provider, 8 answered on local weights
+local ruler (qwen3-0.6b tokenizer): 139 of 188 input tokens were routed off this machine (73.9%)
+provider ruler (gpt-5.1 reported): 204 input + 668 completion tokens billed
+  the same prompt measured 139 tokens locally, so the two rulers differ by 65
+completions generated on local weights: 123 tokens
+REMOTE PROVIDER            IN   COMPLETION         COST
+gpt-5.1                    61          563    $0.005706
+claude-haiku-5-5          143          105    $0.000067
+total                     204          668    $0.005773
+had every prompt gone to gpt-5.1: $0.000235 of input alone, plus $0.001230 for the completions this machine produced for nothing
+router-accounted spend: $0.005773 of the $0.05 shared budget
+```
+
+Eight of ten requests never left the machine. Of the two that did, the policy conflict went to
+gpt-5.1 and the appendix summary went to Haiku, and the per-provider table is where having more than
+one remote stops being a design note and starts being money: **563 completion tokens on gpt-5.1 cost
+$0.005706, while 105 on Haiku cost $0.000067.** Per completion token that is $10.00 against $0.50 per
+million — a factor of twenty for work that did not need the expensive one. The ledger prices each
+line with `ModelCandidate.costOf` on the candidate that actually ran, which is the only way this
+stays right once a fleet holds several providers, and the router's own accounted spend matches the
+total exactly.
+
+Measured on input tokens alone, routing looks unimpressive: 139 of 188 left the machine, because the
+two escalated prompts are the long ones. The script's `all-remote` mode settles what that is worth
+by sending the same ten prompts to gpt-5.1 and totalling what it reports:
+
+```
+PROMPT                                               IN  COMPLETION
+ping                                                  7          10
+still there?                                          9          22
+ok                                                    7          24
+I was charged twice for my September order.          15         422
+tell me more                                          9         100
+I was charged twice for my September subscr…         19         813
+When is a refund issued, and to which payme…         18         300
+What happens to a duplicate charge?                  13         476
+Our refund policy promises five business da…         61         437
+Summarise this appendix for the support han…         89          72
+
+== every prompt through gpt-5.1 ==
+provider-reported: 247 input + 2676 completion tokens
+at the declared $1.25/M in, $10.00/M out: $0.027069
+Floor, not a ceiling: the grounded prompts are sent without their retrieved notes, which a
+real all-remote implementation would have to include in the input.
+```
+
+| | input | completion | cost |
+| --- | --- | --- | --- |
+| Every prompt through gpt-5.1 | 247 | 2,676 | **$0.027069** |
+| As routed across three providers | 204 | 668 | **$0.005773** |
+
+**78.7% less, a factor of 4.69.** The shape of it: the eight prompts that stayed local would have
+billed 2,167 completion tokens on gpt-5.1, or **$0.021791 — 80.5% of the entire all-remote bill.** A
+reasoning model spends 422 completion tokens on "I was charged twice for my September order" and 813
+on the ticket Harriet settles in three forward passes without generating prose at all.
+
+So the saving is not in shaving tokens off short prompts. It is in not paying a frontier model to
+generate output that does not need generating, and in not sending to the expensive provider what the
+cheap one answers five times faster.
+
+## The program
+
+Three pieces do the routing. What each kind of traffic needs, what each model is, and the fleet that
+binds them to something callable.
+
+### Saying what each kind of traffic requires
+
+The six requirement objects are the whole routing policy. The classifier does read the prompt — it
+embeds it to name a task type — but nothing branches on what it says: no `if` over prompt text, no
+keyword matching, no per-model special case. The task type feeds the quality term in scoring;
+eligibility is settled by these objects alone.
+
+<!-- snippet:fleet#requirements -->
+```java
+var liveness =
+    RoutingRequirements.builder()
+        .requireCapability("liveness")
+        .dataBoundary(RoutingDataBoundary.LOCAL_ONLY)
+        .build();
+var chatHere =
+    RoutingRequirements.builder()
+        .requireCapability("chat")
+        .dataBoundary(RoutingDataBoundary.LOCAL_ONLY)
+        .build();
+var grounded =
+    RoutingRequirements.builder()
+        .requireCapability("grounding")
+        .dataBoundary(RoutingDataBoundary.LOCAL_ONLY)
+        .build();
+var decision = RoutingRequirements.builder().requireCapability("decision").build();
+var synthesis = RoutingRequirements.builder().requireCapability("reasoning").build();
+// No local model claims long-context, so this must go remote. Which remote is then a policy
+// question among three providers rather than a vendor choice written into the code.
+var longContext = RoutingRequirements.builder().requireCapability("long-context").build();
+```
+<!-- end:snippet:fleet#requirements -->
+
+A liveness check wants `liveness` and must stay local. A conversation wants `chat` and must stay
+local. A ticket wants `decision`. A grounded question wants `grounding` and must stay local. Only
+synthesis and long-context work may leave the machine, and even then the policy picks which provider.
 
 ### Describing the local models
 
@@ -229,7 +270,8 @@ is a *second* hard filter, on the classifier's task type: a model tagged `chat` 
 prompt classified `summarization`, however good it is at summarising, while an empty tag set
 disables that filter entirely. The catalog tags these models `chat` to describe the weights; this
 fleet routes on capability and quality, so the tags are cleared on purpose. Leave them and
-`tell me more` — the one prompt below that clears the 0.60 similarity floor — matches nothing local.
+`tell me more` — the one prompt in the run above that clears the 0.60 similarity floor — matches
+nothing local.
 
 Harriet is the exception. The catalog reports the composite's base weights as an ordinary chat model
 with a 262,144-token window: true of the weights, wrong about the arm, which answers three typed
@@ -237,6 +279,84 @@ questions in three forward passes and generates no prose. So its capabilities *r
 add — a decision arm claiming `chat` would be eligible for a customer's real question — and its
 throughput is overridden, because tokens per second does not describe what three forward passes
 cost. The context window, which really is a fact of the weights, carries through.
+
+### Binding each candidate to something callable
+
+`ModelFleet<T>` is generic over the client type, and this is where that earns its keep. Each
+provider's closure is where its SDK would live; `models-router` never learns any of their names.
+
+<!-- snippet:fleet#wiring -->
+```java
+return ModelFleet.<Responder>builder()
+    .classifier(classifier)
+    // BALANCED weights quality 0.40 and latency 0.15, and picks qwen3-0.6b for a customer's
+    // question. LOCAL_FIRST picks it too: every local arm scores identical locality, so a 0.35
+    // thumb there separates nothing between them, and the LOCAL_ONLY boundary already keeps
+    // these requests on this machine. FASTEST is the policy that changes the answer -- it
+    // hands ordinary chat to the 360M model on latency alone, which is the wrong trade here.
+    .policy(RoutingPolicy.BALANCED)
+    .model(tiny, prompt -> acknowledge(TINY, prompt))
+    .model(small, prompt -> chat(SMALL, prompt, 80))
+    .model(grounder, prompt -> ground(retrieval, prompt))
+    .model(decisions, fleet::decide)
+    // One fleet, three remote clients. Each closure is where a provider's SDK would live, so
+    // models-router never learns any of their names.
+    .model(premium, prompt -> callOpenAi(PREMIUM, PREMIUM_CAP, prompt))
+    .model(economy, prompt -> callOpenAi(ECONOMY, ECONOMY_CAP, prompt))
+    .model(haiku, prompt -> callAnthropic(HAIKU, HAIKU_CAP, prompt))
+    .build();
+```
+<!-- end:snippet:fleet#wiring -->
+
+Two of those closures call OpenAI with different models and ceilings. The third calls Anthropic,
+which needs a different endpoint, a different auth header and a different response shape — and the
+fleet does not know or care.
+
+## Inside the router
+
+`com.integrallis:models-router` ships a pretrained task classifier **inside the jar**: an index of
+1,929 exemplar prompts across ten task types — chat, code, creative, extraction, math, reasoning,
+sql, summarization, tool-use and translation — embedded at 768 dimensions with
+`google_embeddinggemma_300m_gguf_q8_0` and stored SQ4-quantized. Both sides are embedded under the
+prefix `task: classification | query: `, and the index records that prefix so callers do not have
+to know the convention.
+
+The consequence is that classification is one local forward pass on a model already in your cache.
+No prompt text leaves the machine in order to decide where the prompt should go. That is the part
+most routing layers get backwards.
+
+Around the classifier sits the rest of the machinery, each piece of which earned its place in the
+run above:
+
+- **Capabilities are a hard filter.** A model is eligible only if it declares every capability the
+  request requires. This is an operator's declaration, not a measurement.
+- **Tags are a second, separate filter** on the classifier's task type, and only when non-empty: a
+  candidate tagged `chat` is refused for a prompt classified `summarization`, while a candidate with
+  no tags is never filtered on task type at all.
+- **Policies** are weight vectors over cost, quality, latency, availability and locality.
+  `BALANCED` weights quality 0.40 and latency 0.15; `LOCAL_FIRST` weights locality 0.35;
+  `CHEAPEST`, `FASTEST`, `BEST_QUALITY` and `PRIVACY_STRICT` sit where their names suggest.
+- **A data boundary** (`LOCAL_ONLY` or `REMOTE_ALLOWED`) is enforced per request.
+- **A shared budget** charges each attempt from the candidate's declared prices against actual
+  usage. When the budget denies an attempt, the router falls through to the next candidate — so an
+  exhausted budget pushes work local rather than failing the request.
+- **Sessions make routing sticky.** A request carrying a session id gives the incumbent model a
+  `switch-margin` so a conversation does not hop between models on a near-tie.
+
+A fleet binds candidates to whatever your application can call. `ModelFleet<T>` is generic over the
+client type on purpose, and that is what makes **several remote providers ordinary rather than
+special**. A provider is not a mode the router has to support; it is a candidate with its own
+prices, its own context window, its own output ceiling, and a closure that knows how to call it.
+One fleet can hold an in-process Models runtime, two different vendors' hosted APIs and a private
+gateway, and `models-router` never learns any of their names or links any of their SDKs.
+
+The fleet holds three remote providers alongside the four local models: `gpt-5.1` for work
+that needs reasoning, `gpt-4.1-mini` as a cheaper stablemate, and Anthropic's `claude-haiku-5-5`
+through an entirely separate endpoint, credential and response shape. Only the premium one declares
+`reasoning`; all three declare `long-context`. So when a request needs a long document summarised,
+which provider serves it is a policy question among three, not a vendor decision written into the
+code — and each client normalises its own provider's usage into one `RoutingUsage`, which is the
+only thing the ledger needs.
 
 ### Declaring the remote providers
 
@@ -292,74 +412,6 @@ summarise a document is settled among providers on policy rather than by a vendo
 the code. The `maxOutputTokens` on the premium candidate matters more than it looks: a reasoning
 model bills its reasoning as completion tokens, so it cannot share an output ceiling with a model
 that answers a liveness check in eight tokens.
-
-### Binding each candidate to something callable
-
-`ModelFleet<T>` is generic over the client type, and this is where that earns its keep. Each
-provider's closure is where its SDK would live; `models-router` never learns any of their names.
-
-<!-- snippet:fleet#wiring -->
-```java
-return ModelFleet.<Responder>builder()
-    .classifier(classifier)
-    // BALANCED weights quality 0.40 and latency 0.15, and picks qwen3-0.6b for a customer's
-    // question. LOCAL_FIRST picks it too: every local arm scores identical locality, so a 0.35
-    // thumb there separates nothing between them, and the LOCAL_ONLY boundary already keeps
-    // these requests on this machine. FASTEST is the policy that changes the answer -- it
-    // hands ordinary chat to the 360M model on latency alone, which is the wrong trade here.
-    .policy(RoutingPolicy.BALANCED)
-    .model(tiny, prompt -> acknowledge(TINY, prompt))
-    .model(small, prompt -> chat(SMALL, prompt, 80))
-    .model(grounder, prompt -> ground(retrieval, prompt))
-    .model(decisions, fleet::decide)
-    // One fleet, three remote clients. Each closure is where a provider's SDK would live, so
-    // models-router never learns any of their names.
-    .model(premium, prompt -> callOpenAi(PREMIUM, PREMIUM_CAP, prompt))
-    .model(economy, prompt -> callOpenAi(ECONOMY, ECONOMY_CAP, prompt))
-    .model(haiku, prompt -> callAnthropic(HAIKU, HAIKU_CAP, prompt))
-    .build();
-```
-<!-- end:snippet:fleet#wiring -->
-
-Two of those closures call OpenAI with different models and ceilings. The third calls Anthropic,
-which needs a different endpoint, a different auth header and a different response shape — and the
-fleet does not know or care.
-
-### Saying what each kind of traffic requires
-
-The six requirement objects are the whole routing policy. The classifier does read the prompt — it
-embeds it to name a task type — but nothing branches on what it says: no `if` over prompt text, no
-keyword matching, no per-model special case. The task type feeds the quality term in scoring;
-eligibility is settled by these objects alone.
-
-<!-- snippet:fleet#requirements -->
-```java
-var liveness =
-    RoutingRequirements.builder()
-        .requireCapability("liveness")
-        .dataBoundary(RoutingDataBoundary.LOCAL_ONLY)
-        .build();
-var chatHere =
-    RoutingRequirements.builder()
-        .requireCapability("chat")
-        .dataBoundary(RoutingDataBoundary.LOCAL_ONLY)
-        .build();
-var grounded =
-    RoutingRequirements.builder()
-        .requireCapability("grounding")
-        .dataBoundary(RoutingDataBoundary.LOCAL_ONLY)
-        .build();
-var decision = RoutingRequirements.builder().requireCapability("decision").build();
-var synthesis = RoutingRequirements.builder().requireCapability("reasoning").build();
-// No local model claims long-context, so this must go remote. Which remote is then a policy
-// question among three providers rather than a vendor choice written into the code.
-var longContext = RoutingRequirements.builder().requireCapability("long-context").build();
-```
-<!-- end:snippet:fleet#requirements -->
-
-A liveness check wants `liveness` and must stay local. A conversation wants `chat` and must stay
-local. A ticket wants `decision`. A grounded question wants `grounding` and must stay local. Only
-synthesis and long-context work may leave the machine, and even then the policy picks which provider.
 
 ### Where a second vendor costs more than a config line
 
@@ -455,101 +507,6 @@ if (!remoteSpend.isEmpty()) {
 `costOf` belongs to the candidate that actually ran. With one remote provider that is a detail; with
 three at different prices it is the difference between a ledger and a guess.
 
-The rest of the file — the warm-up, the routing loop, the local arms and the timing table — is in
-[`code/fleet.java`](code/fleet.java). Run it with Java 25 and JBang from [`code/`](code/README.md).
-
-Run it and the routing table is the output:
-
-```
-WARMING                            LOAD MS
-smollm2_360m_instruct_q8_0            2249
-qwen3_0_6b_q4_0                       2043
-bartowski_llama_3_2_1b_instruct…      3221
-unsloth_qwen3_5_4b_gguf_q4_k_m       20196
-total                                27709
-
-PROMPT                           CLASSIFIED           SELECTED                          TOK      MS
-ping                             ~chat 0.48           smollm2_360m_instruct_q8_0          1     170
-    still here
-still there?                     ~summarization 0.50  smollm2_360m_instruct_q8_0          3     172
-    still here
-ok                               ~reasoning 0.57      smollm2_360m_instruct_q8_0          1     160
-    still here
-I was charged twice for my Se…   ~tool-use 0.46       qwen3_0_6b_q4_0                     9    4057
-    We'll check the details of your order to confirm if there was any issue with the payment. Let me know how we can assist you.
-tell me more                     summarization        qwen3_0_6b_q4_0                     3    2307
-    Of course, let me know how we can assist you with the next steps.
-I was charged twice for my Se…   ~tool-use 0.49       unsloth_qwen3_5_4b_gguf_q4_k_m     13   12620
-    billing=true(p=0.91,c=0.58) queue=billing(p=0.99,c=0.95) urgency=this week(p=0.38,c=0.01)
-When is a refund issued, and …   ~tool-use 0.51       bartowski_llama_3_2_1b_instruct…   12    2039
-    A refund is issued to the original payment method within five business days.
-What happens to a duplicate c…   ~code 0.45           bartowski_llama_3_2_1b_instruct…    7    1798
-    A duplicate charge is reversed automatically once billing reconciliation runs nightly.
-Our refund policy promises fi…   ~tool-use 0.52       gpt-5.1                            55    6873
-    There are two processes that can affect the same charge: 1. **Refund path** - Trigger: A support rep or system issues a refund. - P…
-Summarise this appendix for t…   ~summarization 0.54  claude-haiku-5-5                   84    1312
-    Refunds go back to the original payment method within five business days, and account closures require written confirmation from th…
-```
-
-Five kinds of traffic, five different destinations, no `if` statement over prompt text:
-
-**Heartbeats** (`ping`, `still there?`, `ok`) require a `liveness` capability that only the 360M
-SmolLM2 declares. They are answered statelessly under an eight-token ceiling — the table shows them
-spending one to three — and never enter the conversation transcript, because a liveness check is not
-a conversation turn.
-
-**The conversation** (`I was charged twice…`, then `tell me more`) requires `chat` with a
-`LOCAL_ONLY` boundary, and carries a session id. The first turn picks qwen3-0.6b on quality; the
-follow-up stays there because of the switch margin. `tell me more` only means anything because the
-transcript is real, which is why the arm appends both sides of each turn.
-
-**The closed decisions** go to Harriet, which answers three typed questions in three forward
-passes: a boolean, a choice over three queues, and an ordered severity. Nothing is generated, so
-there is no JSON to repair. Each outcome carries a written rule, and that matters: Harriet's own
-javadoc records accuracy **0.8917 with a rubric against 0.7500 without**, measured 2026-09-24 over
-120 JevBench items on the same model and kernel. Note that the model is confident about what the
-ticket is (`p=0.99`) and openly unconfident about its urgency (`c=0.01`) — a calibrated model
-declining to commit is the feature, not a defect.
-
-**The grounded questions** require a `grounding` capability that only the Llama-3.2-1B arm declares,
-and that arm does retrieval before generation. Both answers come back as one sentence drawn from
-the notes.
-
-**The synthesis prompt** requires `reasoning`, which only `gpt-5.1` declares among the three
-remotes, so it is the one request that can only go there. **The appendix summary** requires
-`long-context`, which no local model claims and all three remotes do, so the policy picks among
-providers — and it picked Anthropic's Haiku, the cheapest and fastest of them. Both calls really
-happened: those answers are the providers', and the tokens they report are what the ledger bills.
-
-The `CLASSIFIED` column repays a second look. Only `tell me more` clears the classifier's 0.60
-similarity floor, as `summarization`. The rest print their nearest task with a tilde and the
-similarity that fell short — `ping` is ~chat at 0.48, `ok` is ~reasoning at 0.57, "What happens to a
-duplicate charge?" is ~code at 0.45. That is `PretrainedTaskClassifier.match`, new in Models 0.3.60.
-Before it, every one of those rows was a bare dash, and a prompt unlike every exemplar looked
-identical to one that nearly matched. The numbers say what is really going on: an index built from
-1,929 work-shaped prompts has nothing much to say about conversational filler, and it reports that
-honestly instead of guessing a task and silently applying the wrong quality column.
-
-<!-- diagram:rag -->
-![Retrieval-augmented generation: embed the question, search the collection, ground the prompt in the retrieved documents, then generate or abstain](diagrams/rag.png)
-
-<sub>[Mermaid source](diagrams/rag.mmd) · [SVG](diagrams/rag.svg) · the block below is the same diagram</sub>
-
-```mermaid
-flowchart TD
-  D["Documents"] --> E["Models embedding runtime"]
-  E --> V["Vectors collection"]
-  Q["Question"] --> QE["Same embedding model"]
-  QE --> V
-  V --> H["Retrieved text and source IDs"]
-  H --> P["Grounding preflight"]
-  P -->|enough evidence| G["Models generation runtime"]
-  P -->|insufficient evidence| A["Abstain"]
-  G --> C["Grounded answer policy"]
-  C --> O["Answer plus outcome:<br/>model, abstention or extractive fallback"]
-```
-<!-- end:diagram:rag -->
-
 ## What it took
 
 The router times every attempt, so the conversation reports its own latency:
@@ -584,70 +541,6 @@ server does, and a resident fleet needs one explicit decision: each native runti
 its worker pool for every logical CPU, so four pools on twelve cores oversubscribe badly. The same
 prompt qwen3-0.6b answers in 1,169 ms alone took 23,946 ms beside the others until the script gave
 each runtime three threads.
-
-## What it cost
-
-```
-== ledger ==
-10 prompts, 2 escalated to a remote provider, 8 answered on local weights
-local ruler (qwen3-0.6b tokenizer): 139 of 188 input tokens were routed off this machine (73.9%)
-provider ruler (gpt-5.1 reported): 204 input + 668 completion tokens billed
-  the same prompt measured 139 tokens locally, so the two rulers differ by 65
-completions generated on local weights: 123 tokens
-REMOTE PROVIDER            IN   COMPLETION         COST
-gpt-5.1                    61          563    $0.005706
-claude-haiku-5-5          143          105    $0.000067
-total                     204          668    $0.005773
-had every prompt gone to gpt-5.1: $0.000235 of input alone, plus $0.001230 for the completions this machine produced for nothing
-router-accounted spend: $0.005773 of the $0.05 shared budget
-```
-
-Eight of ten requests never left the machine. Of the two that did, the policy conflict went to
-gpt-5.1 and the appendix summary went to Haiku, and the per-provider table is where having more than
-one remote stops being a design note and starts being money: **563 completion tokens on gpt-5.1 cost
-$0.005706, while 105 on Haiku cost $0.000067.** Per completion token that is $10.00 against $0.50 per
-million — a factor of twenty for work that did not need the expensive one. The ledger prices each
-line with `ModelCandidate.costOf` on the candidate that actually ran, which is the only way this
-stays right once a fleet holds several providers, and the router's own accounted spend matches the
-total exactly.
-
-Measured on input tokens alone, routing looks unimpressive: 139 of 188 left the machine, because the
-two escalated prompts are the long ones. The script's `all-remote` mode settles what that is worth
-by sending the same ten prompts to gpt-5.1 and totalling what it reports:
-
-```
-PROMPT                                               IN  COMPLETION
-ping                                                  7          10
-still there?                                          9          22
-ok                                                    7          24
-I was charged twice for my September order.          15         422
-tell me more                                          9         100
-I was charged twice for my September subscr…         19         813
-When is a refund issued, and to which payme…         18         300
-What happens to a duplicate charge?                  13         476
-Our refund policy promises five business da…         61         437
-Summarise this appendix for the support han…         89          72
-
-== every prompt through gpt-5.1 ==
-provider-reported: 247 input + 2676 completion tokens
-at the declared $1.25/M in, $10.00/M out: $0.027069
-Floor, not a ceiling: the grounded prompts are sent without their retrieved notes, which a
-real all-remote implementation would have to include in the input.
-```
-
-| | input | completion | cost |
-| --- | --- | --- | --- |
-| Every prompt through gpt-5.1 | 247 | 2,676 | **$0.027069** |
-| As routed across three providers | 204 | 668 | **$0.005773** |
-
-**78.7% less, a factor of 4.69.** The shape of it: the eight prompts that stayed local would have
-billed 2,167 completion tokens on gpt-5.1, or **$0.021791 — 80.5% of the entire all-remote bill.** A
-reasoning model spends 422 completion tokens on "I was charged twice for my September order" and 813
-on the ticket Harriet settles in three forward passes without generating prose at all.
-
-So the saving is not in shaving tokens off short prompts. It is in not paying a frontier model to
-generate output that does not need generating, and in not sending to the expensive provider what the
-cheap one answers five times faster.
 
 ### Where these numbers come from
 
@@ -727,6 +620,89 @@ once you have said how.
 
 The run record carries all five with their numbers and the runs that produced them.
 
+## What the catalog holds today
+
+<!-- diagram:stack -->
+![Vectors supplies SIMD math and vector collections; Models builds inference on it; ModelJars adds pinned identity and qualification; models-router takes the classifier index from Vectors and chat types from Models, and ModelJars registers a catalog provider into it; applications and the CLI sit on top](diagrams/stack.png)
+
+<sub>[Mermaid source](diagrams/stack.mmd) · [SVG](diagrams/stack.svg) · the block below is the same diagram</sub>
+
+```mermaid
+flowchart BT
+  V["Vectors<br/>SIMD math, quantized operations, vector collections"]
+  M["Models<br/>loaders, tokenizers, model graphs, generation and task APIs"]
+  J["ModelJars<br/>pinned identity, qualification, verified loading"]
+  R["models-router<br/>pretrained task classifier, policies, budget, fleet"]
+  A["Your JVM application<br/>plain Java, Spring AI or LangChain4j"]
+  C["modeljars.org and CLI<br/>discover, inspect, prefetch, generate examples"]
+  V -->|used by| M
+  M -->|used by| J
+  J -->|used by| A
+  C -.->|selects the same model coordinates| J
+  V -->|retrieval collections| A
+  V -->|classifier index| R
+  M -->|runtime chat types| R
+  R -->|chooses a model per request| A
+  J -.->|registers a catalog provider| R
+```
+<!-- end:diagram:stack -->
+
+
+As of the fall of 2026 the published catalog has **103 entries** drawn from **67 upstream
+repositories**, totalling 167.2 GB across the 101 that declare a size. The smallest is 13.7 MB and
+the largest 16.8 GB; the median entry is 0.91 GB, which is the real centre of gravity — most of this
+catalog runs on a laptop. Every figure in this section is derived by
+[`tools/catalog_stats.py`](tools/catalog_stats.py) from
+[the published catalog](evidence/modeljars-catalog.json), the exact body served by
+`modeljars.org/catalog.json`.
+
+Entries are not all the same kind of thing:
+
+| Dimension | Breakdown |
+| --- | --- |
+| Format | 97 GGUF, 3 safetensors, 2 composite, 1 CACT |
+| Capability | 67 chat and text-generation, 31 text-embedding and semantic-search, 9 code-completion, 7 reasoning, 3 tool-calling, 2 each reranking, text-to-speech and math |
+| Architecture | 21 distinct families: qwen2 (21), llama (20), bert (16), qwen3 (8), qwen35 (7), nomic-bert (6), gemma3 and lfm2 (4 each), gemma4 (3), granite and soprano (2 each) |
+| Quantization | 14 schemes, led by Q4_K_M (49), Q8_0 (13), Q4_0 (7) and F16 (6) |
+| Domain | general (54), retrieval (34), embeddings (31), coding (10), reasoning (7), then legal, healthcare, finance, speech and mathematics in twos and threes |
+| License | 77 Apache-2.0, 6 Gemma, 5 MIT, 5 Llama-3.2, 4 LFM-1.0, and 6 single-model terms including one non-commercial |
+
+Qualification is tracked per entry and per task, not as a single badge: 65 entries carry RAG
+qualifications, 31 carry embedding qualifications, 29 have a performance profile measured on
+specific hardware, 3 carry tool qualifications and 2 carry speech. 
+
+### The models people actually pull
+
+Popularity is not something the catalog invents; it comes from upstream. These are the catalog's
+busiest upstream repositories by HuggingFace 30-day downloads, read from the HuggingFace API on
+2026-10-16 and committed as [a snapshot](evidence/huggingface-downloads.json), because a
+download count is a moving number and quoting one without saying when it was read is quoting
+nothing. Across the 65 repositories that report counts, the total is 17,441,805 downloads in thirty
+days.
+
+| Upstream repository | 30-day downloads | Catalog entry |
+| --- | --- | --- |
+| Qwen/Qwen2.5-0.5B-Instruct | 5,973,624 | `qwen_qwen2_5_0_5b_instruct_bf16` |
+| deepreinforce-ai/Ornith-1.0-9B-GGUF | 2,324,254 | `deepreinforce_ai_ornith_1_0_9b_gguf_q4_k_m` |
+| unsloth/gemma-4-12b-it-GGUF | 1,615,593 | `unsloth_gemma_4_12b_it_gguf_q4_k_m` |
+| unsloth/Qwen3.5-4B-GGUF | 1,228,761 | `unsloth_qwen3_5_4b_gguf_q4_k_m` |
+| mixedbread-ai/mxbai-rerank-xsmall-v1 | 681,103 | `mixedbread_ai_mxbai_rerank_xsmall_v1_f16` |
+| Qwen/Qwen3-8B-GGUF | 581,959 | `qwen3_8b_q4_k_m` |
+| bartowski/Meta-Llama-3.1-8B-Instruct-GGUF | 499,927 | `llama_3_1_8b_instruct_q4_k_m` |
+
+Two of the 67 report no count, and neither is a HuggingFace repository: the first-party
+compositions `org.modeljars.composite:harriet` and `org.modeljars.composite:granite-answerability`
+carry `modeljars://` source ids, exist only here, and so have no upstream history to count. They are
+the catalog's own contributions rather than republished weights.
+
+Just outside that table, ninth by downloads, sits `ggml-org/embeddinggemma-300M-GGUF` at 373,740
+pulls. It is a 334 MB embedding model, and it is also the model the router's task classifier runs
+on — which is where this turns from a catalog into a system. The
+router's position in that system is the part worth looking at: it takes its classifier index from
+Vectors and its chat types from Models, it does not depend on ModelJars at all, and ModelJars
+reaches it the other way round, by registering a catalog provider that the router finds through
+`ServiceLoader`.
+
 ## How a model gets from a coordinate to a forward pass
 
 Two diagrams for the parts underneath. Opening a model is resolution, verification and mapping:
@@ -792,6 +768,28 @@ flowchart TD
 ```
 <!-- end:diagram:native-boundary -->
 
+Retrieval, which the grounded arm above performs before it generates, is the third:
+
+<!-- diagram:rag -->
+![Retrieval-augmented generation: embed the question, search the collection, ground the prompt in the retrieved documents, then generate or abstain](diagrams/rag.png)
+
+<sub>[Mermaid source](diagrams/rag.mmd) · [SVG](diagrams/rag.svg) · the block below is the same diagram</sub>
+
+```mermaid
+flowchart TD
+  D["Documents"] --> E["Models embedding runtime"]
+  E --> V["Vectors collection"]
+  Q["Question"] --> QE["Same embedding model"]
+  QE --> V
+  V --> H["Retrieved text and source IDs"]
+  H --> P["Grounding preflight"]
+  P -->|enough evidence| G["Models generation runtime"]
+  P -->|insufficient evidence| A["Abstain"]
+  G --> C["Grounded answer policy"]
+  C --> O["Answer plus outcome:<br/>model, abstention or extractive fallback"]
+```
+<!-- end:diagram:rag -->
+
 ## The rest of the walkthrough
 
 Every script below runs on ModelJars 0.1.60, Models 0.4.1 and Vectors 0.1.30, all released and
@@ -814,7 +812,7 @@ Central. All fourteen completed on 2026-10-16; outcomes are in
 | [`spring.java`](code/spring.java) | The same model behind a Spring AI `ChatModel` |
 | [`route.java`](code/route.java) | Discovery from the classpath, selection only, no weights needed |
 | [`bonsai.java`](code/bonsai.java) | A verified 5.95 GB PTQ1_0 artifact |
-| [`fleet.java`](code/fleet.java) | The routing fleet and ledger above |
+| [`fleet.java`](code/fleet.java) | The routing fleet and ledger from the top of this article |
 
 Run them with Java 25 and JBang from [`code/`](code/README.md). Discovery is driven by the
 classpath: a marker jar carries its model's descriptor, so `CatalogDiscovery` reports the model and
