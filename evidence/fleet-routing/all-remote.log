@@ -1,19 +1,21 @@
 classifier: 10 tasks from google_embeddinggemma_300m_gguf_q8_0, 768-dimensional, similarity floor 0.60
 
-PROMPT                                               IN  COMPLETION
-ping                                                  7          10
-still there?                                          9          22
-ok                                                    7          24
-I was charged twice for my September order.          15         422
-tell me more                                          9         100
-I was charged twice for my September subscr…         19         813
-When is a refund issued, and to which payme…         18         300
-What happens to a duplicate charge?                  13         476
-Our refund policy promises five business da…         61         437
-Summarise this appendix for the support han…         89          72
+PROMPT                                               IN  COMPLETION       MS
+ping                                                  7          10     2639
+still there?                                          9          22     1360
+ok                                                    7          23     1129
+I was charged twice for my September order.          15         411     6294
+tell me more                                          9         134     1883
+I was charged twice for my September subscr…         19         513     4688
+When is a refund issued, and to which payme…         18         289     3437
+What happens to a duplicate charge?                  13         356     3908
+Our refund policy promises five business da…         61         406     5135
+Summarise this appendix for the support han…         89          81     1497
 
 == every prompt through gpt-5.1 ==
-provider-reported: 247 input + 2676 completion tokens
-at the declared $1.25/M in, $10.00/M out: $0.027069
+provider-reported: 247 input + 2245 completion tokens
+at the declared $1.25/M in, $10.00/M out: $0.022759
+conversation wall clock: 31983 ms, of which 31970 ms (100.0%) was model calls
+No local weights are loaded, so there is no startup cost to amortise.
 Floor, not a ceiling: the grounded prompts are sent without their retrieved notes, which a
 real all-remote implementation would have to include in the input.

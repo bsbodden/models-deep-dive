@@ -75,13 +75,16 @@ def ledger(text: str) -> tuple[dict[str, tuple[int, int, Decimal]], Decimal]:
     return providers, total
 
 
-def all_remote_rows(text: str) -> list[tuple[str, int, int]]:
+def all_remote_rows(text: str) -> list[tuple[str, int, int, int]]:
+    """(prompt, input, completion, ms) per prompt from the no-router table."""
     body = text[text.index("PROMPT ") : text.index("== every prompt")]
     rows = []
     for line in body.splitlines()[1:]:
-        m = re.match(r"^(\S.*?)\s\s+(\d+)\s+(\d+)\s*$", line)
+        m = re.match(r"^(\S.*?)\s\s+(\d+)\s+(\d+)\s+(\d+)\s*$", line)
         if m:
-            rows.append((m.group(1).strip(), int(m.group(2)), int(m.group(3))))
+            rows.append(
+                (m.group(1).strip(), int(m.group(2)), int(m.group(3)), int(m.group(4)))
+            )
     return rows
 
 
@@ -161,9 +164,18 @@ def main() -> int:
 
     wall = re.search(r"conversation wall clock: (\d+) ms, of which (\d+) ms \(([\d.]+)%\)", routed)
     load = re.search(r"one-off load of the four local models: (\d+) ms", routed)
+    base_wall = re.search(r"conversation wall clock: (\d+) ms", remote)
     if wall and load:
-        print(f"wall clock {wall.group(1)} ms, {wall.group(2)} ms ({wall.group(3)}%) in model calls; "
-              f"one-off load {load.group(1)} ms")
+        print(f"routed wall clock {wall.group(1)} ms, {wall.group(2)} ms ({wall.group(3)}%) in model "
+              f"calls; one-off load {load.group(1)} ms")
+    if base_wall and wall:
+        b, r = int(base_wall.group(1)), int(wall.group(1))
+        print(f"no-router wall clock {b} ms; routed is {r - b:+d} ms ({(r - b) / b * 100:+.1f}%)")
+
+    print("per-prompt wall clock, no-router vs routed:")
+    for (text, _, _, base_ms), routed_row in zip(far, rows):
+        print(f"  {text[:40]:<42} {base_ms:>6} ms -> {routed_row[3]:>6} ms "
+              f"({routed_row[1][:28]})")
     return 0
 
 

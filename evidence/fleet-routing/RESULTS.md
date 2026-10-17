@@ -53,28 +53,31 @@ block instead.
 ```
 classifier: 10 tasks from google_embeddinggemma_300m_gguf_q8_0, 768-dimensional, similarity floor 0.60
 
-PROMPT                                               IN  COMPLETION
-ping                                                  7          10
-still there?                                          9          22
-ok                                                    7          24
-I was charged twice for my September order.          15         428
-tell me more                                          9         109
-I was charged twice for my September subscr…         19         625
-When is a refund issued, and to which payme…         18         237
-What happens to a duplicate charge?                  13         400
-Our refund policy promises five business da…         61         430
-Summarise this appendix for the support han…         89          70
+PROMPT                                               IN  COMPLETION       MS
+ping                                                  7          10     2639
+still there?                                          9          22     1360
+ok                                                    7          23     1129
+I was charged twice for my September order.          15         411     6294
+tell me more                                          9         134     1883
+I was charged twice for my September subscr…         19         513     4688
+When is a refund issued, and to which payme…         18         289     3437
+What happens to a duplicate charge?                  13         356     3908
+Our refund policy promises five business da…         61         406     5135
+Summarise this appendix for the support han…         89          81     1497
 
 == every prompt through gpt-5.1 ==
-provider-reported: 247 input + 2355 completion tokens
-at the declared $1.25/M in, $10.00/M out: $0.023859
+provider-reported: 247 input + 2245 completion tokens
+at the declared $1.25/M in, $10.00/M out: $0.022759
+conversation wall clock: 31983 ms, of which 31970 ms (100.0%) was model calls
+No local weights are loaded, so there is no startup cost to amortise.
 Floor, not a ceiling: the grounded prompts are sent without their retrieved notes, which a
 real all-remote implementation would have to include in the input.
 ```
 
-$0.027069 all-remote against $0.005773 as routed: 78.7% less, a factor of 4.69. The eight prompts
-that stayed local would have billed 2,167 completion tokens on gpt-5.1, or $0.021791 -- 80.5% of the
-whole all-remote bill. Per completion token the two providers that did run differ by twenty times,
+$0.022759 with no router against $0.005773 as routed: 74.6% less, a factor of 3.94. The eight
+prompts that stayed local would have billed 1,758 completion tokens on gpt-5.1, or $0.017701 --
+77.8% of the whole no-router bill. Wall clock went the other way: 31,983 ms with no router against
+36,452 ms routed, 14% slower, before the 27,709 ms of one-off model loading. Per completion token the two providers that did run differ by twenty times,
 $10.00 against $0.50 per million, and Haiku answered 5.2 times faster than gpt-5.1.
 
 **These are one measured pair, and the pair moves.** gpt-5.1 bills its reasoning as completion
@@ -86,6 +89,7 @@ same ten prompts at the same declared prices:
 | 2026-10-15 | 0.1.59 / 0.3.60 | $0.023859 | $0.006123 | 74.3% | 3.90 |
 | 2026-10-16 | 0.1.60 / 0.4.0 | $0.022889 | $0.006993 | 69.4% | 3.27 |
 | 2026-10-16 | 0.1.60 / 0.4.1 | $0.027069 | $0.005773 | 78.7% | 4.69 |
+| 2026-10-16 | 0.1.60 / 0.4.1, baseline re-run with timings | $0.022759 | $0.005773 | 74.6% | 3.94 |
 
 The article quotes the last row, because that is the pair measured together against the released
 libraries. The honest reading of the three is that the saving on this workload is somewhere around

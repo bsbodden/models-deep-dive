@@ -2,160 +2,136 @@
 
 ModelJars publishes language models as Maven artifacts: you add a coordinate, and the weights arrive
 through the same resolver that brings you Jackson. Models is the runtime that executes them on the
-JVM. `models-router` is the piece that decides, per request, which of them should answer — and keeps
-most requests on the machine they arrived on.
+JVM. `models-router` decides, per request, which of them should answer.
 
-This article leads with a program and its output, then explains how it works. Every number was
-printed by a script in [`code/`](code/) on the machine named in
-[the run record](evidence/fleet-routing/RESULTS.md), or read from the live catalog at
-`modeljars.org`. Two figures are declared rather than measured and are labelled where they appear:
-the remote providers' prices, and the four-characters-per-token estimate the script uses to charge
-its budget.
+This article takes one support conversation, runs it twice — once the obvious way, once routed —
+and compares what each costs. Every number was printed by a script in [`code/`](code/) on the
+machine named in [the run record](evidence/fleet-routing/RESULTS.md). Two figures are declared
+rather than measured and are labelled where they appear: the providers' prices, and the
+four-characters-per-token estimate the script uses to charge its budget.
 
-## Ten prompts, seven models, one process
+## The conversation
 
-Here is the whole thing working. Ten prompts from one support conversation, seven models, one JVM
-process, no `if` statement anywhere over the text of a prompt:
-
-```
-WARMING                            LOAD MS
-smollm2_360m_instruct_q8_0            2249
-qwen3_0_6b_q4_0                       2043
-bartowski_llama_3_2_1b_instruct…      3221
-unsloth_qwen3_5_4b_gguf_q4_k_m       20196
-total                                27709
-
-PROMPT                           CLASSIFIED           SELECTED                          TOK      MS
-ping                             ~chat 0.48           smollm2_360m_instruct_q8_0          1     170
-    still here
-still there?                     ~summarization 0.50  smollm2_360m_instruct_q8_0          3     172
-    still here
-ok                               ~reasoning 0.57      smollm2_360m_instruct_q8_0          1     160
-    still here
-I was charged twice for my Se…   ~tool-use 0.46       qwen3_0_6b_q4_0                     9    4057
-    We'll check the details of your order to confirm if there was any issue with the payment. Let me know how we can assist you.
-tell me more                     summarization        qwen3_0_6b_q4_0                     3    2307
-    Of course, let me know how we can assist you with the next steps.
-I was charged twice for my Se…   ~tool-use 0.49       unsloth_qwen3_5_4b_gguf_q4_k_m     13   12620
-    billing=true(p=0.91,c=0.58) queue=billing(p=0.99,c=0.95) urgency=this week(p=0.38,c=0.01)
-When is a refund issued, and …   ~tool-use 0.51       bartowski_llama_3_2_1b_instruct…   12    2039
-    A refund is issued to the original payment method within five business days.
-What happens to a duplicate c…   ~code 0.45           bartowski_llama_3_2_1b_instruct…    7    1798
-    A duplicate charge is reversed automatically once billing reconciliation runs nightly.
-Our refund policy promises fi…   ~tool-use 0.52       gpt-5.1                            55    6873
-    There are two processes that can affect the same charge: 1. **Refund path** - Trigger: A support rep or system issues a refund. - P…
-Summarise this appendix for t…   ~summarization 0.54  claude-haiku-5-5                   84    1312
-    Refunds go back to the original payment method within five business days, and account closures require written confirmation from th…
-```
-
-Five kinds of traffic, five different destinations, no `if` statement over prompt text:
-
-**Heartbeats** (`ping`, `still there?`, `ok`) require a `liveness` capability that only the 360M
-SmolLM2 declares. They are answered statelessly under an eight-token ceiling — the table shows them
-spending one to three — and never enter the conversation transcript, because a liveness check is not
-a conversation turn.
-
-**The conversation** (`I was charged twice…`, then `tell me more`) requires `chat` with a
-`LOCAL_ONLY` boundary, and carries a session id. The first turn picks qwen3-0.6b on quality; the
-follow-up stays there because of the switch margin. `tell me more` only means anything because the
-transcript is real, which is why the arm appends both sides of each turn.
-
-**The closed decisions** go to Harriet, which answers three typed questions in three forward
-passes: a boolean, a choice over three queues, and an ordered severity. Nothing is generated, so
-there is no JSON to repair. Each outcome carries a written rule, and that matters: Harriet's own
-javadoc records accuracy **0.8917 with a rubric against 0.7500 without**, measured 2026-09-24 over
-120 JevBench items on the same model and kernel. Note that the model is confident about what the
-ticket is (`p=0.99`) and openly unconfident about its urgency (`c=0.01`) — a calibrated model
-declining to commit is the feature, not a defect.
-
-**The grounded questions** require a `grounding` capability that only the Llama-3.2-1B arm declares,
-and that arm does retrieval before generation. Both answers come back as one sentence drawn from
-the notes.
-
-**The synthesis prompt** requires `reasoning`, which only `gpt-5.1` declares among the three
-remotes, so it is the one request that can only go there. **The appendix summary** requires
-`long-context`, which no local model claims and all three remotes do, so the policy picks among
-providers — and it picked Anthropic's Haiku, the cheapest and fastest of them. Both calls really
-happened: those answers are the providers', and the tokens they report are what the ledger bills.
-
-The `CLASSIFIED` column repays a second look. Only `tell me more` clears the classifier's 0.60
-similarity floor, as `summarization`. The rest print their nearest task with a tilde and the
-similarity that fell short — `ping` is ~chat at 0.48, `ok` is ~reasoning at 0.57, "What happens to a
-duplicate charge?" is ~code at 0.45. That is `PretrainedTaskClassifier.match`, new in Models 0.3.60.
-Before it, every one of those rows was a bare dash, and a prompt unlike every exemplar looked
-identical to one that nearly matched. The numbers say what is really going on: an index built from
-1,929 work-shaped prompts has nothing much to say about conversational filler, and it reports that
-honestly instead of guessing a task and silently applying the wrong quality column.
-
-
-## What it cost
+One support session, ten prompts, in the order they arrive. It is a retrieval-augmented
+conversation: some of the questions have to be answered out of the company's own notes rather than
+out of a model's memory. Those notes are three sentences, embedded into a Vectors collection at
+startup:
 
 ```
-== ledger ==
-10 prompts, 2 escalated to a remote provider, 8 answered on local weights
-local ruler (qwen3-0.6b tokenizer): 139 of 188 input tokens were routed off this machine (73.9%)
-provider ruler (gpt-5.1 reported): 204 input + 668 completion tokens billed
-  the same prompt measured 139 tokens locally, so the two rulers differ by 65
-completions generated on local weights: 123 tokens
-REMOTE PROVIDER            IN   COMPLETION         COST
-gpt-5.1                    61          563    $0.005706
-claude-haiku-5-5          143          105    $0.000067
-total                     204          668    $0.005773
-had every prompt gone to gpt-5.1: $0.000235 of input alone, plus $0.001230 for the completions this machine produced for nothing
-router-accounted spend: $0.005773 of the $0.05 shared budget
+Refunds are issued to the original payment method within five business days.
+A duplicate charge is reversed automatically once billing reconciliation runs nightly.
+Account closures require written confirmation from the account holder.
 ```
 
-Eight of ten requests never left the machine. Of the two that did, the policy conflict went to
-gpt-5.1 and the appendix summary went to Haiku, and the per-provider table is where having more than
-one remote stops being a design note and starts being money: **563 completion tokens on gpt-5.1 cost
-$0.005706, while 105 on Haiku cost $0.000067.** Per completion token that is $10.00 against $0.50 per
-million — a factor of twenty for work that did not need the expensive one. The ledger prices each
-line with `ModelCandidate.costOf` on the candidate that actually ran, which is the only way this
-stays right once a fleet holds several providers, and the router's own accounted spend matches the
-total exactly.
+The ten prompts are not ten of the same thing. They fall into six kinds, and the difference
+between them is the whole point of what follows.
 
-Measured on input tokens alone, routing looks unimpressive: 139 of 188 left the machine, because the
-two escalated prompts are the long ones. The script's `all-remote` mode settles what that is worth
-by sending the same ten prompts to gpt-5.1 and totalling what it reports:
+**Heartbeats** — `ping`, `still there?`, `ok`. A browser tab checking the session is alive. The
+only correct answer is a few tokens saying so. There are three of them, and in a real deployment
+there would be thousands.
+
+**A conversation** — `I was charged twice for my September order.`, then `tell me more`. Two turns
+that share a transcript; the second is meaningless without the first. Customer text, so it should
+not leave the building.
+
+**A closed decision** — `I was charged twice for my September subscription and no refund arrived.`
+The question asked of it is not "write me a reply" but "is this about billing, which queue, how
+urgent", each with a fixed set of answers. What is wanted is a label and a confidence, not prose.
+
+**Two grounded questions** — `When is a refund issued, and to which payment method?` and
+`What happens to a duplicate charge?` Both are answerable from the three notes above and from
+nothing else. The model's job is to retrieve and quote, not to recall.
+
+**One synthesis prompt** — a policy conflict: refunds promise five business days to the original
+payment method, duplicate charges reverse automatically on the nightly reconciliation, and a
+customer who is both refunded and reconciled falls between them. Work out where they disagree and
+draft the paragraph that resolves it. This one genuinely needs a frontier model.
+
+**One long-context summary** — a five-sentence appendix to be condensed into two for a handbook.
+Long input, short output, no reasoning.
+
+Six kinds of work with wildly different requirements: one needs eight tokens, one needs a calibrated
+label rather than prose, two need a document store, one needs real reasoning. And seven of the ten
+are things you would rather not send to a third party at all — the heartbeats because there is no
+reason to, the rest because they carry a customer's words.
+
+## Without a router
+
+The obvious implementation is one client, one model, one loop. Send every prompt to the best model
+you have and let it sort them out. Strip the token and millisecond bookkeeping — this file is also
+the measurement harness — and what is left is `callOpenAi(PREMIUM, ...)` once per prompt:
+
+<!-- snippet:fleet#baseline -->
+```java
+System.out.printf("%n%-46s %8s %11s %8s%n", "PROMPT", "IN", "COMPLETION", "MS");
+for (var prompt : prompts()) {
+  lastRemoteUsage = null;
+  long began = System.nanoTime();
+  var answer = callOpenAi(PREMIUM, PREMIUM_CAP, prompt.text());
+  long millis = (System.nanoTime() - began) / 1_000_000;
+  accounted += millis;
+  if (lastRemoteUsage == null) {
+    System.out.printf("%-46s   no usage reported: %s%n", abbreviate(prompt.text(), 44), answer);
+    continue;
+  }
+  input += lastRemoteUsage.inputTokens();
+  output += lastRemoteUsage.outputTokens();
+  System.out.printf(
+      "%-46s %8d %11d %8d%n",
+      abbreviate(prompt.text(), 44),
+      lastRemoteUsage.inputTokens(),
+      lastRemoteUsage.outputTokens(),
+      millis);
+}
+```
+<!-- end:snippet:fleet#baseline -->
+
+That is the whole program, and it is not a stupid choice. A frontier model will answer all ten
+correctly, including the heartbeats, and there is nothing to operate: no weights, no cache, no
+startup. It is what most of these applications actually look like.
+
+## What that costs
 
 ```
-PROMPT                                               IN  COMPLETION
-ping                                                  7          10
-still there?                                          9          22
-ok                                                    7          24
-I was charged twice for my September order.          15         422
-tell me more                                          9         100
-I was charged twice for my September subscr…         19         813
-When is a refund issued, and to which payme…         18         300
-What happens to a duplicate charge?                  13         476
-Our refund policy promises five business da…         61         437
-Summarise this appendix for the support han…         89          72
+PROMPT                                               IN  COMPLETION       MS
+ping                                                  7          10     2639
+still there?                                          9          22     1360
+ok                                                    7          23     1129
+I was charged twice for my September order.          15         411     6294
+tell me more                                          9         134     1883
+I was charged twice for my September subscr…         19         513     4688
+When is a refund issued, and to which payme…         18         289     3437
+What happens to a duplicate charge?                  13         356     3908
+Our refund policy promises five business da…         61         406     5135
+Summarise this appendix for the support han…         89          81     1497
 
 == every prompt through gpt-5.1 ==
-provider-reported: 247 input + 2676 completion tokens
-at the declared $1.25/M in, $10.00/M out: $0.027069
+provider-reported: 247 input + 2245 completion tokens
+at the declared $1.25/M in, $10.00/M out: $0.022759
+conversation wall clock: 31983 ms, of which 31970 ms (100.0%) was model calls
+No local weights are loaded, so there is no startup cost to amortise.
 Floor, not a ceiling: the grounded prompts are sent without their retrieved notes, which a
 real all-remote implementation would have to include in the input.
 ```
 
-| | input | completion | cost |
-| --- | --- | --- | --- |
-| Every prompt through gpt-5.1 | 247 | 2,676 | **$0.027069** |
-| As routed across three providers | 204 | 668 | **$0.005773** |
+Every prompt answered correctly, in 32 seconds, for **$0.022759**.
 
-**78.7% less, a factor of 4.69.** The shape of it: the eight prompts that stayed local would have
-billed 2,167 completion tokens on gpt-5.1, or **$0.021791 — 80.5% of the entire all-remote bill.** A
-reasoning model spends 422 completion tokens on "I was charged twice for my September order" and 813
-on the ticket Harriet settles in three forward passes without generating prose at all.
+Now look at where it went. The three heartbeats — prompts whose only correct answer is "still
+here" — took 2,639 ms, 1,360 ms and 1,129 ms, because a round trip to a frontier model costs a
+second whatever you ask it. The closed decision came back as 513 tokens of prose when what was
+wanted was three labels. And **1,758 of the 2,245 completion tokens, 77.8% of the bill, were spent
+on the eight prompts that never needed a frontier model at all.**
 
-So the saving is not in shaving tokens off short prompts. It is in not paying a frontier model to
-generate output that does not need generating, and in not sending to the expensive provider what the
-cheap one answers five times faster.
+Nothing here is a defect. The model did exactly what it was asked. The waste is in the asking.
 
-## The program
+## Adding a router
 
-Three pieces do the routing. What each kind of traffic needs, what each model is, and the fleet that
-binds them to something callable.
+Nothing above is wrong, exactly. It is just paying frontier prices for work that is not frontier
+work, and sending customer text to a third party to do it.
+
+`models-router` replaces the single client with a fleet and a set of rules. Three pieces: what each
+kind of traffic requires, what each model is, and the fleet that binds candidates to something
+callable. None of it inspects prompt text.
 
 ### Saying what each kind of traffic requires
 
@@ -311,6 +287,208 @@ return ModelFleet.<Responder>builder()
 Two of those closures call OpenAI with different models and ceilings. The third calls Anthropic,
 which needs a different endpoint, a different auth header and a different response shape — and the
 fleet does not know or care.
+
+## What the router does
+
+```
+WARMING                            LOAD MS
+smollm2_360m_instruct_q8_0            2249
+qwen3_0_6b_q4_0                       2043
+bartowski_llama_3_2_1b_instruct…      3221
+unsloth_qwen3_5_4b_gguf_q4_k_m       20196
+total                                27709
+
+PROMPT                           CLASSIFIED           SELECTED                          TOK      MS
+ping                             ~chat 0.48           smollm2_360m_instruct_q8_0          1     170
+    still here
+still there?                     ~summarization 0.50  smollm2_360m_instruct_q8_0          3     172
+    still here
+ok                               ~reasoning 0.57      smollm2_360m_instruct_q8_0          1     160
+    still here
+I was charged twice for my Se…   ~tool-use 0.46       qwen3_0_6b_q4_0                     9    4057
+    We'll check the details of your order to confirm if there was any issue with the payment. Let me know how we can assist you.
+tell me more                     summarization        qwen3_0_6b_q4_0                     3    2307
+    Of course, let me know how we can assist you with the next steps.
+I was charged twice for my Se…   ~tool-use 0.49       unsloth_qwen3_5_4b_gguf_q4_k_m     13   12620
+    billing=true(p=0.91,c=0.58) queue=billing(p=0.99,c=0.95) urgency=this week(p=0.38,c=0.01)
+When is a refund issued, and …   ~tool-use 0.51       bartowski_llama_3_2_1b_instruct…   12    2039
+    A refund is issued to the original payment method within five business days.
+What happens to a duplicate c…   ~code 0.45           bartowski_llama_3_2_1b_instruct…    7    1798
+    A duplicate charge is reversed automatically once billing reconciliation runs nightly.
+Our refund policy promises fi…   ~tool-use 0.52       gpt-5.1                            55    6873
+    There are two processes that can affect the same charge: 1. **Refund path** - Trigger: A support rep or system issues a refund. - P…
+Summarise this appendix for t…   ~summarization 0.54  claude-haiku-5-5                   84    1312
+    Refunds go back to the original payment method within five business days, and account closures require written confirmation from th…
+```
+
+Six kinds of traffic, six different destinations, no `if` statement over prompt text:
+
+**Heartbeats** (`ping`, `still there?`, `ok`) require a `liveness` capability that only the 360M
+SmolLM2 declares. They are answered statelessly under an eight-token ceiling — the table shows them
+spending one to three — and never enter the conversation transcript, because a liveness check is not
+a conversation turn.
+
+**The conversation** (`I was charged twice…`, then `tell me more`) requires `chat` with a
+`LOCAL_ONLY` boundary, and carries a session id. The first turn picks qwen3-0.6b on quality; the
+follow-up stays there because of the switch margin. `tell me more` only means anything because the
+transcript is real, which is why the arm appends both sides of each turn.
+
+**The closed decisions** go to Harriet, which answers three typed questions in three forward
+passes: a boolean, a choice over three queues, and an ordered severity. Nothing is generated, so
+there is no JSON to repair. Each outcome carries a written rule, and that matters: Harriet's own
+javadoc records accuracy **0.8917 with a rubric against 0.7500 without**, measured 2026-09-24 over
+120 JevBench items on the same model and kernel. Note that the model is confident about what the
+ticket is (`p=0.99`) and openly unconfident about its urgency (`c=0.01`) — a calibrated model
+declining to commit is the feature, not a defect.
+
+**The grounded questions** require a `grounding` capability that only the Llama-3.2-1B arm declares,
+and that arm does retrieval before generation. Both answers come back as one sentence drawn from
+the notes.
+
+**The synthesis prompt** requires `reasoning`, which only `gpt-5.1` declares among the three
+remotes, so it is the one request that can only go there. **The appendix summary** requires
+`long-context`, which no local model claims and all three remotes do, so the policy picks among
+providers — and it picked Anthropic's Haiku, the cheapest and fastest of them. Both calls really
+happened: those answers are the providers', and the tokens they report are what the ledger bills.
+
+The `CLASSIFIED` column repays a second look. Only `tell me more` clears the classifier's 0.60
+similarity floor, as `summarization`. The rest print their nearest task with a tilde and the
+similarity that fell short — `ping` is ~chat at 0.48, `ok` is ~reasoning at 0.57, "What happens to a
+duplicate charge?" is ~code at 0.45. That is `PretrainedTaskClassifier.match`, new in Models 0.3.60.
+Before it, every one of those rows was a bare dash, and a prompt unlike every exemplar looked
+identical to one that nearly matched. The numbers say what is really going on: an index built from
+1,929 work-shaped prompts has nothing much to say about conversational filler, and it reports that
+honestly instead of guessing a task and silently applying the wrong quality column.
+
+### The bill
+
+```
+== ledger ==
+10 prompts, 2 escalated to a remote provider, 8 answered on local weights
+local ruler (qwen3-0.6b tokenizer): 139 of 188 input tokens were routed off this machine (73.9%)
+provider ruler (gpt-5.1 reported): 204 input + 668 completion tokens billed
+  the same prompt measured 139 tokens locally, so the two rulers differ by 65
+completions generated on local weights: 123 tokens
+REMOTE PROVIDER            IN   COMPLETION         COST
+gpt-5.1                    61          563    $0.005706
+claude-haiku-5-5          143          105    $0.000067
+total                     204          668    $0.005773
+had every prompt gone to gpt-5.1: $0.000235 of input alone, plus $0.001230 for the completions this machine produced for nothing
+router-accounted spend: $0.005773 of the $0.05 shared budget
+```
+
+Eight of ten requests never left the machine. Of the two that did, the policy conflict went to
+gpt-5.1 and the appendix summary went to Haiku, and the per-provider table is where having more than
+one remote stops being a design note and starts being money: **563 completion tokens on gpt-5.1 cost
+$0.005706, while 105 on Haiku cost $0.000067.** Per completion token that is $10.00 against $0.50 per
+million — a factor of twenty for work that did not need the expensive one. The ledger prices each
+line with `ModelCandidate.costOf` on the candidate that actually ran, which is the only way this
+stays right once a fleet holds several providers, and the router's own accounted spend matches the
+total exactly.
+
+Against the no-router run:
+
+| | input | completion | cost |
+| --- | --- | --- | --- |
+| Every prompt through gpt-5.1 | 247 | 2,245 | **$0.022759** |
+| Routed across seven models | 204 | 668 | **$0.005773** |
+
+**74.6% less, a factor of 3.94.** Not because the prompts got shorter — input barely moved, 247
+tokens to 204 — but because 1,577 completion tokens were never bought. The saving is in not paying a
+frontier model to generate output that did not need generating.
+
+### The time
+
+```
+== timing, warm ==
+MODEL                            CALLS  TOTAL MS   MEAN MS     SHARE
+smollm2_360m_instruct_q8_0           3       502       167      1.4%
+qwen3_0_6b_q4_0                      2      6364      3182     17.5%
+unsloth_qwen3_5_4b_gguf_q4_k_m       1     12620     12620     34.6%
+bartowski_llama_3_2_1b_instruct…     2      3837      1918     10.5%
+gpt-5.1                              1      6873      6873     18.9%
+claude-haiku-5-5                     1      1312      1312      3.6%
+conversation wall clock: 36452 ms, of which 31508 ms (86.4%) was model calls
+one-off load of the four local models: 27709 ms, paid once at startup, not per request
+```
+
+**Routing did not make this conversation faster.** 36,452 ms against the no-router run's 31,983 ms
+— 14% slower — and that is before the 27,709 ms of one-off model loading, which a long-lived server
+amortises to nothing and a short script does not.
+
+Per prompt, though, the picture is not uniform:
+
+| prompt | no router | routed | |
+| --- | --- | --- | --- |
+| `ping` | 2,639 ms | **170 ms** | 15× faster |
+| `still there?` | 1,360 ms | **172 ms** | 8× faster |
+| `ok` | 1,129 ms | **160 ms** | 7× faster |
+| "When is a refund issued…" | 3,437 ms | **2,039 ms** | faster |
+| "What happens to a duplicate charge?" | 3,908 ms | **1,798 ms** | 2× faster |
+| the closed decision | **4,688 ms** | 12,620 ms | 2.7× *slower* |
+| the synthesis prompt | 5,135 ms | 6,873 ms | same model, run variance |
+
+A heartbeat answered locally in 170 ms beats a network round trip every time; nothing a frontier
+model does can be fast when the speed of light is in the way. The decision arm is the opposite
+trade: Harriet is a 4B model doing three forward passes on a laptop CPU, and it loses to a hosted
+frontier model by a factor of nearly three. You buy a calibrated label and local custody of the
+customer's text, and you pay eight seconds for them.
+
+So the honest summary is that routing bought **a 3.94× cost reduction and a 14% wall-clock
+regression** on this conversation — and that the regression is concentrated in one arm whose job is
+not speed. Turn the volume up to thousands of heartbeats, where the 15× applies and the decision arm
+does not, and the arithmetic moves the other way.
+
+Those shapes hold across runs on an unloaded machine. The absolute numbers do not survive a busy
+one: at load average 39, qwen3-0.6b reports **25,163 ms** for the call it answers in 4,057 ms above.
+The tell is the last line of the table. A healthy run spends 86% of its wall clock inside model
+calls; the contended one spent 50.3%, which means the process was starved rather than slow. Measure
+on a quiet machine, and check that share before believing a timing — a starved run still prints a
+complete and plausible table.
+
+The 28 seconds of loading above the table is paid once. Four models stay resident, which is what a
+server does, and a resident fleet needs one explicit decision: each native runtime otherwise sizes
+its worker pool for every logical CPU, so four pools on twelve cores oversubscribe badly. The same
+prompt qwen3-0.6b answers in 1,169 ms alone took 23,946 ms beside the others until the script gave
+each runtime three threads.
+
+### Where these numbers come from
+
+Token counts are each provider's own report or the qwen3-0.6b tokenizer's, kept apart because they
+disagree — the escalated prompts measured 139 tokens locally and 204 at the providers. Shares are
+quoted on the local ruler, where every prompt is measured identically, and bills on the provider's,
+where they are charged.
+
+Prices are the script's declared inputs, matching published rates from third-party trackers in
+autumn 2026: $1.25/$10.00 per million for gpt-5.1, $0.40/$1.60 for gpt-4.1-mini, $0.10/$0.50 for
+Haiku 5.5. Set them to your own contracts. Haiku also charges a higher rate above a 100k-token
+prompt, which the script declares as `.pricingTier(100_001, 0.50, 2.50)` — new in Models 0.4.0.
+Nothing here comes close to that threshold, so every figure above is the base rate; it is declared
+because `RoutingBudget` charges whatever `costOf` reports, and a budget told a flat price would
+overshoot by five times on a long request.
+
+Scoring, though, still uses list price. Cost is normalised across the eligible candidates into a
+0–1 term, so a rate that moved with prompt size would shift a candidate against all the others at
+its own threshold and make its rank non-monotonic in request size. Accounting is where the tier has
+to be exact. That split is not universal: reading the other routers on this machine rather than
+their documentation, weave-os applies its tier when scoring as well as billing — it can, because it
+scores on an absolute dollar estimate — while vLLM's semantic router and RouteLLM carry no tier
+concept at all, and LiteLLM carries one but is a gateway, so the question does not arise.
+
+Where prices come from divides the same field three ways. LiteLLM fetches a community-maintained
+price map over HTTP at startup, validates it, and falls back to a packaged copy. weave-os keeps its
+catalog in source. TensorZero and the selection routers take operator-declared values. Models is in
+the last group deliberately — a startup fetch trades a network dependency and a third-party trust
+boundary for freshness, which is a deployment's call, not a library's — and the cost of that is
+real: a declared price goes stale silently. Citations are in
+[the run record](evidence/fleet-routing/RESULTS.md).
+
+Two caveats on the comparison itself. The no-router figure is a floor, because its grounded prompts
+were sent without the retrieved notes a real implementation would have to include in the input. And
+the headline percentage moves: gpt-5.1 bills its reasoning as completion tokens and does not spend
+the same amount twice, so four pairs on these same prompts at these same prices came out at 74.3%,
+69.4%, 78.7% and the 74.6% above. Read it as roughly **70–80%, a factor of three to five** on this
+workload.
 
 ## Inside the router
 
@@ -506,78 +684,6 @@ if (!remoteSpend.isEmpty()) {
 
 `costOf` belongs to the candidate that actually ran. With one remote provider that is a detail; with
 three at different prices it is the difference between a ledger and a guess.
-
-## What it took
-
-The router times every attempt, so the conversation reports its own latency:
-
-```
-== timing, warm ==
-MODEL                            CALLS  TOTAL MS   MEAN MS     SHARE
-smollm2_360m_instruct_q8_0           3       502       167      1.4%
-qwen3_0_6b_q4_0                      2      6364      3182     17.5%
-unsloth_qwen3_5_4b_gguf_q4_k_m       1     12620     12620     34.6%
-bartowski_llama_3_2_1b_instruct…     2      3837      1918     10.5%
-gpt-5.1                              1      6873      6873     18.9%
-claude-haiku-5-5                     1      1312      1312      3.6%
-conversation wall clock: 36452 ms, of which 31508 ms (86.4%) was model calls
-one-off load of the four local models: 27709 ms, paid once at startup, not per request
-```
-
-A liveness check answers in **167 ms**. Among the remotes, Anthropic's Haiku returns in **1,312 ms**
-and gpt-5.1 takes **6,873 ms** — five times longer, for the one request that genuinely needed a
-reasoning model. Between them sit the grounded arm at 1.9 seconds, the conversational model at 3.2,
-and Harriet at 12.6, because three calibrated verdicts are three forward passes through a 4B model.
-
-Those shapes hold across runs on an unloaded machine. The absolute numbers do not survive a busy
-one: at load average 39, qwen3-0.6b reports **25,163 ms** for the call it answers in 4,057 ms above.
-The tell is the last line of the table. A healthy run spends 86% of its wall clock inside model
-calls; the contended one spent 50.3%, which means the process was starved rather than slow. Measure
-on a quiet machine, and check that share before believing a timing — a starved run still prints a
-complete and plausible table.
-
-The 28 seconds of loading above the table is paid once. Four models stay resident, which is what a
-server does, and a resident fleet needs one explicit decision: each native runtime otherwise sizes
-its worker pool for every logical CPU, so four pools on twelve cores oversubscribe badly. The same
-prompt qwen3-0.6b answers in 1,169 ms alone took 23,946 ms beside the others until the script gave
-each runtime three threads.
-
-### Where these numbers come from
-
-Token counts are each provider's own report or the qwen3-0.6b tokenizer's, kept apart because they
-disagree — the escalated prompts measured 139 tokens locally and 204 at the providers. Shares are
-quoted on the local ruler, where every prompt is measured identically, and bills on the provider's,
-where they are charged.
-
-Prices are the script's declared inputs, matching published rates from third-party trackers in
-autumn 2026: $1.25/$10.00 per million for gpt-5.1, $0.40/$1.60 for gpt-4.1-mini, $0.10/$0.50 for
-Haiku 5.5. Set them to your own contracts. Haiku also charges a higher rate above a 100k-token
-prompt, which the script declares as `.pricingTier(100_001, 0.50, 2.50)` — new in Models 0.4.0.
-Nothing here comes close to that threshold, so every figure above is the base rate; it is declared
-because `RoutingBudget` charges whatever `costOf` reports, and a budget told a flat price would
-overshoot by five times on a long request.
-
-Scoring, though, still uses list price. Cost is normalised across the eligible candidates into a
-0–1 term, so a rate that moved with prompt size would shift a candidate against all the others at
-its own threshold and make its rank non-monotonic in request size. Accounting is where the tier has
-to be exact. That split is not universal: reading the other routers on this machine rather than
-their documentation, weave-os applies its tier when scoring as well as billing — it can, because it
-scores on an absolute dollar estimate — while vLLM's semantic router and RouteLLM carry no tier
-concept at all, and LiteLLM carries one but is a gateway, so the question does not arise.
-
-Where prices come from divides the same field three ways. LiteLLM fetches a community-maintained
-price map over HTTP at startup, validates it, and falls back to a packaged copy. weave-os keeps its
-catalog in source. TensorZero and the selection routers take operator-declared values. Models is in
-the last group deliberately — a startup fetch trades a network dependency and a third-party trust
-boundary for freshness, which is a deployment's call, not a library's — and the cost of that is
-real: a declared price goes stale silently. Citations are in
-[the run record](evidence/fleet-routing/RESULTS.md).
-
-Two caveats on the comparison itself. The all-remote figure is a floor, because its grounded prompts
-were sent without the retrieved notes a real implementation would include. And the headline
-percentage moves: gpt-5.1 bills its reasoning as completion tokens and does not spend the same
-amount twice, so three pairs on these same prompts at these same prices came out at 74.3%, 69.4% and
-the 78.7% above. Read it as roughly **70–80%, a factor of three to five** on this workload.
 
 ## Five things only a real run would tell you
 

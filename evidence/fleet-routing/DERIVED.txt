@@ -1,8 +1,8 @@
 prompts: 10, answered locally: 8, escalated: 2
-all-remote: 247 input + 2676 completion = $0.027069
+all-remote: 247 input + 2245 completion = $0.022759
 as routed:  204 input + 668 completion = $0.005773
-saved: $0.021296 -- 78.7% less, a factor of 4.69
-the 8 locally answered prompts would have billed 2167 completion tokens on gpt-5.1, or $0.021791 -- 80.5% of the all-remote bill
+saved: $0.016986 -- 74.6% less, a factor of 3.94
+the 8 locally answered prompts would have billed 1758 completion tokens on gpt-5.1, or $0.017701 -- 77.8% of the all-remote bill
   gpt-5.1: 61 in + 563 completion = $0.005706
   claude-haiku-5-5: 143 in + 105 completion = $0.000067
 declared list prices per million tokens, from code/fleet.java:
@@ -16,4 +16,16 @@ declared list prices per million tokens, from code/fleet.java:
   HAIKU_HIGH_OUT = 2.50
 on completion, PREMIUM_OUT is 20 times HAIKU_OUT ($10.00 against $0.50 per million)
 gpt-5.1 mean 6873 ms vs claude-haiku-5-5 mean 1312 ms: Haiku 5.2 times faster
-wall clock 36452 ms, 31508 ms (86.4%) in model calls; one-off load 27709 ms
+routed wall clock 36452 ms, 31508 ms (86.4%) in model calls; one-off load 27709 ms
+no-router wall clock 31983 ms; routed is +4469 ms (+14.0%)
+per-prompt wall clock, no-router vs routed:
+  ping                                         2639 ms ->    170 ms (smollm2_360m_instruct_q8_0)
+  still there?                                 1360 ms ->    172 ms (smollm2_360m_instruct_q8_0)
+  ok                                           1129 ms ->    160 ms (smollm2_360m_instruct_q8_0)
+  I was charged twice for my September ord     6294 ms ->   4057 ms (qwen3_0_6b_q4_0)
+  tell me more                                 1883 ms ->   2307 ms (qwen3_0_6b_q4_0)
+  I was charged twice for my September sub     4688 ms ->  12620 ms (unsloth_qwen3_5_4b_gguf_q4_k)
+  When is a refund issued, and to which pa     3437 ms ->   2039 ms (bartowski_llama_3_2_1b_instr)
+  What happens to a duplicate charge?          3908 ms ->   1798 ms (bartowski_llama_3_2_1b_instr)
+  Our refund policy promises five business     5135 ms ->   6873 ms (gpt-5.1)
+  Summarise this appendix for the support      1497 ms ->   1312 ms (claude-haiku-5-5)

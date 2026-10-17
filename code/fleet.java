@@ -545,13 +545,25 @@ class fleet {
   }
 
   /** Sends every prompt to the provider and totals its own reported usage. */
+  /**
+   * The same conversation with no router: every prompt to one frontier model.
+   *
+   * <p>This is the baseline the routed arm is measured against, and it is deliberately the obvious
+   * implementation -- one client, one model, one loop.
+   */
   static void allRemote() throws Exception {
     long input = 0;
     long output = 0;
-    System.out.printf("%n%-46s %8s %11s%n", "PROMPT", "IN", "COMPLETION");
+    long sessionStart = System.nanoTime();
+    long accounted = 0;
+    // region: baseline
+    System.out.printf("%n%-46s %8s %11s %8s%n", "PROMPT", "IN", "COMPLETION", "MS");
     for (var prompt : prompts()) {
       lastRemoteUsage = null;
+      long began = System.nanoTime();
       var answer = callOpenAi(PREMIUM, PREMIUM_CAP, prompt.text());
+      long millis = (System.nanoTime() - began) / 1_000_000;
+      accounted += millis;
       if (lastRemoteUsage == null) {
         System.out.printf("%-46s   no usage reported: %s%n", abbreviate(prompt.text(), 44), answer);
         continue;
@@ -559,11 +571,14 @@ class fleet {
       input += lastRemoteUsage.inputTokens();
       output += lastRemoteUsage.outputTokens();
       System.out.printf(
-          "%-46s %8d %11d%n",
+          "%-46s %8d %11d %8d%n",
           abbreviate(prompt.text(), 44),
           lastRemoteUsage.inputTokens(),
-          lastRemoteUsage.outputTokens());
+          lastRemoteUsage.outputTokens(),
+          millis);
     }
+    // endregion
+    long sessionMillis = (System.nanoTime() - sessionStart) / 1_000_000;
     // Priced by the same ModelCandidate.costOf the routed ledger uses, rather than by a second
     // copy of the formula that could drift from it.
     var premium =
@@ -578,6 +593,10 @@ class fleet {
         PREMIUM_IN,
         PREMIUM_OUT,
         premium.costOf(input, output).setScale(6, RoundingMode.HALF_UP).toPlainString());
+    System.out.printf(
+        "conversation wall clock: %d ms, of which %d ms (%.1f%%) was model calls%n",
+        sessionMillis, accounted, 100.0 * accounted / sessionMillis);
+    System.out.println("No local weights are loaded, so there is no startup cost to amortise.");
     System.out.println(
         "Floor, not a ceiling: the grounded prompts are sent without their retrieved notes, which a");
     System.out.println("real all-remote implementation would have to include in the input.");
