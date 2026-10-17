@@ -1,6 +1,6 @@
 //JAVA 25
 //RUNTIME_OPTIONS --add-modules=jdk.incubator.vector --enable-native-access=ALL-UNNAMED -Xmx4g
-//DEPS org.modeljars.composite:granite-answerability:0.1.60
+//DEPS org.modeljars.composite:granite-answerability:0.1.61
 
 import java.util.List;
 import org.modeljars.composite.granite.GraniteAnswerability;

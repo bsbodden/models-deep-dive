@@ -1,8 +1,8 @@
 //JAVA 25
 //RUNTIME_OPTIONS --add-modules=jdk.incubator.vector
 //RUNTIME_OPTIONS --enable-native-access=ALL-UNNAMED -Xmx4g
-//DEPS com.integrallis:models:0.4.1
-//DEPS com.integrallis:backend-java:0.4.1
+//DEPS com.integrallis:models:0.4.3
+//DEPS com.integrallis:backend-java:0.4.3
 
 import com.integrallis.models.api.BackendConfiguration;
 import com.integrallis.models.api.SamplingOptions;

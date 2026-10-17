@@ -12,7 +12,7 @@ Raw artifacts: `routed.log`, `all-remote.log`. Every derived figure below and in
 from `tools/derive_fleet_figures.py`, which reads those two logs and `code/fleet.java`; its output
 is `DERIVED.txt`. No figure in either document is hand-computed.
 
-## jbang fleet.java, three remote providers, released 0.1.60 / 0.4.1 / 0.1.30
+## jbang fleet.java, three remote providers, released 0.1.61 / 0.4.3 / 0.1.30
 
 Two OpenAI models and one Anthropic model share the fleet with four local models. Each provider has
 its own endpoint, credential, auth header and response shape; each client normalises its own
@@ -109,13 +109,13 @@ complete and plausible table.
 
 ## Walkthrough re-verified on the released libraries
 
-Every script in `code/` was repinned to ModelJars 0.1.60, Models 0.4.1 and Vectors 0.1.30 and re-run
-on the host above on 2026-10-16, after `~/.m2/repository/com/integrallis/*/0.4.1` was deleted so
+Every script in `code/` was repinned to ModelJars 0.1.61, Models 0.4.3 and Vectors 0.1.30 and re-run
+on the host above on 2026-10-16, after `~/.m2/repository/com/integrallis/*/0.4.3` was deleted so
 nothing could resolve to the copy published locally during development. All fourteen completed; the
 thirteen non-keyed ones were run by `tools/run_examples.py`, whose per-script logs, source hashes,
-resolved dependency coordinates and exit codes are in `evidence/walkthrough-0.4.1/`
+resolved dependency coordinates and exit codes are in `evidence/walkthrough-0.4.3/`
 (`runs.json`, `environment.json`). `runs.json` records the resolved coordinates, which read
-`com.integrallis:models:0.4.1` and the rest.
+`com.integrallis:models:0.4.3` and the rest.
 
 | script | outcome |
 | --- | --- |
@@ -126,7 +126,7 @@ resolved dependency coordinates and exit codes are in `evidence/walkthrough-0.4.
 | tools.java | two tool calls applied: bedroom light 20, front door locked |
 | composite.java | ANSWERABLE; physical prefix sharing true, 182 shared prefix tokens |
 | decisions.java | billing? true p=0.920 c=0.60; queue billing p=0.991 c=0.95; urgency today p=0.389 c=0.02 |
-| speech.java | 1,856 ms of audio at 32 kHz, RTF 1.378 |
+| speech.java | 1,728 ms of audio at 32 kHz, RTF 1.350 |
 | spring.java | "Paris" through the Spring AI adapter |
 | route.java | discovery found 2 cached chat models and selected qwen3_0_6b_q4_0 at score 0.684 |
 | rag.java | retrieved doc-0 at 0.8581 and doc-1 at 0.6651; policy returned EXTRACTIVE_FALLBACK |
@@ -268,25 +268,39 @@ tag-filtered correctly. It is now cleared deliberately, with the reason in the c
 same behaviour arrived at as a decision instead of an accident. Nothing found it except fixing an
 unrelated defect.
 
-**7. "Discovery only finds cached models" was never true (three documents corrected).** The
-article, `code/README.md` and `route.java` all stated that discovery reports only models whose
-weights are already downloaded. That claim was never tested; it was assumed, repeated, and
-published.
+**7. A botched experiment made me "correct" a claim that was right.** The article, `code/README.md`
+and `route.java` all said discovery reports only models whose weights are already cached. I set out
+to verify it, hid `~/.modeljars/cache/sha256/48ab.../model.gguf`, saw discovery still report the
+model, and concluded the claim was false. I rewrote all three documents, recorded the correction
+here, and reverted a `fleet.java` reordering that the original claim justified.
 
-Measured two ways on this host. Hiding a cached GGUF
-(`~/.modeljars/cache/sha256/48ab.../model.gguf`) changed nothing: both models were still reported,
-with the same ids, locality and context windows. Removing the local registry
-(`~/.modeljars/catalog/registry.properties`, 6,585 lines) changed nothing either. Discovery is
-driven entirely by the classpath -- a marker jar carries its model's descriptor -- and weights are
-fetched when a runtime is opened, not when a model is discovered. That is why `route.java` can
-select between models that have never been downloaded, which is a better story than the one the
-article was telling.
+The experiment was wrong. `ModelJarsCatalog.cached()` checks two locations:
 
-The claim surfaced because it predicted a bug: if discovery needed cached weights, `fleet.java`
-building its fleet before warming its models would fail on any machine that had not run it before.
-The prediction was wrong because the premise was, and a reordering made on that premise was
-reverted. Worth recording as the general case: an unverified claim is not merely unsupported, it
-produces confident reasoning that is wrong in a direction nothing in the output reveals.
+```java
+if (descriptor.localPath().filter(Files::isRegularFile).isPresent()) {
+  return true;
+}
+Path artifact = ModelJarCache.artifactPath(descriptor);
+return ModelJarCache.isComplete(descriptor, artifact);
+```
+
+SmolLM2's descriptor carries
+`localPath = ~/.jvllm/models/smollm2-360m-instruct-q8_0.gguf` — a second copy of the same 386 MB
+file, which short-circuits the check before the cache path is consulted. I had hidden one of two
+copies and read the result as proof.
+
+Re-run with **both** copies hidden, discovery reports nothing. The original claim was correct, and
+all three documents are restored.
+
+The reverted reordering was also correct, and is restored. `fleet.java` builds its fleet from
+discovery, so on a machine that has never run it there is nothing to discover until the weights are
+fetched, and opening each runtime is what fetches them. Verified by deleting both copies and running
+the demo: SmolLM2 re-downloaded (31,521 ms of warm-up against its usual ~2,200 ms), discovery then
+found all four models, and routing proceeded normally.
+
+What this costs to get wrong is worth stating plainly: a single bad experiment produced a confident
+correction, three rewritten documents, a reverted bug fix and a written-up finding, all of them
+wrong, and none of it looked uncertain at the time.
 
 **8. A policy comment claimed an outcome nobody had routed (corrected).** `fleet.java` explained
 its choice of `BALANCED` by saying `LOCAL_FIRST` "would weight locality at 0.35 and latency enough
@@ -350,6 +364,108 @@ rather than re-reading the sentence.
   inspect the prompt; that is its job. What is true is that nothing *branches* on what it reports:
   the task type feeds the quality term in scoring, and eligibility is settled by the requirement
   objects alone. Restated to say that.
+
+**12. The walkthrough was not doing RAG in the arm it compared against.** The routed arm called
+`ground()`, which embedded the question, searched the collection and sent `Notes: ... Question: ...`.
+The no-router arm sent the bare question. The two arms were answering different questions, and the
+baseline's input was shorter for a reason that has nothing to do with routing. The article covered
+it with a "floor, not a ceiling" caveat instead of fixing it.
+
+Retrieval is now a shared `resolve(retrieval, prompt)` that both arms call, per request. Measured
+effect on the baseline's input: the two grounded prompts went from 18 and 13 tokens to **73 and 68**.
+
+**13. The long-context escalation was manufactured (fixed), and fixing it exposed three more.**
+`long-context` was a capability name invented in the demo and declared only on the remote
+candidates. The catalog has no such capability; it declares `long-context` as a *feature* on seven
+entries, and 41 of its models have context windows of 128k or more, one at 1,024,000. The prompt
+being escalated was 89 tokens, which every local arm could hold. The demo "worked" because the
+routing obeyed the invention.
+
+The appendix is now a real generated document: 1,500 clauses, 708,130 characters, **147,011 tokens**
+measured by the local tokenizer. Escalation comes from `ModelRouter.eligible` rejecting
+`contextWindow < estimatedTokens`, which excludes the local arms at 8,192 / 40,960 / 131,072 and
+admits the remotes at 200k / 400k / 1M. Sized deliberately: 3,000 clauses gave 295,107 tokens, which
+also excluded Haiku and left only two remotes competing.
+
+Three defects followed, none of which a 89-token prompt could reach:
+
+- **The classifier throws on a long prompt.** `PretrainedTaskClassifier.match` embeds its input, and
+  EmbeddingGemma's context is 2,048 tokens: `sequence of 147019 tokens exceeds the model's context
+  length of 2048`. The demo now routes on the instruction and sizes on the payload, which is also
+  the right design -- "summarise this appendix" carries the task signal and the appendix does not.
+  The library behaviour is still worth changing: a classifier that works by embedding will meet
+  prompts longer than its embedding window, and truncating is a better answer than throwing.
+- **The appendix was inlined into the prompt text**, so routing on `prompt.text()` would still have
+  handed the classifier 147k tokens. It is now an attachment, structurally the same as retrieval.
+- **The input bound was fleet-wide only** -- see finding 14.
+
+**14. The post-call token guard was per-candidate for completions and fleet-wide for prompts
+(fixed in 0.4.3).** `RoutingExecution` read `candidate.effectiveMaxOutputTokens(...)` for the output
+side -- per-candidate since 0.3.60 -- but `options.tokenBounds().inputTokens()` for the input side.
+So the appendix routed correctly, the call succeeded, and the guard then refused it:
+`provider usage exceeded declared token bounds`.
+
+Raising the fleet-wide bound is not a workaround. `RoutingExecution.account` takes
+`inputTokens + outputTokens` as the context every request must fit, so a bound of 200,000 made a
+one-token liveness check demand a 200,512-token window:
+
+```
+NoEligibleModelException: no model has a context window of 200512 tokens;
+no model declares required capabilities [liveness]; policy is local-only
+```
+
+And `RoutingExecutionOptions` rejects a budget without complete bounds, so omitting them was not
+available either. There was no configuration that both admitted a 147,011-token prompt and left
+small requests routable. `ModelCandidate.maxInputTokens` and `effectiveMaxInputTokens` mirror the
+output side; the fleet-wide pair goes back to 4096/512 and each remote declares what it can hold.
+
+**15. A locally published jar shadowed Central for three runs.** Publishing Models to the local
+Maven repository so ModelJars could compile before 0.4.2 existed produced a `backend-native` jar of
+**64,095 bytes with zero native platforms**, because native kernels are built per platform in CI.
+It then shadowed Central's 1,178,791-byte jar with all six, and every run failed with
+`no Models native-kernel artifact for macos-x86_64`. Clearing `~/.m2` was not enough: jbang caches
+its own resolution and kept pointing at the deleted path, so the entry had to be dropped from
+`~/.jbang/cache/dependency_cache.json` and the script rebuilt with `--fresh`. Verify what is on the
+classpath, not what you believe you published.
+
+**16. Three declared numbers were wrong, and each one failed at a different place.** The demo
+declared a context window and a price for every remote. Running a genuinely large document against
+them found three errors, none of which a small prompt could reach.
+
+- **Haiku's window admitted a prompt it could not hold.** Eligibility is decided on a local
+  estimate; billing is decided on the provider's count. The same document measured **147,011**
+  tokens by the local qwen3-0.6b tokenizer, **141,534** at OpenAI and **219,559** at Anthropic --
+  49% longer on Anthropic's ruler. A 147k estimate fits Haiku's 200,000-token window; the 219,559
+  Anthropic actually counted does not. The router admitted it, the call was made and paid for, and
+  the post-call guard refused the result: `provider usage exceeded declared token bounds`, with
+  `billedUsage()` reporting 219,559 input and `billedCost()` $0.1109. That is 0.3.60's
+  billed-overrun API doing exactly the job it was added for, and the only reason the spend was
+  recoverable.
+- **gpt-5.1's declared window was 400,000; the real limit is 272,000.** The provider said so
+  itself: `Input tokens exceed the configured limit of 272000 tokens. Your messages resulted in
+  284034 tokens.` A window declared too generously does not fail at routing time. It fails at the
+  provider, after the request has been built and sent.
+- **The document had to be sized against the worst ruler, not the best.** Sizing it to just clear
+  the local arms left a margin that one provider's tokenizer ate. It is now 2,500 clauses,
+  245,741 local tokens: past every local window, past Haiku's 200,000 on any tokenizer, and inside
+  gpt-5.1's real 272,000.
+
+The general shape is the one this whole file keeps finding: a declared figure is a claim, and the
+only authority on a provider's limits is the provider.
+
+**17. The measured result stopped flattering the router, and the article now says so.** With a real
+document in play the numbers are $0.310373 with no router against $0.099222 routed -- 68.0% less, a
+factor of 3.13 -- but wall clock went from 24,491 ms to 52,588 ms, **115% slower**.
+
+Both halves have the same cause. The appendix is 236,535 of the 236,596 billed input tokens, and
+routing sent it to gpt-4.1-mini at $0.40/M instead of gpt-5.1 at $1.25/M: $0.094736 against $0.296.
+gpt-4.1-mini is also slower, 23,390 ms against 8,485 ms. The cost saving and the latency cost are
+one decision seen from two sides.
+
+The corollary matters more than the headline. The eight prompts answered locally would have cost
+$0.009959 on gpt-5.1 -- **3.2%** of the bill. On this workload keeping them local is nearly free
+either way, and the saving is one provider choice on one document. On a workload of ten thousand
+heartbeats it inverts. The article states both and does not pretend the mix is universal.
 
 ### Where the other implementations on this machine put this line
 

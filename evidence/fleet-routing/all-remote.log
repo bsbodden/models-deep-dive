@@ -1,21 +1,21 @@
 classifier: 10 tasks from google_embeddinggemma_300m_gguf_q8_0, 768-dimensional, similarity floor 0.60
 
-PROMPT                                               IN  COMPLETION       MS
-ping                                                  7          10     2639
-still there?                                          9          22     1360
-ok                                                    7          23     1129
-I was charged twice for my September order.          15         411     6294
-tell me more                                          9         134     1883
-I was charged twice for my September subscr…         19         513     4688
-When is a refund issued, and to which payme…         18         289     3437
-What happens to a duplicate charge?                  13         356     3908
-Our refund policy promises five business da…         61         406     5135
-Summarise this appendix for the support han…         89          81     1497
+PROMPT                                               IN      OUT       MS
+ping                                                  7       10     1277
+still there?                                          9       22      704
+ok                                                    7       24      940
+I was charged twice for my September order.          15      463     3441
+tell me more                                          9      104     1458
+I was charged twice for my September subscr…         19      300     3044
+When is a refund issued, and to which payme…         73       26     1026
+What happens to a duplicate charge?                  68       21      845
+Our refund policy promises five business da…         61      369     3257
+Summarise this appendix for the support han…     236534       98     8485
 
 == every prompt through gpt-5.1 ==
-provider-reported: 247 input + 2245 completion tokens
-at the declared $1.25/M in, $10.00/M out: $0.022759
-conversation wall clock: 31983 ms, of which 31970 ms (100.0%) was model calls
+provider-reported: 236802 input + 1437 completion tokens
+at the declared $1.25/M in, $10.00/M out: $0.310373
+conversation wall clock: 24491 ms, of which 24477 ms (99.9%) was model calls
 No local weights are loaded, so there is no startup cost to amortise.
-Floor, not a ceiling: the grounded prompts are sent without their retrieved notes, which a
-real all-remote implementation would have to include in the input.
+Retrieval ran for the grounded prompts here exactly as it does in the routed arm, so both
+arms sent byte-identical text and the comparison is like for like.

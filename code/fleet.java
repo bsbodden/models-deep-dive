@@ -6,11 +6,11 @@
 // 20x: qwen3-0.6b answered the same prompt in 1,169 ms alone and 23,946 ms beside the others.
 // Three threads each shares the twelve this host has.
 //RUNTIME_OPTIONS -Dmodels.native.kernels.threads=3
-//DEPS org.modeljars:modeljars:0.1.60
-//DEPS com.integrallis:models-router:0.4.1
+//DEPS org.modeljars:modeljars:0.1.61
+//DEPS com.integrallis:models-router:0.4.3
 //DEPS com.integrallis:vectors-db:0.1.30
 //DEPS com.fasterxml.jackson.core:jackson-databind:2.22.3
-//DEPS org.modeljars.composite:harriet:0.1.60
+//DEPS org.modeljars.composite:harriet:0.1.61
 //DEPS org.modeljars.huggingface:ggml-org.embeddinggemma-300m-gguf.q8_0:3.0.0-q8_0.1
 //DEPS org.modeljars.huggingface:huggingfacetb.smollm2-360m-instruct-gguf.q8_0:2.0.0-q8_0.1
 //DEPS org.modeljars.huggingface:ggml-org.qwen3-0.6b-gguf.q4_0:3.0.0-q4_0.1
@@ -127,32 +127,19 @@ class fleet {
     // "all-remote" measures the counterfactual the ledger cannot compute: what the same workload
     // costs when every prompt goes to the provider. Output tokens for prompts that never ran there
     // are not knowable from a local tokenizer, so they are billed by asking.
+    var retrieval = buildRetrieval(embedding);
     if (args.length > 0 && "all-remote".equals(args[0])) {
-      allRemote();
+      allRemote(retrieval);
       return;
     }
 
-    var retrieval = buildRetrieval(embedding);
-    var fleet = buildFleet(classifier, retrieval);
-    var tokenizer = runtime(SMALL).pipeline().tokenizer();
-
-    var budget = new RoutingBudget(new BigDecimal("0.05"));
-    var options =
-        RoutingExecutionOptions.builder()
-            .sharedBudget(budget)
-            // The fleet-wide fallback, which now only has to fit the local arms: the remote
-            // candidate declares its own ceiling.
-            .tokenBounds(new RoutingTokenBounds(4096, 512))
-            .timeout(Duration.ofMinutes(3))
-            .build();
-
-    long remoteTokens = 0;
-    long allTokens = 0;
-    long localCompletionTokens = 0;
-    // Cold load dominates a first call -- Harriet maps 2.7 GB -- so the local arms are opened and
-    // exercised once before anything is timed. Otherwise every per-call figure below would be
-    // reporting a one-off startup cost as if it were routing latency. The remote arms are not
-    // warmed, because warming them would cost money for no local benefit.
+    // Warmed before the fleet is built, and the order matters on a machine that has not run this
+    // before. ModelJarsCatalog.discover() skips any model whose weights are not on disk -- it
+    // checks the descriptor's localPath and then the content-addressed cache -- so discovery has
+    // nothing to report until the weights have been fetched, and opening each runtime is what
+    // fetches them. Warming is needed anyway: cold load dominates a first call, Harriet maps
+    // 2.7 GB, and every per-call figure below would otherwise report a one-off startup cost as
+    // routing latency. The remote arms are not warmed; that would cost money for no local benefit.
     System.out.printf("%n%-32s %9s%n", "WARMING", "LOAD MS");
     long warmTotal = 0;
     var warmers = new LinkedHashMap<String, Responder>();
@@ -170,6 +157,25 @@ class fleet {
     }
     System.out.printf("%-32s %9d%n", "total", warmTotal);
 
+    var fleet = buildFleet(classifier, retrieval);
+    var tokenizer = runtime(SMALL).pipeline().tokenizer();
+
+    var budget = new RoutingBudget(new BigDecimal("0.50"));
+    var options =
+        RoutingExecutionOptions.builder()
+            .sharedBudget(budget)
+            // Both halves are fleet-wide fallbacks sized for the local arms, because every remote
+            // candidate declares its own ceiling. This pair also sets the floor on the context a
+            // request must fit -- the execution takes input + output -- so making it large to
+            // admit one big prompt would make every small prompt unroutable.
+            .tokenBounds(new RoutingTokenBounds(4096, 512))
+            .timeout(Duration.ofMinutes(3))
+            .build();
+
+    long remoteTokens = 0;
+    long allTokens = 0;
+    long localCompletionTokens = 0;
+
     long remoteCompletionTokens = 0;
     long localRulerRemote = 0;
     // Per provider, because there is more than one and they do not cost the same.
@@ -183,14 +189,24 @@ class fleet {
     int escalated = 0;
     var work = prompts();
     System.out.printf(
-        "%n%-32s %-20s %-32s %4s %7s%n", "PROMPT", "CLASSIFIED", "SELECTED", "TOK", "MS");
+        "%n%-32s %-20s %-32s %9s %7s%n", "PROMPT", "CLASSIFIED", "SELECTED", "LOCAL IN", "MS");
     for (var prompt : work) {
       lastRemoteUsage = null;
-      int tokens = tokenizer.encode(prompt.text()).length;
+      // Retrieval happens here, before routing, so the router sizes and bills the prompt a model
+      // will actually receive -- notes included.
+      String text = resolve(retrieval, prompt);
+      int tokens = tokenizer.encode(text).length;
       allTokens += tokens;
       // A session makes the router sticky: it adds a switch margin so a conversation does not
       // hop between models on a tie. Liveness checks are not conversation turns, so they carry
       // no session and cannot anchor the session to the smallest model.
+      // Route on the instruction, size on the payload. The classifier answers by embedding its
+      // input, and an embedding model has a context window like any other -- embeddinggemma's is
+      // 2,048 tokens, so handing it a 147,019-token document throws rather than classifying.
+      // Classifying the instruction is also what you want: "summarise this appendix" is the part
+      // that says what kind of work this is, and the appendix itself says nothing about that.
+      // estimatedTokens still carries the full size, because that is what the context-window
+      // filter and the budget have to see.
       var builder = RoutingRequest.builder(prompt.text()).estimatedTokens(tokens);
       if (prompt.session() != null) builder.sessionId(prompt.session());
       var request = builder.build();
@@ -202,7 +218,7 @@ class fleet {
                 prompt.requirements(),
                 RoutingContinuity.none(),
                 options,
-                client -> client.respond(prompt.text()),
+                client -> client.respond(text),
                 answer ->
                     lastRemoteUsage != null
                         ? lastRemoteUsage
@@ -212,6 +228,12 @@ class fleet {
         System.out.printf(
             "%-44s %-14s %-18s %d%n", abbreviate(prompt.text(), 42), "-", "refused", tokens);
         System.out.printf("    refused: %s%n", denied.getMessage());
+        // New in Models 0.3.60: the spend is recoverable even though the guard refused the result.
+        System.out.printf(
+            "    billed anyway: %s input + %s completion, $%s%n",
+            denied.billedUsage().map(u -> String.valueOf(u.inputTokens())).orElse("-"),
+            denied.billedUsage().map(u -> String.valueOf(u.outputTokens())).orElse("-"),
+            denied.billedCost().map(java.math.BigDecimal::toPlainString).orElse("-"));
         continue;
       }
       var chosen = result.decision().selected();
@@ -237,9 +259,9 @@ class fleet {
               : result.attempts().getLast().duration().toMillis();
       callMillis.computeIfAbsent(chosen.id(), key -> new ArrayList<>()).add(millis);
       System.out.printf(
-          "%-32s %-20s %-32s %4d %7d%n",
+          "%-32s %-20s %-32s %9d %7d%n",
           abbreviate(prompt.text(), 30),
-          describeClassification(pretrained, prompt.text(), result.decision().taskType()),
+          describeClassification(pretrained, text, result.decision().taskType()),
           abbreviate(chosen.id(), 32),
           tokens,
           millis);
@@ -300,20 +322,20 @@ class fleet {
     // actually ran: with one remote that was a detail, with three it is the whole point.
     // region: ledger
     if (!remoteSpend.isEmpty()) {
-      System.out.printf("%-20s %8s %12s %12s%n", "REMOTE PROVIDER", "IN", "COMPLETION", "COST");
+      System.out.printf("%-20s %8s %8s %12s%n", "REMOTE PROVIDER", "IN", "OUT", "COST");
       var total = BigDecimal.ZERO;
       for (var entry : remoteSpend.entrySet()) {
         long[] t = remoteTokensBy.get(entry.getKey());
         total = total.add(entry.getValue());
         System.out.printf(
-            "%-20s %8d %12d %12s%n",
+            "%-20s %8d %8d %12s%n",
             entry.getKey(),
             t[0],
             t[1],
             "$" + entry.getValue().setScale(6, RoundingMode.HALF_UP).toPlainString());
       }
       System.out.printf(
-          "%-20s %8d %12d %12s%n",
+          "%-20s %8d %8d %12s%n",
           "total",
           remoteTokens,
           remoteCompletionTokens,
@@ -335,7 +357,7 @@ class fleet {
             .setScale(6, RoundingMode.HALF_UP)
             .toPlainString());
     System.out.printf(
-        "router-accounted spend: $%s of the $0.05 shared budget%n",
+        "router-accounted spend: $%s of the $0.50 shared budget%n",
         budget.snapshot().spent().setScale(6, RoundingMode.HALF_UP).toPlainString());
 
     for (var open : OPEN.values()) {
@@ -400,19 +422,30 @@ class fleet {
             .build();
     // endregion
     // Three remote providers, not one. Each is an ordinary candidate with its own prices, ceiling
-    // and client. Only the premium one claims `reasoning`; all three claim `long-context`, so a
-    // long document is decided between them on policy rather than on vendor.
+    // and client. Only the premium one claims `reasoning`. Their context windows -- 200k to 1M --
+    // are what makes them the only candidates left for the appendix, and which of the three serves
+    // it is then decided on policy rather than on vendor.
     // region: providers
     var premium =
         ModelCandidate.builder(PREMIUM)
             .local(false)
-            .capabilities(Set.of("chat", "reasoning", "summarization", "long-context"))
+            .capabilities(Set.of("chat", "reasoning", "summarization"))
             .costPerMillionTokens(PREMIUM_IN, PREMIUM_OUT)
             // New in Models 0.3.60. A reasoning model bills its reasoning as completion, so it
             // cannot share an output ceiling with a model that answers a liveness check in eight
             // tokens. The execution-wide bound stays small for the local arms.
             .maxOutputTokens(PREMIUM_CAP)
-            .contextWindow(400000)
+            // New in Models 0.4.3, and the mirror of maxOutputTokens. The fleet-wide input bound
+            // has to stay small, because the execution takes input + output as the context every
+            // request must fit: raise it and a one-token liveness check demands a window no local
+            // model has. So the ceiling belongs on the candidate that can honour it.
+            // 272,000, not the 400,000 a tracker lists. The provider is the authority and it
+            // says so in its own refusal: "Input tokens exceed the configured limit of 272000
+            // tokens. Your messages resulted in 284034 tokens." A declared window that is too
+            // generous does not fail at routing time; it fails at the provider, after the
+            // request was built and sent.
+            .maxInputTokens(272_000)
+            .contextWindow(272000)
             .timeToFirstTokenMillis(850)
             .tokensPerSecond(90)
             .quality(Map.of("chat", 0.95, "reasoning", 0.96, "summarization", 0.94))
@@ -420,9 +453,10 @@ class fleet {
     var economy =
         ModelCandidate.builder(ECONOMY)
             .local(false)
-            .capabilities(Set.of("chat", "summarization", "long-context"))
+            .capabilities(Set.of("chat", "summarization"))
             .costPerMillionTokens(ECONOMY_IN, ECONOMY_OUT)
             .maxOutputTokens(ECONOMY_CAP)
+            .maxInputTokens(1_000_000)
             .contextWindow(1000000)
             .timeToFirstTokenMillis(400)
             .tokensPerSecond(140)
@@ -431,13 +465,14 @@ class fleet {
     var haiku =
         ModelCandidate.builder(HAIKU)
             .local(false)
-            .capabilities(Set.of("chat", "summarization", "long-context"))
+            .capabilities(Set.of("chat", "summarization"))
             .costPerMillionTokens(HAIKU_IN, HAIKU_OUT)
             // New in Models 0.4.0. The provider's step is "over 100k", and the threshold is
             // inclusive, so it is declared one token above. Crossing it reprices the whole
             // request, output included.
             .pricingTier(100_001, HAIKU_HIGH_IN, HAIKU_HIGH_OUT)
             .maxOutputTokens(HAIKU_CAP)
+            .maxInputTokens(200_000)
             .contextWindow(200000)
             .timeToFirstTokenMillis(300)
             .tokensPerSecond(120)
@@ -456,7 +491,7 @@ class fleet {
         .policy(RoutingPolicy.BALANCED)
         .model(tiny, prompt -> acknowledge(TINY, prompt))
         .model(small, prompt -> chat(SMALL, prompt, 80))
-        .model(grounder, prompt -> ground(retrieval, prompt))
+        .model(grounder, fleet::ground)
         .model(decisions, fleet::decide)
         // One fleet, three remote clients. Each closure is where a provider's SDK would live, so
         // models-router never learns any of their names.
@@ -470,9 +505,10 @@ class fleet {
   /**
    * The discovered candidate for one catalog id, as a builder ready to be adjusted.
    *
-   * <p>Discovery is driven by the classpath: a marker jar carries its model's descriptor, so a
-   * model is reported whether or not its weights have been downloaded. An absent id therefore
-   * means a missing dependency, not a cold cache.
+   * <p>Discovery reports only models whose weights are already on disk: `ModelJarsCatalog` checks
+   * the descriptor's local path and then the content-addressed cache, and skips anything it does
+   * not find. An absent id here therefore means the weights have not been fetched yet, which is
+   * why the arms above are warmed first.
    */
   static ModelCandidate.Builder discovered(Map<String, ModelCandidate> catalog, String id) {
     var found = catalog.get(id);
@@ -482,12 +518,101 @@ class fleet {
               + id
               + "; discovery found "
               + catalog.keySet()
-              + ". Check the //DEPS marker jars at the top of this file.");
+              + ". Weights are fetched when a runtime is opened, so this means warming did not"
+              + " run or did not complete.");
     }
     return found.toBuilder();
   }
 
-  record Prompt(String text, RoutingRequirements requirements, String session) {}
+  /**
+   * A billing appendix long enough that no local arm in this fleet can hold it.
+   *
+   * <p>The local chat models' context windows are 8,192, 40,960 and 131,072 tokens, read from their
+   * artifacts by the catalog. This is built to exceed all three, so the router's own
+   * {@code contextWindow < estimatedTokens} filter -- not a capability label -- is what leaves only
+   * the remote candidates eligible. Generated rather than stored so the repository does not carry
+   * a megabyte of filler, and deterministic so every run measures the same input.
+   *
+   * <p>It is also sized well past Haiku's 200,000-token window rather than just past the local
+   * ones, because eligibility is decided on a local estimate and billed on the provider's count,
+   * and the two disagree by more than the margin would survive. Measured on this document at half
+   * this length: 147,011 tokens by the local qwen3-0.6b tokenizer, 141,534 at OpenAI, and 219,559
+   * at Anthropic. A 147k estimate fits a 200k window; the 219k the provider actually counted does
+   * not, and the attempt was refused after it had been paid for.
+   */
+  static String appendix() {
+    var text = new StringBuilder(1_500_000);
+    text.append(
+        "Appendix B. Billing reconciliation and refund policy, consolidated clauses.\n\n");
+    for (int clause = 1; clause <= 2_500; clause++) {
+      text.append("Clause ")
+          .append(clause)
+          .append(". Under settlement variant ")
+          .append(clause % 37)
+          .append(", a refund is issued to the original payment method within five business days,")
+          .append(" unless the originating charge was already reconciled in the same nightly")
+          .append(" cycle, in which case the automatic reversal takes precedence and the refund")
+          .append(" is voided to avoid crediting the cardholder twice. Reconciliation runs at")
+          .append(" 02:00 UTC and retries twice on failure; a reversal that fails twice is")
+          .append(" escalated to the billing queue with the original charge id.\n");
+    }
+    return text.toString();
+  }
+
+  /**
+   * One turn of the conversation.
+   *
+   * @param text what the user typed
+   * @param requirements what answering it needs
+   * @param session conversation id, or null for a turn that carries no history
+   * @param retrieve whether this turn is grounded, and so must have context retrieved and attached
+   *     before any model sees it
+   */
+  record Prompt(
+      String text,
+      RoutingRequirements requirements,
+      String session,
+      boolean retrieve,
+      String attachment) {
+
+    Prompt(String text, RoutingRequirements requirements, String session) {
+      this(text, requirements, session, false, null);
+    }
+
+    Prompt(String text, RoutingRequirements requirements, String session, boolean retrieve) {
+      this(text, requirements, session, retrieve, null);
+    }
+  }
+
+  /**
+   * The text a model actually receives, retrieval included.
+   *
+   * <p>Both arms call this, so a grounded question is byte-identical whether it is answered locally
+   * or by a provider. Retrieval happens per call, as it would in a real system: embed the question,
+   * search the collection, attach what comes back. Skipping it in one arm would make that arm look
+   * cheaper for a reason that has nothing to do with routing -- it would simply be answering a
+   * different, shorter question.
+   */
+  static String resolve(VectorCollection retrieval, Prompt prompt) {
+    if (prompt.attachment() != null) {
+      return prompt.text() + "\n\n" + prompt.attachment();
+    }
+    if (!prompt.retrieve()) {
+      return prompt.text();
+    }
+    var embedding = (EmbeddingBackend) OPEN.get(EMBEDDER);
+    var hits =
+        retrieval.search(SearchRequest.builder(embedding.embed(prompt.text()), 2).build()).hits();
+    var context = new StringBuilder();
+    for (var hit : hits) {
+      context.append(hit.document().text()).append(' ');
+    }
+    return "Notes: "
+        + context.toString().strip()
+        + "\nUsing only those notes, answer in one sentence. If they do not contain the answer,"
+        + " say that you do not know.\nQuestion: "
+        + prompt.text();
+  }
 
   /** One support session: liveness, follow-ups, closed decisions, grounded questions, synthesis. */
   static List<Prompt> prompts() {
@@ -509,9 +634,11 @@ class fleet {
             .build();
     var decision = RoutingRequirements.builder().requireCapability("decision").build();
     var synthesis = RoutingRequirements.builder().requireCapability("reasoning").build();
-    // No local model claims long-context, so this must go remote. Which remote is then a policy
-    // question among three providers rather than a vendor choice written into the code.
-    var longContext = RoutingRequirements.builder().requireCapability("long-context").build();
+    // Nothing here says "go remote". The appendix is larger than any local arm's context window,
+    // so ModelRouter.eligible rules them out on `contextWindow < estimatedTokens` and only the
+    // three remotes are left. Which of them serves it is a policy question, not a vendor decision
+    // written into the code.
+    var longDocument = RoutingRequirements.builder().requireCapability("summarization").build();
     // endregion
     return List.of(
         new Prompt("ping", liveness, null),
@@ -523,8 +650,8 @@ class fleet {
             "I was charged twice for my September subscription and no refund arrived.",
             decision,
             null),
-        new Prompt("When is a refund issued, and to which payment method?", grounded, "s-1"),
-        new Prompt("What happens to a duplicate charge?", grounded, "s-1"),
+        new Prompt("When is a refund issued, and to which payment method?", grounded, "s-1", true),
+        new Prompt("What happens to a duplicate charge?", grounded, "s-1", true),
         new Prompt(
             "Our refund policy promises five business days to the original payment method, while"
                 + " duplicate charges reverse automatically on the nightly reconciliation. Those"
@@ -534,14 +661,11 @@ class fleet {
             synthesis,
             "s-1"),
         new Prompt(
-            "Summarise this appendix for the support handbook, in two sentences. Refunds are"
-                + " issued to the original payment method within five business days. A duplicate"
-                + " charge is reversed automatically once billing reconciliation runs nightly."
-                + " Account closures require written confirmation from the account holder."
-                + " Reconciliation runs at 02:00 UTC and retries twice on failure. A reversal that"
-                + " fails twice is escalated to the billing queue with the original charge id.",
-            longContext,
-            null));
+            "Summarise this appendix for the support handbook, in two sentences.",
+            longDocument,
+            null,
+            false,
+            appendix()));
   }
 
   /** Sends every prompt to the provider and totals its own reported usage. */
@@ -551,17 +675,17 @@ class fleet {
    * <p>This is the baseline the routed arm is measured against, and it is deliberately the obvious
    * implementation -- one client, one model, one loop.
    */
-  static void allRemote() throws Exception {
+  static void allRemote(VectorCollection retrieval) throws Exception {
     long input = 0;
     long output = 0;
     long sessionStart = System.nanoTime();
     long accounted = 0;
     // region: baseline
-    System.out.printf("%n%-46s %8s %11s %8s%n", "PROMPT", "IN", "COMPLETION", "MS");
+    System.out.printf("%n%-46s %8s %8s %8s%n", "PROMPT", "IN", "OUT", "MS");
     for (var prompt : prompts()) {
       lastRemoteUsage = null;
       long began = System.nanoTime();
-      var answer = callOpenAi(PREMIUM, PREMIUM_CAP, prompt.text());
+      var answer = callOpenAi(PREMIUM, PREMIUM_CAP, resolve(retrieval, prompt));
       long millis = (System.nanoTime() - began) / 1_000_000;
       accounted += millis;
       if (lastRemoteUsage == null) {
@@ -571,7 +695,7 @@ class fleet {
       input += lastRemoteUsage.inputTokens();
       output += lastRemoteUsage.outputTokens();
       System.out.printf(
-          "%-46s %8d %11d %8d%n",
+          "%-46s %8d %8d %8d%n",
           abbreviate(prompt.text(), 44),
           lastRemoteUsage.inputTokens(),
           lastRemoteUsage.outputTokens(),
@@ -598,8 +722,8 @@ class fleet {
         sessionMillis, accounted, 100.0 * accounted / sessionMillis);
     System.out.println("No local weights are loaded, so there is no startup cost to amortise.");
     System.out.println(
-        "Floor, not a ceiling: the grounded prompts are sent without their retrieved notes, which a");
-    System.out.println("real all-remote implementation would have to include in the input.");
+        "Retrieval ran for the grounded prompts here exactly as it does in the routed arm, so both");
+    System.out.println("arms sent byte-identical text and the comparison is like for like.");
   }
 
   // ---- arms -------------------------------------------------------------------------------
@@ -645,19 +769,9 @@ class fleet {
   }
 
   /** Retrieval plus a small local model: the ordinary RAG shape, reachable only via "grounding". */
-  static String ground(VectorCollection retrieval, String prompt) {
-    var embedding = (EmbeddingBackend) OPEN.get(EMBEDDER);
-    var hits = retrieval.search(SearchRequest.builder(embedding.embed(prompt), 2).build()).hits();
-    var context = new StringBuilder();
-    for (var hit : hits) context.append(hit.document().text()).append(' ');
-    return generate(
-        GROUNDER,
-        "Notes: "
-            + context.toString().strip()
-            + "\nUsing only those notes, answer in one sentence. If they do not contain the"
-            + " answer, say that you do not know.\nQuestion: "
-            + prompt,
-        64);
+  /** The grounded arm receives an already-retrieved prompt, so it only generates. */
+  static String ground(String groundedPrompt) {
+    return generate(GROUNDER, groundedPrompt, 64);
   }
 
   /** Closed answer spaces: one forward pass, no generated prose to parse or repair. */

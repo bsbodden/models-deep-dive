@@ -1,7 +1,7 @@
 //JAVA 25
 //RUNTIME_OPTIONS --add-modules=jdk.incubator.vector
 //RUNTIME_OPTIONS --enable-native-access=ALL-UNNAMED -Xmx4g
-//DEPS org.modeljars:modeljars:0.1.60
+//DEPS org.modeljars:modeljars:0.1.61
 //DEPS org.modeljars.huggingface:cstr.ms-marco-minilm-l-6-v2-gguf.q4_k_imatrix_g7c_f7:2.0.0-q4_k_imatrix_g7c_f7.2
 
 import java.util.List;
