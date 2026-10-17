@@ -92,6 +92,13 @@ startup. It is what most of these applications actually look like.
 
 ## What that costs
 
+Three columns, and it is worth being precise about them because the router's table later uses a
+different ruler. **IN** and **COMPLETION** are the provider's own numbers, lifted from the `usage`
+object on its response — `prompt_tokens` and `completion_tokens` for OpenAI, `input_tokens` and
+`output_tokens` for Anthropic, normalised into one `RoutingUsage` by whichever client made the call.
+They are what you are billed for: input is everything the model was given, completion is everything
+it generated. **MS** is wall-clock latency for the call, measured around it.
+
 ```
 PROMPT                                               IN  COMPLETION       MS
 ping                                                  7          10     2639
@@ -290,6 +297,14 @@ fleet does not know or care.
 
 ## What the router does
 
+Same ten prompts, same order. **CLASSIFIED** is what the local classifier made of the prompt and how
+close the match was; **SELECTED** is the model the router chose. **TOK** is deliberately not the
+same measurement as `IN` above: it is the *local* qwen3-0.6b tokenizer's count of the prompt text,
+the only ruler that can measure a prompt that never leaves the machine. It reads lower than a
+provider's figure for the same words — `ping` is 1 token here and 7 at OpenAI — because the provider
+tokenizes differently and also counts the chat envelope it wraps the message in. The two are kept
+apart everywhere below: shares are quoted on the local ruler, bills on the provider's.
+
 ```
 WARMING                            LOAD MS
 smollm2_360m_instruct_q8_0            2249
@@ -362,6 +377,10 @@ honestly instead of guessing a task and silently applying the wrong quality colu
 
 ### The bill
 
+`IN` and `COMPLETION` are the providers' own numbers again, so this table is directly comparable
+with the no-router one; `COST` is `ModelCandidate.costOf` applied to the candidate that actually
+ran, at that candidate's declared prices.
+
 ```
 == ledger ==
 10 prompts, 2 escalated to a remote provider, 8 answered on local weights
@@ -398,6 +417,9 @@ tokens to 204 — but because 1,577 completion tokens were never bought. The sav
 frontier model to generate output that did not need generating.
 
 ### The time
+
+One row per model: how many calls it took, the total and mean wall-clock time for them, and `SHARE`,
+that model's slice of the whole conversation's wall clock.
 
 ```
 == timing, warm ==
