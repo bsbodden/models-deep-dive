@@ -467,6 +467,38 @@ $0.009959 on gpt-5.1 -- **3.2%** of the bill. On this workload keeping them loca
 either way, and the saving is one provider choice on one document. On a workload of ten thousand
 heartbeats it inverts. The article states both and does not pretend the mix is universal.
 
+**18. An unsourced number did not survive being measured (null published).** The article claimed
+four resident runtimes "made qwen3-0.6b twenty times slower than it is alone" -- 1,169 ms against
+23,946 ms -- and that capping each runtime at three threads fixed it. Neither figure had a committed
+artifact; both came from an earlier session and were never re-derived.
+
+Measured by `code/oversubscription.java`, which times the same prompt with qwen3-0.6b alone and then
+with three other runtimes resident, run with and without the cap
+(`evidence/fleet-routing/oversubscription.log`):
+
+```
+default: every runtime sizes for all 12 cores
+  qwen3-0.6b alone                   3152 ms
+  qwen3-0.6b beside three others     3749 ms   (1.2x)
+
+-Dmodels.native.kernels.threads=3
+  qwen3-0.6b alone                   3584 ms
+  qwen3-0.6b beside three others     3827 ms   (1.1x)
+```
+
+The effect is **1.2x, not 20x**, and the cap does not improve it -- it is slightly slower on its own.
+The 23,946 ms almost certainly came from a load-contaminated run of the kind finding 11 describes,
+measured before the harness rejected those. The claim is withdrawn and the measurement published as
+it came out. The script still sets the cap, because the published run was measured with it, and the
+article says that rather than implying the cap earned its place.
+
+**19. "115% slower" was true and badly framed.** The routed arm takes 52,588 ms against the
+baseline's 24,491 ms, warm against warm. But routing imposes no such tax: two prompts account for
++23,424 ms of the +23,435 ms, and both are destinations the `BALANCED` policy chose -- the appendix
+to gpt-4.1-mini, cheaper per token and slower, and the closed decision to a 4B model on CPU.
+Everything else nets to +11 ms, and the three heartbeats are 5-9x faster locally. The article now
+attributes the latency to the two choices rather than to routing as such.
+
 ### Where the other implementations on this machine put this line
 
 Read from the clones on this machine, with paths, not from their documentation. Two of the three

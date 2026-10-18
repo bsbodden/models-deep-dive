@@ -437,9 +437,15 @@ conversation wall clock: 52588 ms, of which 47912 ms (91.1%) was model calls
 one-off load of the four local models: 25503 ms, paid once at startup, not per request
 ```
 
-**Routing made this conversation slower, and not by a little.** 52,588 ms against the no-router
-run's 24,491 ms — **115% slower** — before the 25,503 ms of one-off model loading, which a
-long-lived server amortises to nothing and a short script does not.
+**This fleet answered the conversation in 52,588 ms against the no-router run's 24,491 ms** — 2.15×,
+warm against warm, with the routed arm's 25,503 ms of one-off model loading excluded from both and
+reported separately.
+
+That is not a tax routing imposes. Two prompts account for **+23,424 ms of the +23,435 ms** total,
+and both are destinations the policy chose on purpose: the appendix went to gpt-4.1-mini, which is
+cheaper per token and slower, and the closed decision went to a 4B model on this laptop's CPU.
+Everything else nets out at **+11 ms**. Send the appendix to gpt-5.1 instead and the gap nearly
+closes, at three times the price.
 
 Per prompt the picture is not uniform:
 
@@ -460,11 +466,11 @@ almost four times. And the appendix is slower for a reason worth naming: the rou
 gpt-4.1-mini, which is cheaper per token *and* slower, so the cost saving and the latency cost are
 the same decision seen from two sides.
 
-So the honest summary on this workload is **a 3.13× cost reduction bought with a 2.15× wall-clock
-regression**. Whether that is a good trade depends entirely on the mix. Ten thousand heartbeats and
-it is obvious; one long document and a calibrated decision, as here, and you are paying latency to
-save money and to keep customer text on your own machine. The router does not decide that for you —
-it makes the trade explicit and lets the policy pick.
+So on this mix the fleet was **3.13× cheaper and 2.15× slower**, and both numbers come from the
+same two decisions. Change the weights and you change the answer: `FASTEST` would have kept the
+appendix on gpt-5.1 and the decision off Harriet, and bought back most of the 23 seconds at three
+times the cost. The router does not decide which you want. It makes the trade explicit, prices both
+sides, and lets the policy pick.
 
 Those shapes hold across runs on an unloaded machine. The absolute numbers do not survive a busy
 one: at load average 39, qwen3-0.6b reported **25,163 ms** for a call it answers in about 3,000 ms
@@ -473,11 +479,14 @@ contended run once reported 96.1% while every per-call figure was inflated eight
 contention slows the calls themselves rather than descheduling the process between them. The runs
 here are gated on a known model's mean against its quiet baseline, and rejected when it drifts.
 
-The 28 seconds of loading above the table is paid once. Four models stay resident, which is what a
-server does, and a resident fleet needs one explicit decision: each native runtime otherwise sizes
-its worker pool for every logical CPU, so four pools on twelve cores oversubscribe badly. The same
-prompt qwen3-0.6b answers in 1,169 ms alone took 23,946 ms beside the others until the script gave
-each runtime three threads.
+The 25 seconds of loading above the table is paid once. Four models then stay resident, which is
+what a server does, and each native runtime sizes its worker pool for every logical CPU unless told
+otherwise — four pools on twelve cores. Measured on this host by
+[`oversubscription.java`](code/oversubscription.java), that costs less than it sounds: the same
+prompt takes **3,152 ms** with qwen3-0.6b alone and **3,749 ms** with three other runtimes resident,
+a factor of 1.2. Capping each runtime at three threads did not improve it — 3,584 ms and 3,827 ms,
+and slower on its own. The script still sets the cap; this measurement does not justify it, and the
+figure is published as it came out.
 
 ### Where these numbers come from
 
@@ -510,13 +519,14 @@ boundary for freshness, which is a deployment's call, not a library's — and th
 real: a declared price goes stale silently. Citations are in
 [the run record](evidence/fleet-routing/RESULTS.md).
 
-Two caveats on the comparison itself. The no-router figure is a floor, because its grounded prompts
-were sent without the retrieved notes a real implementation would have to include in the input. And
-the headline percentage moves: gpt-5.1 bills its reasoning as completion tokens and does not spend
-the same amount twice, so four pairs on these same prompts at these same prices came out at 74.3%,
-69.4% and 74.6% on the short-document version of this conversation, and 68.0% here. Read it as
+One thing about the comparison itself. The headline percentage moves between runs, because gpt-5.1
+bills its reasoning as completion tokens and does not spend the same amount twice: measured pairs on
+these prompts at these prices have come out at 74.3%, 69.4%, 74.6% and the 68.0% above. Read it as
 roughly **70%, a factor of three**, and expect it to move with how much reasoning the provider
 decides to bill.
+
+Both arms send byte-identical text, retrieval included, so the input side is a like-for-like
+measurement rather than an estimate.
 
 ## Inside the router
 
@@ -765,10 +775,13 @@ clear them — otherwise `tell me more`, the only prompt here that clears the si
 no model tagged `summarization` and the conversation dies. Nothing in a passing run tells you which
 of the two states you are in, which is the argument for setting the field rather than leaving it.
 
-**A resident fleet has to be told how to share a machine.** Four models held open, each sizing a
-worker pool for all twelve cores, made qwen3-0.6b twenty times slower than it is alone. Three
-threads each fixed it. This is the cost of keeping models warm, and it is worth paying — but only
-once you have said how.
+**Keeping four models resident costs less than expected, and the obvious fix does not work.**
+Holding three other runtimes open while qwen3-0.6b answers takes it from 3,152 ms to 3,749 ms, a
+factor of 1.2 — not the collapse that four worker pools on twelve cores suggests. Capping each
+runtime at three threads, which is what the script does, measured no better: 3,584 ms alone and
+3,827 ms beside. Both numbers are in
+[`oversubscription.log`](evidence/fleet-routing/oversubscription.log), and the cap stays in the
+script only because the run above was measured with it.
 
 The run record carries all five with their numbers and the runs that produced them.
 

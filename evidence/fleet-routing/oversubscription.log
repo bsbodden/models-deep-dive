@@ -1,0 +1,9 @@
+=== default: every runtime sizes for all 12 cores ===
+models.native.kernels.threads = (unset: every core)
+qwen3-0.6b alone                   3152 ms
+qwen3-0.6b beside three others     3749 ms   (1.2x)
+
+=== -Dmodels.native.kernels.threads=3 ===
+models.native.kernels.threads = 3
+qwen3-0.6b alone                   3584 ms
+qwen3-0.6b beside three others     3827 ms   (1.1x)
