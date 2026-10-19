@@ -376,6 +376,101 @@ def provider_latency_region(routed: str, remote: str) -> str:
     ])
 
 
+HEARTBEAT_ORDER = ("ping", "still there?", "ok")
+
+
+def summary_region(routed: str, remote: str) -> str:
+    """The whole comparison on one screen, derived from every archived pair on the current pin.
+
+    Written as a range per row rather than a single reading, because one of these rows is a
+    property of the fleet and the rest are a property of the afternoon, and a table of single
+    numbers hides which is which. The accuracy row is deliberately empty: neither arm's answers
+    were scored, and a cost-and-latency harness cannot be stretched into a quality measurement.
+    """
+    found = pairs()
+    if not found:
+        raise SystemExit("no archived pairs on the current pin")
+
+    costs, base_costs, factors, walls, base_walls = [], [], [], [], []
+    locals_, remotes, beats, startups, local_answered, total_prompts = [], [], [], [], set(), set()
+    appendix, local_token_share = [], []
+
+    for stamp, routed_ms, base_ms, local in found:
+        rt = (RUNS / f"{stamp}-routed.log").read_text()
+        bt = (RUNS / f"{stamp}-all-remote.log").read_text()
+        providers, routed_cost = d.ledger(rt)
+        _, _, _, _, base_cost = d.all_remote_total(bt)
+        rows, far = d.routed_prompt_rows(rt), d.all_remote_rows(bt)
+
+        costs.append(routed_cost)
+        base_costs.append(base_cost)
+        factors.append(base_cost / routed_cost)
+        walls.append(routed_ms)
+        base_walls.append(base_ms)
+        locals_.append(local)
+        remotes.append(routed_ms - local)
+        startups.append(int(re.search(r"one-off load of the four local models: (\d+) ms", rt).group(1)))
+
+        escalated = {i for i, row in enumerate(rows) if row[1] in set(providers)}
+        local_answered.add(len(rows) - len(escalated))
+        total_prompts.add(len(rows))
+        beats += [(far[i][3], rows[i][3]) for i, row in enumerate(far)
+                  if row[0] in HEARTBEAT_ORDER]
+        appendix.append(max(far, key=lambda r: r[1])[3])
+        share = re.search(r"input tokens were routed off this machine \(([\d.]+)%\)", rt)
+        if share:
+            local_token_share.append(float(share.group(1)))
+
+    def span(values, unit="ms", fmt=",.0f"):
+        low, high = min(values), max(values)
+        if low == high:
+            return f"{low:{fmt}} {unit}".strip()
+        return f"{low:{fmt}}–{high:{fmt}} {unit}".strip()
+
+    def money_span(values):
+        low, high = min(values), max(values)
+        return money(low) if low == high else f"{money(low)}–{money(high)}"
+
+    beat_ratios = [b / r for b, r in beats]
+    premium = re.search(r"had every prompt gone to (\S+):", routed).group(1)
+
+    rows_out = [
+        ("**Cost, all " + str(next(iter(total_prompts))) + " prompts**",
+         f"**{money_span(costs)}**", money_span(base_costs)),
+        ("Cost factor",
+         f"**{min(factors):.2f}× to {max(factors):.2f}× cheaper**, and steady: the prompts fix the "
+         "token counts", "—"),
+        ("**Wall clock, warm**", f"**{span(walls)}**", span(base_walls)),
+        ("Latency ratio",
+         f"**{min(walls[i] / base_walls[i] for i in range(len(walls))):.2f}× to "
+         f"{max(walls[i] / base_walls[i] for i in range(len(walls))):.2f}×** over "
+         f"{len(found)} pairs" + (", routed faster in one of them"
+             if any(walls[i] < base_walls[i] for i in range(len(walls))) else ""), "—"),
+        ("Latency you can rely on",
+         f"local portion {span(locals_)}, a **{max(locals_) / min(locals_):.2f}× spread**",
+         f"all of it is the other kind: the routed arm's own remote portion spans "
+         f"**{max(remotes) / min(remotes):.2f}×**, and one byte-identical provider call spans "
+         f"**{max(appendix) / min(appendix):.2f}×**"),
+        (f"The {len(HEARTBEAT_ORDER)} heartbeats",
+         f"**{span([r for _, r in beats])}**",
+         f"{span([b for b, _ in beats])} — {min(beat_ratios):.1f}× to {max(beat_ratios):.1f}× slower"),
+        ("Startup",
+         f"**{span(startups)}** to load four local models, paid once, excluded from every "
+         "per-request figure above", "none"),
+        ("Data boundary",
+         f"**{next(iter(local_answered))} of {next(iter(total_prompts))} prompts never left the "
+         f"machine**; by token count {max(local_token_share):.1f}% still did, because the one "
+         "appendix dwarfs the other nine prompts",
+         f"every prompt and every token goes to {premium}"),
+        ("**Accuracy**", "**not measured**", "**not measured**"),
+    ]
+
+    return "\n".join(
+        [f"| | Routed fleet — four local models and three providers | Every prompt to {premium} |",
+         "| --- | --- | --- |"]
+        + [f"| {axis} | {left} | {right} |" for axis, left, right in rows_out])
+
+
 def verify_prose(article: str, routed: str) -> None:
     """Fail on a six-figure number in the prose that no committed artifact supports.
 
@@ -422,6 +517,7 @@ def verify_prose(article: str, routed: str) -> None:
 
 REGIONS = {
     "baseline": baseline_region,
+    "summary": summary_region,
     "grouping": grouping_region,
     "provider-latency": provider_latency_region,
     "cost": cost_region,

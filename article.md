@@ -1066,6 +1066,41 @@ content-addressed cache, and skips what it cannot find — so run `chat.java` an
 before `route.java`. Discovery never downloads anything; opening a runtime is what fetches, which is
 why `fleet.java` warms its four local arms before it builds its fleet.
 
+## The two arms, side by side
+
+Everything above, on one screen. Each row is a range over the three archived pairs rather than one
+reading, because one of these rows is a property of the fleet and most of the rest are properties of
+the afternoon, and a table of single numbers hides which is which.
+
+<!-- figures:summary -->
+| | Routed fleet — four local models and three providers | Every prompt to gpt-5.1 |
+| --- | --- | --- |
+| **Cost, all 10 prompts** | **$0.099425–$0.099695** | $0.311083–$0.316293 |
+| Cost factor | **3.12× to 3.18× cheaper**, and steady: the prompts fix the token counts | — |
+| **Wall clock, warm** | **37,694–58,446 ms** | 34,574–49,230 ms |
+| Latency ratio | **0.94× to 1.42×** over 3 pairs, routed faster in one of them | — |
+| Latency you can rely on | local portion 22,104–22,501 ms, a **1.02× spread** | all of it is the other kind: the routed arm's own remote portion spans **2.36×**, and one byte-identical provider call spans **4.51×** |
+| The 3 heartbeats | **151–246 ms** | 1,082–1,997 ms — 5.7× to 12.0× slower |
+| Startup | **30,613–31,330 ms** to load four local models, paid once, excluded from every per-request figure above | none |
+| Data boundary | **8 of 10 prompts never left the machine**; by token count 99.9% still did, because the one appendix dwarfs the other nine prompts | every prompt and every token goes to gpt-5.1 |
+| **Accuracy** | **not measured** | **not measured** |
+<!-- end:figures:summary -->
+
+Routing buys a bill three times smaller and a latency you can predict. It does not reliably buy a
+smaller latency: on this mix it landed on both sides of parity across three runs of identical code.
+The cost column is the one that holds still, because the prompts fix the token counts and nothing
+about somebody else's queue can move them.
+
+The empty row is the honest one, and it is not a detail. The whole argument for routing is that a
+360M model answering `ping`, and a 1B model quoting three retrieved sentences, are good enough — and
+this harness never tests that. It measures what each arm charged and how long it took, not whether
+the answers were right. What exists nearby is weaker than it sounds: Harriet's rubric figures are
+about rubrics rather than about local against frontier, and each local model's catalog qualification
+is measured against its own baseline rather than against `gpt-5.1` on these ten prompts. Filling
+that column means a different experiment — both arms' answers judged under one protocol at matched
+retrieval budgets, on prompts nobody here wrote — and it is not one a cost-and-latency harness can
+be stretched into.
+
 ## What this adds up to
 
 A catalog is only interesting if you can choose from it, and choosing by hand does not scale past
