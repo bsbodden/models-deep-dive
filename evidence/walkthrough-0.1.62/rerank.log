@@ -1,0 +1,14 @@
+[jbang] Resolving dependencies...
+[jbang]    org.modeljars:modeljars:0.1.62
+[jbang]    org.modeljars.huggingface:cstr.ms-marco-minilm-l-6-v2-gguf.q4_k_imatrix_g7c_f7:2.0.0-q4_k_imatrix_g7c_f7.2
+[jbang] Dependencies resolved
+[jbang] Building jar for rerank.java...
+WARNING: Using incubator modules: jdk.incubator.vector
+Query: How many people live in Berlin?
+Rank  Score       Document
+   1    8.708755  Berlin has a population of 3,520,031 registered inhabitants.
+   2   -3.362205  Berlin is well known for its museums and metropolitan area.
+   3  -10.987034  Paris is the capital and most populous city of France.
+
+Load:      496 ms
+Execution: 1,495 ms

@@ -1,0 +1,11 @@
+[jbang] Resolving dependencies...
+[jbang]    org.modeljars:modeljars:0.1.62
+[jbang]    org.modeljars.huggingface:liquidai.lfm2.5-embedding-350m-gguf.q4_0:2.5.0-q4_0.1
+[jbang] Dependencies resolved
+[jbang] Building jar for embed.java...
+WARNING: Using incubator modules: jdk.incubator.vector
+Input:     Public transit connects people and cities.
+First eight components: [-0.014879334, 9.298991E-4, 0.008527548, -0.0026449468, -0.031594288, -0.0085636815, -0.043605085, 0.022970349]
+Dimensions: 1,024
+Load:       1,394 ms
+Execution:   1,072 ms

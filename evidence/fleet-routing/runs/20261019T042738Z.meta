@@ -5,3 +5,5 @@ load after routed arm: not captured
 qwen3-0.6b mean: 3317 ms (acceptance ceiling 8000), read from the pair's own timing table
 waited for quiet: unknown
 host: i9-14900HX, AVX2, no AVX-512
+pin: org.modeljars:modeljars:0.1.61
+pin: org.modeljars.composite:harriet:0.1.61

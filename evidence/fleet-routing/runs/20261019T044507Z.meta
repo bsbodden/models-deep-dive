@@ -4,3 +4,5 @@ load after routed arm: { 4.67 4.93 4.61 }
 qwen3-0.6b mean: 3965 ms (acceptance ceiling 8000)
 waited for quiet: 150s of 600s, threshold 3.5
 host: Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz, 12 logical CPUs
+pin: org.modeljars:modeljars:0.1.61
+pin: org.modeljars.composite:harriet:0.1.61

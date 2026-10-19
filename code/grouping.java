@@ -1,7 +1,7 @@
 //JAVA 25
 //RUNTIME_OPTIONS --add-modules=jdk.incubator.vector
 //RUNTIME_OPTIONS --enable-native-access=ALL-UNNAMED -Xmx4g
-//DEPS org.modeljars.composite:harriet:0.1.61
+//DEPS org.modeljars.composite:harriet:0.1.62
 
 import com.integrallis.models.decisions.AnswerSpace;
 import com.integrallis.models.decisions.Choice;
@@ -52,10 +52,10 @@ class grouping {
       // The first forward pass of the process pages 2.55 GiB of weights in and is not comparable
       // to anything after it: measured at 18,159 ms against 1,724 ms for the question that
       // followed it. Warm the runtime and throw that batch away.
-      System.out.printf("%-44s %8s %9s%n", "DISCARDED WARM-UP", "MS", "MS/Q");
+      System.out.printf("%-44s %8s %9s %9s%n", "DISCARDED WARM-UP", "MS", "MS/Q", "HEAP MIB");
       measure(harriet, "warm-up, not a measurement", sameRubric().subList(0, 1));
 
-      System.out.printf("%n%-44s %8s %9s%n", "BATCH", "MS", "MS/Q");
+      System.out.printf("%n%-44s %8s %9s %9s%n", "BATCH", "MS", "MS/Q", "HEAP MIB");
       measure(harriet, "one rubric, 1 question", sameRubric().subList(0, 1));
       measure(harriet, "one rubric, 2 questions", sameRubric().subList(0, 2));
       measure(harriet, "one rubric, 3 questions", sameRubric());
@@ -131,13 +131,28 @@ class grouping {
     long began = System.nanoTime();
     List<Verdict> verdicts = Harriet.decideAll(harriet, spaces, evidence);
     long millis = (System.nanoTime() - began) / 1_000_000;
-    System.out.printf("%-44s %8d %9d%n", label, millis, millis / spaces.size());
+    System.out.printf("%-44s %8d %9d %9d%n", label, millis, millis / spaces.size(), retainedMiB());
     for (int index = 0; index < verdicts.size(); index++) {
       var verdict = verdicts.get(index);
       System.out.printf(
           "    q%d %-14s p=%.6f  confidence=%.6f%n",
           index + 1, verdict.winner(), verdict.probabilityOf(verdict.winner()), verdict.confidence());
     }
+  }
+
+  /**
+   * Live heap after a collection, in MiB.
+   *
+   * The runtime holds a resumption point per decision, and each point is a copy of the model's
+   * linear state. How much that copy costs is not visible from the public API -- Resumption exposes
+   * only its position -- so it is observed from the outside: the same probe on two builds, read
+   * after a collection, differs by what the extra point retains. A forced collection is a request
+   * and not a guarantee, which is why this is reported for every batch rather than once.
+   */
+  private static long retainedMiB() {
+    var runtime = Runtime.getRuntime();
+    System.gc();
+    return (runtime.totalMemory() - runtime.freeMemory()) / (1024 * 1024);
   }
 
   private static void quietLibraries() {

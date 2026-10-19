@@ -60,6 +60,9 @@ for attempt in $(seq 1 $ATTEMPTS); do
       echo "qwen3-0.6b mean: $mean ms (acceptance ceiling $CEILING)"
       echo "waited for quiet: ${waited}s of ${PATIENCE}s, threshold $QUIET"
       echo "host: $(sysctl -n machdep.cpu.brand_string), $(sysctl -n hw.logicalcpu) logical CPUs"
+      # The library versions the arms actually ran. A pair measured before a runtime change is not
+      # comparable with one measured after it, and the logs do not say which is which.
+      grep -E "^//DEPS org\.modeljars" "$ROOT/code/fleet.java" | sed 's|^//DEPS |pin: |'
     } > "$OUT/runs/$stamp.meta"
     cd "$ROOT"
     python3 tools/derive_fleet_figures.py > evidence/fleet-routing/DERIVED.txt

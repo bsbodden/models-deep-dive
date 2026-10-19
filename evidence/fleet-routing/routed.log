@@ -1,54 +1,54 @@
 classifier: 10 tasks from google_embeddinggemma_300m_gguf_q8_0, 768-dimensional, similarity floor 0.60
 
 WARMING                            LOAD MS
-smollm2_360m_instruct_q8_0            3006
-qwen3_0_6b_q4_0                       4595
-bartowski_llama_3_2_1b_instruct…      3859
-unsloth_qwen3_5_4b_gguf_q4_k_m       25460
-total                                36920
+smollm2_360m_instruct_q8_0            2488
+qwen3_0_6b_q4_0                       3727
+bartowski_llama_3_2_1b_instruct…      3266
+unsloth_qwen3_5_4b_gguf_q4_k_m       21132
+total                                30613
 
 PROMPT                           CLASSIFIED           SELECTED                          LOCAL IN      MS
-ping                             ~chat 0.48           smollm2_360m_instruct_q8_0               1     192
+ping                             ~chat 0.48           smollm2_360m_instruct_q8_0               1     246
     still here
-still there?                     ~summarization 0.50  smollm2_360m_instruct_q8_0               3     249
+still there?                     ~summarization 0.50  smollm2_360m_instruct_q8_0               3     184
     still here
-ok                               ~reasoning 0.57      smollm2_360m_instruct_q8_0               1     193
+ok                               ~reasoning 0.57      smollm2_360m_instruct_q8_0               1     161
     still here
-I was charged twice for my Se…   ~tool-use 0.46       qwen3_0_6b_q4_0                          9    5159
+I was charged twice for my Se…   ~tool-use 0.46       qwen3_0_6b_q4_0                          9    4123
     We'll check the details of your order to confirm if there was any issue with the payment. Let me know how we can assist you.
-tell me more                     summarization        qwen3_0_6b_q4_0                          3    2771
+tell me more                     summarization        qwen3_0_6b_q4_0                          3    2431
     Of course, let me know how we can assist you with the next steps.
-I was charged twice for my Se…   ~tool-use 0.49       unsloth_qwen3_5_4b_gguf_q4_k_m          13   15540
+I was charged twice for my Se…   ~tool-use 0.49       unsloth_qwen3_5_4b_gguf_q4_k_m          13   11669
     billing=true(p=0.91,c=0.58) queue=billing(p=0.99,c=0.95) urgency=this week(p=0.38,c=0.01)
-When is a refund issued, and …   ~math 0.50           bartowski_llama_3_2_1b_instruct…        67    2456
+When is a refund issued, and …   ~math 0.50           bartowski_llama_3_2_1b_instruct…        67    1958
     A refund is issued to the original payment method within five business days.
-What happens to a duplicate c…   ~code 0.50           bartowski_llama_3_2_1b_instruct…        62    2107
+What happens to a duplicate c…   ~code 0.50           bartowski_llama_3_2_1b_instruct…        62    1729
     A duplicate charge is reversed automatically once billing reconciliation runs nightly.
-Our refund policy promises fi…   ~tool-use 0.52       gpt-5.1                                 55    6999
-    Here’s the conflict, then a draft paragraph you can drop into your terms. **Where the two paths conflict** - Path A: **Refund** – Y…
-Summarise this appendix for t…   summarization        gpt-4.1-mini                        245741    3251
-    Refunds are processed to the original payment method within five business days unless the charge was already reconciled in the same…
+Our refund policy promises fi…   ~tool-use 0.52       gpt-5.1                                 55    7331
+    There are two potential conflicts: 1. **Timing mismatch** - Policy: “Refunds in five business days to the original payment method.”…
+Summarise this appendix for t…   summarization        gpt-4.1-mini                        245741   13964
+    Refunds are issued to the original payment method within five business days unless the charge was already reconciled in the same ni…
 
 == timing, warm ==
 MODEL                            CALLS  TOTAL MS   MEAN MS     SHARE
-smollm2_360m_instruct_q8_0           3       634       211      1.4%
-qwen3_0_6b_q4_0                      2      7930      3965     17.4%
-unsloth_qwen3_5_4b_gguf_q4_k_m       1     15540     15540     34.1%
-bartowski_llama_3_2_1b_instruct…     2      4563      2281     10.0%
-gpt-5.1                              1      6999      6999     15.4%
-gpt-4.1-mini                         1      3251      3251      7.1%
-conversation wall clock: 45530 ms, of which 38917 ms (85.5%) was model calls
-one-off load of the four local models: 36920 ms, paid once at startup, not per request
+smollm2_360m_instruct_q8_0           3       591       197      1.2%
+qwen3_0_6b_q4_0                      2      6554      3277     13.3%
+unsloth_qwen3_5_4b_gguf_q4_k_m       1     11669     11669     23.7%
+bartowski_llama_3_2_1b_instruct…     2      3687      1843      7.5%
+gpt-5.1                              1      7331      7331     14.9%
+gpt-4.1-mini                         1     13964     13964     28.3%
+conversation wall clock: 49261 ms, of which 43796 ms (88.9%) was model calls
+one-off load of the four local models: 30613 ms, paid once at startup, not per request
 
 == ledger ==
 10 prompts, 2 escalated to a remote provider, 8 answered on local weights
 local ruler (qwen3-0.6b tokenizer): 245796 of 245955 input tokens were routed off this machine (99.9%)
-provider ruler (gpt-5.1 reported): 236596 input + 548 completion tokens billed
+provider ruler (gpt-5.1 reported): 236596 input + 566 completion tokens billed
   the same prompt measured 245796 tokens locally, so the two rulers differ by -9200
 completions generated on local weights: 123 tokens
 REMOTE PROVIDER            IN      OUT         COST
-gpt-5.1                    61      474    $0.004816
-gpt-4.1-mini           236535       74    $0.094732
-total                  236596      548    $0.099549
+gpt-5.1                    61      488    $0.004956
+gpt-4.1-mini           236535       78    $0.094739
+total                  236596      566    $0.099695
 had every prompt gone to gpt-5.1: $0.307444 of input alone, plus $0.001230 for the completions this machine produced for nothing
-router-accounted spend: $0.099549 of the $0.50 shared budget
+router-accounted spend: $0.099695 of the $0.50 shared budget

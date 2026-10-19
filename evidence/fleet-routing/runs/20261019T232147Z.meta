@@ -1,0 +1,8 @@
+stamp: 20261019T232147Z
+load at start of routed arm: { 3.11 5.45 4.95 }
+load after routed arm: { 2.96 4.69 4.74 }
+qwen3-0.6b mean: 3140 ms (acceptance ceiling 8000)
+waited for quiet: 120s of 600s, threshold 3.5
+host: Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz, 12 logical CPUs
+pin: org.modeljars:modeljars:0.1.62
+pin: org.modeljars.composite:harriet:0.1.62

@@ -513,16 +513,16 @@ the fleet owns. Every accepted pair is now archived under `runs/` with its load 
 <!-- figures:variance -->
 | run (UTC) | routed | no router | latency ratio | cost factor |
 | --- | --- | --- | --- | --- |
-| `20261019T042738Z` | 63,520 ms | 58,623 ms | 1.08× | 3.15× cheaper |
-| `20261019T043801Z` | 43,690 ms | 31,155 ms | 1.40× | 3.19× cheaper |
-| `20261019T044507Z` | 45,530 ms | 25,857 ms | 1.76× | 3.13× cheaper |
+| `20261019T232147Z` | 58,446 ms | 49,230 ms | 1.19× | 3.17× cheaper |
+| `20261019T232350Z` | 37,694 ms | 40,133 ms | 0.94× | 3.18× cheaper |
+| `20261019T232628Z` | 49,261 ms | 34,574 ms | 1.42× | 3.12× cheaper |
 
-Across **3 measured pairs** — same code, same prompts, same machine, all archived under [`evidence/fleet-routing/runs/`](evidence/fleet-routing/runs) — the latency ratio moved from **1.08× to 1.76×** (median 1.40×) while the cost factor moved from **3.13× to 3.19×**. One of those is a property of the fleet; the other is a property of the provider's queue on the day. Which is which:
+Across **3 measured pairs** — same code, same prompts, same machine, all archived under [`evidence/fleet-routing/runs/`](evidence/fleet-routing/runs) — the latency ratio moved from **0.94× to 1.42×** (median 1.19×) while the cost factor moved from **3.12× to 3.18×**. One of those is a property of the fleet; the other is a property of the provider's queue on the day. Which is which:
 
-- the no-router arm's wall clock ranged over **2.27×** (25,857 ms to 58,623 ms)
-- the routed arm's remote portion ranged over **2.62×** (15,226 ms to 39,935 ms)
-- the routed arm's local portion ranged over **1.22×** (23,585 ms to 28,667 ms)
-- the appendix prompt alone, byte for byte identical every run, came back in 3,309 ms at best and 17,863 ms at worst — **5.40×** on one call to one provider
+- the no-router arm's wall clock ranged over **1.42×** (34,574 ms to 49,230 ms)
+- the routed arm's remote portion ranged over **2.36×** (15,379 ms to 36,342 ms)
+- the routed arm's local portion ranged over **1.02×** (22,104 ms to 22,501 ms)
+- the appendix prompt alone, byte for byte identical every run, came back in 3,345 ms at best and 15,094 ms at worst — **4.51×** on one call to one provider
 <!-- end:figures:variance -->
 
 The cost factor barely moves, because token counts are a function of the prompts and the prompts do
@@ -573,21 +573,21 @@ batch, printing every verdict's probability to six places as well as its latency
 is the before/after check on any change (`evidence/fleet-routing/grouping.log`):
 
 <!-- figures:grouping -->
-| questions about one ticket | one shared rubric | three different rubrics |
-| --- | --- | --- |
-| 1 | 14,723 ms | 14,792 ms |
-| 2 | 15,919 ms | 32,387 ms |
-| 3 | 16,635 ms | 44,005 ms |
+| questions about one ticket | one shared rubric, 0.1.61 | one shared rubric, 0.1.62 | three different rubrics, 0.1.61 | three different rubrics, 0.1.62 |
+| --- | --- | --- | --- | --- |
+| 1 | 8,019–8,275 ms | 8,231–8,432 ms | 7,972–8,232 ms | 8,244–8,438 ms |
+| 2 | 8,622–8,934 ms | 8,919–9,096 ms | 16,132–16,603 ms | 10,294–10,540 ms |
+| 3 | 9,348–9,657 ms | 9,617–9,819 ms | 24,418–25,206 ms | 12,612–12,945 ms |
 
-The first question costs what reading the ticket costs — 14,723 ms and 14,792 ms, the same work either way. What the two after it cost is the finding: **956 ms** each when the rubric is shared against **14,606 ms** each when it is not, a factor of **15.3**.
+Each build was run 2 times and the range is what moved; the first question costs what reading the ticket costs and no build changes it. What the next two cost is the finding. On 0.1.61 they cost **8,223–8,487 ms** each when the rubrics differ against **664–691 ms** when they are shared, because a question whose rubric differed read the whole ticket again.
 
-Strip the rubrics out entirely and the same three questions take **14,464 ms** against **44,005 ms** — the prefix is then the ticket alone, so all three share it. That **3.0×** is what the rubric buys its accuracy with, and the library's own record prices the other side of that trade at 0.8917 accuracy with rubrics against 0.7500 without. Measured here, read there.
+0.1.62 moves the resumption point behind the rubric when the rubrics differ, so such a question reads only its own rules: **2,184–2,254 ms** each, **3.6× to 3.9× cheaper**, with every measured answer identical and the live heap unchanged. A batch that shares one rubric is untouched (693–694 ms per extra question) and is still the cheapest shape there is.
 <!-- end:figures:grouping -->
 
 Harriet stays in the walkthrough: nothing here returns a wrong answer, and the three archived pairs
 above include this cost in the routed arm without it changing which arm is cheaper.
 
-**The headroom is real and is not a prompt change.** Where the rubric sits in the prompt is settled
+**The headroom was real, and it is now closed in 0.1.62 -- see finding 23.** Originally: Where the rubric sits in the prompt is settled
 by the Intelligence measurement. Where the *capture* sits is not: capturing after the state alone
 and re-reading the criteria per question would send byte-identical prompts, return the same
 answers, and amortise the evidence across unlike questions. On this probe the mixed batch pays
@@ -595,6 +595,85 @@ answers, and amortise the evidence across unlike questions. On this probe the mi
 `ModelJarDecisionRuntime` -- a second resumption slot keyed on the state prefix, with the existing
 tokenisation guard deciding whether the split is safe -- and it is the next thing on this path. It
 is not in 0.1.61 and the article says so rather than implying the current cost is necessary.
+
+**23. The headroom was taken, and measuring the cost of the obvious fix changed the design.**
+Finding 22 said the next thing on this path was to capture after the evidence rather than after the
+evidence and the rubric. That fix was implemented, measured, and then replaced by a different one,
+because the first version held a second resumption point and the cost of a point had never been
+measured. `snapshot-cost.java` prefills a ticket, takes ten captures in turn and reads the live
+heap after a collection between each:
+
+```
+CAPTURES    LIVE HEAP MIB PER CAPTURE KIB
+0                   724.6              -
+1                   822.9       100610.7
+5                  1216.0       100628.0
+10                 1707.4       100634.0
+```
+
+**98.3 MiB per capture, flat in prefix length.** Two points would cost that again on every open
+decision runtime, which is not a reasonable price for a latency win, and nothing in the library's
+tests would have noticed. So ModelJars 0.1.62 holds one point and chooses where to take it:
+`decideAll` sees every question before answering any, so one shared rubric keeps the point after the
+whole prefix while differing rubrics put it after the evidence; `decide`, asked one question at a
+time, starts where a single question is cheapest and moves once a second rubric over the same
+evidence proves the questions are unlike.
+
+**The measurement moved to a host that was doing nothing else.** This workstation produced the
+right ratio and useless absolutes: two runs of the probe on identical code differed by 1.14x, and
+one pair by 2x on code paths the change cannot touch, because the machine also runs an editor and a
+screen recorder. A Hetzner `ccx33` -- 8 dedicated vCPU EPYC-Milan, idle, provisioned for this and
+deleted after it -- ran both releases twice each:
+
+| | 0.1.61 | 0.1.62 |
+| --- | --- | --- |
+| three questions, three rubrics | 16,497 and 16,618 ms | 7,766 and 8,300 ms |
+| each question after the first | 5,539 and 5,584 ms | 1,378 and 1,466 ms |
+| three questions, one rubric | 6,343 and 6,416 ms | 5,895 and 6,276 ms |
+| live heap after a collection | 822 MiB | 822 MiB |
+
+**2.00x to 2.12x** on the batch shape `decideAll` documents, **4x cheaper** per question after the
+first, same-rubric and no-rubric batches unchanged, no extra retained state, and all fifteen
+measured verdicts identical across both builds and both passes. The sixteenth, in the batch the
+probe discards, moves by 0.012 -- between two runs of the same build as much as between builds,
+because it is the process's first forward pass.
+
+The full record, including the preflight with its live price and ceiling, the host baseline, the
+teardown audit, the superseded two-point candidate and the generator that derives every figure from
+the logs, is in the library repository under
+`docs/model-evidence/decision-prefix-20261018/`. `tools/measure_on_isolated_host.sh` reproduces the
+measurement; it refuses to run without `--confirm`, prints the live hourly price first, and deletes
+the server and its firewall on every exit path.
+
+This is the fourth finding in this record that came from writing the article rather than from using
+the library, after findings 5, 13 and 14. The walkthrough asks the library to do something a test
+does not: the same three questions, in the shape a support queue actually produces them.
+
+**24. The release changed the walkthrough's own numbers, so the walkthrough was re-measured on
+it.** 0.1.62 is in the demo's decision path, so the figures measured on 0.1.61 stopped describing
+the code the article pins. Three fresh pairs on the released artifact, with the harness now
+recording each pair's pins so a pre-release pair cannot be averaged with a post-release one:
+
+| | 0.1.61 | 0.1.62 |
+| --- | --- | --- |
+| the decision row, three pairs each | 15,633, 12,821 and 15,540 ms | 11,667, 11,669 and 11,623 ms |
+
+A third faster, and -- the part that matters more -- three readings inside 46 ms of each other. The
+fleet's ticket is a few dozen tokens, so it saves far less than the probe's 250-token ticket, which
+is what `docs/model-evidence/decision-prefix-20261018/README.md` says to expect: the saving is the
+evidence read, so it scales with the evidence.
+
+That tightened the finding in 20 rather than softening it. On the three released pairs the routed
+arm's **local portion ranged 22,104 to 22,501 ms, a 1.02x spread**, against 2.36x for its own remote
+portion and 4.51x for one provider call on byte-identical input. The latency ratio ran 0.94x to
+1.42x -- one pair had the routed arm faster outright -- while the cost factor stayed between 3.12x
+and 3.18x. Predictable local, unpredictable remote, stable bill.
+
+The thirteen non-keyed walkthrough scripts were re-run on the 0.1.62 pins and all exited 0
+(`evidence/walkthrough-0.1.62.md`). `decisions.java` returns the same three verdicts to three
+decimals, which is what a change that only moves where a prefix is resumed should do. `speech.java`
+reported RTF 1.470 against 1.350, which is one run of a synthesis script on a laptop that was also
+doing other things; the article quotes the new figure rather than the better one.
 
 ### Where the other implementations on this machine put this line
 

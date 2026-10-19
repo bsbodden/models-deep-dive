@@ -189,10 +189,25 @@ def per_prompt_across_pairs() -> dict[str, list[float]]:
     return ratios
 
 
+def current_pin() -> str:
+    """The ModelJars version the demo is pinned to right now."""
+    source = (ROOT / "code/fleet.java").read_text()
+    return re.search(r"//DEPS org\.modeljars:modeljars:(\S+)", source).group(1)
+
+
 def pairs() -> list[tuple[str, int, int, int]]:
-    """(stamp, routed wall, no-router wall, local ms) for every archived pair."""
+    """(stamp, routed wall, no-router wall, local ms) for every archived pair on the current pin.
+
+    A pair measured before a runtime change cannot be averaged with one measured after it. The
+    0.1.62 decision change moved the routed arm by seconds, so the harness records each pair's
+    pins and this reads only the pairs that match what the demo resolves today.
+    """
+    pin = current_pin()
     found = []
     for routed in sorted(RUNS.glob("*-routed.log")):
+        meta = routed.with_name(routed.name[:16] + ".meta")
+        if not meta.exists() or f"modeljars:{pin}" not in meta.read_text():
+            continue
         base = routed.with_name(routed.name.replace("-routed", "-all-remote"))
         if not base.exists():
             continue
@@ -264,46 +279,67 @@ def cost_factor(stamp: str) -> Decimal:
 
 
 def grouping_region(routed: str, remote: str) -> str:
-    """What a batch of decisions costs, from code/grouping.java's committed log."""
-    log = ROOT / "evidence/fleet-routing/grouping.log"
-    if not log.exists():
-        raise SystemExit(
-            f"{log.relative_to(ROOT)} is missing: run `jbang code/grouping.java` and save its "
-            "output there before regenerating the article")
-    rows = {
-        m.group(1).strip(): int(m.group(2))
-        for m in re.finditer(r"^(\D.*?)\s{2,}(\d+)\s+\d+\s*$", log.read_text(), re.M)
-        if not m.group(1).startswith(("BATCH", "DISCARDED"))
-    }
-    wanted = [f"{shape}, {n} question{'s' if n != 1 else ''}"
-              for shape in ("one rubric", "three rubrics") for n in (1, 2, 3)]
-    missing = [label for label in wanted + ["no rubric, 3 questions"] if label not in rows]
-    if missing:
-        raise SystemExit(f"grouping.log has no row for {missing}")
+    """What a batch of typed decisions costs, before and after the 0.1.62 runtime change.
 
-    same = [rows[label] for label in wanted[:3]]
-    mixed = [rows[label] for label in wanted[3:]]
-    bare = rows["no rubric, 3 questions"]
+    Both releases are measured on a host that is doing nothing else, twice each, because a batch
+    of decisions is seconds of local compute and this workstation's own editor moves that by more
+    than the change does. Every pass is read here rather than one of them, so a figure that moved
+    between passes is printed as the range it was.
+    """
+    runs: dict[str, list[dict[str, int]]] = {}
+    for version in ("0.1.61", "0.1.62"):
+        logs = sorted((ROOT / "evidence/harriet-decisions").glob(
+            f"grouping-{version.replace('.', '')}-pass*.log"))
+        if not logs:
+            raise SystemExit(
+                f"no probe logs for {version}: run tools/measure_on_isolated_host.sh --confirm")
+        runs[version] = [{
+            m.group(1).strip(): int(m.group(2))
+            for m in re.finditer(
+                r"^(\D.*?)\s{2,}(\d+)\s+\d+(?:\s+\d+)?\s*$", log.read_text(), re.M)
+            if not m.group(1).startswith(("BATCH", "DISCARDED"))
+        } for log in logs]
 
-    out = ["| questions about one ticket | one shared rubric | three different rubrics |",
-           "| --- | --- | --- |"]
-    for index, count in enumerate((1, 2, 3)):
-        out.append(f"| {count} | {same[index]:,} ms | {mixed[index]:,} ms |")
+    def span(version: str, key: str) -> str:
+        values = sorted(pass_[key] for pass_ in runs[version])
+        return f"{values[0]:,} ms" if values[0] == values[-1] else f"{values[0]:,}–{values[-1]:,} ms"
 
-    same_extra = (same[2] - same[0]) / 2
-    mixed_extra = (mixed[2] - mixed[0]) / 2
+    def extra(version: str, prefix: str) -> list[float]:
+        return sorted((pass_[f"{prefix}, 3 questions"] - pass_[f"{prefix}, 1 question"]) / 2
+                      for pass_ in runs[version])
+
+    passes = min(len(v) for v in runs.values())
+    columns = [(shape, version) for shape in ("one shared rubric", "three different rubrics")
+               for version in runs]
+    out = ["| questions about one ticket | " + " | ".join(
+        f"{shape}, {version}" for shape, version in columns) + " |",
+        "| --- | " + " | ".join("---" for _ in columns) + " |"]
+    for count in (1, 2, 3):
+        cells = []
+        for shape, version in columns:
+            prefix = "one rubric" if shape.startswith("one") else "three rubrics"
+            cells.append(span(version, f"{prefix}, {count} question{'s' if count != 1 else ''}"))
+        out.append(f"| {count} | " + " | ".join(cells) + " |")
+
+    mixed_before, mixed_after = extra("0.1.61", "three rubrics"), extra("0.1.62", "three rubrics")
+    shared_before = extra("0.1.61", "one rubric")
+    shared_after = extra("0.1.62", "one rubric")
     out += [
         "",
-        f"The first question costs what reading the ticket costs — {same[0]:,} ms and "
-        f"{mixed[0]:,} ms, the same work either way. What the two after it cost is the finding: "
-        f"**{same_extra:,.0f} ms** each when the rubric is shared against **{mixed_extra:,.0f} ms** "
-        f"each when it is not, a factor of **{mixed_extra / same_extra:.1f}**.",
+        f"Each build was run {passes} times and the range is what moved; the first question costs "
+        "what reading the ticket costs and no build changes it. What the next two cost is the "
+        f"finding. On 0.1.61 they cost **{mixed_before[0]:,.0f}–{mixed_before[-1]:,.0f} ms** each "
+        f"when the rubrics differ against **{shared_before[0]:,.0f}–{shared_before[-1]:,.0f} ms** "
+        "when they are shared, because a question whose rubric differed read the whole ticket "
+        "again.",
         "",
-        f"Strip the rubrics out entirely and the same three questions take **{bare:,} ms** against "
-        f"**{mixed[2]:,} ms** — the prefix is then the ticket alone, so all three share it. That "
-        f"**{mixed[2] / bare:.1f}×** is what the rubric buys its accuracy with, and the library's "
-        "own record prices the other side of that trade at 0.8917 accuracy with rubrics against "
-        "0.7500 without. Measured here, read there.",
+        f"0.1.62 moves the resumption point behind the rubric when the rubrics differ, so such a "
+        f"question reads only its own rules: **{mixed_after[0]:,.0f}–{mixed_after[-1]:,.0f} ms** "
+        f"each, **{mixed_before[0] / mixed_after[-1]:.1f}× to "
+        f"{mixed_before[-1] / mixed_after[0]:.1f}× cheaper**, with every measured answer identical "
+        f"and the live heap unchanged. A batch that shares one rubric is untouched "
+        f"({shared_after[0]:,.0f}–{shared_after[-1]:,.0f} ms per extra question) and is still the "
+        "cheapest shape there is.",
     ]
     return "\n".join(out)
 
