@@ -453,7 +453,9 @@ them found three errors, none of which a small prompt could reach.
 The general shape is the one this whole file keeps finding: a declared figure is a claim, and the
 only authority on a provider's limits is the provider.
 
-**17. The measured result stopped flattering the router, and the article now says so.** With a real
+**17. The measured result stopped flattering the router, and the article now says so.**
+*The latency half of this finding is superseded by finding 20: the ratio quoted here is one
+pair, and the pair moves. The cost half stands.* With a real
 document in play the numbers are $0.310373 with no router against $0.099222 routed -- 68.0% less, a
 factor of 3.13 -- but wall clock went from 24,491 ms to 52,588 ms, **115% slower**.
 
@@ -492,12 +494,107 @@ measured before the harness rejected those. The claim is withdrawn and the measu
 it came out. The script still sets the cap, because the published run was measured with it, and the
 article says that rather than implying the cap earned its place.
 
-**19. "115% slower" was true and badly framed.** The routed arm takes 52,588 ms against the
+**19. "115% slower" was true and badly framed.**
+*Superseded by finding 20: re-measuring the pair three times showed the ratio itself is not a
+property of the fleet. The attribution below -- two chosen destinations, not a routing tax --
+held up and is still what the article says.* The routed arm takes 52,588 ms against the
 baseline's 24,491 ms, warm against warm. But routing imposes no such tax: two prompts account for
 +23,424 ms of the +23,435 ms, and both are destinations the `BALANCED` policy chose -- the appendix
 to gpt-4.1-mini, cheaper per token and slower, and the closed decision to a 4B model on CPU.
 Everything else nets to +11 ms, and the three heartbeats are 5-9x faster locally. The article now
 attributes the latency to the two choices rather than to routing as such.
+
+**20. The headline latency ratio was a property of the provider, not of the fleet.** Findings 17
+and 19 both quoted one pair of wall clocks, 52,588 ms routed against 24,491 ms with no router, and
+argued about the 115% between them. Re-running the identical pair showed the ratio is not a number
+the fleet owns. Every accepted pair is now archived under `runs/` with its load readings, and
+`tools/run_variance.py` reduces them:
+
+<!-- figures:variance -->
+| run (UTC) | routed | no router | latency ratio | cost factor |
+| --- | --- | --- | --- | --- |
+| `20261019T042738Z` | 63,520 ms | 58,623 ms | 1.08× | 3.15× cheaper |
+| `20261019T043801Z` | 43,690 ms | 31,155 ms | 1.40× | 3.19× cheaper |
+| `20261019T044507Z` | 45,530 ms | 25,857 ms | 1.76× | 3.13× cheaper |
+
+Across **3 measured pairs** — same code, same prompts, same machine, all archived under [`evidence/fleet-routing/runs/`](evidence/fleet-routing/runs) — the latency ratio moved from **1.08× to 1.76×** (median 1.40×) while the cost factor moved from **3.13× to 3.19×**. One of those is a property of the fleet; the other is a property of the provider's queue on the day. Which is which:
+
+- the no-router arm's wall clock ranged over **2.27×** (25,857 ms to 58,623 ms)
+- the routed arm's remote portion ranged over **2.62×** (15,226 ms to 39,935 ms)
+- the routed arm's local portion ranged over **1.22×** (23,585 ms to 28,667 ms)
+- the appendix prompt alone, byte for byte identical every run, came back in 3,309 ms at best and 17,863 ms at worst — **5.40×** on one call to one provider
+<!-- end:figures:variance -->
+
+The cost factor barely moves, because token counts are a function of the prompts and the prompts do
+not change. The latency ratio moves by a third, because most of the no-router arm is one call to one
+provider and that call is not the same call twice. The article no longer leads with a ratio. It
+leads with which of the two arms you can predict, states the range with its n, and the harness
+refuses to publish a figure from a single pair.
+
+This is the same class of error as finding 18 -- a number quoted without asking whether it is
+repeatable -- and it survived longer because this one had an artifact. A committed log proves what a
+run printed. It does not prove the run is representative.
+
+**21. The article's prose drifted from its own tables twice, so the prose is generated now.**
+`tools/refresh_article_blocks.py` has lifted the quoted output blocks straight out of the logs since
+finding 9. The sentences around them were still typed by hand, and after a re-measurement the
+article stated 52,588 ms in a paragraph directly beneath a table reading 63,520 ms, quoted
+$0.310373 above a ledger reading $0.313503, and said the appendix went to Anthropic's Haiku in a
+section whose own table showed it going to gpt-4.1-mini.
+
+`tools/article_figures.py` now generates the comparison tables *and* the sentences that carry their
+numbers, into `<!-- figures:NAME -->` regions in both this record and the article. What cannot be
+generated in place is checked instead: `verify_prose` fails the run if the article states a
+six-figure number that appears in no file under `evidence/` or `code/`. Both generators read the
+newest *archived* pair rather than the harness's working logs, which the harness truncates at the
+start of every attempt -- so the quoted blocks and the derived tables are always the same run.
+
+**22. Harriet's batched decisions are not a bug, and the condition they turn on is not documented.**
+Asking three questions about one ticket costs more than the javadoc's "a second question about the
+same state costs a fraction of the first" implies, and the reason is in the source rather than in
+any fault. The resumption point is captured after the *shared prefix*, and
+`ModelJarDecisionRuntime.sharedPrefix` is `criteria.isEmpty() ? state : state + "\n" + criteria` --
+the evidence **and the rubric**. It is reused only when the next question's shared prefix is
+byte-identical (`ModelJarDecisionRuntime` line 243: "Every space in the group must share one prefix,
+so a group of mixed rubrics cannot be grouped. Falling back is correct and the caller sees the same
+answers either way"). Three questions with three rubrics -- a boolean, a choice over queues, an
+ordered severity, which is exactly the shape of a real batch -- share no prefix, so each one
+re-reads the evidence.
+
+The layout itself is a measured choice, not an oversight: the same javadoc records rubric-before
+with letters-after at Intelligence **88.9** over 120 JevBench items against **86.1** for both after
+the criterion and **79.6** for both before, dated 2026-09-24. That is read from the library's own
+record, not measured here. So the rubric is in the prefix because it scores better there, and the
+cost of that is that mixed-rubric batches do not amortise.
+
+`code/grouping.java` measures both shapes -- same-rubric and mixed-rubric, at one, two and three
+questions -- on the shipped 0.1.61 artifact over a 250-token ticket, after a discarded warm-up
+batch, printing every verdict's probability to six places as well as its latency so the same probe
+is the before/after check on any change (`evidence/fleet-routing/grouping.log`):
+
+<!-- figures:grouping -->
+| questions about one ticket | one shared rubric | three different rubrics |
+| --- | --- | --- |
+| 1 | 14,723 ms | 14,792 ms |
+| 2 | 15,919 ms | 32,387 ms |
+| 3 | 16,635 ms | 44,005 ms |
+
+The first question costs what reading the ticket costs — 14,723 ms and 14,792 ms, the same work either way. What the two after it cost is the finding: **956 ms** each when the rubric is shared against **14,606 ms** each when it is not, a factor of **15.3**.
+
+Strip the rubrics out entirely and the same three questions take **14,464 ms** against **44,005 ms** — the prefix is then the ticket alone, so all three share it. That **3.0×** is what the rubric buys its accuracy with, and the library's own record prices the other side of that trade at 0.8917 accuracy with rubrics against 0.7500 without. Measured here, read there.
+<!-- end:figures:grouping -->
+
+Harriet stays in the walkthrough: nothing here returns a wrong answer, and the three archived pairs
+above include this cost in the routed arm without it changing which arm is cheaper.
+
+**The headroom is real and is not a prompt change.** Where the rubric sits in the prompt is settled
+by the Intelligence measurement. Where the *capture* sits is not: capturing after the state alone
+and re-reading the criteria per question would send byte-identical prompts, return the same
+answers, and amortise the evidence across unlike questions. On this probe the mixed batch pays
+44,005 ms for a ticket that costs 14,464 ms to read once. That is a change to
+`ModelJarDecisionRuntime` -- a second resumption slot keyed on the state prefix, with the existing
+tokenisation guard deciding whether the split is safe -- and it is the next thing on this path. It
+is not in 0.1.61 and the article says so rather than implying the current cost is necessary.
 
 ### Where the other implementations on this machine put this line
 

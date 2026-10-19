@@ -8,3 +8,6 @@ evidence/local-install/modeljars-macos-x86_64
 evidence/local-install-0157/native-release/modeljars-macos-x86_64
 evidence/release-bundle/modeljars-central-bundle.zip
 evidence/release-bundle-0157/modeljars-central-bundle.zip
+
+# Python bytecode from the generators in tools/
+tools/__pycache__/

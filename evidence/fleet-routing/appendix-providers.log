@@ -1,0 +1,10 @@
+gpt-5.1        run1    3436 ms   236534 in +   94 out  $0.296608
+gpt-5.1        run2    2354 ms   236534 in +   97 out  $0.296638
+gpt-5.1        run3    2817 ms   236534 in +   97 out  $0.296638
+gpt-5.1        run4    2705 ms   236534 in +  101 out  $0.296678
+gpt-5.1        run5    2224 ms   236534 in +   90 out  $0.296568
+gpt-4.1-mini   run1    1869 ms   236535 in +   77 out  $0.094737
+gpt-4.1-mini   run2    2644 ms   236535 in +   79 out  $0.094740
+gpt-4.1-mini   run3    2310 ms   236535 in +   78 out  $0.094739
+gpt-4.1-mini   run4    1920 ms   236535 in +   77 out  $0.094737
+gpt-4.1-mini   run5    1893 ms   236535 in +   79 out  $0.094740

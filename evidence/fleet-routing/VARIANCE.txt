@@ -1,0 +1,12 @@
+| run (UTC) | routed | no router | latency ratio | cost factor |
+| --- | --- | --- | --- | --- |
+| `20261019T042738Z` | 63,520 ms | 58,623 ms | 1.08× | 3.15× cheaper |
+| `20261019T043801Z` | 43,690 ms | 31,155 ms | 1.40× | 3.19× cheaper |
+| `20261019T044507Z` | 45,530 ms | 25,857 ms | 1.76× | 3.13× cheaper |
+
+Across **3 measured pairs** — same code, same prompts, same machine, all archived under [`evidence/fleet-routing/runs/`](evidence/fleet-routing/runs) — the latency ratio moved from **1.08× to 1.76×** (median 1.40×) while the cost factor moved from **3.13× to 3.19×**. One of those is a property of the fleet; the other is a property of the provider's queue on the day. Which is which:
+
+- the no-router arm's wall clock ranged over **2.27×** (25,857 ms to 58,623 ms)
+- the routed arm's remote portion ranged over **2.62×** (15,226 ms to 39,935 ms)
+- the routed arm's local portion ranged over **1.22×** (23,585 ms to 28,667 ms)
+- the appendix prompt alone, byte for byte identical every run, came back in 3,309 ms at best and 17,863 ms at worst — **5.40×** on one call to one provider

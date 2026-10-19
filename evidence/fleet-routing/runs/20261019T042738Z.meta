@@ -1,0 +1,7 @@
+stamp: 20261019T042738Z
+load at start of routed arm: not captured (this pair was archived by hand, before the harness
+  began writing this sidecar; its acceptance gate did run and passed)
+load after routed arm: not captured
+qwen3-0.6b mean: 3317 ms (acceptance ceiling 8000), read from the pair's own timing table
+waited for quiet: unknown
+host: i9-14900HX, AVX2, no AVX-512

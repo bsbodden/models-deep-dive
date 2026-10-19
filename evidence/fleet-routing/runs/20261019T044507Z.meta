@@ -1,0 +1,6 @@
+stamp: 20261019T044507Z
+load at start of routed arm: { 3.30 4.47 4.40 }
+load after routed arm: { 4.67 4.93 4.61 }
+qwen3-0.6b mean: 3965 ms (acceptance ceiling 8000)
+waited for quiet: 150s of 600s, threshold 3.5
+host: Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz, 12 logical CPUs

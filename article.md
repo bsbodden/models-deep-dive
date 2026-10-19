@@ -99,33 +99,31 @@ response. `MS` is latency.
 
 ```
 PROMPT                                               IN      OUT       MS
-ping                                                  7       10     1277
-still there?                                          9       22      704
-ok                                                    7       24      940
-I was charged twice for my September order.          15      463     3441
-tell me more                                          9      104     1458
-I was charged twice for my September subscr…         19      300     3044
-When is a refund issued, and to which payme…         73       26     1026
-What happens to a duplicate charge?                  68       21      845
-Our refund policy promises five business da…         61      369     3257
-Summarise this appendix for the support han…     236534       98     8485
+ping                                                  7       10     1758
+still there?                                          9       22     1026
+ok                                                    7       23      906
+I was charged twice for my September order.          15      229     2896
+tell me more                                          9       95     2376
+I was charged twice for my September subscr…         19      574     5307
+When is a refund issued, and to which payme…         73       26     1207
+What happens to a duplicate charge?                  68       21     1276
+Our refund policy promises five business da…         61      446     5778
+Summarise this appendix for the support han…     236534      104     3309
 
 == every prompt through gpt-5.1 ==
-provider-reported: 236802 input + 1437 completion tokens
-at the declared $1.25/M in, $10.00/M out: $0.310373
-conversation wall clock: 24491 ms, of which 24477 ms (99.9%) was model calls
+provider-reported: 236802 input + 1550 completion tokens
+at the declared $1.25/M in, $10.00/M out: $0.311503
+conversation wall clock: 25857 ms, of which 25839 ms (99.9%) was model calls
 No local weights are loaded, so there is no startup cost to amortise.
 Retrieval ran for the grounded prompts here exactly as it does in the routed arm, so both
 arms sent byte-identical text and the comparison is like for like.
 ```
 
-Every prompt answered, in 24 seconds, for **$0.310373**.
+<!-- figures:baseline -->
+Every prompt answered, in 26 seconds, for **$0.311503**.
 
-Two things in that table do the damage. The appendix is **236,534 input tokens**, and at
-$1.25/M that one prompt is **$0.296** — 95% of the bill, paid to a frontier model to compress a
-document into two sentences. And the three heartbeats, whose only correct answer is "still here",
-took 1,277 ms, 704 ms and 940 ms, because a network round trip costs most of a second whatever you
-ask for.
+Two things in that table do the damage. The appendix is **236,534 input tokens**, and at the declared rate that one prompt is **$0.295668** — 95% of the bill, paid to a frontier model to compress a document into two sentences. And the 3 heartbeats, whose only correct answer is "still here", took 906 ms, 1,026 ms, 1,758 ms, because a network round trip costs most of a second whatever you ask for.
+<!-- end:figures:baseline -->
 
 Nothing here is a defect. The model did exactly what it was asked, and did it well. The waste is in
 the asking: one request needed a 236k-token window and none of the others needed a frontier model
@@ -307,33 +305,33 @@ locally and 7 at OpenAI, which tokenizes differently and also bills the chat env
 
 ```
 WARMING                            LOAD MS
-smollm2_360m_instruct_q8_0            2017
-qwen3_0_6b_q4_0                       3036
-bartowski_llama_3_2_1b_instruct…      2739
-unsloth_qwen3_5_4b_gguf_q4_k_m       17711
-total                                25503
+smollm2_360m_instruct_q8_0            3006
+qwen3_0_6b_q4_0                       4595
+bartowski_llama_3_2_1b_instruct…      3859
+unsloth_qwen3_5_4b_gguf_q4_k_m       25460
+total                                36920
 
 PROMPT                           CLASSIFIED           SELECTED                          LOCAL IN      MS
-ping                             ~chat 0.48           smollm2_360m_instruct_q8_0               1     149
+ping                             ~chat 0.48           smollm2_360m_instruct_q8_0               1     192
     still here
-still there?                     ~summarization 0.50  smollm2_360m_instruct_q8_0               3     147
+still there?                     ~summarization 0.50  smollm2_360m_instruct_q8_0               3     249
     still here
-ok                               ~reasoning 0.57      smollm2_360m_instruct_q8_0               1     130
+ok                               ~reasoning 0.57      smollm2_360m_instruct_q8_0               1     193
     still here
-I was charged twice for my Se…   ~tool-use 0.46       qwen3_0_6b_q4_0                          9    3415
+I was charged twice for my Se…   ~tool-use 0.46       qwen3_0_6b_q4_0                          9    5159
     We'll check the details of your order to confirm if there was any issue with the payment. Let me know how we can assist you.
-tell me more                     summarization        qwen3_0_6b_q4_0                          3    1973
+tell me more                     summarization        qwen3_0_6b_q4_0                          3    2771
     Of course, let me know how we can assist you with the next steps.
-I was charged twice for my Se…   ~tool-use 0.49       unsloth_qwen3_5_4b_gguf_q4_k_m          13   11563
+I was charged twice for my Se…   ~tool-use 0.49       unsloth_qwen3_5_4b_gguf_q4_k_m          13   15540
     billing=true(p=0.91,c=0.58) queue=billing(p=0.99,c=0.95) urgency=this week(p=0.38,c=0.01)
-When is a refund issued, and …   ~math 0.50           bartowski_llama_3_2_1b_instruct…        67    1741
+When is a refund issued, and …   ~math 0.50           bartowski_llama_3_2_1b_instruct…        67    2456
     A refund is issued to the original payment method within five business days.
-What happens to a duplicate c…   ~code 0.50           bartowski_llama_3_2_1b_instruct…        62    1548
+What happens to a duplicate c…   ~code 0.50           bartowski_llama_3_2_1b_instruct…        62    2107
     A duplicate charge is reversed automatically once billing reconciliation runs nightly.
-Our refund policy promises fi…   ~tool-use 0.52       gpt-5.1                                 55    3856
-    Conflict analysis (brief): - Path A – Refund: - You manually issue a refund. - Policy: “Refunds are processed within five business …
-Summarise this appendix for t…   summarization        gpt-4.1-mini                        245741   23390
-    Refunds to the original payment method are processed within five business days unless the related charge was already reconciled dur…
+Our refund policy promises fi…   ~tool-use 0.52       gpt-5.1                                 55    6999
+    Here’s the conflict, then a draft paragraph you can drop into your terms. **Where the two paths conflict** - Path A: **Refund** – Y…
+Summarise this appendix for t…   summarization        gpt-4.1-mini                        245741    3251
+    Refunds are processed to the original payment method within five business days unless the charge was already reconciled in the same…
 ```
 
 Six kinds of traffic, six different destinations, no `if` statement over prompt text:
@@ -365,8 +363,9 @@ remotes, so it is the one request that can only go there. **The appendix summary
 special at all — plain `summarization`, which qwen3-0.6b also declares. It leaves the machine
 because of its size: at 245,741 tokens it does not fit any local context window, so
 `ModelRouter.eligible` rules every local arm out on `contextWindow < estimatedTokens` and the policy
-picks among the remotes that remain — and it picked Anthropic's Haiku, the cheapest and fastest of them. Both calls really
-happened: those answers are the providers', and the tokens they report are what the ledger bills.
+picks among the remotes that remain. Which remote it picked is the whole of the bill below. Both
+escalations really happened: those answers are the providers', and the tokens they report are what
+the ledger bills.
 
 The `CLASSIFIED` column repays a second look. Only `tell me more` clears the classifier's 0.60
 similarity floor, as `summarization`. The rest print their nearest task with a tilde and the
@@ -385,36 +384,33 @@ honestly instead of guessing a task and silently applying the wrong quality colu
 == ledger ==
 10 prompts, 2 escalated to a remote provider, 8 answered on local weights
 local ruler (qwen3-0.6b tokenizer): 245796 of 245955 input tokens were routed off this machine (99.9%)
-provider ruler (gpt-5.1 reported): 236596 input + 517 completion tokens billed
+provider ruler (gpt-5.1 reported): 236596 input + 548 completion tokens billed
   the same prompt measured 245796 tokens locally, so the two rulers differ by -9200
 completions generated on local weights: 123 tokens
 REMOTE PROVIDER            IN      OUT         COST
-gpt-5.1                    61      441    $0.004486
-gpt-4.1-mini           236535       76    $0.094736
-total                  236596      517    $0.099222
+gpt-5.1                    61      474    $0.004816
+gpt-4.1-mini           236535       74    $0.094732
+total                  236596      548    $0.099549
 had every prompt gone to gpt-5.1: $0.307444 of input alone, plus $0.001230 for the completions this machine produced for nothing
-router-accounted spend: $0.099222 of the $0.50 shared budget
+router-accounted spend: $0.099549 of the $0.50 shared budget
 ```
 
-Eight of ten requests never left the machine. Of the two that did, the policy conflict went to
-Eight of ten never left the machine. The policy conflict went to gpt-5.1, the one request that
-genuinely needs reasoning. The appendix went to **gpt-4.1-mini** — and that single choice is most of
-the story:
+<!-- figures:cost -->
+8 of the 10 prompts never left the machine. The 2 that escalated did not go to the same provider: *Our refund policy promises five business da…* to gpt-5.1, *Summarise this appendix for the support han…* to gpt-4.1-mini — and that second choice is most of the story.
 
-| | input | completion | cost |
+| | input tokens | completion tokens | cost |
 | --- | --- | --- | --- |
-| Every prompt through gpt-5.1 | 236,802 | 1,437 | **$0.310373** |
-| Routed across seven models | 236,596 | 517 | **$0.099222** |
+| Every prompt through gpt-5.1 | 236,802 | 1,550 | **$0.311503** |
+| Routed across the fleet | 236,596 | 548 | **$0.099549** |
 
-**68.0% less, a factor of 3.13.** Note where it does *not* come from. The eight prompts answered
-locally would have cost $0.009959 on gpt-5.1 — **3.2%** of the bill. Keeping them local is almost
-free either way.
+**68.0% less, a factor of 3.13.** Note where it does *not* come from. The 8 prompts answered locally would have cost $0.010259 on gpt-5.1 — **3.3%** of the bill. Keeping them local is almost free either way.
 
-The saving is one decision: the same 236,535-token document cost **$0.094736** at gpt-4.1-mini's
-$0.40/M instead of **$0.296** at gpt-5.1's $1.25/M. Both providers can hold it; one costs three
-times less to read it. That is what having more than one remote buys, and it only works if the
-ledger prices each line with `ModelCandidate.costOf` on the candidate that actually ran — which is
-why the router's accounted spend matches the total exactly.
+The saving is one decision: the same 236,535-token document cost **$0.094732** at gpt-4.1-mini's declared rate instead of **$0.296409** at gpt-5.1's. Both providers can hold it; one costs 3.1 times less to read it.
+<!-- end:figures:cost -->
+
+That is what having more than one remote buys, and it only works if the ledger prices each line
+with `ModelCandidate.costOf` on the candidate that actually ran — which is why the router's
+accounted spend matches the total exactly.
 
 On this workload the small prompts are a rounding error and the big one is the bill. On a workload
 of ten thousand heartbeats it would be the other way around. The router does not need to know which
@@ -427,59 +423,97 @@ you have.
 ```
 == timing, warm ==
 MODEL                            CALLS  TOTAL MS   MEAN MS     SHARE
-smollm2_360m_instruct_q8_0           3       426       142      0.8%
-qwen3_0_6b_q4_0                      2      5388      2694     10.2%
-unsloth_qwen3_5_4b_gguf_q4_k_m       1     11563     11563     22.0%
-bartowski_llama_3_2_1b_instruct…     2      3289      1644      6.3%
-gpt-5.1                              1      3856      3856      7.3%
-gpt-4.1-mini                         1     23390     23390     44.5%
-conversation wall clock: 52588 ms, of which 47912 ms (91.1%) was model calls
-one-off load of the four local models: 25503 ms, paid once at startup, not per request
+smollm2_360m_instruct_q8_0           3       634       211      1.4%
+qwen3_0_6b_q4_0                      2      7930      3965     17.4%
+unsloth_qwen3_5_4b_gguf_q4_k_m       1     15540     15540     34.1%
+bartowski_llama_3_2_1b_instruct…     2      4563      2281     10.0%
+gpt-5.1                              1      6999      6999     15.4%
+gpt-4.1-mini                         1      3251      3251      7.1%
+conversation wall clock: 45530 ms, of which 38917 ms (85.5%) was model calls
+one-off load of the four local models: 36920 ms, paid once at startup, not per request
 ```
 
-**This fleet answered the conversation in 52,588 ms against the no-router run's 24,491 ms** — 2.15×,
-warm against warm, with the routed arm's 25,503 ms of one-off model loading excluded from both and
-reported separately.
+Per prompt, with each arm's own wall clock:
 
-That is not a tax routing imposes. Two prompts account for **+23,424 ms of the +23,435 ms** total,
-and both are destinations the policy chose on purpose: the appendix went to gpt-4.1-mini, which is
-cheaper per token and slower, and the closed decision went to a 4B model on this laptop's CPU.
-Everything else nets out at **+11 ms**. Send the appendix to gpt-5.1 instead and the gap nearly
-closes, at three times the price.
+<!-- figures:per-prompt -->
+| prompt | no router | routed | | destination |
+| --- | --- | --- | --- | --- |
+| ping | 1,758 ms | **192 ms** | 9.2× faster | local |
+| still there? | 1,026 ms | **249 ms** | 4.1× faster | local |
+| ok | 906 ms | **193 ms** | 4.7× faster | local |
+| I was charged twice for my September order. | **2,896 ms** | 5,159 ms | 1.8× *slower* | local |
+| tell me more | **2,376 ms** | 2,771 ms | 1.2× *slower* | local |
+| I was charged twice for my September subscr… | **5,307 ms** | 15,540 ms | 2.9× *slower* | local |
+| When is a refund issued, and to which payme… | **1,207 ms** | 2,456 ms | 2.0× *slower* | local |
+| What happens to a duplicate charge? | **1,276 ms** | 2,107 ms | 1.7× *slower* | local |
+| Our refund policy promises five business da… | **5,778 ms** | 6,999 ms | 1.2× *slower* | gpt-5.1 |
+| Summarise this appendix for the support han… | 3,309 ms | 3,251 ms | level | gpt-4.1-mini |
 
-Per prompt the picture is not uniform:
+One row holds across all 3 archived pairs: a heartbeat is answered locally **4.1× to 13.0× faster** than a network round trip can answer it at all. Nothing a hosted model does is quick when the speed of light is in the way, and in a real deployment this row is most of the traffic.
 
-| prompt | no router | routed | |
-| --- | --- | --- | --- |
-| `ping` | 1,277 ms | **149 ms** | 9× faster |
-| `still there?` | 704 ms | **147 ms** | 5× faster |
-| `ok` | 940 ms | **130 ms** | 7× faster |
-| "I was charged twice…" | 3,441 ms | 3,415 ms | level |
-| "When is a refund issued…" | **1,026 ms** | 1,741 ms | slower |
-| the closed decision | **3,044 ms** | 11,563 ms | 3.8× *slower* |
-| the appendix | **8,485 ms** | 23,390 ms | 2.8× *slower* |
+The rest of the table is one afternoon: **6 of the 10 prompts** changed which arm was faster between pairs, so the per-prompt ordering is not a property of the fleet either. What is stable is where each prompt went and what it cost, which is what the policy actually decides.
+<!-- end:figures:per-prompt -->
 
-A heartbeat answered locally in 149 ms beats a network round trip every time; nothing a hosted model
-can do is fast when the speed of light is in the way. Everything else goes the other way. Harriet is
-a 4B model doing three forward passes on a laptop CPU and loses to a hosted frontier model by
-almost four times. And the appendix is slower for a reason worth naming: the router sent it to
-gpt-4.1-mini, which is cheaper per token *and* slower, so the cost saving and the latency cost are
-the same decision seen from two sides.
+Where a prompt went was the policy's decision, and the two escalations were chosen for price, not
+for speed: the appendix to gpt-4.1-mini because it reads a long document for a third of gpt-5.1's
+rate, the closed decision to a 4B model on this laptop's CPU because the text is a customer's.
+Change the weights and you change that — `FASTEST` would have kept the appendix on gpt-5.1 and the
+decision off Harriet, at roughly three times the price. The router does not decide which you want.
+It makes the trade explicit, prices both sides, and lets the policy pick.
 
-So on this mix the fleet was **3.13× cheaper and 2.15× slower**, and both numbers come from the
-same two decisions. Change the weights and you change the answer: `FASTEST` would have kept the
-appendix on gpt-5.1 and the decision off Harriet, and bought back most of the 23 seconds at three
-times the cost. The router does not decide which you want. It makes the trade explicit, prices both
-sides, and lets the policy pick.
+#### The ratio between the arms is mostly a statement about the provider
 
-Those shapes hold across runs on an unloaded machine. The absolute numbers do not survive a busy
-one: at load average 39, qwen3-0.6b reported **25,163 ms** for a call it answers in about 3,000 ms
-quiet. The share of wall clock spent inside model calls is a weaker tell than it looks — a
-contended run once reported 96.1% while every per-call figure was inflated eight-fold, because
-contention slows the calls themselves rather than descheduling the process between them. The runs
-here are gated on a known model's mean against its quiet baseline, and rejected when it drifts.
+Run the same pair again and the headline ratio moves, on code that has not changed:
 
-The 25 seconds of loading above the table is paid once. Four models then stay resident, which is
+<!-- figures:variance -->
+| run (UTC) | routed | no router | latency ratio | cost factor |
+| --- | --- | --- | --- | --- |
+| `20261019T042738Z` | 63,520 ms | 58,623 ms | 1.08× | 3.15× cheaper |
+| `20261019T043801Z` | 43,690 ms | 31,155 ms | 1.40× | 3.19× cheaper |
+| `20261019T044507Z` | 45,530 ms | 25,857 ms | 1.76× | 3.13× cheaper |
+
+Across **3 measured pairs** — same code, same prompts, same machine, all archived under [`evidence/fleet-routing/runs/`](evidence/fleet-routing/runs) — the latency ratio moved from **1.08× to 1.76×** (median 1.40×) while the cost factor moved from **3.13× to 3.19×**. One of those is a property of the fleet; the other is a property of the provider's queue on the day. Which is which:
+
+- the no-router arm's wall clock ranged over **2.27×** (25,857 ms to 58,623 ms)
+- the routed arm's remote portion ranged over **2.62×** (15,226 ms to 39,935 ms)
+- the routed arm's local portion ranged over **1.22×** (23,585 ms to 28,667 ms)
+- the appendix prompt alone, byte for byte identical every run, came back in 3,309 ms at best and 17,863 ms at worst — **5.40×** on one call to one provider
+<!-- end:figures:variance -->
+
+The local arm is the stable one. Four models on this laptop's CPU answer in nearly the same time
+every run, because nothing is competing for them and no queue stands in front of them. The hosted
+calls are the opposite, and the last bullet is worth isolating: that is one prompt, one provider,
+identical input. Sent repeatedly on purpose by
+[`appendix-providers`](evidence/fleet-routing/appendix-providers.log):
+
+<!-- figures:provider-latency -->
+| provider | n | fastest | median | slowest | spread | cost of the same input |
+| --- | --- | --- | --- | --- | --- | --- |
+| gpt-5.1 | 5 | 2,224 ms | 2,705 ms | 3,436 ms | **1.5×** | $0.296568 to $0.296678 |
+| gpt-4.1-mini | 5 | 1,869 ms | 1,920 ms | 2,644 ms | **1.4×** | $0.094737 to $0.094740 |
+
+The same prompt, the same declared model, 5 calls each: latency spread **1.4× to 1.5×**, while the bill moved in the sixth decimal place — the few completion tokens the model chose to emit. A hosted model's price is something you can quote. Its latency is something you can only sample, and this article says how many times it was sampled wherever it quotes one.
+<!-- end:figures:provider-latency -->
+
+The no-router arm is made entirely of calls like that.
+
+So the honest claim is not "routing is faster" and not "routing is slower" — on this mix it has
+landed on both sides of parity across runs. It is that routing moves most of the conversation onto
+hardware whose latency you can measure once and then rely on, and prices the part that stays
+remote. The cost factor above is the number that holds still; the latency ratio is the number that
+depends on somebody else's afternoon. Quote a single pair of wall clocks for an API arm and you are
+quoting that afternoon.
+
+None of these numbers survive a busy machine, which is why each pair is gated before it is kept:
+at load average 39, qwen3-0.6b reported **25,163 ms** for a call it answers in about 3,000 ms quiet.
+The share of wall clock spent inside model calls is a weaker tell than it looks — a contended run
+once reported 96.1% while every per-call figure was inflated eight-fold, because contention slows
+the calls themselves rather than descheduling the process between them. So acceptance is decided
+after the run, on a known model's mean against its quiet baseline, and a pair that drifts is thrown
+away. Each kept pair carries its load readings beside it in
+[`runs/`](evidence/fleet-routing/runs).
+
+The model loading reported above the table is paid once. Four models then stay resident, which is
 what a server does, and each native runtime sizes its worker pool for every logical CPU unless told
 otherwise — four pools on twelve cores. Measured on this host by
 [`oversubscription.java`](code/oversubscription.java), that costs less than it sounds: the same
@@ -741,7 +775,7 @@ if (!remoteSpend.isEmpty()) {
 `costOf` belongs to the candidate that actually ran. With one remote provider that is a detail; with
 three at different prices it is the difference between a ledger and a guess.
 
-## Five things only a real run would tell you
+## Six things only a real run would tell you
 
 **A decision without a rubric is a coin flip.** Harriet's yes-or-no call accepts a written rule for
 each outcome, and without them the question "is this ticket about billing?" came back
@@ -775,6 +809,41 @@ clear them — otherwise `tell me more`, the only prompt here that clears the si
 no model tagged `summarization` and the conversation dies. Nothing in a passing run tells you which
 of the two states you are in, which is the argument for setting the field rather than leaving it.
 
+**A batch of decisions amortises only when the questions share a rubric.** Harriet reads the
+ticket once and then answers each question against that read — but the resumption point is captured
+after the *shared prefix*, and the shared prefix is the evidence **and the rubric**
+(`ModelJarDecisionRuntime.sharedPrefix` is `criteria.isEmpty() ? state : state + "\n" + criteria`).
+Two questions reuse that read only when their rubrics are byte-identical. The three questions this
+demo asks are a boolean, a choice over three queues and an ordered severity, each with its own
+written rules, so no two of them share a prefix and each one reads the ticket again. Measured by
+[`grouping.java`](code/grouping.java) on the same ticket:
+
+<!-- figures:grouping -->
+| questions about one ticket | one shared rubric | three different rubrics |
+| --- | --- | --- |
+| 1 | 14,723 ms | 14,792 ms |
+| 2 | 15,919 ms | 32,387 ms |
+| 3 | 16,635 ms | 44,005 ms |
+
+The first question costs what reading the ticket costs — 14,723 ms and 14,792 ms, the same work either way. What the two after it cost is the finding: **956 ms** each when the rubric is shared against **14,606 ms** each when it is not, a factor of **15.3**.
+
+Strip the rubrics out entirely and the same three questions take **14,464 ms** against **44,005 ms** — the prefix is then the ticket alone, so all three share it. That **3.0×** is what the rubric buys its accuracy with, and the library's own record prices the other side of that trade at 0.8917 accuracy with rubrics against 0.7500 without. Measured here, read there.
+<!-- end:figures:grouping -->
+
+Where the rubric sits in the *prompt* is a measured choice, not an accident: the library's own
+record puts rubric-before-with-letters-after at Intelligence 88.9 over 120 JevBench items against
+86.1 for both after the criterion and 79.6 for both before. What that choice does not force is
+where the *resumption point* sits. Capturing after the ticket alone and re-reading only the rubric
+per question would amortise the ticket across unlike questions while sending byte-identical
+prompts — the third row's 14,464 ms is what reading this ticket once costs, and the mixed batch
+pays for it three times. That is a change to the runtime rather than to the prompt, it is not in
+the 0.1.61 artifact this article pins, and it is the next thing on this path.
+
+Until it lands, the operating rule is the measurement: if your decisions share one rubric — the same
+yes-or-no rule over many statements — batching them is nearly free. If they do not, size for the
+first question times the number of questions. The walkthrough above pays this: its three typed
+questions carry three rubrics, which is most of what the decision row in its timing table costs.
+
 **Keeping four models resident costs less than expected, and the obvious fix does not work.**
 Holding three other runtimes open while qwen3-0.6b answers takes it from 3,152 ms to 3,749 ms, a
 factor of 1.2 — not the collapse that four worker pools on twelve cores suggests. Capping each
@@ -783,7 +852,7 @@ runtime at three threads, which is what the script does, measured no better: 3,5
 [`oversubscription.log`](evidence/fleet-routing/oversubscription.log), and the cap stays in the
 script only because the run above was measured with it.
 
-The run record carries all five with their numbers and the runs that produced them.
+The run record carries all six with their numbers and the runs that produced them.
 
 ## What the catalog holds today
 
@@ -978,6 +1047,12 @@ Central. All fourteen completed on 2026-10-17; outcomes are in
 | [`route.java`](code/route.java) | Discovery over what is already cached, selection only |
 | [`bonsai.java`](code/bonsai.java) | A verified 5.95 GB PTQ1_0 artifact |
 | [`fleet.java`](code/fleet.java) | The routing fleet and ledger from the top of this article |
+
+Two more scripts in [`code/`](code/README.md) are measurement harnesses rather than examples, both
+used earlier in this article: [`oversubscription.java`](code/oversubscription.java), which times one
+model alone against the same model with three other runtimes resident, and
+[`grouping.java`](code/grouping.java), which times a batch of typed decisions with and without a
+shared rubric. Neither needs an API key.
 
 Run them with Java 25 and JBang from [`code/`](code/README.md). Discovery reports only models whose
 weights are already on disk — `ModelJarsCatalog` checks the descriptor's local path and then the

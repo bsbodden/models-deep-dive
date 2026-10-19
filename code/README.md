@@ -34,6 +34,28 @@ First runs need internet access to resolve JARs and download weights. Models rem
 larger than the smaller chat and embedding examples; allow several gigabytes of disk for
 the complete walkthrough. Do not include that download in an inference timing comparison.
 
+Three scripts are measurement harnesses rather than walkthrough examples, and are listed
+separately because two of them spend money:
+
+```bash
+OPENAI_API_KEY=... ANTHROPIC_API_KEY=... jbang fleet.java             # the routed arm
+OPENAI_API_KEY=... ANTHROPIC_API_KEY=... jbang fleet.java all-remote  # the same conversation, one model
+jbang oversubscription.java                                           # four resident runtimes against one
+jbang grouping.java                                                   # what a batch of decisions costs
+```
+
+`fleet.java` sends ten prompts, one of which is a 236k-token document, so a pair of runs bills
+roughly $0.40 at the prices the script declares. Run it through
+[`../tools/measure_fleet.sh`](../tools/measure_fleet.sh) rather than directly: the harness waits
+for a quiet host, rejects a run whose known-model mean has drifted, archives each accepted pair
+under `../evidence/fleet-routing/runs/` with its load readings, and regenerates every derived
+figure in the article from what it measured. A single pair is not a result: the spread across the
+archived pairs is in [`VARIANCE.txt`](../evidence/fleet-routing/VARIANCE.txt), regenerated from
+them by [`../tools/run_variance.py`](../tools/run_variance.py), and the latency ratio between the
+arms is not stable across runs even though the cost factor is.
+
+`grouping.java` and `oversubscription.java` need no keys and print their own tables.
+
 To inspect or download an artifact first:
 
 ```bash

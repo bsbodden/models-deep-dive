@@ -10,12 +10,15 @@ it. Hand-editing these blocks is how a stale number survives a re-measurement.
 from __future__ import annotations
 
 import re
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from fleet_logs import latest_pair
 
 ROOT = Path(__file__).resolve().parent.parent
 ARTICLE = ROOT / "article.md"
-ROUTED = ROOT / "evidence/fleet-routing/routed.log"
-ALL_REMOTE = ROOT / "evidence/fleet-routing/all-remote.log"
 
 
 def slice_between(text: str, start: str, end: str | None) -> str:
@@ -35,8 +38,7 @@ def replace_block(article: str, first_line: str, body: str) -> str:
 
 
 def main() -> int:
-    routed = ROUTED.read_text()
-    remote = ALL_REMOTE.read_text()
+    stamp, routed, remote = latest_pair()
     article = ARTICLE.read_text()
 
     article = replace_block(article, "WARMING", slice_between(routed, "WARMING", "\n== timing"))
@@ -49,7 +51,7 @@ def main() -> int:
     )
 
     ARTICLE.write_text(article)
-    print("refreshed four output blocks from the committed logs")
+    print(f"refreshed four output blocks from run {stamp}")
     return 0
 
 

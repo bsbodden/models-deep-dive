@@ -1,0 +1,54 @@
+classifier: 10 tasks from google_embeddinggemma_300m_gguf_q8_0, 768-dimensional, similarity floor 0.60
+
+WARMING                            LOAD MS
+smollm2_360m_instruct_q8_0            2509
+qwen3_0_6b_q4_0                       3798
+bartowski_llama_3_2_1b_instruct…      3451
+unsloth_qwen3_5_4b_gguf_q4_k_m       21286
+total                                31044
+
+PROMPT                           CLASSIFIED           SELECTED                          LOCAL IN      MS
+ping                             ~chat 0.48           smollm2_360m_instruct_q8_0               1     174
+    still here
+still there?                     ~summarization 0.50  smollm2_360m_instruct_q8_0               3     193
+    still here
+ok                               ~reasoning 0.57      smollm2_360m_instruct_q8_0               1     154
+    still here
+I was charged twice for my Se…   ~tool-use 0.46       qwen3_0_6b_q4_0                          9    4163
+    We'll check the details of your order to confirm if there was any issue with the payment. Let me know how we can assist you.
+tell me more                     summarization        qwen3_0_6b_q4_0                          3    2472
+    Of course, let me know how we can assist you with the next steps.
+I was charged twice for my Se…   ~tool-use 0.49       unsloth_qwen3_5_4b_gguf_q4_k_m          13   12821
+    billing=true(p=0.91,c=0.58) queue=billing(p=0.99,c=0.95) urgency=this week(p=0.38,c=0.01)
+When is a refund issued, and …   ~math 0.50           bartowski_llama_3_2_1b_instruct…        67    1900
+    A refund is issued to the original payment method within five business days.
+What happens to a duplicate c…   ~code 0.50           bartowski_llama_3_2_1b_instruct…        62    1708
+    A duplicate charge is reversed automatically once billing reconciliation runs nightly.
+Our refund policy promises fi…   ~tool-use 0.52       gpt-5.1                                 55   10706
+    Here’s where the conflict happens and a paragraph you can drop into your terms: **Where the conflict is** - Path 1 – Refund: You ma…
+Summarise this appendix for t…   summarization        gpt-4.1-mini                        245741   23601
+    Refunds are issued to the original payment method within five business days, except when the original charge has already been recon…
+
+== timing, warm ==
+MODEL                            CALLS  TOTAL MS   MEAN MS     SHARE
+smollm2_360m_instruct_q8_0           3       521       173      0.8%
+qwen3_0_6b_q4_0                      2      6635      3317     10.4%
+unsloth_qwen3_5_4b_gguf_q4_k_m       1     12821     12821     20.2%
+bartowski_llama_3_2_1b_instruct…     2      3608      1804      5.7%
+gpt-5.1                              1     10706     10706     16.9%
+gpt-4.1-mini                         1     23601     23601     37.2%
+conversation wall clock: 63520 ms, of which 57892 ms (91.1%) was model calls
+one-off load of the four local models: 31044 ms, paid once at startup, not per request
+
+== ledger ==
+10 prompts, 2 escalated to a remote provider, 8 answered on local weights
+local ruler (qwen3-0.6b tokenizer): 245796 of 245955 input tokens were routed off this machine (99.9%)
+provider ruler (gpt-5.1 reported): 236596 input + 560 completion tokens billed
+  the same prompt measured 245796 tokens locally, so the two rulers differ by -9200
+completions generated on local weights: 123 tokens
+REMOTE PROVIDER            IN      OUT         COST
+gpt-5.1                    61      475    $0.004826
+gpt-4.1-mini           236535       85    $0.094750
+total                  236596      560    $0.099576
+had every prompt gone to gpt-5.1: $0.307444 of input alone, plus $0.001230 for the completions this machine produced for nothing
+router-accounted spend: $0.099576 of the $0.50 shared budget

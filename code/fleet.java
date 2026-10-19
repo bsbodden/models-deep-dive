@@ -20,6 +20,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.integrallis.models.api.EmbeddingBackend;
 import com.integrallis.models.api.SamplingOptions;
+import com.integrallis.models.decisions.Noul;
+import com.integrallis.models.decisions.Choice;
+import com.integrallis.models.decisions.Score;
 import com.integrallis.models.decisions.Verdict;
 import com.integrallis.models.router.*;
 import com.integrallis.models.runtime.chat.ChatMessage;
@@ -777,38 +780,42 @@ class fleet {
   /** Closed answer spaces: one forward pass, no generated prose to parse or repair. */
   static String decide(String evidence) {
     var harriet = (ModelJarDecisionRuntime) OPEN.computeIfAbsent("harriet", key -> Harriet.open());
-    // Each outcome carries a written rule. The Harriet javadoc records the difference this
-    // makes: accuracy 0.8917 with a rubric against 0.7500 without, measured 2026-09-24 over
-    // 120 JevBench items on the same model and kernel. Without one, the boolean below returns
-    // a 0.50 coin flip on evidence a human reads instantly.
-    var billing =
-        Harriet.noul(
+    // decideAll, not three separate calls. The three questions are asked about one piece of
+    // evidence, and Harriet prefills that evidence once and resumes per question. Calling noul,
+    // choice and score individually is the same three answers for three full prefills -- which is
+    // what this demo did until the cost was measured.
+    //
+    // Each outcome carries a written rule. The Harriet javadoc records the difference this makes:
+    // accuracy 0.8917 with a rubric against 0.7500 without, measured 2026-09-24 over 120 JevBench
+    // items on the same model and kernel. Without one, the boolean below returns a 0.50 coin flip
+    // on evidence a human reads instantly.
+    var verdicts =
+        Harriet.decideAll(
             harriet,
-            "This ticket is about billing.",
-            "the customer describes a charge, a refund, an invoice or a subscription payment",
-            "the customer describes delivery, product faults, accounts or anything not monetary",
+            List.of(
+                new Noul(
+                    "This ticket is about billing.",
+                    "the customer describes a charge, a refund, an invoice or a subscription"
+                        + " payment",
+                    "the customer describes delivery, product faults, accounts or anything not"
+                        + " monetary"),
+                new Choice(
+                    "Which queue should handle this ticket?",
+                    List.of("billing", "technical", "shipping"),
+                    Map.of(
+                        "billing", "charges, refunds, invoices and subscription payments",
+                        "technical", "errors, outages and product faults",
+                        "shipping", "delivery, tracking and returns in transit")),
+                new Score(
+                    "How urgent is this ticket?",
+                    List.of("can wait", "this week", "today"),
+                    Map.of(
+                        "can wait", "no money is at stake and nothing is blocked",
+                        "this week", "money is at stake but the customer is not blocked",
+                        "today", "the customer is blocked or out of pocket with no path forward"))),
             evidence);
-    var queue =
-        Harriet.choice(
-            harriet,
-            "Which queue should handle this ticket?",
-            List.of("billing", "technical", "shipping"),
-            Map.of(
-                "billing", "charges, refunds, invoices and subscription payments",
-                "technical", "errors, outages and product faults",
-                "shipping", "delivery, tracking and returns in transit"),
-            evidence);
-    var urgency =
-        Harriet.score(
-            harriet,
-            "How urgent is this ticket?",
-            List.of("can wait", "this week", "today"),
-            Map.of(
-                "can wait", "no money is at stake and nothing is blocked",
-                "this week", "money is at stake but the customer is not blocked",
-                "today", "the customer is blocked or out of pocket with no path forward"),
-            evidence);
-    return "billing=%s queue=%s urgency=%s".formatted(show(billing), show(queue), show(urgency));
+    return "billing=%s queue=%s urgency=%s"
+        .formatted(show(verdicts.get(0)), show(verdicts.get(1)), show(verdicts.get(2)));
   }
 
   static String show(Verdict verdict) {
