@@ -8,6 +8,7 @@
 //RUNTIME_OPTIONS -Dmodels.native.kernels.threads=3
 //DEPS org.modeljars:modeljars:0.1.62
 //DEPS com.integrallis:models-router:0.5.0
+//DEPS com.integrallis:models-rag:0.5.0
 //DEPS com.integrallis:vectors-db:0.1.30
 //DEPS com.fasterxml.jackson.core:jackson-databind:2.22.3
 //DEPS org.modeljars.composite:harriet:0.1.62
@@ -19,6 +20,11 @@
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.integrallis.models.api.EmbeddingBackend;
+import com.integrallis.models.rag.GroundedAnswerPolicy;
+import com.integrallis.models.rag.GroundedRagPrompt;
+import com.integrallis.models.rag.GroundingContextDecision;
+import com.integrallis.models.rag.GroundingDecision;
+import com.integrallis.models.rag.GroundingDocument;
 import com.integrallis.models.api.SamplingOptions;
 import com.integrallis.models.decisions.Noul;
 import com.integrallis.models.decisions.Choice;
@@ -51,6 +57,30 @@ import org.modeljars.composite.harriet.Harriet;
  */
 class fleet {
   // Declared contract prices, not measurements. Set these to your own agreements.
+  /**
+   * The grounding policy this fleet's retrieval arm is qualified under.
+   *
+   * <p>0.25 is the demonstration threshold `rag.java` uses, and it is a threshold rather than a
+   * measurement: calibrate it on held-out data before trusting it in an application. What is not a
+   * judgement call is that the policy runs at all. ModelJars qualified this artifact as
+   * GUARDED_RAG, which is defined as production-usable with this policy, and a fleet that
+   * generates without it is using a model outside the configuration its evidence covers.
+   */
+  static final GroundedAnswerPolicy GROUNDING_POLICY =
+      new GroundedAnswerPolicy(
+          Float.parseFloat(System.getProperty("fleet.grounding.minimumRetrievalScore", "0.25")));
+
+  /** What the grounded arm needs to check its own answer, recorded by resolve. */
+  static List<GroundingDocument> lastGroundingEvidence;
+
+  static String lastGroundingQuestion;
+
+  /** How the policy decided, reported per prompt so the guard is visible rather than implied. */
+  static GroundingDecision lastGroundingDecision;
+
+  /** Set when retrieval alone was too weak to answer, so neither arm calls a model. */
+  static GroundingContextDecision lastGroundingRefusal;
+
   static final String PREMIUM = "gpt-5.1";
   static final double PREMIUM_IN = 1.25;
   static final double PREMIUM_OUT = 10.00;
@@ -198,6 +228,16 @@ class fleet {
       // Retrieval happens here, before routing, so the router sizes and bills the prompt a model
       // will actually receive -- notes included.
       String text = resolve(retrieval, prompt);
+      if (text == null) {
+        // Retrieval was too weak for the grounding policy to allow an answer, so no model runs and
+        // nothing is billed. Reported in the table, because an abstention a reader cannot see is
+        // indistinguishable from a question nobody asked.
+        System.out.printf(
+            "%-32s %-20s %-32s %9s %7s%n",
+            abbreviate(prompt.text(), 32), "-", "abstained", "-", "-");
+        System.out.printf("    grounding policy: %s%n", lastGroundingDecision);
+        continue;
+      }
       int tokens = tokenizer.encode(text).length;
       allTokens += tokens;
       // A session makes the router sticky: it adds a switch margin so a conversation does not
@@ -269,6 +309,12 @@ class fleet {
           tokens,
           millis);
       System.out.printf("    %s%n", abbreviate(String.valueOf(result.value()), 132));
+      if (lastGroundingDecision != null) {
+        // The guard, stated per prompt. A grounded answer that was overwritten by the extractive
+        // fallback and one the model produced itself read the same way on the page, and the
+        // difference is the whole question of whether the model earned its place in the fleet.
+        System.out.printf("    grounding policy: %s%n", lastGroundingDecision);
+      }
       // Pass "explain" to see why: the score breakdown names every term, including the
       // switch-margin a session grants the incumbent model.
       if (args.length > 0 && "explain".equals(args[0])) {
@@ -629,6 +675,14 @@ class fleet {
    * different, shorter question.
    */
   static String resolve(VectorCollection retrieval, Prompt prompt) {
+    // Cleared for every prompt, before any branch. Setting these only inside the grounded branch
+    // left the previous prompt's decision in place, and the table then printed "grounding policy:
+    // EXTRACTIVE_FALLBACK" under the two prompts that followed a grounded one -- a policy verdict
+    // for prompts the policy never saw. Four lines where there should have been two.
+    lastGroundingEvidence = null;
+    lastGroundingQuestion = null;
+    lastGroundingDecision = null;
+    lastGroundingRefusal = null;
     if (prompt.attachment() != null) {
       return prompt.text() + "\n\n" + prompt.attachment();
     }
@@ -638,15 +692,30 @@ class fleet {
     var embedding = (EmbeddingBackend) OPEN.get(EMBEDDER);
     var hits =
         retrieval.search(SearchRequest.builder(embedding.embed(prompt.text()), 2).build()).hits();
-    var context = new StringBuilder();
+    // The retrieval scores are kept rather than flattened away. The grounding policy's first gate
+    // is a retrieval-score threshold, so discarding them -- which this file did until 0.5.0, by
+    // concatenating the hit text into one string -- removes the policy's ability to decline before
+    // a model is ever called.
+    var evidence = new ArrayList<GroundingDocument>();
     for (var hit : hits) {
-      context.append(hit.document().text()).append(' ');
+      evidence.add(
+          new GroundingDocument(
+              hit.id(), hit.id(), hit.document().text(), (float) hit.score(), evidence.size() + 1));
     }
-    return "Notes: "
-        + context.toString().strip()
-        + "\nUsing only those notes, answer in one sentence. If they do not contain the answer,"
-        + " say that you do not know.\nQuestion: "
-        + prompt.text();
+    lastGroundingEvidence = List.copyOf(evidence);
+    lastGroundingQuestion = prompt.text();
+    lastGroundingDecision = null;
+    var grounded = GroundedRagPrompt.prepare(GROUNDING_POLICY, prompt.text(), evidence);
+    if (!grounded.generationAllowed()) {
+      // The policy refused on the retrieval alone, so no model is called at all. The first version
+      // of this returned the abstention string as the prompt, which would have sent a model the
+      // text "INSUFFICIENT_CONTEXT\nQuestion: ..." and billed for the answer. A refusal is a
+      // decision not to generate, not a different thing to generate.
+      lastGroundingRefusal = grounded.decision();
+      lastGroundingDecision = GroundingDecision.RETRIEVAL_ABSTENTION;
+      return null;
+    }
+    return grounded.text();
   }
 
   /** One support session: liveness, follow-ups, closed decisions, grounded questions, synthesis. */
@@ -720,7 +789,15 @@ class fleet {
     for (var prompt : prompts()) {
       lastRemoteUsage = null;
       long began = System.nanoTime();
-      var answer = callOpenAi(PREMIUM, PREMIUM_CAP, resolve(retrieval, prompt));
+      var grounded = resolve(retrieval, prompt);
+      if (grounded == null) {
+        // The same refusal, in the arm that has no router. Sending the question anyway would make
+        // this arm look better by answering something the other arm declined to answer, which is
+        // not a difference between the arms but a difference in what they were asked.
+        System.out.printf("%-46s %8s %8s %8s%n", abbreviate(prompt.text(), 44), "-", "-", "-");
+        continue;
+      }
+      var answer = callOpenAi(PREMIUM, PREMIUM_CAP, grounded);
       long millis = (System.nanoTime() - began) / 1_000_000;
       accounted += millis;
       if (lastRemoteUsage == null) {
@@ -806,7 +883,23 @@ class fleet {
   /** Retrieval plus a small local model: the ordinary RAG shape, reachable only via "grounding". */
   /** The grounded arm receives an already-retrieved prompt, so it only generates. */
   static String ground(String groundedPrompt) {
-    return generate(GROUNDER, groundedPrompt, 64);
+    var raw = generate(GROUNDER, groundedPrompt, 64);
+    var evidence = lastGroundingEvidence;
+    var question = lastGroundingQuestion;
+    if (evidence == null || question == null) {
+      // No retrieval ran for this prompt, so there is nothing to check an answer against. Returning
+      // the raw generation is the only honest option, and it cannot happen for a grounded prompt:
+      // resolve() records both before the arm is ever called.
+      return raw;
+    }
+    // The guard this artifact was qualified under, not an unguarded generation. ModelJars reports
+    // the Llama-3.2-1B entry as GUARDED_RAG, which the policy defines as production-usable *with*
+    // the grounding and extractive fallback policy, and its model-only correctness is 0.111
+    // against a pipeline correctness of 1.0. This fleet generated unguarded for every run before
+    // 0.5.0 while quoting the catalog as evidence that the arm was fit for the job.
+    var decided = GROUNDING_POLICY.apply(question, evidence, raw);
+    lastGroundingDecision = decided.decision();
+    return decided.text();
   }
 
   /** Closed answer spaces: one forward pass, no generated prose to parse or repair. */
