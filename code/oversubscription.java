@@ -1,9 +1,9 @@
 //JAVA 25
 //RUNTIME_OPTIONS --add-modules=jdk.incubator.vector --enable-native-access=ALL-UNNAMED -Xmx12g
-//DEPS org.modeljars:modeljars:0.1.62
-//DEPS com.integrallis:models-router:0.5.0
+//DEPS org.modeljars:modeljars:0.1.63
+//DEPS com.integrallis:models-router:0.5.1
 //DEPS com.integrallis:vectors-db:0.1.30
-//DEPS org.modeljars.composite:harriet:0.1.62
+//DEPS org.modeljars.composite:harriet:0.1.63
 //DEPS org.modeljars.huggingface:huggingfacetb.smollm2-360m-instruct-gguf.q8_0:2.0.0-q8_0.1
 //DEPS org.modeljars.huggingface:ggml-org.qwen3-0.6b-gguf.q4_0:3.0.0-q4_0.1
 //DEPS org.modeljars.huggingface:bartowski.llama-3.2-1b-instruct-gguf.q4_k_m:3.2.0-q4_k_m.1

@@ -6,12 +6,12 @@
 // 20x: qwen3-0.6b answered the same prompt in 1,169 ms alone and 23,946 ms beside the others.
 // Three threads each shares the twelve this host has.
 //RUNTIME_OPTIONS -Dmodels.native.kernels.threads=3
-//DEPS org.modeljars:modeljars:0.1.62
-//DEPS com.integrallis:models-router:0.5.0
-//DEPS com.integrallis:models-rag:0.5.0
+//DEPS org.modeljars:modeljars:0.1.63
+//DEPS com.integrallis:models-router:0.5.1
+//DEPS com.integrallis:models-rag:0.5.1
 //DEPS com.integrallis:vectors-db:0.1.30
 //DEPS com.fasterxml.jackson.core:jackson-databind:2.22.3
-//DEPS org.modeljars.composite:harriet:0.1.62
+//DEPS org.modeljars.composite:harriet:0.1.63
 //DEPS org.modeljars.huggingface:ggml-org.embeddinggemma-300m-gguf.q8_0:3.0.0-q8_0.1
 //DEPS org.modeljars.huggingface:huggingfacetb.smollm2-360m-instruct-gguf.q8_0:2.0.0-q8_0.1
 //DEPS org.modeljars.huggingface:ggml-org.qwen3-0.6b-gguf.q4_0:3.0.0-q4_0.1

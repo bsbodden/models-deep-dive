@@ -1,7 +1,7 @@
 //JAVA 25
 //RUNTIME_OPTIONS --add-modules=jdk.incubator.vector
 //RUNTIME_OPTIONS --enable-native-access=ALL-UNNAMED -Xmx4g
-//DEPS org.modeljars.composite:harriet:0.1.62
+//DEPS org.modeljars.composite:harriet:0.1.63
 
 import com.integrallis.models.decisions.AnswerSpace;
 import com.integrallis.models.decisions.Choice;

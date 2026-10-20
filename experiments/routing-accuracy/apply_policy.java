@@ -1,5 +1,5 @@
 //JAVA 25
-//DEPS com.integrallis:models-rag:0.4.3
+//DEPS com.integrallis:models-rag:0.5.1
 //DEPS com.fasterxml.jackson.core:jackson-databind:2.20.0
 
 import com.fasterxml.jackson.databind.ObjectMapper;
