@@ -111,7 +111,10 @@ class accuracy {
       // The fleet's own guard says so rather than quietly building a smaller fleet, which is how
       // this harness found out.
       warmLocalArms();
-      built = fleet.buildFleet(classifier, retrieval);
+      // The article's own policy, with no floor: this experiment measures what the fleet's
+      // selected models answer, and a floor would change which models answer rather than how well
+      // they do. BALANCED is what fleet.java routes with by default.
+      built = fleet.buildFleet(classifier, retrieval, RoutingPolicy.BALANCED);
       options = RoutingExecutionOptions.builder()
           .sharedBudget(new RoutingBudget(new BigDecimal("15.00")))
           // The article's fleet-wide bounds, except for input: a HotpotQA item carries ten

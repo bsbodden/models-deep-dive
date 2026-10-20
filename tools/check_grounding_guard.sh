@@ -62,6 +62,23 @@ check "all-remote arm skips the same two prompts" 2 \
   "$(grep -cE '^[^ ].*  +-  +-  +-$' <<<"$remote_table")"
 
 echo
+echo "== quality floor: nothing in this fleet has a measured quality, so nothing routes =="
+# The uncomfortable half of the evidence, asserted rather than described. Every qualified RAG
+# artifact in the catalog is GUARDED_RAG, which measures a pipeline and not the model, and the
+# hosted models carry no qualification at all now that their invented scores are deleted. A floor
+# therefore refuses all ten prompts and names what is missing. If a measurement ever lands, this
+# check fails and the article's claim has to be rewritten -- which is the correct trigger.
+floored="$(jbang fleet.java require-quality 0.5 2>&1 | strip)"
+floored_table="$(sed -n '/^PROMPT /,/== timing/p' <<<"$floored")"
+check "every prompt is refused under a floor" 10 "$(grep -c 'refused' <<<"$floored_table")"
+check "the reason names the missing measurement" 10 \
+  "$(grep -c 'measured quality' <<<"$floored_table")"
+check "no model answers under a floor" 0 \
+  "$(grep -cE 'smollm2_360m|qwen3_0_6b|bartowski_llama|unsloth_qwen3|gpt-|claude-' <<<"$floored_table")"
+check "a refusal is not fatal: the run still reports" 1 \
+  "$(grep -c '== timing, warm ==' <<<"$floored")"
+
+echo
 if [ "$failures" -eq 0 ]; then
   echo "grounding guard: all checks passed"
 else

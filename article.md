@@ -69,7 +69,15 @@ System.out.printf("%n%-46s %8s %8s %8s%n", "PROMPT", "IN", "OUT", "MS");
 for (var prompt : prompts()) {
   lastRemoteUsage = null;
   long began = System.nanoTime();
-  var answer = callOpenAi(PREMIUM, PREMIUM_CAP, resolve(retrieval, prompt));
+  var grounded = resolve(retrieval, prompt);
+  if (grounded == null) {
+    // The same refusal, in the arm that has no router. Sending the question anyway would make
+    // this arm look better by answering something the other arm declined to answer, which is
+    // not a difference between the arms but a difference in what they were asked.
+    System.out.printf("%-46s %8s %8s %8s%n", abbreviate(prompt.text(), 44), "-", "-", "-");
+    continue;
+  }
+  var answer = callOpenAi(PREMIUM, PREMIUM_CAP, grounded);
   long millis = (System.nanoTime() - began) / 1_000_000;
   accounted += millis;
   if (lastRemoteUsage == null) {
@@ -301,7 +309,7 @@ return ModelFleet.<Responder>builder()
     // thumb there separates nothing between them, and the LOCAL_ONLY boundary already keeps
     // these requests on this machine. FASTEST is the policy that changes the answer -- it
     // hands ordinary chat to the 360M model on latency alone, which is the wrong trade here.
-    .policy(RoutingPolicy.BALANCED)
+    .policy(policy)
     .model(tiny, prompt -> acknowledge(TINY, prompt))
     .model(small, prompt -> chat(SMALL, prompt, 80))
     .model(grounder, fleet::ground)

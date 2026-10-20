@@ -190,7 +190,30 @@ class fleet {
     }
     System.out.printf("%-32s %9d%n", "total", warmTotal);
 
-    var fleet = buildFleet(classifier, retrieval);
+    var floor = qualityFloor(args);
+    if (floor.isPresent()) {
+      System.out.printf(
+          "%nquality floor: %.2f. A candidate with no measurement for a task does not clear it.%n",
+          floor.getAsDouble());
+    }
+    var fleet =
+        buildFleet(
+            classifier,
+            retrieval,
+            floor.isPresent()
+                ? RoutingPolicy.BALANCED.withMinimumQuality(floor.getAsDouble())
+                : RoutingPolicy.BALANCED);
+    // A quality floor, off by default, and what it does on this fleet is the point rather than a
+    // limitation. Nothing in the catalog carries a measured quality for chat, grounding or a closed
+    // decision -- every qualified RAG artifact is GUARDED_RAG, which measures a pipeline rather
+    // than the model -- so a floor refuses every local arm and says so. That is the honest state of
+    // the evidence: this fleet routes its local traffic on cost, latency and locality, and on an
+    // operator's declaration of what each model is allowed to serve, not on a measurement of how
+    // well it serves it.
+    //
+    // Run `jbang fleet.java require-quality 0.5` to see the refusal instead of reading about it.
+    // The alternative, which this file did until 0.5.0, is to type a number in and route as though
+    // it were measured.
     var tokenizer = runtime(SMALL).pipeline().tokenizer();
 
     var budget = new RoutingBudget(new BigDecimal("0.50"));
@@ -266,6 +289,16 @@ class fleet {
                     lastRemoteUsage != null
                         ? lastRemoteUsage
                         : new RoutingUsage(tokens, estimateOutputTokens(answer)));
+      } catch (NoEligibleModelException refused) {
+        // Reported per prompt and not fatal. A fleet that cannot route one request has not failed
+        // as a fleet, and the whole point of a floor is to see which requests it refuses and why:
+        // aborting on the first one tells a reader that something went wrong rather than which
+        // evidence is missing.
+        System.out.printf(
+            "%-32s %-20s %-32s %9s %7s%n",
+            abbreviate(prompt.text(), 32), "-", "refused", "-", "-");
+        System.out.printf("    %s%n", refused.getMessage());
+        continue;
       } catch (RoutingBudgetExceededException denied) {
         // Reported, not fatal: one refused attempt should not discard the rest of the ledger.
         System.out.printf(
@@ -423,7 +456,8 @@ class fleet {
    * grounding}; only Harriet claims {@code decision}. The capability filter therefore settles
    * eligibility before any score is compared.
    */
-  static ModelFleet<Responder> buildFleet(TaskClassifier classifier, VectorCollection retrieval) {
+  static ModelFleet<Responder> buildFleet(
+      TaskClassifier classifier, VectorCollection retrieval, RoutingPolicy policy) {
     // region: locals
     // Identity, locality, the context window read from the artifact and this host's throughput all
     // come from the catalog, so none of them is written here.
@@ -569,7 +603,7 @@ class fleet {
         // thumb there separates nothing between them, and the LOCAL_ONLY boundary already keeps
         // these requests on this machine. FASTEST is the policy that changes the answer -- it
         // hands ordinary chat to the 360M model on latency alone, which is the wrong trade here.
-        .policy(RoutingPolicy.BALANCED)
+        .policy(policy)
         .model(tiny, prompt -> acknowledge(TINY, prompt))
         .model(small, prompt -> chat(SMALL, prompt, 80))
         .model(grounder, fleet::ground)
@@ -716,6 +750,23 @@ class fleet {
       return null;
     }
     return grounded.text();
+  }
+
+  /**
+   * The floor this run demands, if any.
+   *
+   * <p>A floor is the only way to say "do not route this without evidence", and
+   * `RoutingPolicy.withMinimumQuality` refuses an unmeasured candidate outright rather than
+   * scoring it zero, which is what Models 0.5.0 changed. Reading the refusal is more informative
+   * than reading a paragraph about it, so it is a run mode rather than a comment.
+   */
+  static java.util.OptionalDouble qualityFloor(String... args) {
+    for (int index = 0; index < args.length - 1; index++) {
+      if ("require-quality".equals(args[index])) {
+        return java.util.OptionalDouble.of(Double.parseDouble(args[index + 1]));
+      }
+    }
+    return java.util.OptionalDouble.empty();
   }
 
   /** One support session: liveness, follow-ups, closed decisions, grounded questions, synthesis. */
