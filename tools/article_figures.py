@@ -12,6 +12,7 @@ Parsing is reused from derive_fleet_figures, so both tools read the logs the sam
 
 from __future__ import annotations
 
+import json
 import re
 import statistics
 import sys
@@ -379,6 +380,23 @@ def provider_latency_region(routed: str, remote: str) -> str:
 HEARTBEAT_ORDER = ("ping", "still there?", "ok")
 
 
+def accuracy_cell(side: str) -> str:
+    """One cell of the summary table's accuracy row, or the honest empty it used to hold."""
+    results = ROOT / "experiments/routing-accuracy/RESULTS.json"
+    if not results.exists():
+        return "**not measured**"
+    stages = json.loads(results.read_text())["stages"]
+    scores = [stage["routed" if side == "routed" else "allApi"] for stage in stages.values()]
+    if not scores:
+        return "**not measured**"
+    if side != "routed":
+        return (f"the reference: **{min(scores):.0f} to {max(scores):.0f}** depending on the task")
+    deltas = [stage["delta"] for stage in stages.values()]
+    return (f"**{abs(max(deltas)):.0f} to {abs(min(deltas)):.0f} points behind** on "
+            f"{len(stages)} public datasets, and a tie on the one shape this mix asks for — "
+            "see below")
+
+
 def summary_region(routed: str, remote: str) -> str:
     """The whole comparison on one screen, derived from every archived pair on the current pin.
 
@@ -462,13 +480,69 @@ def summary_region(routed: str, remote: str) -> str:
          f"machine**; by token count {max(local_token_share):.1f}% still did, because the one "
          "appendix dwarfs the other nine prompts",
          f"every prompt and every token goes to {premium}"),
-        ("**Accuracy**", "**not measured**", "**not measured**"),
+        ("**Accuracy**", accuracy_cell("routed"), accuracy_cell("allApi")),
     ]
 
     return "\n".join(
         [f"| | Routed fleet — four local models and three providers | Every prompt to {premium} |",
          "| --- | --- | --- |"]
         + [f"| {axis} | {left} | {right} |" for axis, left, right in rows_out])
+
+
+def accuracy_region(routed: str, remote: str) -> str:
+    """The accuracy row, from experiments/routing-accuracy/RESULTS.json.
+
+    This row said "not measured" until there was something to put in it. What went in is not what
+    the routing argument assumed, which is the reason the experiment was run rather than reasoned
+    about.
+    """
+    results = ROOT / "experiments/routing-accuracy/RESULTS.json"
+    if not results.exists():
+        raise SystemExit("experiments/routing-accuracy/RESULTS.json is missing: run score.py")
+    stages = json.loads(results.read_text())["stages"]
+    if not stages:
+        raise SystemExit("RESULTS.json has no scored stages")
+
+    names = {
+        "qa/squad2": ("SQuAD v2 dev, half of it unanswerable", "exact match"),
+        "qa/hotpotqa": ("HotpotQA distractor, ten paragraphs per question", "exact match"),
+        "decide/snips": ("SNIPS 2017, seven intents", "label accuracy"),
+        "decide/trec": ("TREC coarse, six classes", "label accuracy"),
+    }
+    out = ["| public dataset | metric | routed | every prompt to gpt-5.1 | difference |",
+           "| --- | --- | --- | --- | --- |"]
+    deltas = []
+    for key, (label, metric) in names.items():
+        stage = stages.get(key)
+        if not stage:
+            continue
+        low, high = stage["ci95"]
+        deltas.append(stage["delta"])
+        out.append(f"| {label} (n={stage['n']}) | {metric} | **{stage['routed']:.1f}** | "
+                   f"**{stage['allApi']:.1f}** | {stage['delta']:+.1f} [{low:+.0f}, {high:+.0f}] |")
+
+    split = stages.get("qa/squad2", {}).get("split", {})
+    if split:
+        answerable = split.get("answerable/routed", {})
+        answerable_api = split.get("answerable/allApi", {})
+        unanswerable = split.get("unanswerable/routed", {})
+        unanswerable_api = split.get("unanswerable/allApi", {})
+        out += [
+            "",
+            f"Every dataset rejects it, by {abs(max(deltas)):.0f} to {abs(min(deltas)):.0f} points, "
+            "under a threshold fixed before the run. The aggregate hides where the loss is, and the "
+            "split is the finding: on SQuAD's answerable half the 1B model scores "
+            f"**{answerable.get('exactMatch', 0):.1f}** against the frontier model's "
+            f"**{answerable_api.get('exactMatch', 0):.1f}** — a tie on extracting an answer from "
+            "one short passage. On the unanswerable half it scores "
+            f"**{unanswerable.get('exactMatch', 0):.1f}** against "
+            f"**{unanswerable_api.get('exactMatch', 0):.1f}**, because it declined "
+            f"**{unanswerable.get('abstained', 0)} times out of {unanswerable.get('n', 0)}** while "
+            f"gpt-5.1 declined {unanswerable_api.get('abstained', 0)}. HotpotQA, which has no "
+            "unanswerable questions, isolates the rest: ten paragraphs and two-hop answers cost "
+            f"{abs(stages['qa/hotpotqa']['delta']):.0f} points with no abstention involved.",
+        ]
+    return "\n".join(out)
 
 
 def verify_prose(article: str, routed: str) -> None:
@@ -516,6 +590,7 @@ def verify_prose(article: str, routed: str) -> None:
 
 
 REGIONS = {
+    "accuracy": accuracy_region,
     "baseline": baseline_region,
     "summary": summary_region,
     "grouping": grouping_region,

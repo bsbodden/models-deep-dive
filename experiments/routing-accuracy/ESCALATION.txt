@@ -1,0 +1,26 @@
+== snips: n=100, local only 80.0, all-API 96.0
+ threshold  accuracy  escalated
+      0.00      80.0         0%
+      0.20      82.0         4%
+      0.40      90.0        17%
+      0.50      93.0        23%
+      0.60      96.0        36%
+      0.80      96.0        61%
+      1.00      96.0       100%
+   best on this dataset: threshold 0.60 -> 96.0 at 36% escalated
+
+== trec: n=100, local only 76.0, all-API 92.0
+ threshold  accuracy  escalated
+      0.00      76.0         0%
+      0.20      76.0         5%
+      0.40      86.0        41%
+      0.50      90.0        62%
+      0.60      90.0        74%
+      0.80      91.0        99%
+      1.00      92.0       100%
+   best on this dataset: threshold 0.85 -> 92.0 at 100% escalated
+
+cross-dataset, which is the honest number: a threshold chosen on one dataset,
+applied to the other, so the data that picked it is not the data that scores it.
+  threshold 0.60 from snips on trec: 90.0 against 76.0 local-only and 92.0 all-API, 74% escalated
+  threshold 0.85 from trec on snips: 96.0 against 80.0 local-only and 96.0 all-API, 74% escalated

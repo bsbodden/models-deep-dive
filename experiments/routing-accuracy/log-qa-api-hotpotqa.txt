@@ -1,0 +1,108 @@
+load at start: 4.31 4.21 3.53 1/182 3622
+started 2026-10-20T01:46:44Z
+WARNING: Using incubator modules: jdk.incubator.vector
+
+ITEM   SELECTED                            LOCAL IN       MS  ANSWER
+1      gpt-5.1                                 1154     1466  "The Conversation"
+2      gpt-5.1                                 1199      629  "Suicide Squad"
+3      gpt-5.1                                 2033     1231  seasonal television specials
+4      gpt-5.1                                 1576     1087  Lush Ltd.
+5      gpt-5.1                                 1162      545  Yellowcraig
+6      gpt-5.1                                 1475      923  35,124
+7      gpt-5.1                                 1420      626  Chattahoochee
+8      gpt-5.1                                 1308      850  David Weissman
+9      gpt-5.1                                 1134      550  1866
+10     gpt-5.1                                 1007      601  Golden Valley, Minnesota
+11     gpt-5.1                                 1791      568  Jillian Belk
+12     gpt-5.1                                 1773      543  Sacred Planet
+13     gpt-5.1                                 1768      531  the keyboard function keys
+14     gpt-5.1                                 1373      821  712 5th Avenue
+15     gpt-5.1                                 1496      989  acidic bogs
+16     gpt-5.1                                 1143      632  Wichita
+17     gpt-5.1                                 1711      734  "Teach the Controversy" campaign
+18     gpt-5.1                                 1371      889  I don't know
+19     gpt-5.1                                 1130      844  more than 70
+20     gpt-5.1                                 1723      573  Monica Lewinsky
+21     gpt-5.1                                 1277      603  44 victories
+22     gpt-5.1                                 2014      555  requiring only men to register for the draft
+23     gpt-5.1                                 1406      695  over the course of three centuries
+24     gpt-5.1                                 1737      652  Scotch Collie
+25     gpt-5.1                                 1313      575  The Bye Bye Man
+26     gpt-5.1                                 1357      672  Brooklyn, New York
+27     gpt-5.1                                 2061      599  The Drop-In
+28     gpt-5.1                                 2099      680  Usher
+29     gpt-5.1                                 1654      632  Seven Days Battles
+30     gpt-5.1                                 1767      599  Marsilea
+31     gpt-5.1                                 1597      663  13–3
+32     gpt-5.1                                 1400      815  Pirate's Cove is a board game designed by Paul Randles and …
+33     gpt-5.1                                 1068      499  World War II
+34     gpt-5.1                                 1732      777  Tybalt
+35     gpt-5.1                                 1313      756  the IFFHS World's Best Goalkeeper
+36     gpt-5.1                                 1489      738  Brad Silberling
+37     gpt-5.1                                 1688      501  Jackson Storm
+38     gpt-5.1                                 1496      559  Screaming Trees
+39     gpt-5.1                                 1327      486  Kevin Spacey
+40     gpt-5.1                                 1420      485  Hong Kong
+41     gpt-5.1                                 1002      507  Nebo Zovyot
+42     gpt-5.1                                 1035      719  the Richmond River
+43     gpt-5.1                                 2223      636  1901
+44     gpt-5.1                                 1615      622  Charles Kelley
+45     gpt-5.1                                 3016      854  4,000
+46     gpt-5.1                                 1108      501  I don't know
+47     gpt-5.1                                 1738      541  I don't know
+48     gpt-5.1                                 1372      626  Carabao Cup
+49     gpt-5.1                                 1529      760  "Slaughterhouse-Five"
+50     gpt-5.1                                 1135      722  George Archainbaud
+51     gpt-5.1                                 1193      647  Kathy Sullivan
+52     gpt-5.1                                 1660      459  Texas Tech University
+53     gpt-5.1                                 1701      631  I don't know
+54     gpt-5.1                                 1359      831  George Raft
+55     gpt-5.1                                 1377      674  I don't know
+56     gpt-5.1                                 1286      640  Fairfax County
+57     gpt-5.1                                 1210      771  valuation
+58     gpt-5.1                                 1233      623  Beijing
+59     gpt-5.1                                 1421      803  the North Atlantic Conference
+60     gpt-5.1                                 1439      635  Roberta Vinci
+61     gpt-5.1                                  872      801  821
+62     gpt-5.1                                 1525      682  Wendell Berry
+63     gpt-5.1                                 1163      789  Skin Yard was an American grunge band from Seattle, Washing…
+64     gpt-5.1                                 1221      583  Pasek and Paul
+65     gpt-5.1                                 1236      679  I don't know
+66     gpt-5.1                                  920      667  I don't know
+67     gpt-5.1                                 1505      541  United States presidential election of 2016
+68     gpt-5.1                                 1608      764  9,984
+69     gpt-5.1                                 1703      615  the early years of the nineteenth century
+70     gpt-5.1                                 1649      641  IT products and services
+71     gpt-5.1                                 1188      685  Barton Lee Hazlewood
+72     gpt-5.1                                 1695      836  Leo Varadkar
+73     gpt-5.1                                 1189      993  Tenerife (Canary Islands, Spain) and the island of La Gomer…
+74     gpt-5.1                                 1288      738  Henry John Kaiser
+75     gpt-5.1                                 2732      594  I don't know.
+76     gpt-5.1                                 1678      637  April 1, 1949
+77     gpt-5.1                                 1916      517  Eenasul Fateh
+78     gpt-5.1                                 1448      645  between the 8th and 16th centuries
+79     gpt-5.1                                 1649      592  English Electric Canberra
+80     gpt-5.1                                 1104      551  Ann
+81     gpt-5.1                                 1106      599  City of Newcastle
+82     gpt-5.1                                 1643      649  United States v. Paramount Pictures, Inc.
+83     gpt-5.1                                 2024      551  Ethiopian sovereignty
+84     gpt-5.1                                 1067      572  the British-born composer Anna Clyne
+85     gpt-5.1                                 1251      847  The Beatles
+86     gpt-5.1                                 1064      638  I don't know
+87     gpt-5.1                                 1842      508  Dinosaur
+88     gpt-5.1                                 1213      849  Marvel Comics
+89     gpt-5.1                                 1544      607  Stapleton Cotton, 1st Viscount Combermere
+90     gpt-5.1                                 1622      566  Rear Adm. J. Edward Snyder
+91     gpt-5.1                                 1039      552  Salford City
+92     gpt-5.1                                 1220      630  the Parthian Empire
+93     gpt-5.1                                 1380      565  United States ambassador to Ghana and to Czechoslovakia
+94     gpt-5.1                                 1359      650  Charles Eugène Jules Marie Nungesser
+95     gpt-5.1                                  445      645  I don't know.
+96     gpt-5.1                                 1192      740  Ryan Seacrest
+97     gpt-5.1                                 1102      759  Kimberly Couger "Kimmy" Schmidt
+98     gpt-5.1                                  672      552  Ferdi Taygan
+99     gpt-5.1                                 1709      855  7 October 1978
+100    gpt-5.1                                 1284      552  Bhushan Patel
+
+wrote 100 rows to results-qa-api-hotpotqa.jsonl
+finished 2026-10-20T01:47:56Z

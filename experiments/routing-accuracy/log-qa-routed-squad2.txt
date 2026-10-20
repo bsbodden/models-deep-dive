@@ -1,0 +1,112 @@
+load at start: 0.81 0.22 0.07 1/201 2681
+started 2026-10-20T01:18:43Z
+WARNING: Using incubator modules: jdk.incubator.vector
+warmed smollm2_360m_instruct_q8_0            1047 ms
+warmed qwen3_0_6b_q4_0                       2047 ms
+warmed bartowski_llama_3_2_1b_instruct_g…     898 ms
+warmed unsloth_qwen3_5_4b_gguf_q4_k_m        7430 ms
+
+ITEM   SELECTED                            LOCAL IN       MS  ANSWER
+1      bartowski_llama_3_2_1b_instruct_g…       221     2059  The Treaty of Amsterdam
+2      bartowski_llama_3_2_1b_instruct_g…       221     2283  Complexity theory is interested in how algorithms scale wit…
+3      bartowski_llama_3_2_1b_instruct_g…       332     2847  William the Silent.
+4      bartowski_llama_3_2_1b_instruct_g…       164     1419  Roger Ebert
+5      bartowski_llama_3_2_1b_instruct_g…       164     1570  civil disobedience
+6      bartowski_llama_3_2_1b_instruct_g…       238     2092  Rhine Gutter
+7      bartowski_llama_3_2_1b_instruct_g…       177     1744  Islamic fundamentalist or neofundamentalist
+8      bartowski_llama_3_2_1b_instruct_g…       236     1979  30%
+9      bartowski_llama_3_2_1b_instruct_g…       272     2405  Summing component forces.
+10     bartowski_llama_3_2_1b_instruct_g…       178     1556  The Middle Rhine
+11     bartowski_llama_3_2_1b_instruct_g…       208     1796  It expanded again.
+12     bartowski_llama_3_2_1b_instruct_g…       159     1540  Harvard ended its early admissions program in 2007.
+13     bartowski_llama_3_2_1b_instruct_g…       225     1935  17,786,419
+14     bartowski_llama_3_2_1b_instruct_g…       214     1912  The object's weight.
+15     bartowski_llama_3_2_1b_instruct_g…       173     1571  Medication Therapy Management
+16     bartowski_llama_3_2_1b_instruct_g…       170     1499  Toyota Corona
+17     bartowski_llama_3_2_1b_instruct_g…       145     1292  Brownlee
+18     bartowski_llama_3_2_1b_instruct_g…       199     1796  Bonn at the Rhine
+19     bartowski_llama_3_2_1b_instruct_g…       272     2471  P = NP is not solved.
+20     bartowski_llama_3_2_1b_instruct_g…       278     2377  Francisco de Orellana.
+21     bartowski_llama_3_2_1b_instruct_g…       199     1855  Computational complexity theory.
+22     bartowski_llama_3_2_1b_instruct_g…       248     1895  Marseille
+23     bartowski_llama_3_2_1b_instruct_g…       160     1560  Early Action program is more selective, lower transfer-in.
+24     bartowski_llama_3_2_1b_instruct_g…       145     1254  physicians
+25     bartowski_llama_3_2_1b_instruct_g…       183     1497  packet switching
+26     bartowski_llama_3_2_1b_instruct_g…       210     1796  Rhine knee
+27     bartowski_llama_3_2_1b_instruct_g…       272     2376  Metamorphic rock.
+28     bartowski_llama_3_2_1b_instruct_g…       234     2073  Oncogenes.
+29     bartowski_llama_3_2_1b_instruct_g…       196     1798  Iroquois Confederation
+30     bartowski_llama_3_2_1b_instruct_g…       317     2659  60%
+31     bartowski_llama_3_2_1b_instruct_g…       157     1410  Donald Johanson
+32     bartowski_llama_3_2_1b_instruct_g…       251     2013  The City council.
+33     bartowski_llama_3_2_1b_instruct_g…       215     1921  Magdalen Tower
+34     bartowski_llama_3_2_1b_instruct_g…       203     1772  often damaging
+35     bartowski_llama_3_2_1b_instruct_g…       169     1543  Scandinavia
+36     bartowski_llama_3_2_1b_instruct_g…       209     1866  160 kPa
+37     bartowski_llama_3_2_1b_instruct_g…       175     1467  1994
+38     bartowski_llama_3_2_1b_instruct_g…       197     1685  December 12
+39     bartowski_llama_3_2_1b_instruct_g…       168     2104  The committees in Scottish Parliament are weaker than in ot…
+40     bartowski_llama_3_2_1b_instruct_g…       173     1495  Kingdom of Prussia
+41     bartowski_llama_3_2_1b_instruct_g…       270     2390  recent testing show it to be weak.
+42     bartowski_llama_3_2_1b_instruct_g…       169     1681  Net mechanical energy is what in an open system is converte…
+43     bartowski_llama_3_2_1b_instruct_g…       234     1943  azote
+44     bartowski_llama_3_2_1b_instruct_g…       185     1571  Seine
+45     bartowski_llama_3_2_1b_instruct_g…       235     1981  1769
+46     bartowski_llama_3_2_1b_instruct_g…       186     1591  Roeding Park
+47     bartowski_llama_3_2_1b_instruct_g…       263     2221  John B. Weller
+48     bartowski_llama_3_2_1b_instruct_g…       280     2421  The spread of diseases from Europe.
+49     bartowski_llama_3_2_1b_instruct_g…       239     2174  Antimicrobial peptides called defensins.
+50     bartowski_llama_3_2_1b_instruct_g…       264     2275  basic necessities.
+51     bartowski_llama_3_2_1b_instruct_g…       209     1752  Four
+52     bartowski_llama_3_2_1b_instruct_g…       251     2238  one of the largest in the world.
+53     bartowski_llama_3_2_1b_instruct_g…       260     2232  Ed Whitfield
+54     bartowski_llama_3_2_1b_instruct_g…       274     2250  Wasn't
+55     bartowski_llama_3_2_1b_instruct_g…       236     1968  1724
+56     bartowski_llama_3_2_1b_instruct_g…       186     1939  Cornell won the Intercollegiate Sailing Association Nationa…
+57     bartowski_llama_3_2_1b_instruct_g…       202     1778  Abercynon
+58     bartowski_llama_3_2_1b_instruct_g…       291     2629  The logic behind the cicadas prime number evolutionary stra…
+59     bartowski_llama_3_2_1b_instruct_g…       207     1687  2001
+60     bartowski_llama_3_2_1b_instruct_g…       194     1622  two million
+61     bartowski_llama_3_2_1b_instruct_g…       185     1561  William Shirley
+62     bartowski_llama_3_2_1b_instruct_g…       246     2118  Sir Isaac Newton
+63     bartowski_llama_3_2_1b_instruct_g…       215     1868  Teachers.
+64     bartowski_llama_3_2_1b_instruct_g…       245     2204  After the end of the Mexican War.
+65     bartowski_llama_3_2_1b_instruct_g…       183     1541  Charles Richard
+66     bartowski_llama_3_2_1b_instruct_g…       288     2456  church reform
+67     bartowski_llama_3_2_1b_instruct_g…       174     1580  The steam escapes.
+68     bartowski_llama_3_2_1b_instruct_g…       193     1723  blood–brain barrier
+69     bartowski_llama_3_2_1b_instruct_g…       283     2386  Charles W. Eliot
+70     bartowski_llama_3_2_1b_instruct_g…       171     1470  water
+71     bartowski_llama_3_2_1b_instruct_g…       439     3782  Western power.
+72     bartowski_llama_3_2_1b_instruct_g…       180     1595  Philip Roth
+73     bartowski_llama_3_2_1b_instruct_g…       244     2149  almost a month.
+74     bartowski_llama_3_2_1b_instruct_g…       186     1640  swimmers
+75     bartowski_llama_3_2_1b_instruct_g…       318     2749  hydrophilic
+76     bartowski_llama_3_2_1b_instruct_g…       243     2125  Tricia Marwick
+77     bartowski_llama_3_2_1b_instruct_g…       192     1659  13,000 BP
+78     bartowski_llama_3_2_1b_instruct_g…       180     1621  Hyde Park
+79     bartowski_llama_3_2_1b_instruct_g…       329     2825  Resign.
+80     bartowski_llama_3_2_1b_instruct_g…       211     1704  RAND Corporation
+81     bartowski_llama_3_2_1b_instruct_g…       283     2389  Ögedei Khan
+82     bartowski_llama_3_2_1b_instruct_g…       170     1532  Oxidant
+83     bartowski_llama_3_2_1b_instruct_g…       232     2011  Newton
+84     bartowski_llama_3_2_1b_instruct_g…       236     2088  Choctaw and Creek
+85     bartowski_llama_3_2_1b_instruct_g…       214     1765  British Parliament
+86     bartowski_llama_3_2_1b_instruct_g…       184     1727  Melbourne's affluent areas.
+87     bartowski_llama_3_2_1b_instruct_g…       299     2424  1755
+88     bartowski_llama_3_2_1b_instruct_g…       149     1469  Hilliard, Taylor & Wheeler
+89     bartowski_llama_3_2_1b_instruct_g…       262     2352  Parliament of the United Kingdom at Westminster.
+90     bartowski_llama_3_2_1b_instruct_g…       255     2203  photosynthesis
+91     bartowski_llama_3_2_1b_instruct_g…       186     1502  1975
+92     bartowski_llama_3_2_1b_instruct_g…       184     1602  oval
+93     bartowski_llama_3_2_1b_instruct_g…       322     2595  Virginia
+94     bartowski_llama_3_2_1b_instruct_g…       222     1994  Wahhabi/Salafi jihadist
+95     bartowski_llama_3_2_1b_instruct_g…       201     1690  48.8 °C
+96     bartowski_llama_3_2_1b_instruct_g…       281     2324  San Mateo
+97     bartowski_llama_3_2_1b_instruct_g…       227     1934  100
+98     bartowski_llama_3_2_1b_instruct_g…       334     2739  1550
+99     bartowski_llama_3_2_1b_instruct_g…       178     1500  death
+100    bartowski_llama_3_2_1b_instruct_g…       223     2189  The ones who are violating the greater law are the members …
+
+wrote 100 rows to results-qa-routed-squad2.jsonl
+finished 2026-10-20T01:22:13Z

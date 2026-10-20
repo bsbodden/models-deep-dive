@@ -15,3 +15,6 @@ tools/__pycache__/
 # Raw dataset downloads for experiments/: hashed in each experiment's MANIFEST.json and refetched
 # by its fetcher. The frozen samples are committed; redistributing whole corpora is not ours to do.
 experiments/*/data/
+
+# Python bytecode from the experiment scripts
+experiments/*/__pycache__/

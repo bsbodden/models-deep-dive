@@ -1,0 +1,30 @@
+[jbang] Resolving dependencies...
+[jbang]    org.modeljars:modeljars:0.1.62
+[jbang]    com.integrallis:models-router:0.4.3
+[jbang]    com.integrallis:vectors-db:0.1.30
+[jbang]    com.fasterxml.jackson.core:jackson-databind:2.22.3
+[jbang]    org.modeljars.composite:harriet:0.1.62
+[jbang]    org.modeljars.huggingface:ggml-org.embeddinggemma-300m-gguf.q8_0:3.0.0-q8_0.1
+[jbang]    org.modeljars.huggingface:huggingfacetb.smollm2-360m-instruct-gguf.q8_0:2.0.0-q8_0.1
+[jbang]    org.modeljars.huggingface:ggml-org.qwen3-0.6b-gguf.q4_0:3.0.0-q4_0.1
+[jbang]    org.modeljars.huggingface:bartowski.llama-3.2-1b-instruct-gguf.q4_k_m:3.2.0-q4_k_m.1
+[jbang] Dependencies resolved
+[jbang] Building jar for accuracy.java...
+Note: /root/run/experiments/routing-accuracy/accuracy.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+WARNING: Using incubator modules: jdk.incubator.vector
+Oct 20, 2026 1:18:09 AM com.integrallis.vectors.core.PanamaVectorUtilSupportProvider create
+INFO: vectors-core: Using Panama Vector API SIMD provider (vector bits: 256)
+Oct 20, 2026 1:18:09 AM com.integrallis.vectors.core.VectorizationProvider logActiveToggles
+INFO: vectors-core: provider=PanamaVectorUtilSupport panama=true maxBits=256 preferredBits=256 fastVectorFMA=true fastScalarFMA=true sve=false ggufParallel=true ggufParallelThreshold=1048576 ggufExecutor=persistent ggufThreads=8 ggufChunksPerThread=2 mappedKQuantLongOffsets=auto(q4=true,q5=false,q6=false) q4ShortPairwiseSupported=true q4UnsignedPairwiseSupported=true toggles=[(defaults — no -Dvectors.* overrides)]
+warmed smollm2_360m_instruct_q8_0            3843 ms
+warmed qwen3_0_6b_q4_0                       3380 ms
+warmed bartowski_llama_3_2_1b_instruct_g…    7011 ms
+warmed unsloth_qwen3_5_4b_gguf_q4_k_m       14461 ms
+Oct 20, 2026 1:18:40 AM com.integrallis.models.router.CatalogDiscovery discover
+INFO: estimated throughput for 4 model(s) with no profile for this hardware: unsloth_qwen3_5_4b_gguf_q4_k_m, smollm2_360m_instruct_q8_0, qwen3_0_6b_q4_0, bartowski_llama_3_2_1b_instruct_gguf_q4_k_m. Estimates are conservative defaults, since nothing on this machine has been measured; benchmark them for measured figures.
+
+ITEM   SELECTED                            LOCAL IN       MS  ANSWER
+1      bartowski_llama_3_2_1b_instruct_g…       221     2066  The Treaty of Amsterdam
+
+wrote 1 rows to results-qa-routed-squad2.jsonl

@@ -105,11 +105,12 @@ class accuracy {
     ModelFleet<fleet.Responder> built = null;
     RoutingExecutionOptions options = null;
     if ("routed".equals(arm)) {
-      // Warm the arm under test, for the same reason the article warms it: a cold load of the
-      // weights would otherwise be charged to the first item as answer latency.
-      long began = System.nanoTime();
-      fleet.ground("ready?");
-      System.out.printf("warmed the grounding arm in %d ms%n", (System.nanoTime() - began) / 1_000_000);
+      // All four local arms, not just the one that answers. buildFleet names every candidate, and
+      // discovery reports only models whose weights are already on disk -- opening a runtime is
+      // what fetches them -- so warming one arm and building the fleet fails on the other three.
+      // The fleet's own guard says so rather than quietly building a smaller fleet, which is how
+      // this harness found out.
+      warmLocalArms();
       built = fleet.buildFleet(classifier, retrieval);
       options = RoutingExecutionOptions.builder()
           .sharedBudget(new RoutingBudget(new BigDecimal("15.00")))
@@ -168,6 +169,29 @@ class accuracy {
       out.add(row);
       System.out.printf("%-6d %-34s %9d %8d  %s%n", index0, abbreviate(selected, 34), tokens,
           millis, abbreviate(answer.replace('\n', ' '), 60));
+    }
+  }
+
+  /**
+   * Loads every local arm the fleet names, and reports what each cost.
+   *
+   * Warming is not politeness. A cold load of these weights is seconds that would be charged to
+   * the first item as if it were answer latency, and the article's own harness warms for the same
+   * reason.
+   */
+  static void warmLocalArms() throws Exception {
+    var warmers = new LinkedHashMap<String, fleet.Responder>();
+    warmers.put(fleet.TINY_ID, text -> fleet.acknowledge(fleet.TINY, text));
+    warmers.put(fleet.SMALL_ID, text -> fleet.complete(fleet.SMALL, List.of(
+        com.integrallis.models.runtime.chat.ChatMessage.user(text)), 8));
+    warmers.put(fleet.GROUNDER_ID, text -> fleet.complete(fleet.GROUNDER, List.of(
+        com.integrallis.models.runtime.chat.ChatMessage.user(text)), 8));
+    warmers.put(fleet.HARRIET_ID, text -> fleet.decide(text));
+    for (var warm : warmers.entrySet()) {
+      long began = System.nanoTime();
+      warm.getValue().respond("ready?");
+      System.out.printf("warmed %-34s %7d ms%n", abbreviate(warm.getKey(), 34),
+          (System.nanoTime() - began) / 1_000_000);
     }
   }
 

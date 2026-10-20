@@ -1,0 +1,108 @@
+load at start: 3.70 2.06 0.85 1/201 2897
+started 2026-10-20T01:22:16Z
+WARNING: Using incubator modules: jdk.incubator.vector
+
+ITEM   SELECTED                            LOCAL IN       MS  ANSWER
+1      gpt-5.1                                  221     2857  I don't know.
+2      gpt-5.1                                  221      652  I don't know.
+3      gpt-5.1                                  332     1045  William the Silent
+4      gpt-5.1                                  164      964  I don't know
+5      gpt-5.1                                  164      920  become utterly debased
+6      gpt-5.1                                  238      606  "Rhine Gutter"
+7      gpt-5.1                                  177      527  Islamic fundamentalist or neofundamentalist
+8      gpt-5.1                                  236      565  some 30% of the city
+9      gpt-5.1                                  272      899  I don't know
+10     gpt-5.1                                  178      964  the Middle Rhine
+11     gpt-5.1                                  208      744  It expanded again during the Middle Miocene
+12     gpt-5.1                                  159      982  the program was believed to disadvantage low-income and und…
+13     gpt-5.1                                  225      786  17,786,419
+14     gpt-5.1                                  214      465  the object's weight
+15     gpt-5.1                                  173      603  the thorough analysis of all medication (prescription, non-…
+16     gpt-5.1                                  170      497  I don't know.
+17     gpt-5.1                                  145      538  I don't know
+18     gpt-5.1                                  199      601  the Drachenfels (Siebengebirge)
+19     gpt-5.1                                  272      499  there is no known polynomial-time solution for Π1
+20     gpt-5.1                                  278      955  Francisco de Orellana
+21     gpt-5.1                                  199      754  computational complexity theory
+22     gpt-5.1                                  248      641  I don't know
+23     gpt-5.1                                  160      474  I don't know.
+24     gpt-5.1                                  145      783  I don't know
+25     gpt-5.1                                  183      530  packet switching
+26     gpt-5.1                                  210      517  the "Rhine knee"
+27     gpt-5.1                                  272      724  I don't know.
+28     gpt-5.1                                  234     1051  I don't know
+29     gpt-5.1                                  196      589  Iroquois rule
+30     gpt-5.1                                  317      575  the quality of the student body and its motivation
+31     gpt-5.1                                  157      841  I don't know
+32     gpt-5.1                                  251      532  the City council
+33     gpt-5.1                                  215      583  Oxford's Magdalen Tower
+34     gpt-5.1                                  203      489  ‘often damaging’
+35     gpt-5.1                                  169      526  I don't know.
+36     gpt-5.1                                  209      750  160 kPa
+37     gpt-5.1                                  175      646  1994
+38     gpt-5.1                                  197      649  On December 12
+39     gpt-5.1                                  168      516  I don't know
+40     gpt-5.1                                  173      626  the Kingdom of Prussia
+41     gpt-5.1                                  270      462  very weak
+42     gpt-5.1                                  169      885  I don't know.
+43     gpt-5.1                                  234      958  oxygen
+44     gpt-5.1                                  185      565  the Seine
+45     gpt-5.1                                  235      727  1769
+46     gpt-5.1                                  186      573  I don't know
+47     gpt-5.1                                  263      671  I don't know
+48     gpt-5.1                                  280      652  the spread of diseases from Europe, such as smallpox
+49     gpt-5.1                                  239      496  I don't know
+50     gpt-5.1                                  264      614  a great deal of utility to that person
+51     gpt-5.1                                  209      479  four academic research divisions
+52     gpt-5.1                                  251      533  I don't know.
+53     gpt-5.1                                  260      574  Ed Whitfield
+54     gpt-5.1                                  274      546  to cease trading with the British
+55     gpt-5.1                                  236      716  I don't know.
+56     gpt-5.1                                  186      609  I don't know.
+57     gpt-5.1                                  202      647  Abercynon in south Wales
+58     gpt-5.1                                  291      784  the prime number intervals between emergences make it very …
+59     gpt-5.1                                  207      528  2001
+60     gpt-5.1                                  194      626  I don't know.
+61     gpt-5.1                                  185      593  William Shirley
+62     gpt-5.1                                  246      645  Galileo Galilei and Sir Isaac Newton
+63     gpt-5.1                                  215      677  the best teachers
+64     gpt-5.1                                  245      754  I don't know
+65     gpt-5.1                                  183      646  Charles Richard
+66     gpt-5.1                                  288      605  I don't know.
+67     gpt-5.1                                  174      483  the lead melts
+68     gpt-5.1                                  193      628  I don't know.
+69     gpt-5.1                                  283      595  I don't know.
+70     gpt-5.1                                  171      583  water
+71     gpt-5.1                                  439      514  I don't know
+72     gpt-5.1                                  180      612  Canadian-born Pulitzer Prize and Nobel Prize for Literature…
+73     gpt-5.1                                  244      639  almost a month
+74     gpt-5.1                                  186      777  swimmers
+75     gpt-5.1                                  318      879  hydrophilic amino acids
+76     gpt-5.1                                  243      553  Tricia Marwick
+77     gpt-5.1                                  192      578  about 13,000 BP
+78     gpt-5.1                                  180      532  I don't know
+79     gpt-5.1                                  329      797  I don't know.
+80     gpt-5.1                                  211      514  Baran
+81     gpt-5.1                                  283      634  I don't know.
+82     gpt-5.1                                  170      614  the oxidant
+83     gpt-5.1                                  232     1510  gravity
+84     gpt-5.1                                  236     1391  some Christianized Yamasee
+85     gpt-5.1                                  214      637  I don't know
+86     gpt-5.1                                  184      478  the Liberals
+87     gpt-5.1                                  299      620  I don't know.
+88     gpt-5.1                                  149      562  I don't know.
+89     gpt-5.1                                  262      675  The Scottish Parliament
+90     gpt-5.1                                  255      619  photosynthesis
+91     gpt-5.1                                  186      849  in 1977
+92     gpt-5.1                                  184      644  oval bodies that are flattened in the oral-aboral direction
+93     gpt-5.1                                  322      701  the colony of Virginia
+94     gpt-5.1                                  222      577  a Wahhabi/Salafi jihadist extremist militant group
+95     gpt-5.1                                  201      552  I don't know
+96     gpt-5.1                                  281      735  San Mateo
+97     gpt-5.1                                  227      617  I don't know.
+98     gpt-5.1                                  334      586  I don't know.
+99     gpt-5.1                                  178      729  I don't know
+100    gpt-5.1                                  223      608  her statement suggested a lack of remorse, an attempt to av…
+
+wrote 100 rows to results-qa-api-squad2.jsonl
+finished 2026-10-20T01:23:29Z

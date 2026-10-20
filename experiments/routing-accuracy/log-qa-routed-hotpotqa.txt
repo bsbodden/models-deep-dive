@@ -1,0 +1,112 @@
+load at start: 1.09 1.61 0.79 1/184 3387
+started 2026-10-20T01:23:33Z
+WARNING: Using incubator modules: jdk.incubator.vector
+warmed smollm2_360m_instruct_q8_0            1028 ms
+warmed qwen3_0_6b_q4_0                       2060 ms
+warmed bartowski_llama_3_2_1b_instruct_g…     889 ms
+warmed unsloth_qwen3_5_4b_gguf_q4_k_m        7702 ms
+
+ITEM   SELECTED                            LOCAL IN       MS  ANSWER
+1      bartowski_llama_3_2_1b_instruct_g…      1154    10765  The Conversation
+2      bartowski_llama_3_2_1b_instruct_g…      1199    10985  Street Kings 2: Motor City
+3      bartowski_llama_3_2_1b_instruct_g…      2033    20204  Rankin/Bass.
+4      bartowski_llama_3_2_1b_instruct_g…      1576    14911  Lush
+5      bartowski_llama_3_2_1b_instruct_g…      1162    10637  Dirleton Castle.
+6      bartowski_llama_3_2_1b_instruct_g…      1475    13580  Kirton End is located in the Boston district of Lincolnshir…
+7      bartowski_llama_3_2_1b_instruct_g…      1420    13492  Tonight I Climbed the Wall
+8      bartowski_llama_3_2_1b_instruct_g…      1308    12071  David Weissman.
+9      bartowski_llama_3_2_1b_instruct_g…      1134    10293  2004
+10     bartowski_llama_3_2_1b_instruct_g…      1007     8989  Golden Valley, Minnesota
+11     bartowski_llama_3_2_1b_instruct_g…      1791    16934  Jillian Bell.
+12     bartowski_llama_3_2_1b_instruct_g…      1773    16755  Sacred Planet
+13     bartowski_llama_3_2_1b_instruct_g…      1768    17671  iSight iMac G5.
+14     bartowski_llama_3_2_1b_instruct_g…      1373    12663  712 Fifth Avenue
+15     bartowski_llama_3_2_1b_instruct_g…      1496    14596  American Revolutionary War.
+16     bartowski_llama_3_2_1b_instruct_g…      1143    10617  Wichita
+17     bartowski_llama_3_2_1b_instruct_g…      1711    16893  Truth Initiative
+18     bartowski_llama_3_2_1b_instruct_g…      1371    11997  8
+19     bartowski_llama_3_2_1b_instruct_g…      1130    10172  70
+20     bartowski_llama_3_2_1b_instruct_g…      1723    16597  Paula Jones
+21     bartowski_llama_3_2_1b_instruct_g…      1277    11287  5
+22     bartowski_llama_3_2_1b_instruct_g…      2014    20166  gender distinction.
+23     bartowski_llama_3_2_1b_instruct_g…      1406    13859  three centuries.
+24     bartowski_llama_3_2_1b_instruct_g…      1737    17432  Scotch Collie.
+25     bartowski_llama_3_2_1b_instruct_g…      1313    12289  One Night in Istanbul
+26     bartowski_llama_3_2_1b_instruct_g…      1357    12875  Brooklyn, New York
+27     bartowski_llama_3_2_1b_instruct_g…      2061    20314  Talking Dead
+28     bartowski_llama_3_2_1b_instruct_g…      2099    21508  Usher
+29     bartowski_llama_3_2_1b_instruct_g…      1654    16234  Seven Days Battles.
+30     bartowski_llama_3_2_1b_instruct_g…      1767    17798  Marsilea
+31     bartowski_llama_3_2_1b_instruct_g…      1597    15071  13-3
+32     bartowski_llama_3_2_1b_instruct_g…      1400    13602  Catan
+33     bartowski_llama_3_2_1b_instruct_g…      1068     9626  World War II
+34     bartowski_llama_3_2_1b_instruct_g…      1732    17267  Romeo.
+35     bartowski_llama_3_2_1b_instruct_g…      1313    12226  Peter Schmeichel.
+36     bartowski_llama_3_2_1b_instruct_g…      1489    14478  Rise of the Planet of the Apes
+37     bartowski_llama_3_2_1b_instruct_g…      1688    16901  Armie Hammer voices Tonto in The Lone Ranger.
+38     bartowski_llama_3_2_1b_instruct_g…      1496    14348  Screaming Trees
+39     bartowski_llama_3_2_1b_instruct_g…      1327    12327  Annette Bening
+40     bartowski_llama_3_2_1b_instruct_g…      1420    13641  One Raffles Place.
+41     bartowski_llama_3_2_1b_instruct_g…      1002     8936  Battle Beyond the Stars
+42     bartowski_llama_3_2_1b_instruct_g…      1035    10044  Mummulgum is a stop on the Bruxner Highway before reaching …
+43     bartowski_llama_3_2_1b_instruct_g…      2223    22388  1901
+44     bartowski_llama_3_2_1b_instruct_g…      1615    15389  Montgomery Gentry
+45     bartowski_llama_3_2_1b_instruct_g…      3016    33654  1,400
+46     bartowski_llama_3_2_1b_instruct_g…      1108    10329  No
+47     bartowski_llama_3_2_1b_instruct_g…      1738    16962  Yes
+48     bartowski_llama_3_2_1b_instruct_g…      1372    12369  Carabao Cup
+49     bartowski_llama_3_2_1b_instruct_g…      1529    14692  Kurt Vonnegut.
+50     bartowski_llama_3_2_1b_instruct_g…      1135    10144  Ralph Murphy
+51     bartowski_llama_3_2_1b_instruct_g…      1193    10284  Bronwyn Bishop.
+52     bartowski_llama_3_2_1b_instruct_g…      1660    15140  Texas Technological College
+53     bartowski_llama_3_2_1b_instruct_g…      1701    16082  August
+54     bartowski_llama_3_2_1b_instruct_g…      1359    11868  George Raft.
+55     bartowski_llama_3_2_1b_instruct_g…      1377    13032  No
+56     bartowski_llama_3_2_1b_instruct_g…      1286    11855  Tysons Corner.
+57     bartowski_llama_3_2_1b_instruct_g…      1210    11248  Owner earnings and Warren Buffett have in common that they …
+58     bartowski_llama_3_2_1b_instruct_g…      1233    11275  Beijing
+59     bartowski_llama_3_2_1b_instruct_g…      1421    12690  North Atlantic Conference
+60     bartowski_llama_3_2_1b_instruct_g…      1439    12920  Roberta Vinci
+61     bartowski_llama_3_2_1b_instruct_g…       872     7514  7734
+62     bartowski_llama_3_2_1b_instruct_g…      1525    14277  Wendell Berry
+63     bartowski_llama_3_2_1b_instruct_g…      1163    10402  No
+64     bartowski_llama_3_2_1b_instruct_g…      1221    11159  Pasek and Paul.
+65     bartowski_llama_3_2_1b_instruct_g…      1236    10999  American.
+66     bartowski_llama_3_2_1b_instruct_g…       920     8067  250 million
+67     bartowski_llama_3_2_1b_instruct_g…      1505    13846  United States presidential election, 2016.
+68     bartowski_llama_3_2_1b_instruct_g…      1608    15361  9,984
+69     bartowski_llama_3_2_1b_instruct_g…      1703    16523  1811
+70     bartowski_llama_3_2_1b_instruct_g…      1649    16011  IT products and services
+71     bartowski_llama_3_2_1b_instruct_g…      1188    10852  Lee Hazlewood.
+72     bartowski_llama_3_2_1b_instruct_g…      1695    14473  Leo Varadkar
+73     bartowski_llama_3_2_1b_instruct_g…      1189    11279  Tenerife, Canary Islands, Spain.
+74     bartowski_llama_3_2_1b_instruct_g…      1288    11982  Henry J. Kaiser.
+75     bartowski_llama_3_2_1b_instruct_g…      2732    30019  No.
+76     bartowski_llama_3_2_1b_instruct_g…      1678    16152  April 1, 1949.
+77     bartowski_llama_3_2_1b_instruct_g…      1916    19040  Eenasul Fateh
+78     bartowski_llama_3_2_1b_instruct_g…      1448    14129  Old Saxon.
+79     bartowski_llama_3_2_1b_instruct_g…      1649    15898  Tupolev Tu-12
+80     bartowski_llama_3_2_1b_instruct_g…      1104    10023  Christopher
+81     bartowski_llama_3_2_1b_instruct_g…      1106    10305  City of Newcastle.
+82     bartowski_llama_3_2_1b_instruct_g…      1643    15242  United States v. Paramount Pictures, Inc.
+83     bartowski_llama_3_2_1b_instruct_g…      2024    20265  Ethiopia sovereignty.
+84     bartowski_llama_3_2_1b_instruct_g…      1067     9505  Anna Clyne
+85     bartowski_llama_3_2_1b_instruct_g…      1251    11432  The Beatles
+86     bartowski_llama_3_2_1b_instruct_g…      1064     9337  No
+87     bartowski_llama_3_2_1b_instruct_g…      1842    18186  Dinosaur
+88     bartowski_llama_3_2_1b_instruct_g…      1213    11012  Marvel
+89     bartowski_llama_3_2_1b_instruct_g…      1544    14759  Commander-in-Chief, India.
+90     bartowski_llama_3_2_1b_instruct_g…      1622    15669  J. Edward Snyder.
+91     bartowski_llama_3_2_1b_instruct_g…      1039     9466  Salford City
+92     bartowski_llama_3_2_1b_instruct_g…      1220    11177  Sasanian Empire
+93     bartowski_llama_3_2_1b_instruct_g…      1380    12411  Lord High Treasurer.
+94     bartowski_llama_3_2_1b_instruct_g…      1359    12425  Charles Nungesser.
+95     bartowski_llama_3_2_1b_instruct_g…       445     3731  No
+96     bartowski_llama_3_2_1b_instruct_g…      1192    10784  Nicki Minaj
+97     bartowski_llama_3_2_1b_instruct_g…      1102    10126  Ellie Kemper.
+98     bartowski_llama_3_2_1b_instruct_g…       672     5830  Ferdi Taygan.
+99     bartowski_llama_3_2_1b_instruct_g…      1709    16121  October 7, 1978
+100    bartowski_llama_3_2_1b_instruct_g…      1284    11673  Vikram Bhatt.
+
+wrote 100 rows to results-qa-routed-hotpotqa.jsonl
+finished 2026-10-20T01:46:41Z

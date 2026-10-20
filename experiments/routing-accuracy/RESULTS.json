@@ -1,0 +1,157 @@
+{
+  "resamples": 10000,
+  "seed": 20261019,
+  "stages": {
+    "qa/squad2": {
+      "n": 100,
+      "metric": "exact match",
+      "routed": 35.0,
+      "allApi": 70.0,
+      "delta": -35.0,
+      "ci95": [
+        -47.0,
+        -23.0
+      ],
+      "localShare": 100.0,
+      "verdict": "REJECT",
+      "routedExtra": {
+        "n": 100,
+        "exactMatch": 35.0,
+        "tokenF1": 38.294581235757704
+      },
+      "apiExtra": {
+        "n": 100,
+        "exactMatch": 70.0,
+        "tokenF1": 78.2988677988678
+      },
+      "split": {
+        "answerable/routed": {
+          "n": 50,
+          "exactMatch": 70.0,
+          "tokenF1": 76.59,
+          "abstained": 0
+        },
+        "answerable/allApi": {
+          "n": 50,
+          "exactMatch": 70.0,
+          "tokenF1": 86.6,
+          "abstained": 2
+        },
+        "unanswerable/routed": {
+          "n": 50,
+          "exactMatch": 0.0,
+          "tokenF1": 0.0,
+          "abstained": 0
+        },
+        "unanswerable/allApi": {
+          "n": 50,
+          "exactMatch": 70.0,
+          "tokenF1": 70.0,
+          "abstained": 35
+        }
+      },
+      "groundingPolicyArm": {
+        "n": 100,
+        "exactMatch": 27.0,
+        "tokenF1": 30.34,
+        "decisions": {
+          "MODEL_ANSWER_WITH_DERIVED_CITATIONS": 71,
+          "EXTRACTIVE_FALLBACK": 27,
+          "RETRIEVAL_ABSTENTION": 2
+        }
+      }
+    },
+    "qa/hotpotqa": {
+      "n": 100,
+      "metric": "exact match",
+      "routed": 37.0,
+      "allApi": 60.0,
+      "delta": -23.0,
+      "ci95": [
+        -35.0,
+        -11.0
+      ],
+      "localShare": 100.0,
+      "verdict": "REJECT",
+      "routedExtra": {
+        "n": 100,
+        "exactMatch": 37.0,
+        "tokenF1": 47.23845598845599
+      },
+      "apiExtra": {
+        "n": 100,
+        "exactMatch": 60.0,
+        "tokenF1": 71.32013871323335
+      },
+      "split": {
+        "answerable/routed": {
+          "n": 100,
+          "exactMatch": 37.0,
+          "tokenF1": 47.24,
+          "abstained": 0
+        },
+        "answerable/allApi": {
+          "n": 100,
+          "exactMatch": 60.0,
+          "tokenF1": 71.32,
+          "abstained": 10
+        }
+      },
+      "groundingPolicyArm": {
+        "n": 100,
+        "exactMatch": 10.0,
+        "tokenF1": 14.98,
+        "decisions": {
+          "MODEL_ANSWER_WITH_DERIVED_CITATIONS": 29,
+          "EXTRACTIVE_FALLBACK": 71
+        }
+      }
+    },
+    "decide/snips": {
+      "n": 100,
+      "metric": "label accuracy",
+      "routed": 80.0,
+      "allApi": 96.0,
+      "delta": -16.0,
+      "ci95": [
+        -24.0,
+        -9.0
+      ],
+      "localShare": 100.0,
+      "verdict": "REJECT",
+      "routedExtra": {
+        "n": 100,
+        "accuracy": 80.0,
+        "unparseable": 0
+      },
+      "apiExtra": {
+        "n": 100,
+        "accuracy": 96.0,
+        "unparseable": 0
+      }
+    },
+    "decide/trec": {
+      "n": 100,
+      "metric": "label accuracy",
+      "routed": 76.0,
+      "allApi": 92.0,
+      "delta": -16.0,
+      "ci95": [
+        -25.0,
+        -8.0
+      ],
+      "localShare": 100.0,
+      "verdict": "REJECT",
+      "routedExtra": {
+        "n": 100,
+        "accuracy": 76.0,
+        "unparseable": 0
+      },
+      "apiExtra": {
+        "n": 100,
+        "accuracy": 92.0,
+        "unparseable": 0
+      }
+    }
+  }
+}

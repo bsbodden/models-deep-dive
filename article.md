@@ -1083,7 +1083,7 @@ the afternoon, and a table of single numbers hides which is which.
 | The 3 heartbeats | **151–246 ms** | 1,082–1,997 ms — 5.7× to 12.0× slower |
 | Startup | **30,613–31,330 ms** to load four local models, paid once, excluded from every per-request figure above | none |
 | Data boundary | **8 of 10 prompts never left the machine**; by token count 99.9% still did, because the one appendix dwarfs the other nine prompts | every prompt and every token goes to gpt-5.1 |
-| **Accuracy** | **not measured** | **not measured** |
+| **Accuracy** | **16 to 35 points behind** on 4 public datasets, and a tie on the one shape this mix asks for — see below | the reference: **60 to 96** depending on the task |
 <!-- end:figures:summary -->
 
 Routing buys a bill three times smaller and a latency you can predict. It does not reliably buy a
@@ -1091,15 +1091,54 @@ smaller latency: on this mix it landed on both sides of parity across three runs
 The cost column is the one that holds still, because the prompts fix the token counts and nothing
 about somebody else's queue can move them.
 
-The empty row is the honest one, and it is not a detail. The whole argument for routing is that a
-360M model answering `ping`, and a 1B model quoting three retrieved sentences, are good enough — and
-this harness never tests that. It measures what each arm charged and how long it took, not whether
-the answers were right. What exists nearby is weaker than it sounds: Harriet's rubric figures are
-about rubrics rather than about local against frontier, and each local model's catalog qualification
-is measured against its own baseline rather than against `gpt-5.1` on these ten prompts. Filling
-that column means a different experiment — both arms' answers judged under one protocol at matched
-retrieval budgets, on prompts nobody here wrote — and it is not one a cost-and-latency harness can
-be stretched into.
+### The accuracy row, which used to say "not measured"
+
+That row was empty for most of this article's life, and it was the row the whole argument rested
+on: a 1B model quoting retrieved sentences and a 4B model choosing between labels are supposed to
+be good enough that moving that traffic off a frontier model is free. The harness above never
+tested it — it records what each arm charged and how long it took, not whether the answers were
+right.
+
+So it was tested, on four public datasets nobody here wrote, under a decision rule and a kill
+criterion [frozen before the first call](experiments/routing-accuracy/README.md). Both arms got
+byte-identical prompts, hashed per item. The local arms answered 100% of the items routing sent
+them, so this measures the models and not the eligibility rules.
+
+<!-- figures:accuracy -->
+| public dataset | metric | routed | every prompt to gpt-5.1 | difference |
+| --- | --- | --- | --- | --- |
+| SQuAD v2 dev, half of it unanswerable (n=100) | exact match | **35.0** | **70.0** | -35.0 [-47, -23] |
+| HotpotQA distractor, ten paragraphs per question (n=100) | exact match | **37.0** | **60.0** | -23.0 [-35, -11] |
+| SNIPS 2017, seven intents (n=100) | label accuracy | **80.0** | **96.0** | -16.0 [-24, -9] |
+| TREC coarse, six classes (n=100) | label accuracy | **76.0** | **92.0** | -16.0 [-25, -8] |
+
+Every dataset rejects it, by 16 to 35 points, under a threshold fixed before the run. The aggregate hides where the loss is, and the split is the finding: on SQuAD's answerable half the 1B model scores **70.0** against the frontier model's **70.0** — a tie on extracting an answer from one short passage. On the unanswerable half it scores **0.0** against **70.0**, because it declined **0 times out of 50** while gpt-5.1 declined 35. HotpotQA, which has no unanswerable questions, isolates the rest: ten paragraphs and two-hop answers cost 23 points with no abstention involved.
+<!-- end:figures:accuracy -->
+
+**That rejects the quality claim, and the article is not going to round it off.** Three separate
+things are in those numbers, and only one of them matches what this walkthrough asks of its local
+arms. Extracting an answer from a single short passage — which is what the demo's three one-line
+notes are — is a tie. Reading ten passages and combining two of them is 23 points worse. Knowing
+that the answer is not there at all is not something the local arm did even once, though the prompt
+told it exactly what to reply.
+
+The obvious objection was measured rather than argued. `GroundedAnswerPolicy`, the grounding policy
+the library ships and [`rag.java`](code/rag.java) uses and this fleet does not, was applied to the
+same collected answers: it made them **worse** — 35.0 to 27.0 on SQuAD, 37.0 to 10.0 on HotpotQA —
+because its extractive fallback overwrites answers that were already right, and it never produces
+an abstention on an unanswerable question. Its declining comes from a retrieval-score gate that a
+topically relevant paragraph passes.
+
+One thing did work. The decision arm's confidence separates its hits from its misses — median 0.793
+when right, 0.379 when wrong — so a gate that escalates its unsure answers recovers almost the whole
+difference: 76.0 to 90.0 on TREC at a threshold chosen on SNIPS, and 80.0 to 96.0 the other way
+round. It escalates 74% of the decisions to do it, which is most of the cost advantage on that
+traffic. Calibration is real and it is not free.
+
+[The findings](experiments/routing-accuracy/FINDINGS.md) carry the rest, including what four
+datasets of a hundred items each cannot settle: three of the six traffic kinds above are untouched,
+prompt engineering was not attempted for either arm, and a larger local model is the obvious next
+question and is not answered here.
 
 ## What this adds up to
 
@@ -1109,6 +1148,16 @@ model is allowed to serve, which traffic may leave the machine, what you are wil
 how much better an alternative must be before a conversation switches models mid-flight. Then it
 tells you which rule fired, in numbers, for every request.
 
-Most of the traffic in the run above never needed a frontier model. Eight of ten requests never
-left the machine, two did, and exactly one of those needed a reasoning model — which it got. That is
-the whole argument.
+Eight of ten requests in the run above never left the machine, two did, and exactly one of those
+needed a reasoning model — which it got. What that bought is measured: a bill three times smaller,
+a local latency with a 1.02× spread, and eight prompts' worth of customer text that stayed here.
+
+What it cost is also measured now, and it is not nothing. On public corpora the local arms are 16
+to 35 points behind the frontier model — a tie on the one shape this walkthrough actually asks of
+them, and well behind on multi-hop reading, on many-way classification, and on the question of
+whether the answer is in the notes at all. So the honest form of the argument is narrower than
+"most of this traffic never needed a frontier model". It is: for traffic you have characterised,
+routing is dramatically cheaper and more predictable, and the router is the thing that lets you
+state which traffic that is, price both sides, and change your mind in configuration rather than in
+code. The measurement is what tells you where the line sits, and this article's own line moved once
+it was measured.
