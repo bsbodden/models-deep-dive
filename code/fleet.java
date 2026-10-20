@@ -7,7 +7,7 @@
 // Three threads each shares the twelve this host has.
 //RUNTIME_OPTIONS -Dmodels.native.kernels.threads=3
 //DEPS org.modeljars:modeljars:0.1.62
-//DEPS com.integrallis:models-router:0.4.3
+//DEPS com.integrallis:models-router:0.5.0
 //DEPS com.integrallis:vectors-db:0.1.30
 //DEPS com.fasterxml.jackson.core:jackson-databind:2.22.3
 //DEPS org.modeljars.composite:harriet:0.1.62
@@ -387,29 +387,53 @@ class fleet {
     }
 
     // Only what a catalog cannot know: `liveness` and `grounding` are names this application
-    // invented, and the quality weights are its judgement. `toBuilder` keeps the rest.
+    // invented, because they describe how this application intends to use a model rather than a
+    // property of the weights. `toBuilder` keeps everything the catalog measured.
+    //
+    // No quality numbers are declared here, and that is the point. This fleet used to carry four
+    // of them -- chat 0.45, chat 0.60, grounding 0.70, decision 0.90 -- typed in by hand because
+    // the router scored an unmeasured candidate zero and an honest fleet therefore never routed
+    // locally. MEASURED 2026-10-20 against gpt-5.1 on four public datasets, those numbers were
+    // optimistic by 16 to 35 points, and the 0.70 contradicted this catalog's own evidence for the
+    // artifact it described: that entry is GUARDED_RAG with a model-only correctness of 0.111, and
+    // this fleet was generating unguarded.
+    //
+    // Models 0.5.0 made declaring nothing the honest option: an unmeasured task scores a neutral
+    // prior under its own `quality-unmeasured` key, so absence no longer loses by default, and
+    // `withMinimumQuality` refuses an unmeasured candidate outright instead of pretending it
+    // scored zero. What the catalog measures, the router gets. What nobody measured, nobody
+    // claims.
     //
     // Tags are a second filter, separate from capabilities and active only when non-empty: a model
     // tagged `chat` is refused outright for a prompt classified `summarization`. The catalog tags
     // these `chat` to describe the weights; this fleet selects on capability and quality, so the
     // tags are cleared.
+    // `capabilities`, not `addCapabilities`: replace what the catalog describes rather than add to
+    // it. The catalog calls these weights a chat model, which is true of the weights and wrong
+    // about this arm's job. Adding `liveness` to `chat` leaves a 360M model eligible for a
+    // customer's billing complaint, and with the invented quality numbers deleted nothing else
+    // separated it from the 0.6B arm: both scored the neutral prior, the tie fell to latency, and
+    // the smallest model won. It answered "I was charged twice for my September order." with
+    // "still here".
+    //
+    // That was always the declaration this fleet meant to make -- the prose beside the decision
+    // arm has said so since it was written -- and an invented 0.45 was quietly covering for it.
+    // A capability is an application saying what a model is allowed to serve. A quality score is a
+    // claim that it serves it well. Only the first belongs in this file.
     var tiny =
         discovered(catalog, TINY_ID)
             .tags(Set.of())
-            .addCapabilities("liveness")
-            .quality(Map.of("chat", 0.45))
+            .capabilities(Set.of("liveness"))
             .build();
     var small =
         discovered(catalog, SMALL_ID)
             .tags(Set.of())
-            .addCapabilities("summarization")
-            .quality(Map.of("chat", 0.60, "summarization", 0.62))
+            .capabilities(Set.of("chat", "summarization"))
             .build();
     var grounder =
         discovered(catalog, GROUNDER_ID)
             .tags(Set.of())
-            .addCapabilities("grounding")
-            .quality(Map.of("chat", 0.66, "grounding", 0.70))
+            .capabilities(Set.of("grounding"))
             .build();
     // Harriet is the exception. The catalog reports the composite's base weights as a chat model,
     // true of the weights and wrong about this arm: three typed questions, three forward passes, no
@@ -421,7 +445,6 @@ class fleet {
             .tags(Set.of())
             .capabilities(Set.of("decision"))
             .tokensPerSecond(1)
-            .quality(Map.of("decision", 0.90))
             .build();
     // endregion
     // Three remote providers, not one. Each is an ordinary candidate with its own prices, ceiling
@@ -449,9 +472,20 @@ class fleet {
             // request was built and sent.
             .maxInputTokens(272_000)
             .contextWindow(272000)
-            .timeToFirstTokenMillis(850)
-            .tokensPerSecond(90)
-            .quality(Map.of("chat", 0.95, "reasoning", 0.96, "summarization", 0.94))
+            // Measured from this machine by code/provider_speed.java, five streamed samples per
+            // model, medians: evidence/fleet-routing/provider-speed.log. A candidate must declare
+            // both figures and no provider publishes either, so the only alternatives were to
+            // measure them or to guess -- and the guesses that stood here, 850 ms and 90 tok/s,
+            // were wrong in both directions and had the decode ordering of the three remotes
+            // backwards.
+            //
+            // No quality is declared. These are hosted models with no qualification in any catalog
+            // on this machine, and the scores that stood here (chat 0.95, reasoning 0.96,
+            // summarization 0.94) were this application's opinion of a vendor's marketing. What
+            // was measured on 2026-10-20 covers grounded answering and closed decisions, not chat,
+            // reasoning or summarization, so it does not transfer to these labels either.
+            .timeToFirstTokenMillis(1049)
+            .tokensPerSecond(136.9)
             .build();
     var economy =
         ModelCandidate.builder(ECONOMY)
@@ -461,9 +495,8 @@ class fleet {
             .maxOutputTokens(ECONOMY_CAP)
             .maxInputTokens(1_000_000)
             .contextWindow(1000000)
-            .timeToFirstTokenMillis(400)
-            .tokensPerSecond(140)
-            .quality(Map.of("chat", 0.82, "summarization", 0.86))
+            .timeToFirstTokenMillis(886)
+            .tokensPerSecond(104.4)
             .build();
     var haiku =
         ModelCandidate.builder(HAIKU)
@@ -477,9 +510,8 @@ class fleet {
             .maxOutputTokens(HAIKU_CAP)
             .maxInputTokens(200_000)
             .contextWindow(200000)
-            .timeToFirstTokenMillis(300)
-            .tokensPerSecond(120)
-            .quality(Map.of("chat", 0.80, "summarization", 0.83))
+            .timeToFirstTokenMillis(780)
+            .tokensPerSecond(230.2)
             .build();
     // endregion
 
