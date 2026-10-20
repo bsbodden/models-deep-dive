@@ -11,3 +11,7 @@ evidence/release-bundle-0157/modeljars-central-bundle.zip
 
 # Python bytecode from the generators in tools/
 tools/__pycache__/
+
+# Raw dataset downloads for experiments/: hashed in each experiment's MANIFEST.json and refetched
+# by its fetcher. The frozen samples are committed; redistributing whole corpora is not ours to do.
+experiments/*/data/

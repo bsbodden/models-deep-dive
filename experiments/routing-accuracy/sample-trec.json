@@ -1,0 +1,502 @@
+[
+ {
+  "id": "trec-137",
+  "label": "HUM",
+  "text": "Who wrote the hymn `` Amazing Grace '' ?"
+ },
+ {
+  "id": "trec-408",
+  "label": "NUM",
+  "text": "When was the Boston tea party ?"
+ },
+ {
+  "id": "trec-119",
+  "label": "LOC",
+  "text": "Where is Perth ?"
+ },
+ {
+  "id": "trec-104",
+  "label": "LOC",
+  "text": "What county is Phoenix , AZ in ?"
+ },
+ {
+  "id": "trec-69",
+  "label": "LOC",
+  "text": "What strait separates North America from Asia ?"
+ },
+ {
+  "id": "trec-312",
+  "label": "NUM",
+  "text": "How many hearts does an octopus have ?"
+ },
+ {
+  "id": "trec-98",
+  "label": "DESC",
+  "text": "What are coral reefs ?"
+ },
+ {
+  "id": "trec-237",
+  "label": "DESC",
+  "text": "What is phosphorus ?"
+ },
+ {
+  "id": "trec-13",
+  "label": "HUM",
+  "text": "Who was the first man to fly across the Pacific Ocean ?"
+ },
+ {
+  "id": "trec-223",
+  "label": "ENTY",
+  "text": "What is the electrical output in Madrid , Spain ?"
+ },
+ {
+  "id": "trec-123",
+  "label": "HUM",
+  "text": "Who discovered America ?"
+ },
+ {
+  "id": "trec-43",
+  "label": "DESC",
+  "text": "What is a shaman ?"
+ },
+ {
+  "id": "trec-114",
+  "label": "ENTY",
+  "text": "What is Hawaii 's state flower ?"
+ },
+ {
+  "id": "trec-181",
+  "label": "DESC",
+  "text": "What is neuropathy ?"
+ },
+ {
+  "id": "trec-190",
+  "label": "ENTY",
+  "text": "What is the sales tax in Minnesota ?"
+ },
+ {
+  "id": "trec-266",
+  "label": "DESC",
+  "text": "What is dianetics ?"
+ },
+ {
+  "id": "trec-231",
+  "label": "HUM",
+  "text": "What is the name of the leader of Ireland ?"
+ },
+ {
+  "id": "trec-250",
+  "label": "HUM",
+  "text": "Who is the tallest man in the world ?"
+ },
+ {
+  "id": "trec-217",
+  "label": "ENTY",
+  "text": "What are the spots on dominoes called ?"
+ },
+ {
+  "id": "trec-198",
+  "label": "ENTY",
+  "text": "What was the most popular toy in 1957 ?"
+ },
+ {
+  "id": "trec-241",
+  "label": "DESC",
+  "text": "What is Valentine 's Day ?"
+ },
+ {
+  "id": "trec-25",
+  "label": "HUM",
+  "text": "Who developed the Macintosh computer ?"
+ },
+ {
+  "id": "trec-57",
+  "label": "LOC",
+  "text": "What is the capital of Yugoslavia ?"
+ },
+ {
+  "id": "trec-158",
+  "label": "LOC",
+  "text": "In the late 1700 's British convicts were used to populate which colony ?"
+ },
+ {
+  "id": "trec-447",
+  "label": "HUM",
+  "text": "Who was the first African American to win the Nobel Prize in literature ?"
+ },
+ {
+  "id": "trec-10",
+  "label": "LOC",
+  "text": "What city had a world fair in 1900 ?"
+ },
+ {
+  "id": "trec-38",
+  "label": "NUM",
+  "text": "How much fiber should you have per day ?"
+ },
+ {
+  "id": "trec-210",
+  "label": "NUM",
+  "text": "What year did the United States abolish the draft ?"
+ },
+ {
+  "id": "trec-85",
+  "label": "DESC",
+  "text": "Why is a ladybug helpful ?"
+ },
+ {
+  "id": "trec-483",
+  "label": "DESC",
+  "text": "What is rheumatoid arthritis ?"
+ },
+ {
+  "id": "trec-468",
+  "label": "DESC",
+  "text": "What are solar cells ?"
+ },
+ {
+  "id": "trec-131",
+  "label": "HUM",
+  "text": "Who was the abolitionist who led the raid on Harper 's Ferry in 1859 ?"
+ },
+ {
+  "id": "trec-113",
+  "label": "HUM",
+  "text": "What is the name of Neil Armstrong 's wife ?"
+ },
+ {
+  "id": "trec-174",
+  "label": "LOC",
+  "text": "Where is the Shawnee National Forest ?"
+ },
+ {
+  "id": "trec-239",
+  "label": "NUM",
+  "text": "How fast is sound ?"
+ },
+ {
+  "id": "trec-204",
+  "label": "NUM",
+  "text": "What is the melting point of copper ?"
+ },
+ {
+  "id": "trec-387",
+  "label": "HUM",
+  "text": "Who lived in the Neuschwanstein castle ?"
+ },
+ {
+  "id": "trec-221",
+  "label": "NUM",
+  "text": "What year was the Mona Lisa painted ?"
+ },
+ {
+  "id": "trec-99",
+  "label": "ENTY",
+  "text": "What is the longest major league baseball-winning streak ?"
+ },
+ {
+  "id": "trec-478",
+  "label": "ENTY",
+  "text": "What color are crickets ?"
+ },
+ {
+  "id": "trec-402",
+  "label": "NUM",
+  "text": "When is Father 's Day ?"
+ },
+ {
+  "id": "trec-112",
+  "label": "NUM",
+  "text": "What is the length of the coastline of the state of Alaska ?"
+ },
+ {
+  "id": "trec-463",
+  "label": "NUM",
+  "text": "What is Susan B. Anthony 's birthday ?"
+ },
+ {
+  "id": "trec-319",
+  "label": "LOC",
+  "text": "What is the brightest star ?"
+ },
+ {
+  "id": "trec-325",
+  "label": "ABBR",
+  "text": "What does the technical term ISDN mean ?"
+ },
+ {
+  "id": "trec-171",
+  "label": "NUM",
+  "text": "How fast is alcohol absorbed ?"
+ },
+ {
+  "id": "trec-168",
+  "label": "LOC",
+  "text": "What state has the least amount of rain per year ?"
+ },
+ {
+  "id": "trec-487",
+  "label": "NUM",
+  "text": "How far away is the moon ?"
+ },
+ {
+  "id": "trec-226",
+  "label": "NUM",
+  "text": "What is the population of Nigeria ?"
+ },
+ {
+  "id": "trec-20",
+  "label": "HUM",
+  "text": "Who was the first American to walk in space ?"
+ },
+ {
+  "id": "trec-313",
+  "label": "DESC",
+  "text": "What is pneumonia ?"
+ },
+ {
+  "id": "trec-482",
+  "label": "ENTY",
+  "text": "What kind of gas is in a fluorescent bulb ?"
+ },
+ {
+  "id": "trec-433",
+  "label": "HUM",
+  "text": "Who was the first person to reach the North Pole ?"
+ },
+ {
+  "id": "trec-455",
+  "label": "NUM",
+  "text": "When was the telephone invented ?"
+ },
+ {
+  "id": "trec-364",
+  "label": "DESC",
+  "text": "What is acetic acid ?"
+ },
+ {
+  "id": "trec-120",
+  "label": "NUM",
+  "text": "What year did WWII begin ?"
+ },
+ {
+  "id": "trec-132",
+  "label": "DESC",
+  "text": "What does target heart rate mean ?"
+ },
+ {
+  "id": "trec-47",
+  "label": "DESC",
+  "text": "What are triglycerides ?"
+ },
+ {
+  "id": "trec-297",
+  "label": "NUM",
+  "text": "How old do you have to be in order to rent a car in Italy ?"
+ },
+ {
+  "id": "trec-375",
+  "label": "NUM",
+  "text": "When did North Carolina enter the union ?"
+ },
+ {
+  "id": "trec-465",
+  "label": "ENTY",
+  "text": "What do you call a word that is spelled the same backwards and forwards ?"
+ },
+ {
+  "id": "trec-105",
+  "label": "DESC",
+  "text": "What is a micron ?"
+ },
+ {
+  "id": "trec-481",
+  "label": "ENTY",
+  "text": "What precious stone is a form of pure carbon ?"
+ },
+ {
+  "id": "trec-60",
+  "label": "LOC",
+  "text": "What is the oldest city in the United States ?"
+ },
+ {
+  "id": "trec-292",
+  "label": "NUM",
+  "text": "What is the life expectancy of a dollar bill ?"
+ },
+ {
+  "id": "trec-164",
+  "label": "ENTY",
+  "text": "What is another astronomic term for the Northern Lights ?"
+ },
+ {
+  "id": "trec-195",
+  "label": "LOC",
+  "text": "What city has the zip code of 35824 ?"
+ },
+ {
+  "id": "trec-151",
+  "label": "HUM",
+  "text": "Who discovered radium ?"
+ },
+ {
+  "id": "trec-490",
+  "label": "DESC",
+  "text": "What is pectin ?"
+ },
+ {
+  "id": "trec-254",
+  "label": "DESC",
+  "text": "What is pilates ?"
+ },
+ {
+  "id": "trec-141",
+  "label": "ENTY",
+  "text": "What is the name of Roy Roger 's dog ?"
+ },
+ {
+  "id": "trec-381",
+  "label": "HUM",
+  "text": "Who was the first vice president of the U.S. ?"
+ },
+ {
+  "id": "trec-205",
+  "label": "LOC",
+  "text": "Where is the volcano Olympus Mons located ?"
+ },
+ {
+  "id": "trec-272",
+  "label": "DESC",
+  "text": "What is osteoporosis ?"
+ },
+ {
+  "id": "trec-337",
+  "label": "ENTY",
+  "text": "What fruit is Melba sauce made from ?"
+ },
+ {
+  "id": "trec-263",
+  "label": "ENTY",
+  "text": "What instrument did Glenn Miller play ?"
+ },
+ {
+  "id": "trec-191",
+  "label": "NUM",
+  "text": "What is the distance in miles from the earth to the sun ?"
+ },
+ {
+  "id": "trec-348",
+  "label": "NUM",
+  "text": "What year did the Andy Griffith show begin ?"
+ },
+ {
+  "id": "trec-405",
+  "label": "LOC",
+  "text": "What city 's newspaper is called `` The Star '' ?"
+ },
+ {
+  "id": "trec-84",
+  "label": "NUM",
+  "text": "When was Rosa Parks born ?"
+ },
+ {
+  "id": "trec-258",
+  "label": "DESC",
+  "text": "What is Mardi Gras ?"
+ },
+ {
+  "id": "trec-61",
+  "label": "HUM",
+  "text": "What was W.C. Fields ' real name ?"
+ },
+ {
+  "id": "trec-436",
+  "label": "DESC",
+  "text": "What is the spirometer test ?"
+ },
+ {
+  "id": "trec-411",
+  "label": "ENTY",
+  "text": "What are cigarettes made of ?"
+ },
+ {
+  "id": "trec-489",
+  "label": "ENTY",
+  "text": "In what spacecraft did U.S. astronaut Alan Shepard make his historic 1961 flight ?"
+ },
+ {
+  "id": "trec-303",
+  "label": "NUM",
+  "text": "What date did Neil Armstrong land on the moon ?"
+ },
+ {
+  "id": "trec-170",
+  "label": "NUM",
+  "text": "What year did the Milwaukee Braves become the Atlanta Braves ?"
+ },
+ {
+  "id": "trec-21",
+  "label": "DESC",
+  "text": "What is a biosphere ?"
+ },
+ {
+  "id": "trec-453",
+  "label": "NUM",
+  "text": "When was Thomas Jefferson born ?"
+ },
+ {
+  "id": "trec-5",
+  "label": "NUM",
+  "text": "How tall is the Sears Building ?"
+ },
+ {
+  "id": "trec-74",
+  "label": "LOC",
+  "text": "Where is the Mall of the America ?"
+ },
+ {
+  "id": "trec-333",
+  "label": "ENTY",
+  "text": "What is the name of William Penn 's ship ?"
+ },
+ {
+  "id": "trec-278",
+  "label": "ABBR",
+  "text": "What is the abbreviation for Texas ?"
+ },
+ {
+  "id": "trec-143",
+  "label": "ENTY",
+  "text": "What is a baby turkey called ?"
+ },
+ {
+  "id": "trec-341",
+  "label": "ENTY",
+  "text": "What was President Lyndon Johnson 's reform program called ?"
+ },
+ {
+  "id": "trec-412",
+  "label": "LOC",
+  "text": "What is the capital of Zimbabwe ?"
+ },
+ {
+  "id": "trec-288",
+  "label": "DESC",
+  "text": "What is naproxen ?"
+ },
+ {
+  "id": "trec-242",
+  "label": "DESC",
+  "text": "What causes gray hair ?"
+ },
+ {
+  "id": "trec-420",
+  "label": "NUM",
+  "text": "When was the first kidney transplant ?"
+ },
+ {
+  "id": "trec-305",
+  "label": "LOC",
+  "text": "Where is the Savannah River ?"
+ }
+]

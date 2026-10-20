@@ -1,0 +1,12 @@
+{
+  "question": "What kind of answer does this question ask for?",
+  "source": "Written here, from the TREC coarse class definitions (Li and Roth, 2002). The same text is given to both arms.",
+  "labels": {
+    "ABBR": "the answer is an abbreviation or what an abbreviation stands for",
+    "DESC": "the answer is a description, a definition, a reason or a manner of doing something",
+    "ENTY": "the answer is a thing: an animal, a colour, a product, a technique, a word, an event",
+    "HUM": "the answer is a person, a group of people or an organisation",
+    "LOC": "the answer is a place: a city, a country, a mountain, an address",
+    "NUM": "the answer is a number: a count, a date, a distance, a price, a period, a percentage"
+  }
+}

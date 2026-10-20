@@ -1,0 +1,13 @@
+{
+  "question": "Which label describes this request?",
+  "source": "Written here, from the SNIPS 2017 intent definitions. The same text is given to both arms, so the comparison is between two models reading one set of rules.",
+  "labels": {
+    "AddToPlaylist": "the speaker wants a song, album or artist added to a playlist",
+    "BookRestaurant": "the speaker wants a table, reservation or booking at a place to eat",
+    "GetWeather": "the speaker asks about weather, forecast, temperature or conditions somewhere",
+    "PlayMusic": "the speaker wants music played now, by artist, song, album or station",
+    "RateBook": "the speaker gives a book a rating, a number of stars or points",
+    "SearchCreativeWork": "the speaker is looking for a specific work such as a film, show, book, song or painting",
+    "SearchScreeningEvent": "the speaker is looking for a film showing, cinema times or a screening nearby"
+  }
+}

@@ -1,0 +1,502 @@
+[
+ {
+  "id": "snips-PlayMusic-353",
+  "label": "PlayMusic",
+  "text": "Play a Bob Burns song"
+ },
+ {
+  "id": "snips-PlayMusic-356",
+  "label": "PlayMusic",
+  "text": "Please play something on Iheart from artist Ari Gold last album"
+ },
+ {
+  "id": "snips-RateBook-412",
+  "label": "RateBook",
+  "text": "rate the current novel 5 of 6 stars"
+ },
+ {
+  "id": "snips-BookRestaurant-181",
+  "label": "BookRestaurant",
+  "text": "Please book me a table at a pizzeria with a parking facility in Ghana."
+ },
+ {
+  "id": "snips-RateBook-409",
+  "label": "RateBook",
+  "text": "Rate The Sneetches and Other Stories a three"
+ },
+ {
+  "id": "snips-PlayMusic-310",
+  "label": "PlayMusic",
+  "text": "I want to hear a seventies sound track."
+ },
+ {
+  "id": "snips-SearchScreeningEvent-686",
+  "label": "SearchScreeningEvent",
+  "text": "Is Cowboy Canteen playing"
+ },
+ {
+  "id": "snips-AddToPlaylist-27",
+  "label": "AddToPlaylist",
+  "text": "add this track to my Hands Up playlist"
+ },
+ {
+  "id": "snips-GetWeather-292",
+  "label": "GetWeather",
+  "text": "Will there be a cloud in VI in 14 minutes ?"
+ },
+ {
+  "id": "snips-SearchScreeningEvent-661",
+  "label": "SearchScreeningEvent",
+  "text": "Find the schedule at Star Theatres."
+ },
+ {
+  "id": "snips-BookRestaurant-183",
+  "label": "BookRestaurant",
+  "text": "Please book me a restaurant"
+ },
+ {
+  "id": "snips-SearchScreeningEvent-640",
+  "label": "SearchScreeningEvent",
+  "text": "Is American Primitive showing in Santikos Theatres"
+ },
+ {
+  "id": "snips-GetWeather-268",
+  "label": "GetWeather",
+  "text": "What will the weather be in Hialeah Gardens on October the 24th?"
+ },
+ {
+  "id": "snips-BookRestaurant-194",
+  "label": "BookRestaurant",
+  "text": "I want to eat in Ramona"
+ },
+ {
+  "id": "snips-SearchCreativeWork-572",
+  "label": "SearchCreativeWork",
+  "text": "Find the creative work Face Down"
+ },
+ {
+  "id": "snips-BookRestaurant-196",
+  "label": "BookRestaurant",
+  "text": "Book me a reservation for a party of 3 at a pub in Northern Mariana Islands"
+ },
+ {
+  "id": "snips-GetWeather-264",
+  "label": "GetWeather",
+  "text": "What's the weather like in Tyonek, New Jersey"
+ },
+ {
+  "id": "snips-AddToPlaylist-53",
+  "label": "AddToPlaylist",
+  "text": "Add the track to the drum & breaks playlist."
+ },
+ {
+  "id": "snips-SearchScreeningEvent-606",
+  "label": "SearchScreeningEvent",
+  "text": "show me the schedule for Rat Rod Rockers!"
+ },
+ {
+  "id": "snips-RateBook-476",
+  "label": "RateBook",
+  "text": "Out of 6, give Rivers of Babylon a 1"
+ },
+ {
+  "id": "snips-RateBook-486",
+  "label": "RateBook",
+  "text": "Give this album one stars"
+ },
+ {
+  "id": "snips-RateBook-431",
+  "label": "RateBook",
+  "text": "mark this album a score of 5"
+ },
+ {
+  "id": "snips-BookRestaurant-127",
+  "label": "BookRestaurant",
+  "text": "I want to book a taverna in Archer City for this spring for nine people."
+ },
+ {
+  "id": "snips-BookRestaurant-130",
+  "label": "BookRestaurant",
+  "text": "table for Breadline Cafe in Minnesota next friday"
+ },
+ {
+  "id": "snips-SearchScreeningEvent-630",
+  "label": "SearchScreeningEvent",
+  "text": "Give me the movie schedule nearby"
+ },
+ {
+  "id": "snips-BookRestaurant-125",
+  "label": "BookRestaurant",
+  "text": "book spot for 4 in Somalia"
+ },
+ {
+  "id": "snips-PlayMusic-343",
+  "label": "PlayMusic",
+  "text": "Open deezer and play Curtain Call: The Hits by Junichi Okada."
+ },
+ {
+  "id": "snips-AddToPlaylist-55",
+  "label": "AddToPlaylist",
+  "text": "Add the boy george track to the Emo Forever playlist."
+ },
+ {
+  "id": "snips-SearchCreativeWork-516",
+  "label": "SearchCreativeWork",
+  "text": "Please help me find the Late Night Heartbroken Blues television show."
+ },
+ {
+  "id": "snips-RateBook-429",
+  "label": "RateBook",
+  "text": "rate Black Boy 4 out of 6"
+ },
+ {
+  "id": "snips-SearchScreeningEvent-671",
+  "label": "SearchScreeningEvent",
+  "text": "show me the schedule of movie The Great Gildersleeve near movie house"
+ },
+ {
+  "id": "snips-SearchCreativeWork-529",
+  "label": "SearchCreativeWork",
+  "text": "Find me a TV show called Baby Blue"
+ },
+ {
+  "id": "snips-BookRestaurant-152",
+  "label": "BookRestaurant",
+  "text": "Book me a table for 5 this year at Cherwell Boathouse"
+ },
+ {
+  "id": "snips-RateBook-406",
+  "label": "RateBook",
+  "text": "Give the current series four of 6 points."
+ },
+ {
+  "id": "snips-RateBook-452",
+  "label": "RateBook",
+  "text": "give the current book a zero of 6"
+ },
+ {
+  "id": "snips-SearchCreativeWork-518",
+  "label": "SearchCreativeWork",
+  "text": "Please look up the TV series Parables for Wooden Ears."
+ },
+ {
+  "id": "snips-BookRestaurant-103",
+  "label": "BookRestaurant",
+  "text": "Book a reservation for an oyster bar"
+ },
+ {
+  "id": "snips-GetWeather-216",
+  "label": "GetWeather",
+  "text": "Check the forecast for Nebraska."
+ },
+ {
+  "id": "snips-BookRestaurant-145",
+  "label": "BookRestaurant",
+  "text": "Book seven in neighboring Moorpark"
+ },
+ {
+  "id": "snips-BookRestaurant-198",
+  "label": "BookRestaurant",
+  "text": "Book a reservation for nine people at the best pub nearby Tangier in six months"
+ },
+ {
+  "id": "snips-PlayMusic-309",
+  "label": "PlayMusic",
+  "text": "Play Subconscious Lobotomy from Jennifer Paull."
+ },
+ {
+  "id": "snips-SearchCreativeWork-576",
+  "label": "SearchCreativeWork",
+  "text": "Find a creative work called Fire in the Hole"
+ },
+ {
+  "id": "snips-GetWeather-277",
+  "label": "GetWeather",
+  "text": "what is the forecast for Lansford for temperate weather"
+ },
+ {
+  "id": "snips-SearchCreativeWork-506",
+  "label": "SearchCreativeWork",
+  "text": "Can you find me the work, The Curse of Oak Island?"
+ },
+ {
+  "id": "snips-AddToPlaylist-36",
+  "label": "AddToPlaylist",
+  "text": "Add a song to this is racionais mc's"
+ },
+ {
+  "id": "snips-SearchScreeningEvent-604",
+  "label": "SearchScreeningEvent",
+  "text": "i want to see JLA Adventures: Trapped In Time"
+ },
+ {
+  "id": "snips-RateBook-492",
+  "label": "RateBook",
+  "text": "Give this textbook 0 out of 6 stars"
+ },
+ {
+  "id": "snips-PlayMusic-308",
+  "label": "PlayMusic",
+  "text": "I want to play music from iheart"
+ },
+ {
+  "id": "snips-RateBook-453",
+  "label": "RateBook",
+  "text": "rate Personal Demons 0 out of 6 points"
+ },
+ {
+  "id": "snips-BookRestaurant-111",
+  "label": "BookRestaurant",
+  "text": "book the best table in Tanzania for 5 people at a diner"
+ },
+ {
+  "id": "snips-BookRestaurant-186",
+  "label": "BookRestaurant",
+  "text": "table for 5 A.m. at Baker's Keyboard Lounge"
+ },
+ {
+  "id": "snips-SearchCreativeWork-536",
+  "label": "SearchCreativeWork",
+  "text": "Please search for the painting titled This Is the Night."
+ },
+ {
+  "id": "snips-BookRestaurant-118",
+  "label": "BookRestaurant",
+  "text": "I want to book Oregon Electric Station in North City."
+ },
+ {
+  "id": "snips-SearchCreativeWork-598",
+  "label": "SearchCreativeWork",
+  "text": "Please find me the work, Serious Awesomeness!."
+ },
+ {
+  "id": "snips-SearchCreativeWork-511",
+  "label": "SearchCreativeWork",
+  "text": "Find the television show To Me"
+ },
+ {
+  "id": "snips-SearchCreativeWork-519",
+  "label": "SearchCreativeWork",
+  "text": "Can you find me, Hey Man?"
+ },
+ {
+  "id": "snips-BookRestaurant-171",
+  "label": "BookRestaurant",
+  "text": "Book a reservation for five people for a tatar taverna in Sargents"
+ },
+ {
+  "id": "snips-AddToPlaylist-39",
+  "label": "AddToPlaylist",
+  "text": "Add a track to playlist Cena con Amigos"
+ },
+ {
+  "id": "snips-BookRestaurant-137",
+  "label": "BookRestaurant",
+  "text": "book spot for 1 at Town of Ramsgate in Merit"
+ },
+ {
+  "id": "snips-PlayMusic-365",
+  "label": "PlayMusic",
+  "text": "Play the greatest music from Bryan Maclean."
+ },
+ {
+  "id": "snips-SearchCreativeWork-501",
+  "label": "SearchCreativeWork",
+  "text": "Please look up the TV show, Vanity."
+ },
+ {
+  "id": "snips-GetWeather-228",
+  "label": "GetWeather",
+  "text": "what is the forecast for \u014ctone Prefectural Natural Park in 1 hour and within the same area"
+ },
+ {
+  "id": "snips-SearchCreativeWork-535",
+  "label": "SearchCreativeWork",
+  "text": "Can you find me the work titled Music for Millions?"
+ },
+ {
+  "id": "snips-RateBook-496",
+  "label": "RateBook",
+  "text": "Rate this book 3 stars out of 6"
+ },
+ {
+  "id": "snips-RateBook-461",
+  "label": "RateBook",
+  "text": "Give The American Scene 2 of 6 stars"
+ },
+ {
+  "id": "snips-SearchCreativeWork-558",
+  "label": "SearchCreativeWork",
+  "text": "Can you find me the Free for All show?"
+ },
+ {
+  "id": "snips-PlayMusic-307",
+  "label": "PlayMusic",
+  "text": "Play my inventive playlist"
+ },
+ {
+  "id": "snips-AddToPlaylist-15",
+  "label": "AddToPlaylist",
+  "text": "Onto jerry's Classical Moments in Movies, please add the album."
+ },
+ {
+  "id": "snips-PlayMusic-372",
+  "label": "PlayMusic",
+  "text": "Let's hear stuff from Andrew Hewitt."
+ },
+ {
+  "id": "snips-AddToPlaylist-46",
+  "label": "AddToPlaylist",
+  "text": "Can I put this tune onto my sin estr\u00e9s playlist?"
+ },
+ {
+  "id": "snips-PlayMusic-396",
+  "label": "PlayMusic",
+  "text": "Please play a sound track from the fifties that's on Iheart"
+ },
+ {
+  "id": "snips-SearchCreativeWork-510",
+  "label": "SearchCreativeWork",
+  "text": "Looking for a creative work called Plant Ecology"
+ },
+ {
+  "id": "snips-GetWeather-273",
+  "label": "GetWeather",
+  "text": "Need weather for Parc national Tolhuaca to see if it will be fog today"
+ },
+ {
+  "id": "snips-SearchScreeningEvent-668",
+  "label": "SearchScreeningEvent",
+  "text": "What's the movie schedule for Great Escape Theatres"
+ },
+ {
+  "id": "snips-SearchScreeningEvent-622",
+  "label": "SearchScreeningEvent",
+  "text": "I want to know if there are any movies playing in the area."
+ },
+ {
+  "id": "snips-GetWeather-284",
+  "label": "GetWeather",
+  "text": "Weather in two hours  in Uzbekistan"
+ },
+ {
+  "id": "snips-GetWeather-252",
+  "label": "GetWeather",
+  "text": "what is the overcast forecast for the current position starting on jul. 19, 2030"
+ },
+ {
+  "id": "snips-SearchScreeningEvent-634",
+  "label": "SearchScreeningEvent",
+  "text": "I want a movie schedule."
+ },
+ {
+  "id": "snips-BookRestaurant-193",
+  "label": "BookRestaurant",
+  "text": "I want to book a restaurant in sixteen seconds for 5 people in Gold Point Montana."
+ },
+ {
+  "id": "snips-BookRestaurant-132",
+  "label": "BookRestaurant",
+  "text": "Book spot for 9"
+ },
+ {
+  "id": "snips-GetWeather-297",
+  "label": "GetWeather",
+  "text": "Will it be hot in the Netherlands on February 16th?"
+ },
+ {
+  "id": "snips-SearchCreativeWork-503",
+  "label": "SearchCreativeWork",
+  "text": "Please find me the saga, The Deep Six."
+ },
+ {
+  "id": "snips-RateBook-418",
+  "label": "RateBook",
+  "text": "Give the current book 4 stars"
+ },
+ {
+  "id": "snips-SearchCreativeWork-586",
+  "label": "SearchCreativeWork",
+  "text": "Please look up the work, Prophets."
+ },
+ {
+  "id": "snips-SearchCreativeWork-580",
+  "label": "SearchCreativeWork",
+  "text": "Please find me the Journal of the British Astronomical Association movie."
+ },
+ {
+  "id": "snips-SearchCreativeWork-559",
+  "label": "SearchCreativeWork",
+  "text": "Please find me the Olympia 74 soundtrack."
+ },
+ {
+  "id": "snips-PlayMusic-327",
+  "label": "PlayMusic",
+  "text": "Play All Things Must Pass."
+ },
+ {
+  "id": "snips-SearchScreeningEvent-690",
+  "label": "SearchScreeningEvent",
+  "text": "Find the movie schedule for North American Cinemas in eleven seconds."
+ },
+ {
+  "id": "snips-PlayMusic-394",
+  "label": "PlayMusic",
+  "text": "Let me hear Chris Knight music"
+ },
+ {
+  "id": "snips-SearchCreativeWork-549",
+  "label": "SearchCreativeWork",
+  "text": "Can you find me the National Anthem of the Ancient Britons television show?"
+ },
+ {
+  "id": "snips-BookRestaurant-159",
+  "label": "BookRestaurant",
+  "text": "Book a reservation for 5 people at the top-rated brasserie restaurant"
+ },
+ {
+  "id": "snips-RateBook-471",
+  "label": "RateBook",
+  "text": "rate Neverwhere four out of 6"
+ },
+ {
+  "id": "snips-SearchScreeningEvent-691",
+  "label": "SearchScreeningEvent",
+  "text": "Find the nearest cinema with movies playing"
+ },
+ {
+  "id": "snips-RateBook-483",
+  "label": "RateBook",
+  "text": "Give 1 out of 6 rating to the current textbook"
+ },
+ {
+  "id": "snips-GetWeather-281",
+  "label": "GetWeather",
+  "text": "Tell me the weather forecast for UT on thursday"
+ },
+ {
+  "id": "snips-GetWeather-289",
+  "label": "GetWeather",
+  "text": "What's the weather in Fox Chapel?"
+ },
+ {
+  "id": "snips-BookRestaurant-109",
+  "label": "BookRestaurant",
+  "text": "I want to book a brasserie for 3 people in Netherlands Antilles."
+ },
+ {
+  "id": "snips-SearchScreeningEvent-641",
+  "label": "SearchScreeningEvent",
+  "text": "what are the movie schedules in the neighborhood"
+ },
+ {
+  "id": "snips-SearchCreativeWork-531",
+  "label": "SearchCreativeWork",
+  "text": "Look for the television show Meet the Prince"
+ },
+ {
+  "id": "snips-RateBook-428",
+  "label": "RateBook",
+  "text": "Rate the book The Atmospheric Railway 5 out of 6"
+ }
+]

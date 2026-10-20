@@ -1,0 +1,102 @@
+{
+  "seed": 20261019,
+  "sampleSize": 100,
+  "sources": {
+    "squad2": {
+      "url": "https://rajpurkar.github.io/SQuAD-explorer/dataset/dev-v2.0.json",
+      "bytes": 4370528,
+      "sha256": "80a5225e94905956a6446d296ca1093975c4d3b3260f1d6c8f68bc2ab77182d8"
+    },
+    "trec": {
+      "url": "https://cogcomp.seas.upenn.edu/Data/QA/QC/TREC_10.label",
+      "bytes": 23354,
+      "sha256": "033f22c028c2bbba9ca682f68ffe204dc1aa6e1cf35dd6207f2d4ca67f0d0e8e"
+    },
+    "snips/AddToPlaylist": {
+      "url": "https://raw.githubusercontent.com/sonos/nlu-benchmark/master/2017-06-custom-intent-engines/AddToPlaylist/validate_AddToPlaylist.json",
+      "bytes": 44160,
+      "sha256": "14cc9ee49ae477b1452632a6e835498cf4c32da397b16967c82abb3e50403e83"
+    },
+    "snips/BookRestaurant": {
+      "url": "https://raw.githubusercontent.com/sonos/nlu-benchmark/master/2017-06-custom-intent-engines/BookRestaurant/validate_BookRestaurant.json",
+      "bytes": 49353,
+      "sha256": "4f7258ccc768b777b2eb8916532db9aa50dbd058ddf1ffb0dc59218963e7442a"
+    },
+    "snips/GetWeather": {
+      "url": "https://raw.githubusercontent.com/sonos/nlu-benchmark/master/2017-06-custom-intent-engines/GetWeather/validate_GetWeather.json",
+      "bytes": 39612,
+      "sha256": "60c095e193655d6ca92be220fed3926ca25e18cd70c85664145efe25d80993af"
+    },
+    "snips/PlayMusic": {
+      "url": "https://raw.githubusercontent.com/sonos/nlu-benchmark/master/2017-06-custom-intent-engines/PlayMusic/validate_PlayMusic.json",
+      "bytes": 33122,
+      "sha256": "922212775e26259d5bffeaf79b6048d070ca017d229df00b2cc9800f71c75d20"
+    },
+    "snips/RateBook": {
+      "url": "https://raw.githubusercontent.com/sonos/nlu-benchmark/master/2017-06-custom-intent-engines/RateBook/validate_RateBook.json",
+      "bytes": 52854,
+      "sha256": "c1f8b4114da0bb5e8afd78a8062766e18b2eabb0e717539598db01b09d04619b"
+    },
+    "snips/SearchCreativeWork": {
+      "url": "https://raw.githubusercontent.com/sonos/nlu-benchmark/master/2017-06-custom-intent-engines/SearchCreativeWork/validate_SearchCreativeWork.json",
+      "bytes": 31404,
+      "sha256": "8a5e830eddb185d3e4a9d27ded140a145d04766bdce0e58834676ede32d13e77"
+    },
+    "snips/SearchScreeningEvent": {
+      "url": "https://raw.githubusercontent.com/sonos/nlu-benchmark/master/2017-06-custom-intent-engines/SearchScreeningEvent/validate_SearchScreeningEvent.json",
+      "bytes": 35716,
+      "sha256": "81e1445713e03c7c3e615353c5f3fee05f369fe9834100b9b9735900a96b9498"
+    },
+    "hotpotqa": {
+      "url": "https://datasets-server.huggingface.co/rows?dataset=hotpotqa%2Fhotpot_qa&config=distractor&split=validation&offset=0&length=100",
+      "pages": 3,
+      "rows": 300,
+      "pageSha256": [
+        "d2d4806c1337dc8e60958ac06647c630716479695bac029336f0e8ae3ba2234b",
+        "442a605c314ce2e4554b8b65e4e822ccee0d27918ad9734107e33046797ca79c",
+        "576d3d3e67a2df3ed7b91cb4dcb962afc8787b1197855e43f5ae651f28a2d231"
+      ]
+    }
+  },
+  "samples": {
+    "squad2": {
+      "items": 100,
+      "file": "sample-squad2.json",
+      "sha256": "5365f9c16c09b60a6a2d0cefd5e849d12a089b23ec5c62caa5b766d18b467115"
+    },
+    "hotpotqa": {
+      "items": 100,
+      "file": "sample-hotpotqa.json",
+      "sha256": "f9f9fa9a9b730b67fd89094ee18063c2c82888425f0c42e5e301fde8325a92cb"
+    },
+    "snips": {
+      "items": 100,
+      "file": "sample-snips.json",
+      "sha256": "65a4488734ab67b1a1d20061021f4624ca67e62c9a68a16ba9fc1135b99054b2"
+    },
+    "trec": {
+      "items": 100,
+      "file": "sample-trec.json",
+      "sha256": "a044dbf5f0fd104c79d80fd14ee95622c444e552ca3592e41b0b6fdb688992aa"
+    }
+  },
+  "labelSets": {
+    "snips": [
+      "AddToPlaylist",
+      "BookRestaurant",
+      "GetWeather",
+      "PlayMusic",
+      "RateBook",
+      "SearchCreativeWork",
+      "SearchScreeningEvent"
+    ],
+    "trec": [
+      "ABBR",
+      "DESC",
+      "ENTY",
+      "HUM",
+      "LOC",
+      "NUM"
+    ]
+  }
+}
