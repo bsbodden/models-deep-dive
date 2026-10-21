@@ -1,0 +1,212 @@
+[
+  {
+    "abstained": 3,
+    "arm": "llama1b",
+    "artifact": "results-llama1b-coqa.jsonl",
+    "bestLocal": {
+      "arm": "llama3.1-8b",
+      "arms": [
+        "llama3.1-8b"
+      ],
+      "behind": 24.5,
+      "value": 82.25
+    },
+    "capabilityDataset": "chat/coqa",
+    "carriesDeclaration": false,
+    "ci95": [
+      -35.77,
+      -16.84
+    ],
+    "coordinate": "org.modeljars.huggingface:bartowski.llama-3.2-1b-instruct-gguf.q4_k_m:3.2.0-q4_k_m.1",
+    "delta": -26.13,
+    "exactMatch": 48.0,
+    "experiment": "local-only-chat",
+    "maxHeapMiB": 337,
+    "medianMillis": 3635.0,
+    "metric": "tokenF1",
+    "n": 100,
+    "reference": {
+      "arm": "frontier",
+      "catalogIds": [
+        "gpt-5.1"
+      ],
+      "value": 83.88
+    },
+    "value": 57.75
+  },
+  {
+    "abstained": 1,
+    "arm": "llama3.1-8b",
+    "artifact": "results-llama3.1-8b-coqa.jsonl",
+    "bestLocal": {
+      "arm": "llama3.1-8b",
+      "arms": [
+        "llama3.1-8b"
+      ],
+      "behind": 0.0,
+      "value": 82.25
+    },
+    "capabilityDataset": "chat/coqa",
+    "carriesDeclaration": true,
+    "ci95": [
+      -8.15,
+      4.8
+    ],
+    "coordinate": "org.modeljars.huggingface:bartowski.meta-llama-3.1-8b-instruct-gguf.q4_k_m:3.1.0-q4_k_m.2",
+    "delta": -1.63,
+    "exactMatch": 65.0,
+    "experiment": "local-only-chat",
+    "maxHeapMiB": 596,
+    "medianMillis": 32987.5,
+    "metric": "tokenF1",
+    "n": 100,
+    "reference": {
+      "arm": "frontier",
+      "catalogIds": [
+        "gpt-5.1"
+      ],
+      "value": 83.88
+    },
+    "value": 82.25
+  },
+  {
+    "abstained": 62,
+    "arm": "small",
+    "artifact": "results-small-coqa.jsonl",
+    "bestLocal": {
+      "arm": "llama3.1-8b",
+      "arms": [
+        "llama3.1-8b"
+      ],
+      "behind": 67.55,
+      "value": 82.25
+    },
+    "capabilityDataset": "chat/coqa",
+    "carriesDeclaration": false,
+    "ci95": [
+      -76.19,
+      -62.0
+    ],
+    "coordinate": "org.modeljars.huggingface:ggml-org.qwen3-0.6b-gguf.q4_0:3.0.0-q4_0.1",
+    "delta": -69.18,
+    "exactMatch": 5.0,
+    "experiment": "local-only-chat",
+    "maxHeapMiB": 736,
+    "medianMillis": 9091.5,
+    "metric": "tokenF1",
+    "n": 100,
+    "reference": {
+      "arm": "frontier",
+      "catalogIds": [
+        "gpt-5.1"
+      ],
+      "value": 83.88
+    },
+    "value": 14.7
+  },
+  {
+    "abstained": 19,
+    "arm": "llama1b",
+    "artifact": "results-llama1b-quac.jsonl",
+    "bestLocal": {
+      "arm": "llama3.1-8b",
+      "arms": [
+        "llama3.1-8b"
+      ],
+      "behind": 20.1,
+      "value": 48.1
+    },
+    "capabilityDataset": "chat/quac",
+    "carriesDeclaration": false,
+    "ci95": [
+      -29.83,
+      -12.3
+    ],
+    "coordinate": "org.modeljars.huggingface:bartowski.llama-3.2-1b-instruct-gguf.q4_k_m:3.2.0-q4_k_m.1",
+    "delta": -20.97,
+    "exactMatch": 16.0,
+    "experiment": "local-only-chat",
+    "maxHeapMiB": 476,
+    "medianMillis": 6220.5,
+    "metric": "tokenF1",
+    "n": 100,
+    "reference": {
+      "arm": "frontier",
+      "catalogIds": [
+        "gpt-5.1"
+      ],
+      "value": 48.97
+    },
+    "value": 28.0
+  },
+  {
+    "abstained": 16,
+    "arm": "llama3.1-8b",
+    "artifact": "results-llama3.1-8b-quac.jsonl",
+    "bestLocal": {
+      "arm": "llama3.1-8b",
+      "arms": [
+        "llama3.1-8b"
+      ],
+      "behind": 0.0,
+      "value": 48.1
+    },
+    "capabilityDataset": "chat/quac",
+    "carriesDeclaration": true,
+    "ci95": [
+      -9.96,
+      8.51
+    ],
+    "coordinate": "org.modeljars.huggingface:bartowski.meta-llama-3.1-8b-instruct-gguf.q4_k_m:3.1.0-q4_k_m.2",
+    "delta": -0.87,
+    "exactMatch": 20.0,
+    "experiment": "local-only-chat",
+    "maxHeapMiB": 1144,
+    "medianMillis": 48578.5,
+    "metric": "tokenF1",
+    "n": 100,
+    "reference": {
+      "arm": "frontier",
+      "catalogIds": [
+        "gpt-5.1"
+      ],
+      "value": 48.97
+    },
+    "value": 48.1
+  },
+  {
+    "abstained": 72,
+    "arm": "small",
+    "artifact": "results-small-quac.jsonl",
+    "bestLocal": {
+      "arm": "llama3.1-8b",
+      "arms": [
+        "llama3.1-8b"
+      ],
+      "behind": 20.95,
+      "value": 48.1
+    },
+    "capabilityDataset": "chat/quac",
+    "carriesDeclaration": false,
+    "ci95": [
+      -30.61,
+      -13.09
+    ],
+    "coordinate": "org.modeljars.huggingface:ggml-org.qwen3-0.6b-gguf.q4_0:3.0.0-q4_0.1",
+    "delta": -21.82,
+    "exactMatch": 20.0,
+    "experiment": "local-only-chat",
+    "maxHeapMiB": 1258,
+    "medianMillis": 13760.5,
+    "metric": "tokenF1",
+    "n": 100,
+    "reference": {
+      "arm": "frontier",
+      "catalogIds": [
+        "gpt-5.1"
+      ],
+      "value": 48.97
+    },
+    "value": 27.15
+  }
+]

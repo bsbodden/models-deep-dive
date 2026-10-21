@@ -1,0 +1,584 @@
+{
+  "datasets": {
+    "snips": {
+      "constraintFeasible": false,
+      "heldOutAccuracy": {
+        "delta": -3.0,
+        "shippedMean": 96.0,
+        "tunedMean": 93.0
+      },
+      "heldOutEscalatedShare": {
+        "delta": -12.0,
+        "shippedMean": 36.0,
+        "tunedMean": 24.0
+      },
+      "rounds": [
+        {
+          "basis": "F1 alone; no threshold satisfies both constraints on this training split",
+          "fold": 0,
+          "heldOut": {
+            "accuracy": 95.0,
+            "confusion": {
+              "fn": 0,
+              "fp": 0,
+              "tn": 16,
+              "tp": 4
+            },
+            "escalatedShare": 20.0,
+            "f1": 1.0,
+            "f2": 1.0,
+            "n": 20,
+            "precision": 1.0,
+            "recall": 1.0,
+            "threshold": 0.47
+          },
+          "heldOutAtShipped": {
+            "accuracy": 95.0,
+            "confusion": {
+              "fn": 0,
+              "fp": 2,
+              "tn": 14,
+              "tp": 4
+            },
+            "escalatedShare": 30.0,
+            "f1": 0.8,
+            "f2": 0.9091,
+            "n": 20,
+            "precision": 0.6667,
+            "recall": 1.0,
+            "threshold": 0.6
+          },
+          "selected": 0.47,
+          "train": {
+            "accuracy": 92.5,
+            "confusion": {
+              "fn": 5,
+              "fp": 6,
+              "tn": 58,
+              "tp": 11
+            },
+            "escalatedShare": 21.25,
+            "f1": 0.6667,
+            "f2": 0.679,
+            "n": 80,
+            "precision": 0.6471,
+            "recall": 0.6875,
+            "threshold": 0.47
+          }
+        },
+        {
+          "basis": "F1 alone; no threshold satisfies both constraints on this training split",
+          "fold": 1,
+          "heldOut": {
+            "accuracy": 85.0,
+            "confusion": {
+              "fn": 2,
+              "fp": 5,
+              "tn": 11,
+              "tp": 2
+            },
+            "escalatedShare": 35.0,
+            "f1": 0.3636,
+            "f2": 0.4348,
+            "n": 20,
+            "precision": 0.2857,
+            "recall": 0.5,
+            "threshold": 0.55
+          },
+          "heldOutAtShipped": {
+            "accuracy": 90.0,
+            "confusion": {
+              "fn": 1,
+              "fp": 8,
+              "tn": 8,
+              "tp": 3
+            },
+            "escalatedShare": 55.0,
+            "f1": 0.4,
+            "f2": 0.5556,
+            "n": 20,
+            "precision": 0.2727,
+            "recall": 0.75,
+            "threshold": 0.6
+          },
+          "selected": 0.55,
+          "train": {
+            "accuracy": 97.5,
+            "confusion": {
+              "fn": 1,
+              "fp": 7,
+              "tn": 57,
+              "tp": 15
+            },
+            "escalatedShare": 27.5,
+            "f1": 0.7895,
+            "f2": 0.8721,
+            "n": 80,
+            "precision": 0.6818,
+            "recall": 0.9375,
+            "threshold": 0.55
+          }
+        },
+        {
+          "basis": "F1 alone; no threshold satisfies both constraints on this training split",
+          "fold": 2,
+          "heldOut": {
+            "accuracy": 95.0,
+            "confusion": {
+              "fn": 1,
+              "fp": 1,
+              "tn": 15,
+              "tp": 3
+            },
+            "escalatedShare": 20.0,
+            "f1": 0.75,
+            "f2": 0.75,
+            "n": 20,
+            "precision": 0.75,
+            "recall": 0.75,
+            "threshold": 0.47
+          },
+          "heldOutAtShipped": {
+            "accuracy": 100.0,
+            "confusion": {
+              "fn": 0,
+              "fp": 1,
+              "tn": 15,
+              "tp": 4
+            },
+            "escalatedShare": 25.0,
+            "f1": 0.8889,
+            "f2": 0.9524,
+            "n": 20,
+            "precision": 0.8,
+            "recall": 1.0,
+            "threshold": 0.6
+          },
+          "selected": 0.47,
+          "train": {
+            "accuracy": 92.5,
+            "confusion": {
+              "fn": 4,
+              "fp": 5,
+              "tn": 59,
+              "tp": 12
+            },
+            "escalatedShare": 21.25,
+            "f1": 0.7273,
+            "f2": 0.7407,
+            "n": 80,
+            "precision": 0.7059,
+            "recall": 0.75,
+            "threshold": 0.47
+          }
+        },
+        {
+          "basis": "F1 alone; no threshold satisfies both constraints on this training split",
+          "fold": 3,
+          "heldOut": {
+            "accuracy": 100.0,
+            "confusion": {
+              "fn": 0,
+              "fp": 2,
+              "tn": 14,
+              "tp": 4
+            },
+            "escalatedShare": 30.0,
+            "f1": 0.8,
+            "f2": 0.9091,
+            "n": 20,
+            "precision": 0.6667,
+            "recall": 1.0,
+            "threshold": 0.47
+          },
+          "heldOutAtShipped": {
+            "accuracy": 100.0,
+            "confusion": {
+              "fn": 0,
+              "fp": 4,
+              "tn": 12,
+              "tp": 4
+            },
+            "escalatedShare": 40.0,
+            "f1": 0.6667,
+            "f2": 0.8333,
+            "n": 20,
+            "precision": 0.5,
+            "recall": 1.0,
+            "threshold": 0.6
+          },
+          "selected": 0.47,
+          "train": {
+            "accuracy": 91.25,
+            "confusion": {
+              "fn": 5,
+              "fp": 4,
+              "tn": 60,
+              "tp": 11
+            },
+            "escalatedShare": 18.75,
+            "f1": 0.7097,
+            "f2": 0.6962,
+            "n": 80,
+            "precision": 0.7333,
+            "recall": 0.6875,
+            "threshold": 0.47
+          }
+        },
+        {
+          "basis": "F1 alone; no threshold satisfies both constraints on this training split",
+          "fold": 4,
+          "heldOut": {
+            "accuracy": 90.0,
+            "confusion": {
+              "fn": 2,
+              "fp": 1,
+              "tn": 15,
+              "tp": 2
+            },
+            "escalatedShare": 15.0,
+            "f1": 0.5714,
+            "f2": 0.5263,
+            "n": 20,
+            "precision": 0.6667,
+            "recall": 0.5,
+            "threshold": 0.47
+          },
+          "heldOutAtShipped": {
+            "accuracy": 95.0,
+            "confusion": {
+              "fn": 1,
+              "fp": 3,
+              "tn": 13,
+              "tp": 3
+            },
+            "escalatedShare": 30.0,
+            "f1": 0.6,
+            "f2": 0.6818,
+            "n": 20,
+            "precision": 0.5,
+            "recall": 0.75,
+            "threshold": 0.6
+          },
+          "selected": 0.47,
+          "train": {
+            "accuracy": 93.75,
+            "confusion": {
+              "fn": 3,
+              "fp": 5,
+              "tn": 59,
+              "tp": 13
+            },
+            "escalatedShare": 22.5,
+            "f1": 0.7647,
+            "f2": 0.7927,
+            "n": 80,
+            "precision": 0.7222,
+            "recall": 0.8125,
+            "threshold": 0.47
+          }
+        }
+      ],
+      "selectedMedian": 0.47,
+      "selectedThresholds": [
+        0.47,
+        0.55,
+        0.47,
+        0.47,
+        0.47
+      ]
+    },
+    "trec": {
+      "constraintFeasible": false,
+      "heldOutAccuracy": {
+        "delta": -1.0,
+        "shippedMean": 90.0,
+        "tunedMean": 89.0
+      },
+      "heldOutEscalatedShare": {
+        "delta": -15.0,
+        "shippedMean": 74.0,
+        "tunedMean": 59.0
+      },
+      "rounds": [
+        {
+          "basis": "F1 alone; no threshold satisfies both constraints on this training split",
+          "fold": 0,
+          "heldOut": {
+            "accuracy": 90.0,
+            "confusion": {
+              "fn": 1,
+              "fp": 9,
+              "tn": 6,
+              "tp": 4
+            },
+            "escalatedShare": 65.0,
+            "f1": 0.4444,
+            "f2": 0.6061,
+            "n": 20,
+            "precision": 0.3077,
+            "recall": 0.8,
+            "threshold": 0.55
+          },
+          "heldOutAtShipped": {
+            "accuracy": 90.0,
+            "confusion": {
+              "fn": 1,
+              "fp": 9,
+              "tn": 6,
+              "tp": 4
+            },
+            "escalatedShare": 65.0,
+            "f1": 0.4444,
+            "f2": 0.6061,
+            "n": 20,
+            "precision": 0.3077,
+            "recall": 0.8,
+            "threshold": 0.6
+          },
+          "selected": 0.55,
+          "train": {
+            "accuracy": 91.25,
+            "confusion": {
+              "fn": 1,
+              "fp": 37,
+              "tn": 24,
+              "tp": 18
+            },
+            "escalatedShare": 68.75,
+            "f1": 0.4865,
+            "f2": 0.687,
+            "n": 80,
+            "precision": 0.3273,
+            "recall": 0.9474,
+            "threshold": 0.55
+          }
+        },
+        {
+          "basis": "F1 alone; no threshold satisfies both constraints on this training split",
+          "fold": 1,
+          "heldOut": {
+            "accuracy": 90.0,
+            "confusion": {
+              "fn": 1,
+              "fp": 11,
+              "tn": 4,
+              "tp": 4
+            },
+            "escalatedShare": 75.0,
+            "f1": 0.4,
+            "f2": 0.5714,
+            "n": 20,
+            "precision": 0.2667,
+            "recall": 0.8,
+            "threshold": 0.52
+          },
+          "heldOutAtShipped": {
+            "accuracy": 90.0,
+            "confusion": {
+              "fn": 0,
+              "fp": 12,
+              "tn": 3,
+              "tp": 5
+            },
+            "escalatedShare": 85.0,
+            "f1": 0.4545,
+            "f2": 0.6757,
+            "n": 20,
+            "precision": 0.2941,
+            "recall": 1.0,
+            "threshold": 0.6
+          },
+          "selected": 0.52,
+          "train": {
+            "accuracy": 91.25,
+            "confusion": {
+              "fn": 2,
+              "fp": 32,
+              "tn": 29,
+              "tp": 17
+            },
+            "escalatedShare": 61.25,
+            "f1": 0.5,
+            "f2": 0.68,
+            "n": 80,
+            "precision": 0.3469,
+            "recall": 0.8947,
+            "threshold": 0.52
+          }
+        },
+        {
+          "basis": "F1 alone; no threshold satisfies both constraints on this training split",
+          "fold": 2,
+          "heldOut": {
+            "accuracy": 95.0,
+            "confusion": {
+              "fn": 1,
+              "fp": 9,
+              "tn": 6,
+              "tp": 4
+            },
+            "escalatedShare": 65.0,
+            "f1": 0.4444,
+            "f2": 0.6061,
+            "n": 20,
+            "precision": 0.3077,
+            "recall": 0.8,
+            "threshold": 0.55
+          },
+          "heldOutAtShipped": {
+            "accuracy": 95.0,
+            "confusion": {
+              "fn": 1,
+              "fp": 9,
+              "tn": 6,
+              "tp": 4
+            },
+            "escalatedShare": 65.0,
+            "f1": 0.4444,
+            "f2": 0.6061,
+            "n": 20,
+            "precision": 0.3077,
+            "recall": 0.8,
+            "threshold": 0.6
+          },
+          "selected": 0.55,
+          "train": {
+            "accuracy": 90.0,
+            "confusion": {
+              "fn": 1,
+              "fp": 37,
+              "tn": 24,
+              "tp": 18
+            },
+            "escalatedShare": 68.75,
+            "f1": 0.4865,
+            "f2": 0.687,
+            "n": 80,
+            "precision": 0.3273,
+            "recall": 0.9474,
+            "threshold": 0.55
+          }
+        },
+        {
+          "basis": "F1 alone; no threshold satisfies both constraints on this training split",
+          "fold": 3,
+          "heldOut": {
+            "accuracy": 85.0,
+            "confusion": {
+              "fn": 0,
+              "fp": 8,
+              "tn": 7,
+              "tp": 5
+            },
+            "escalatedShare": 65.0,
+            "f1": 0.5556,
+            "f2": 0.7576,
+            "n": 20,
+            "precision": 0.3846,
+            "recall": 1.0,
+            "threshold": 0.55
+          },
+          "heldOutAtShipped": {
+            "accuracy": 80.0,
+            "confusion": {
+              "fn": 0,
+              "fp": 12,
+              "tn": 3,
+              "tp": 5
+            },
+            "escalatedShare": 85.0,
+            "f1": 0.4545,
+            "f2": 0.6757,
+            "n": 20,
+            "precision": 0.2941,
+            "recall": 1.0,
+            "threshold": 0.6
+          },
+          "selected": 0.55,
+          "train": {
+            "accuracy": 92.5,
+            "confusion": {
+              "fn": 2,
+              "fp": 38,
+              "tn": 23,
+              "tp": 17
+            },
+            "escalatedShare": 68.75,
+            "f1": 0.4595,
+            "f2": 0.6489,
+            "n": 80,
+            "precision": 0.3091,
+            "recall": 0.8947,
+            "threshold": 0.55
+          }
+        },
+        {
+          "basis": "F1 alone; no threshold satisfies both constraints on this training split",
+          "fold": 4,
+          "heldOut": {
+            "accuracy": 85.0,
+            "confusion": {
+              "fn": 3,
+              "fp": 4,
+              "tn": 12,
+              "tp": 1
+            },
+            "escalatedShare": 25.0,
+            "f1": 0.2222,
+            "f2": 0.2381,
+            "n": 20,
+            "precision": 0.2,
+            "recall": 0.25,
+            "threshold": 0.33
+          },
+          "heldOutAtShipped": {
+            "accuracy": 95.0,
+            "confusion": {
+              "fn": 0,
+              "fp": 10,
+              "tn": 6,
+              "tp": 4
+            },
+            "escalatedShare": 70.0,
+            "f1": 0.4444,
+            "f2": 0.6667,
+            "n": 20,
+            "precision": 0.2857,
+            "recall": 1.0,
+            "threshold": 0.6
+          },
+          "selected": 0.33,
+          "train": {
+            "accuracy": 83.75,
+            "confusion": {
+              "fn": 9,
+              "fp": 13,
+              "tn": 47,
+              "tp": 11
+            },
+            "escalatedShare": 30.0,
+            "f1": 0.5,
+            "f2": 0.5288,
+            "n": 80,
+            "precision": 0.4583,
+            "recall": 0.55,
+            "threshold": 0.33
+          }
+        }
+      ],
+      "selectedMedian": 0.55,
+      "selectedThresholds": [
+        0.55,
+        0.52,
+        0.55,
+        0.55,
+        0.33
+      ]
+    }
+  },
+  "folds": 5,
+  "minPrecision": 0.8,
+  "minRecall": 0.8,
+  "seed": 20261021
+}

@@ -1,0 +1,34 @@
+{
+  "sampleSize": 100,
+  "samples": {
+    "coqa": {
+      "drawnFrom": 500,
+      "file": "sample-coqa.json",
+      "items": 100,
+      "medianHistoryTurns": 6,
+      "sha256": "918915e4545a1916a3e4669b1a1a517aee00af820ba2dc91b7810d8e5a12b693",
+      "unanswerable": 1
+    },
+    "quac": {
+      "drawnFrom": 1000,
+      "file": "sample-quac.json",
+      "items": 100,
+      "medianHistoryTurns": 3,
+      "sha256": "163846f44480b42d102f362dbe33a07ea97e89138664a04f1f9e2acc5aee6468",
+      "unanswerable": 18
+    }
+  },
+  "seed": 20261019,
+  "sources": {
+    "coqa": {
+      "bytes": 9090845,
+      "sha256": "dfa367a9733ce53222918d0231d9b3bedc2b8ee831a2845f62dfc70701f2540a",
+      "url": "https://downloads.cs.stanford.edu/nlp/data/coqa/coqa-dev-v1.0.json"
+    },
+    "quac": {
+      "bytes": 8929167,
+      "sha256": "09e622916280ba04c9352acb1bc5bbe80f11a2598f6f34e934c51d9e6570f378",
+      "url": "https://s3.amazonaws.com/my89public/quac/val_v0.2.json"
+    }
+  }
+}

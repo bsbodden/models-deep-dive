@@ -513,16 +513,16 @@ the fleet owns. Every accepted pair is now archived under `runs/` with its load 
 <!-- figures:variance -->
 | run (UTC) | routed | no router | latency ratio | cost factor |
 | --- | --- | --- | --- | --- |
-| `20261019T232147Z` | 58,446 ms | 49,230 ms | 1.19× | 3.17× cheaper |
-| `20261019T232350Z` | 37,694 ms | 40,133 ms | 0.94× | 3.18× cheaper |
-| `20261019T232628Z` | 49,261 ms | 34,574 ms | 1.42× | 3.12× cheaper |
+| `20261021T053512Z` | 134,244 ms | 43,861 ms | 3.06× | 3.13× cheaper |
+| `20261021T053908Z` | 137,880 ms | 26,918 ms | 5.12× | 3.12× cheaper |
+| `20261021T054341Z` | 125,040 ms | 50,171 ms | 2.49× | 3.16× cheaper |
 
-Across **3 measured pairs** — same code, same prompts, same machine, all archived under [`evidence/fleet-routing/runs/`](evidence/fleet-routing/runs) — the latency ratio moved from **0.94× to 1.42×** (median 1.19×) while the cost factor moved from **3.12× to 3.18×**. One of those is a property of the fleet; the other is a property of the provider's queue on the day. Which is which:
+Across **3 measured pairs** — same code, same prompts, same machine, all archived under [`evidence/fleet-routing/runs/`](evidence/fleet-routing/runs) — the latency ratio moved from **2.49× to 5.12×** (median 3.06×) while the cost factor moved from **3.12× to 3.16×**. One of those is a property of the fleet; the other is a property of the provider's queue on the day. Which is which:
 
-- the no-router arm's wall clock ranged over **1.42×** (34,574 ms to 49,230 ms)
-- the routed arm's remote portion ranged over **2.36×** (15,379 ms to 36,342 ms)
-- the routed arm's local portion ranged over **1.02×** (22,104 ms to 22,501 ms)
-- the appendix prompt alone, byte for byte identical every run, came back in 3,345 ms at best and 15,094 ms at worst — **4.51×** on one call to one provider
+- the no-router arm's wall clock ranged over **1.86×** (26,918 ms to 50,171 ms)
+- the routed arm's remote portion ranged over **1.96×** (19,093 ms to 37,493 ms)
+- the routed arm's local portion ranged over **1.06×** (100,387 ms to 105,947 ms)
+- the appendix prompt alone, byte for byte identical every run, came back in 4,040 ms at best and 17,640 ms at worst — **4.37×** on one call to one provider
 <!-- end:figures:variance -->
 
 The cost factor barely moves, because token counts are a function of the prompts and the prompts do

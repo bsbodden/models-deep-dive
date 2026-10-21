@@ -1,0 +1,120 @@
+started 2026-10-20T22:59:38Z
+load: 0.61 0.18 0.06 1/205 2287
+[jbang] Resolving dependencies...
+[jbang]    org.modeljars:modeljars:0.1.63
+[jbang]    com.integrallis:models-router:0.5.1
+[jbang]    com.fasterxml.jackson.core:jackson-databind:2.22.3
+[jbang]    org.modeljars.huggingface:ggml-org.qwen3-0.6b-gguf.q4_0:3.0.0-q4_0.1
+[jbang]    org.modeljars.huggingface:bartowski.llama-3.2-1b-instruct-gguf.q4_k_m:3.2.0-q4_k_m.1
+[jbang]    org.modeljars.huggingface:bartowski.meta-llama-3.1-8b-instruct-gguf.q4_k_m:3.1.0-q4_k_m.2
+[jbang] Dependencies resolved
+[jbang] Building jar for chat.java...
+WARNING: Using incubator modules: jdk.incubator.vector
+ITEM      PROMPT        MS   HEAP MIB  ANSWER
+Oct 20, 2026 11:00:17 PM com.integrallis.vectors.core.PanamaVectorUtilSupportProvider create
+INFO: vectors-core: Using Panama Vector API SIMD provider (vector bits: 256)
+Oct 20, 2026 11:00:17 PM com.integrallis.vectors.core.VectorizationProvider logActiveToggles
+INFO: vectors-core: provider=PanamaVectorUtilSupport panama=true maxBits=256 preferredBits=256 fastVectorFMA=true fastScalarFMA=true sve=false ggufParallel=true ggufParallelThreshold=1048576 ggufExecutor=persistent ggufThreads=8 ggufChunksPerThread=2 mappedKQuantLongOffsets=auto(q4=true,q5=false,q6=false) q4ShortPairwiseSupported=true q4UnsignedPairwiseSupported=true toggles=[(defaults — no -Dvectors.* overrides)]
+1           1379     23743        550  Auntie Beth.
+2           1405     20431        551  Europe.
+3           1273     20768        253  She was sad.
+4           1444     23601        253  The witch made a spell.
+5           2206     35328        530  Yes.
+6           1917     32682        531  Yes.
+7           2189     34264        535  right before bedtime.
+8           2044     32394        536  Sony Music, a subsidiary of Sony Corporation of America.
+9           2431     40521        543  70 to 80 kilograms of cocaine each month.
+10          3732     63184        548  Yes.
+11          2054     33640        551  He'd look you over in the course of a month or two.
+12          2160     36605        554  She is a beautiful actress.
+13          3730     61184        562  $75.
+14          1788     28707        564  They yelled, screamed, and jumped up and down.
+15          1978     32063        567  150 runs.
+16          1815     29936        570  Tammy Meyers.
+17          2991     47065        573  Eduard Kokoity.
+18          2300     35562        580  Alzheimer's.
+19          2030     29382        581  Lionel Messi and Cristiano Ronaldo.
+20          2220     40007        586  He is not fit to be Andy's guardian.
+21          2113     28580        586  A deeper voice and larger Adam's apple in boys.
+22          1139     17660        589  Cindy.
+23          2404     46670        596  the birch grove on the south shore of Lake Minniemashie.
+24          2216     33097        384  Yes.
+25          1575     25914        384  Tennessee.
+26          2268     38922        389  He worked as a manager for a coffee company, wrote a ne…
+27          1871     24502        389  Chemurgy.
+28          1825     25945        394  Der Spiegel.
+29          2040     29261        394  Radicalized individuals.
+30          2446     43553        402  in his dressing-gown, with sunken, pale cheeks, and fai…
+31          1421     23858        403  It rested.
+32          2198     32401        407  1995.
+33          2137     32418        408  June 25, 2009.
+34          2285     39955        413  Tom Watson.
+35          2321     36609        415  anti-government protests and uprisings in several Afric…
+36          1163     17588        417  Seattle.
+37          1176     18497        422  Milo.
+38          2310     37696        424  Yes.
+39          1106     16529        427  The brown-haired lady.
+40          1447     26254        429  Marsha's mom told her to soak him in water every few da…
+41          1924     30933        432  model
+42          1707     23642        432  ISDN networks.
+43          2066     31430        437  Yes.
+44          2269     36300        440  The historic centre of Florence.
+45          1871     29129        443  Local elders and Somali officials.
+46          2513     37750        446  Beth.
+47          1527     20407        449  I don't know.
+48          2667     47928        456  stainless-steel container with rice, vegetables and eit…
+49          1756     27802        458  He was burned over 65 percent of his body.
+50          2636     40229        461  first-degree murder
+51          1769     29973        463  They were talking to each other happily.
+52          1928     28376        466  Doctors indicated returning to racing three weeks after…
+53          2154     31419        468  Central Institute of Statistics.
+54          2189     39529        474  Where is Shaggam Creek?
+55          2314     35835        477  Her family.
+56          1808     28460        480  No.
+57          2184     40208        483  Guy.
+58          1686     26838        485  Her brother.
+59          2530     42763        491  Yes.
+60          1383     23968        493  Oscar.
+61          2221     33435        499  Prime Minister Nuri al-Maliki.
+62          1774     29370        501  No.
+63          1798     27441        379  Jerry.
+64          2151     30516        382  Slovenia.
+65          2209     40424        385  his notebook and a pen.
+66          2783     43606        390  They were to start a regular theatre.
+67          2126     33831        392  The Pacific.
+68          1927     33720        395  three skates
+69          2560     42046        400  enjoying a fun and legal sport.
+70          2206     37969        403  1967 Arab–Israeli War
+71          2150     32878        407  Yes.
+72          1332     22138        409  On the floor.
+73          2567     40019        413  the lion
+74          1909     30774        417  CNN.
+75          2011     36539        420  He looks worried and his mother will see it.
+76          2148     32845        423  The Duomo.
+77          2342     42649        428  He was shaking his other fist wrathfully.
+78          2579     40632        431  The first arts editor of The Front Page.
+79          1921     32150        436  Martin.
+80          2002     34767        438  She feels gratitude and will think of him and love him …
+81          2389     37811        441  Yes, he had a dog named Ruffles.
+82          1231     17142        446  Yes.
+83          2395     39310        449  STD (code) or a dialling code.
+84          1784     28268        451  Along the road, by the stream.
+85          2629     42905        457  Firefighters and those who live in the community.
+86          3105     53534        460  Anything you think there should be more of, do it rando…
+87          2176     35025        465  It wasn't exactly the most efficient system.
+88          2344     40110        468  He wants to get revenge.
+89          2687     41468        472  Lightweight materials.
+90          1635     27599        476  Max simple nods back.
+91          3298     48508        480  Yes, antiwar demonstrations.
+92          2321     33825        483  Portland, Oregon, US.
+93          2410     39051        487  Pakistan.
+94          2036     33378        490  He settled down in a village.
+95          2860     40723        494  germ-free environment
+96          1379     22309        497  the park
+97          1453     22289        499  No.
+98          2114     35618        503  Big events in Philadelphia and a description of British…
+99          2041     29987        506  1920
+100         1885     32658        509  The Xinhai Revolution of 1911 and May Fourth Movement o…
+
+wrote 100 rows to results-llama3.1-8b-coqa.jsonl
+finished 2026-10-20T23:56:09Z

@@ -1,0 +1,120 @@
+started 2026-10-20T21:58:05Z
+load: 0.31 0.09 0.03 1/203 2298
+[jbang] Resolving dependencies...
+[jbang]    org.modeljars:modeljars:0.1.63
+[jbang]    com.integrallis:models-router:0.5.1
+[jbang]    com.fasterxml.jackson.core:jackson-databind:2.22.3
+[jbang]    org.modeljars.huggingface:ggml-org.qwen3-0.6b-gguf.q4_0:3.0.0-q4_0.1
+[jbang]    org.modeljars.huggingface:bartowski.llama-3.2-1b-instruct-gguf.q4_k_m:3.2.0-q4_k_m.1
+[jbang]    org.modeljars.huggingface:bartowski.meta-llama-3.1-8b-instruct-gguf.q4_k_m:3.1.0-q4_k_m.2
+[jbang] Dependencies resolved
+[jbang] Building jar for chat.java...
+WARNING: Using incubator modules: jdk.incubator.vector
+ITEM      PROMPT        MS   HEAP MIB  ANSWER
+Oct 20, 2026 9:58:11 PM com.integrallis.vectors.core.PanamaVectorUtilSupportProvider create
+INFO: vectors-core: Using Panama Vector API SIMD provider (vector bits: 256)
+Oct 20, 2026 9:58:12 PM com.integrallis.vectors.core.VectorizationProvider logActiveToggles
+INFO: vectors-core: provider=PanamaVectorUtilSupport panama=true maxBits=256 preferredBits=256 fastVectorFMA=true fastScalarFMA=true sve=false ggufParallel=true ggufParallelThreshold=1048576 ggufExecutor=persistent ggufThreads=8 ggufChunksPerThread=2 mappedKQuantLongOffsets=auto(q4=true,q5=false,q6=false) q4ShortPairwiseSupported=true q4UnsignedPairwiseSupported=true toggles=[(defaults — no -Dvectors.* overrides)]
+1           1379      6620        470  Auntie Beth
+2           1405      5843        473  They went first by plane around Europe.
+3           1273      5652        476  I don't know.
+4           1444      6283        477  I don't know.
+5           2206     10156        721  I don't know.
+6           1917      8945        724  I don't know.
+7           2189      9348        728  I don't know.
+8           2044      8724        732  RCA is owned by Sony Music.
+9           2431     11018        736  I don't know.
+10          3732     17117        463  I don't know.
+11          2054      8648        467  I don't know.
+12          2160      9912        471  I don't know.
+13          3730     17655        476  I don't know.
+14          1788      7687        479  The kids got its attention by stopping the truck and wa…
+15          1978      9220        482  I don't know.
+16          1815      8175        486  I don't know.
+17          2991     12619        491  I don't know.
+18          2300      9747        495  I don't know.
+19          2030      7975        498  Ronaldo and Messi.
+20          2220     10636        502  I don't know.
+21          2113      7432        505  puberty
+22          1139      5001        506  Maxine and Thomas were happy.
+23          2404     12082        511  I don't know.
+24          2216      9162        514  I don't know.
+25          1575      7144        518  I don't know.
+26          2268     10534        520  He worked as a manager for a coffee company.
+27          1871      6733        524  synthetics
+28          1825      7288        526  Der Spiegel.
+29          2040      8067        532  I don't know.
+30          2446     11001        535  I don't know.
+31          1421      6737        538  I don't know.
+32          2198      9300        542  I don't know.
+33          2137      8720        545  I don't know.
+34          2285     11057        548  I don't know.
+35          2321      9591        553  I don't know.
+36          1163      4839        554  Utah
+37          1176      5221        556  Eddie's BFF is Milo.
+38          2310     10252        560  Yes.
+39          1106      4673        562  The answer is: the brown-haired lady.
+40          1447      6770        564  He lives in a plastic bag.
+41          1924      8778        567  I don't know.
+42          1707      6648        571  I don't know.
+43          2066      8804        574  I don't know.
+44          2269     10424        578  It is a UNESCO World Heritage site.
+45          1871      7864        580  I don't know.
+46          2513     10373        586  A: Louise
+47          1527      5614        586  I don't know.
+48          2667     13259        593  A: a thermos with hot soup and a stainless-steel contai…
+49          1756      7474        595  The subject of the story is Michael Brewer.
+50          2636     10994        600  I don't know.
+51          1769      8145        602  Some women were talking to each other happily.
+52          1928      7277        606  I don't know.
+53          2154      8805        609  Istituto Centrale di Statistica
+54          2189     10675        614  I don't know.
+55          2314     10384        617  Her career and public service were more important to he…
+56          1808      7890        620  I don't know.
+57          2184     11083        624  I don't know.
+58          1686      7748        627  Janet Jackson is doing a duet with her brother.
+59          2530     11834        631  I don't know.
+60          1383      6558        634  I don't know.
+61          2221      9488        638  U.N. Secretary-General Ban Ki-moon appeared at a news c…
+62          1774      8150        641  I don't know.
+63          1798      7588        644  A wild-dog
+64          2151      8716        647  Ljubljana is the capital of Slovenia.
+65          2209     11332        651  Tidwell took out his notebook and a pen.
+66          2783     12005        655  A: Johnny told him about starting a regular theatre.
+67          2126      9454        659  I don't know.
+68          1927      9319        663  he threw off the three skates
+69          2560     12204        668  He enjoys watching these animals, but he also enjoys ca…
+70          2206     10753        671  I don't know.
+71          2150      9072        675  I don't know.
+72          1332      6102        677  I don't know.
+73          2567     11066        682  I don't know.
+74          1909      8673        686  I don't know.
+75          2011     10092        688  He didn't leave for home immediately because he felt so…
+76          2148      8961        693  I don't know.
+77          2342     11370        459  I don't know.
+78          2579     10941        461  I don't know.
+79          1921      8931        464  I don't know.
+80          2002      9111        467  I don't know.
+81          2389     10057        471  I don't know.
+82          1231      5164        474  Genes evolve due to natural selection or survival of th…
+83          2395     10472        479  Ofcom
+84          1784      7590        481  I don't know.
+85          2629     11656        486  I don't know.
+86          3105     14391        491  Anne thinks people should do anything they think is bea…
+87          2176      9464        495  Yes, it was an efficient process.
+88          2344     10880        499  I don't know.
+89          2687     11338        503  I don't know.
+90          1635      7417        507  Max nods.
+91          3298     13222        512  I don't know.
+92          2321      9586        515  Zink Media, Inc.
+93          2410     10900        519  I don't know.
+94          2036      8983        523  I don't know.
+95          2860     11190        526  I don't know.
+96          1379      6236        530  I don't know.
+97          1453      6494        531  I don't know.
+98          2114      9218        535  The diary was recorded in the diary.
+99          2041      8398        538  I don't know.
+100         1885      8734        543  I don't know.
+
+wrote 100 rows to results-small-coqa.jsonl
+finished 2026-10-20T22:13:33Z

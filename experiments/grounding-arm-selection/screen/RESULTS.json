@@ -1,0 +1,170 @@
+{
+  "acceptWithin": 2.0,
+  "bestLocal": {
+    "hotpotqa": [
+      "llama1b"
+    ],
+    "squad2": [
+      "llama3.1-8b"
+    ]
+  },
+  "datasets": {
+    "hotpotqa": {
+      "arms": {
+        "frontier": {
+          "answerable": {
+            "abstained": 3,
+            "exactMatch": 66.0,
+            "n": 50,
+            "tokenF1": 76.84
+          },
+          "exactMatch": 66.0,
+          "local": false,
+          "maxHeapMiB": null,
+          "medianMillis": 632.0,
+          "n": 50,
+          "tokenF1": 76.84
+        },
+        "llama1b": {
+          "answerable": {
+            "abstained": 0,
+            "exactMatch": 30.0,
+            "n": 50,
+            "tokenF1": 34.47
+          },
+          "behindBestLocal": 0.0,
+          "carriesDeclaration": true,
+          "deltaExactMatch": -36.0,
+          "driftFromFrozen": -7.0,
+          "exactMatch": 30.0,
+          "frozenExactMatch": 37.0,
+          "interval95": [
+            -52.0,
+            -22.0
+          ],
+          "local": true,
+          "maxHeapMiB": 605,
+          "medianMillis": 19083.0,
+          "n": 50,
+          "tokenF1": 34.47,
+          "verdict": "REJECT"
+        }
+      },
+      "artifacts": {
+        "frontier": "../routing-accuracy/results-qa-api-hotpotqa.jsonl",
+        "llama1b": "results-llama1b-hotpotqa.jsonl"
+      },
+      "n": 50
+    },
+    "squad2": {
+      "arms": {
+        "frontier": {
+          "answerable": {
+            "abstained": 1,
+            "exactMatch": 66.67,
+            "n": 27,
+            "tokenF1": 87.21
+          },
+          "exactMatch": 70.0,
+          "local": false,
+          "maxHeapMiB": null,
+          "medianMillis": 633.5,
+          "n": 50,
+          "tokenF1": 81.1,
+          "unanswerable": {
+            "abstained": 17,
+            "exactMatch": 73.91,
+            "n": 23,
+            "tokenF1": 73.91
+          }
+        },
+        "llama1b": {
+          "answerable": {
+            "abstained": 0,
+            "exactMatch": 74.07,
+            "n": 27,
+            "tokenF1": 81.44
+          },
+          "behindBestLocal": 32.0,
+          "carriesDeclaration": false,
+          "deltaExactMatch": -30.0,
+          "driftFromFrozen": 5.0,
+          "exactMatch": 40.0,
+          "frozenExactMatch": 35.0,
+          "interval95": [
+            -46.0,
+            -12.0
+          ],
+          "local": true,
+          "maxHeapMiB": 326,
+          "medianMillis": 2485.5,
+          "n": 50,
+          "tokenF1": 43.98,
+          "unanswerable": {
+            "abstained": 0,
+            "exactMatch": 0.0,
+            "n": 23,
+            "tokenF1": 0.0
+          },
+          "verdict": "REJECT"
+        },
+        "llama3.1-8b": {
+          "answerable": {
+            "abstained": 2,
+            "exactMatch": 62.96,
+            "n": 27,
+            "tokenF1": 80.06
+          },
+          "behindBestLocal": 0.0,
+          "carriesDeclaration": true,
+          "deltaExactMatch": 2.0,
+          "exactMatch": 72.0,
+          "interval95": [
+            -10.0,
+            14.0
+          ],
+          "local": true,
+          "maxHeapMiB": 552,
+          "medianMillis": 13546.0,
+          "n": 50,
+          "tokenF1": 81.23,
+          "unanswerable": {
+            "abstained": 19,
+            "exactMatch": 82.61,
+            "n": 23,
+            "tokenF1": 82.61
+          },
+          "verdict": "INCONCLUSIVE"
+        }
+      },
+      "artifacts": {
+        "frontier": "../routing-accuracy/results-qa-api-squad2.jsonl",
+        "llama1b": "results-llama1b-squad2.jsonl",
+        "llama3.1-8b": "results-llama3.1-8b-squad2.jsonl"
+      },
+      "n": 50
+    }
+  },
+  "overall": {
+    "llama1b": {
+      "call": "REJECT",
+      "perDataset": [
+        "REJECT",
+        "REJECT"
+      ]
+    },
+    "llama3.1-8b": {
+      "call": "INCOMPLETE",
+      "perDataset": [
+        "INCONCLUSIVE"
+      ]
+    }
+  },
+  "rejectBeyond": 5.0,
+  "resamples": 10000,
+  "scorer": "../routing-accuracy/score.py",
+  "seed": 20261019,
+  "void": [
+    "hotpotqa: control arm moved -7.0 points from the frozen 37.0; run is VOID for this dataset"
+  ]
+}

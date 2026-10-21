@@ -1,0 +1,57 @@
+classifier: 10 tasks from google_embeddinggemma_300m_gguf_q8_0, 768-dimensional, similarity floor 0.60
+
+WARMING                            LOAD MS
+smollm2_360m_instruct_q8_0            2382
+qwen3_0_6b_q4_0                       4179
+llama_3_1_8b_instruct_q4_k_m         18508
+unsloth_qwen3_5_4b_gguf_q4_k_m       19920
+total                                44989
+
+PROMPT                           CLASSIFIED           SELECTED                          LOCAL IN      MS
+ping                             ~chat 0.48           smollm2_360m_instruct_q8_0               1     176
+    still here
+still there?                     ~summarization 0.50  smollm2_360m_instruct_q8_0               3     179
+    still here
+ok                               ~reasoning 0.57      smollm2_360m_instruct_q8_0               1     162
+    still here
+I was charged twice for my Se…   ~tool-use 0.46       llama_3_1_8b_instruct_q4_k_m             9   34075
+    That can be frustrating and confusing. I'd be happy to help you try to resolve the issue. Can you please provide more details about…
+tell me more                     summarization        llama_3_1_8b_instruct_q4_k_m             3   13915
+    I didn't tell you anything yet. This conversation just started. What would you like to talk about? I can share some interesting fac…
+I was charged twice for my Se…   ~tool-use 0.49       unsloth_qwen3_5_4b_gguf_q4_k_m          13   14704
+    billing=true(escalated, local was true c=0.58) queue=billing(p=0.99,c=0.95) urgency=today(escalated, local was this week c=0.01)
+When is a refund issued, and …   ~summarization 0.48  llama_3_1_8b_instruct_q4_k_m           153   23598
+    Refunds are issued to the original payment method within five business days. [note-0] [note-1]
+    grounding policy: MODEL_ANSWER
+What happens to a duplicate c…   ~summarization 0.50  llama_3_1_8b_instruct_q4_k_m           148   13578
+    A duplicate charge is reversed automatically once billing reconciliation runs nightly. [note-1] [note-0]
+    grounding policy: MODEL_ANSWER
+Our refund policy promises fi…   ~tool-use 0.52       gpt-5.1                                 55    6158
+    Here’s the conflict and a resolving paragraph you can drop into your terms. **Where they conflict** - Path 1: Support issues a refu…
+Summarise this appendix for t…   summarization        gpt-4.1-mini                        245741   24050
+    Refunds are issued to the original payment method within five business days unless the original charge has already been reconciled …
+
+== timing, warm ==
+MODEL                            CALLS  TOTAL MS   MEAN MS     SHARE
+smollm2_360m_instruct_q8_0           3       517       172      0.4%
+llama_3_1_8b_instruct_q4_k_m         4     85166     21291     61.8%
+unsloth_qwen3_5_4b_gguf_q4_k_m       1     14704     14704     10.7%
+gpt-5.1                              1      6158      6158      4.5%
+gpt-4.1-mini                         1     24050     24050     17.4%
+conversation wall clock: 137880 ms, of which 130595 ms (94.7%) was model calls
+one-off load of the 4 local models: 44989 ms, paid once at startup, not per request
+
+== ledger ==
+10 prompts, 2 routed to a remote provider, 8 answered on local weights
+7 of 10 prompts sent no text off this machine; 3 did, 1 of them while a local arm answered
+the decision arm escalated 2 of its questions below confidence 0.6, and those calls are in the ledger below
+local ruler (qwen3-0.6b tokenizer): 245809 of 246127 input tokens were routed off this machine (99.9%)
+provider ruler (gpt-5.1 reported): 236694 input + 556 completion tokens billed
+  the same prompt measured 245809 tokens locally, so the two rulers differ by -9115
+completions generated on local weights: 236 tokens
+REMOTE PROVIDER            IN      OUT         COST
+gpt-5.1                   159      479    $0.004989
+gpt-4.1-mini           236535       77    $0.094737
+total                  236694      556    $0.099726
+had every prompt gone to gpt-5.1: $0.307659 of input alone, plus $0.002360 for the completions this machine produced for nothing
+router-accounted spend: $0.099403 of the $0.50 shared budget

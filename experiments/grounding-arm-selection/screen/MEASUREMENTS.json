@@ -1,0 +1,110 @@
+[
+  {
+    "abstained": 0,
+    "arm": "llama1b",
+    "artifact": "results-llama1b-squad2.jsonl",
+    "bestLocal": {
+      "arm": "llama3.1-8b",
+      "arms": [
+        "llama3.1-8b"
+      ],
+      "behind": 32.0,
+      "value": 72.0
+    },
+    "capabilityDataset": "qa/squad2",
+    "carriesDeclaration": false,
+    "ci95": [
+      -46.0,
+      -12.0
+    ],
+    "coordinate": "org.modeljars.huggingface:bartowski.llama-3.2-1b-instruct-gguf.q4_k_m:3.2.0-q4_k_m.1",
+    "delta": -30.0,
+    "experiment": "grounding-arm-selection",
+    "maxHeapMiB": 326,
+    "medianMillis": 2485.5,
+    "metric": "exactMatch",
+    "n": 50,
+    "reference": {
+      "arm": "frontier",
+      "catalogIds": [
+        "gpt-5.1"
+      ],
+      "value": 70.0
+    },
+    "tokenF1": 43.98,
+    "value": 40.0,
+    "verdict": "REJECT"
+  },
+  {
+    "abstained": 21,
+    "arm": "llama3.1-8b",
+    "artifact": "results-llama3.1-8b-squad2.jsonl",
+    "bestLocal": {
+      "arm": "llama3.1-8b",
+      "arms": [
+        "llama3.1-8b"
+      ],
+      "behind": 0.0,
+      "value": 72.0
+    },
+    "capabilityDataset": "qa/squad2",
+    "carriesDeclaration": true,
+    "ci95": [
+      -10.0,
+      14.0
+    ],
+    "coordinate": "org.modeljars.huggingface:bartowski.meta-llama-3.1-8b-instruct-gguf.q4_k_m:3.1.0-q4_k_m.2",
+    "delta": 2.0,
+    "experiment": "grounding-arm-selection",
+    "maxHeapMiB": 552,
+    "medianMillis": 13546.0,
+    "metric": "exactMatch",
+    "n": 50,
+    "reference": {
+      "arm": "frontier",
+      "catalogIds": [
+        "gpt-5.1"
+      ],
+      "value": 70.0
+    },
+    "tokenF1": 81.23,
+    "value": 72.0,
+    "verdict": "INCONCLUSIVE"
+  },
+  {
+    "abstained": 0,
+    "arm": "llama1b",
+    "artifact": "results-llama1b-hotpotqa.jsonl",
+    "bestLocal": {
+      "arm": "llama1b",
+      "arms": [
+        "llama1b"
+      ],
+      "behind": 0.0,
+      "value": 30.0
+    },
+    "capabilityDataset": "qa/hotpotqa",
+    "carriesDeclaration": true,
+    "ci95": [
+      -52.0,
+      -22.0
+    ],
+    "coordinate": "org.modeljars.huggingface:bartowski.llama-3.2-1b-instruct-gguf.q4_k_m:3.2.0-q4_k_m.1",
+    "delta": -36.0,
+    "experiment": "grounding-arm-selection",
+    "maxHeapMiB": 605,
+    "medianMillis": 19083.0,
+    "metric": "exactMatch",
+    "n": 50,
+    "reference": {
+      "arm": "frontier",
+      "catalogIds": [
+        "gpt-5.1"
+      ],
+      "value": 66.0
+    },
+    "tokenF1": 34.47,
+    "value": 30.0,
+    "verdict": "REJECT"
+  }
+]

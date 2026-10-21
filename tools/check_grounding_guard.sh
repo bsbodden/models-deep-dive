@@ -24,6 +24,22 @@ cd "$ROOT/code"
 strip() { grep -viE "^WARNING|incubator|^\[jbang\]|^Oct |^INFO|^Note:"; }
 failures=0
 
+# The arm ids come out of fleet.java, not out of this file. This check hard-coded
+# `bartowski_llama_3_2_1b` and kept passing until the grounding arm was replaced on measured
+# evidence -- at which point it reported "grounded prompts answered locally: expected 2, got 0"
+# about a fleet that had answered both of them locally. A guard that names a model is a guard that
+# fails for the wrong reason the day the model changes.
+id_of() {
+  sed -n "s/.*static final String $1 = \"\([^\"]*\)\";.*/\1/p" "$ROOT/code/fleet.java" | head -1
+}
+GROUNDER_ID="$(id_of GROUNDER_ID)"
+TINY_ID="$(id_of TINY_ID)"
+[ -n "$GROUNDER_ID" ] && [ -n "$TINY_ID" ] || {
+  echo "could not read GROUNDER_ID/TINY_ID out of code/fleet.java" >&2
+  exit 2
+}
+echo "arms under test: grounding=$GROUNDER_ID liveness=$TINY_ID"
+
 check() {
   local label="$1" expected="$2" actual="$3"
   if [ "$expected" = "$actual" ]; then
@@ -39,11 +55,18 @@ routed="$(jbang fleet.java 2>&1 | strip)"
 table="$(sed -n '/^PROMPT /,/== timing/p' <<<"$routed")"
 check "grounding verdicts printed" 2 "$(grep -c 'grounding policy:' <<<"$table")"
 check "grounded prompts answered locally" 2 \
-  "$(grep -c 'bartowski_llama_3_2_1b' <<<"$table")"
+  "$(grep -c "$GROUNDER_ID" <<<"$table")"
 # The liveness arm must not be eligible for a customer's question: before the capability
 # declarations were corrected, "I was charged twice" was answered "still here" by a 360M model.
-check "liveness model answers only heartbeats" 3 "$(grep -c 'smollm2_360m' <<<"$table")"
+check "liveness model answers only heartbeats" 3 "$(grep -c "$TINY_ID" <<<"$table")"
 check "no abstentions at the default threshold" 0 "$(grep -c 'abstained' <<<"$table")"
+# Which decision the policy reaches is a property of the arm, and it changed when the arm did: with
+# the 1B model both grounded prompts came back EXTRACTIVE_FALLBACK -- the policy overriding the
+# model with sentences lifted from the notes -- and with the 8B both come back MODEL_ANSWER. That
+# is the better outcome and it is worth failing on if it regresses, because a fleet whose answers
+# are always the fallback is a fleet whose model is contributing nothing.
+check "the policy accepts the model's own grounded answers" 2 \
+  "$(grep -c 'grounding policy: MODEL_ANSWER' <<<"$table")"
 
 echo
 echo "== forced refusal: retrieval too weak, so no model runs in either arm =="
@@ -53,7 +76,7 @@ check "grounded prompts abstain" 2 "$(grep -c 'abstained' <<<"$forced_table")"
 check "abstentions are retrieval-level" 2 \
   "$(grep -c 'grounding policy: RETRIEVAL_ABSTENTION' <<<"$forced_table")"
 check "the grounding model is never called" 0 \
-  "$(grep -c 'bartowski_llama_3_2_1b' <<<"$forced_table")"
+  "$(grep -c "$GROUNDER_ID" <<<"$forced_table")"
 
 remote="$(env -u OPENAI_API_KEY -u ANTHROPIC_API_KEY \
   jbang -Dfleet.grounding.minimumRetrievalScore=0.99 fleet.java all-remote 2>&1 | strip)"

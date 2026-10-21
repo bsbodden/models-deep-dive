@@ -1,7 +1,7 @@
 //JAVA 25
 //RUNTIME_OPTIONS --add-modules=jdk.incubator.vector
 //RUNTIME_OPTIONS --enable-native-access=ALL-UNNAMED -Xmx4g
-//DEPS org.modeljars:modeljars:0.1.63
+//DEPS org.modeljars:modeljars:0.1.64
 //DEPS org.modeljars.huggingface:walkingcat.soprano-1.1-80m-gguf.bf16:1.1.0-bf16.1
 
 import com.integrallis.models.api.WavEncoder;

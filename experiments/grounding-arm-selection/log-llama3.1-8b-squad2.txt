@@ -1,0 +1,120 @@
+started 2026-10-20T19:14:10Z
+load: 1.31 0.51 0.18 1/209 2302
+[jbang] Resolving dependencies...
+[jbang]    org.modeljars:modeljars:0.1.63
+[jbang]    com.integrallis:models-router:0.5.1
+[jbang]    com.fasterxml.jackson.core:jackson-databind:2.22.3
+[jbang]    org.modeljars.huggingface:bartowski.llama-3.2-1b-instruct-gguf.q4_k_m:3.2.0-q4_k_m.1
+[jbang]    org.modeljars.huggingface:qwen.qwen3-8b-gguf.q4_k_m:3.0.0-q4_k_m.3
+[jbang]    org.modeljars.huggingface:bartowski.meta-llama-3.1-8b-instruct-gguf.q4_k_m:3.1.0-q4_k_m.2
+[jbang] Dependencies resolved
+[jbang] Building jar for arms.java...
+WARNING: Using incubator modules: jdk.incubator.vector
+ITEM      PROMPT        MS   HEAP MIB  ANSWER
+Oct 20, 2026 7:14:35 PM com.integrallis.vectors.core.PanamaVectorUtilSupportProvider create
+INFO: vectors-core: Using Panama Vector API SIMD provider (vector bits: 256)
+Oct 20, 2026 7:14:35 PM com.integrallis.vectors.core.VectorizationProvider logActiveToggles
+INFO: vectors-core: provider=PanamaVectorUtilSupport panama=true maxBits=256 preferredBits=256 fastVectorFMA=true fastScalarFMA=true sve=false ggufParallel=true ggufParallelThreshold=1048576 ggufExecutor=persistent ggufThreads=8 ggufChunksPerThread=2 mappedKQuantLongOffsets=auto(q4=true,q5=false,q6=false) q4ShortPairwiseSupported=true q4UnsignedPairwiseSupported=true toggles=[(defaults — no -Dvectors.* overrides)]
+1           1068     13977        406  I don't know.
+2           1073     14003        408  I don't know.
+3           1432     20669        552  William the Silent.
+4            772     10424        552  I don't know.
+5            803     11810        260  ambiguity and in modern times, become utterly debased.
+6           1046     15140        260  Rhine Gutter
+7            946     12069        260  Islamic fundamentalist or neofundamentalist.
+8           1105     14121        261  30%
+9           1459     17367        261  I don't know.
+10           795     11322        265  The Middle Rhine.
+11           977     12709        266  It expanded.
+12           785     11687        267  It was believed to disadvantage low-income and under-re…
+13          1063     13852        267  17,786,419
+14          1102     14147        268  The force of gravity acting on the object.
+15           947     11390        268  The thorough analysis of all medication.
+16           796     10761        271  I don't know.
+17           787      9461        273  I don't know.
+18           801     13172        274  Near Bonn at the Rhine.
+19          1157     17815        274  There is no known polynomial-time solution for Π1.
+20          1226     17158        278  Francisco de Orellana.
+21          1117     12755        280  I don't know.
+22           929     14053        282  I don't know.
+23           796      9972        284  I don't know.
+24           830      9403        284  I don't know.
+25           807     10866        284  packet switching
+26           882     13474        286  The "Rhine knee".
+27          1265     17272        289  I don't know.
+28          1212     14865        289  I don't know.
+29           882     12706        291  Iroquois rule.
+30          1466     19124        291  Its motivation.
+31           804     10104        294  I don't know.
+32          1016     14255        297  The City council.
+33          1031     13666        297  Magdalen Tower.
+34           959     12688        298  'often damaging'
+35           905     10908        299  I don't know.
+36           856     12677        301  160 kPa
+37           765     10712        303  I don't know.
+38           879     12276        305  December 12.
+39           924     10821        305  I don't know.
+40           745     10721        306  The Kingdom of Prussia.
+41          1288     16375        307  Very weak.
+42           870     10907        310  I don't know.
+43          1061     14204        312  Oxygen.
+44           864     11897        313  The left bank of the Seine.
+45          1252     14852        314  I don't know.
+46           845     11859        314  I don't know.
+47          1179     16063        316  I don't know.
+48          1241     18168        319  The spread of diseases from Europe, such as smallpox.
+49          1312     15249        323  I don't know.
+50          1389     16829        324  a great deal of utility.
+51          1074     12864        324  Four academic research divisions.
+52          1286     15761        328  I don't know.
+53          1306     16462        330  Mann, Bradley and Hughes.
+54          1183     16804        330  I don't know.
+55          1086     14816        331  I don't know.
+56           848     11575        331  I don't know.
+57           947     13251        335  Abercynon in south Wales.
+58          1264     18537        337  It makes it very difficult for predators to evolve.
+59           906     12254        337  2001.
+60           882     11930        337  I don't know.
+61           883     11374        339  William Shirley.
+62          1298     16327        341  Galileo Galilei and Sir Isaac Newton.
+63          1118     13481        344  The best teachers.
+64          1235     15486        345  I don't know.
+65           982     10924        346  Charles Richard
+66          1294     18003        347  I don't know.
+67           855     10946        349  The lead melts.
+68          1005     12321        351  I don't know.
+69          1406     17095        354  I don't know.
+70           829     10578        354  Water.
+71          2285     27497        357  I don't know.
+72           894     11547        357  I don't know.
+73          1136     14905        364  almost a month.
+74           810     11730        364  I don't know.
+75          1630     20215        364  Hydrophilic amino acids.
+76          1249     15423        368  Tricia Marwick.
+77           847     12134        368  About 13,000 BP.
+78           965     11409        370  I don't know.
+79          1568     20845        371  I don't know.
+80           953     12036        372  Baran
+81          1189     17620        375  I don't know.
+82           817     10755        375  The oxidant.
+83          1180     14676        377  I don't know.
+84          1253     14845        378  I don't know.
+85          1042     13228        378  I don't know.
+86           938     11420        384  The Liberals.
+87          1375     18129        385  I don't know.
+88           780      9648        387  I don't know.
+89          1344     15891        387  The Scottish Parliament.
+90          1253     15726        388  photosynthesis
+91           797     10481        391  1977
+92           797     11793        393  I don't know.
+93          1452     19095        394  Virginia.
+94          1045     14709        394  Wahhabi/Salafi jihadist extremist militant group.
+95           762     12019        395  I don't know.
+96          1267     17063        398  San Mateo.
+97          1083     14241        400  I don't know.
+98          1448     20202        401  I don't know.
+99          1013     11434        402  I don't know.
+100         1078     13913        404  A lack of remorse.
+
+wrote 100 rows to results-llama3.1-8b-squad2.jsonl
+finished 2026-10-20T19:37:56Z

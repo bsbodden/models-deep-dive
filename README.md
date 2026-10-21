@@ -13,6 +13,15 @@ The libraries it exercises are public: [integrallis/models](https://github.com/i
 
 - [Runnable JBang walkthrough](code/README.md)
 - [Routing fleet run record and the two defects it found](evidence/fleet-routing/RESULTS.md)
+- **What the fleet's quality claims rest on**, each with its protocol frozen before the data:
+  [routing accuracy](experiments/routing-accuracy/README.md) (four public datasets, which rejected
+  three of the fleet's four declarations),
+  [grounding arm selection](experiments/grounding-arm-selection/README.md) (does a larger local
+  model reach the frontier model's accuracy?) and
+  [local-only chat](experiments/local-only-chat/README.md) (which local arm may serve a turn the
+  data boundary forbids sending anywhere). The declarations themselves are in
+  [PARITY-BASIS.json](PARITY-BASIS.json) and `make check` refuses any the measurements do not
+  support.
 - [Mermaid sources](diagrams/)
 - [Latest model onboarding and release report](evidence/onboarding-release-report.md)
 - [Initial article correction report](evidence/release-report.md)
@@ -38,6 +47,14 @@ To check diagram syntax without adding JavaScript dependencies to the libraries:
 npm install --prefix /private/tmp/models-article-mermaid --no-package-lock mermaid@11.12.0 jsdom@26.1.0
 node tools/check_mermaid.mjs /private/tmp/models-article-mermaid/node_modules
 ```
+
+`make check` is what CI runs, and it is four claims about this repository rather than a lint: every
+scored number re-derives from the raw rows committed beside it, every figure in the article
+re-derives from the archived run logs, every capability the demo fleet declares is matched to a
+measurement of the model it actually ships, and the gate that does that matching has its own
+twelve-case test suite — because a gate nobody tests is a gate that passes for the wrong reason,
+which has already happened twice here. `make measured` runs the checks that need a JVM, the
+local weights or a provider key, on a machine that has them.
 
 The article is a local draft. Repository fixes and library publication are tracked separately
 from publishing the prose. Recordings retain original terminal casts as well as edited video exports.

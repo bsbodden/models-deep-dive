@@ -1,0 +1,107 @@
+started 2026-10-20T22:13:37Z
+load: 7.36 7.52 5.05 1/183 2574
+WARNING: Using incubator modules: jdk.incubator.vector
+ITEM      PROMPT        MS   HEAP MIB  ANSWER
+1           2818     12906        707  I don't know.
+2           7087     33852       1184  I don't know.
+3           2579     10402       1186  I don't know.
+4           3546     13756       1193  I don't know.
+5           2708     13428       1198  He was born in North Melbourne, an inner suburb of Melb…
+6           3221     15442       1203  I don't know.
+7           3000     13721       1208  I don't know.
+8           7554     29517       1219  I don't know.
+9           7178     34158       1232  I don't know.
+10          3430     14990       1237  I don't know.
+11          2708     10097       1241  I don't know.
+12          2201      9217       1246  I don't know.
+13          2637     12845       1250  I don't know.
+14          2097      8747       1252  I don't know.
+15          3222     14572       1258  I don Know.
+16          4660     20190        681  I don't know.
+17          3459     13028        689  I don't know.
+18          2782     13139        692  I don't know.
+19          3380     14840        699  I don't know.
+20          3283     15252        706  I don't know.
+21          3250     14149        709  I don't know.
+22          2508     11362        715  The SLA was led by DeFreeze, who, after a prison acquai…
+23          1961      8863        718  It means that he chose to build a guitar out of everyda…
+24          3117     14982        723  I don't know.
+25          3406     15037        728  I don't know.
+26          3727     17336        736  I don't know.
+27          1741      7942        738  I don't know.
+28          2040     10082        742  I don't know.
+29          3287     14473        748  I don't know.
+30          3013     12542        752  I don't know.
+31          3204     12910        758  I don't know.
+32          2663     14000        762  Spahn was the ace of the champion Milwaukee Braves.
+33          3716     14853        767  I don't know.
+34          2432     10244        771  I don't know.
+35          2040      9921        776  I don't know.
+36          2700     10372        779  I don't know.
+37          2703     11417        784  He was spirited away to the Praetorian camp and put und…
+38          3280     14835        789  Guns N' Roses was formed in 1985.
+39          2110      8360        793  I don't know.
+40          2495     11440        797  I don't know.
+41          3479     15078        803  Her career began after getting an agent at the age of s…
+42          7970     35677        815  I don't know.
+43          2862     12178        819  I don't know.
+44          8180     38724        833  I don't know.
+45          3333     14910        840  I don't know.
+46          3445     14576        845  I don't know.
+47          3908     16543        850  These policies aimed to strengthen social values and ec…
+48          3658     18873        857  Lil' Kim's single "Lighters Up" was number one on BET's…
+49          3261     13923        863  I don't know.
+50          3622     17248        869  I don't know.
+51          2975     12781        874  I don't know.
+52          3482     14566        880  I don't know.
+53          2605     10403        883  I don knew.
+54          3351     15245        889  I didn't know.
+55          3109     13916        894  I don't know.
+56          3325     13686        899  I don't know.
+57          2525     12267        904  I don't know.
+58          3418     14733        909  I don't know.
+59          3305     14181        914  The Purple Tape.
+60          2543     11331        918  I don't know.
+61          2727     11199        923  I don't know.
+62          2775     12409        928  I don't know.
+63          2269      9403        931  I don't know.
+64          2486     10860        936  I donned a new coat.
+65          3497     15138        941  I don't know.
+66          2579     10948        946  Jesse Ed Davis
+67          3270     13871        950  Yes.
+68          7346     36467        964  I don't know.
+69          3301     15340        969  Iglesias collaborated with three producers: RedOne, Mar…
+70          2053      9460        973  He had other roles in subsequent films and TV shows.
+71          3242     14324        978  I don't know.
+72          2802     13798        984  I don't know.
+73          4156     16915        989  I don't know.
+74          6317     28636        999  During that interaction, Kelly attacked Fook, beat him …
+75          3247     14635       1005  The band performed their first official concert as Diam…
+76          2967     12953       1010  I don't know.
+77          3536     17024       1017  I didn't know.
+78          3116     14122       1022  2004
+79          2683     12222       1026  I don't know.
+80          2262      9847       1030  I don't know.
+81          7484     35132       1042  I don't know.
+82          2458     10165       1046  The band was created in 1981.
+83          3417     15430       1051  His second season was a time of success, with the Hurri…
+84          2435     11634       1056  I don't know.
+85          2709     11672       1060  I don't know.
+86          2526     11078       1065  I don't know.
+87          3585     16367       1071  I don't know.
+88          2802     11649       1075  I don't know.
+89          3202     14891       1080  The Right Stuff was released in 1988.
+90          2950     13765       1085  I don't know.
+91          3396     14443       1090  I don't know.
+92          2055      8670       1093  I don't know.
+93          1874      7265       1098  I don't know.
+94          3000     11275       1102  I don't know.
+95          2427      9311       1105  I don't know.
+96          2182      9269       1109  At Tabuk, the Muslim army was entrusted with the standa…
+97          7343     29363       1119  I don't know.
+98          2526     11152       1124  In 1982.
+99          2728     11946       1128  From the Depths of Dreams.
+100         3738     14803       1135  I don't know.
+
+wrote 100 rows to results-small-quac.jsonl
+finished 2026-10-20T22:38:19Z

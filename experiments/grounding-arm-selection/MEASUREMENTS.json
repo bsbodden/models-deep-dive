@@ -1,0 +1,146 @@
+[
+  {
+    "abstained": 0,
+    "arm": "llama1b",
+    "artifact": "../routing-accuracy/results-qa-routed-squad2.jsonl",
+    "bestLocal": {
+      "arm": "llama3.1-8b",
+      "arms": [
+        "llama3.1-8b"
+      ],
+      "behind": 44.0,
+      "value": 79.0
+    },
+    "capabilityDataset": "qa/squad2",
+    "carriesDeclaration": false,
+    "ci95": [
+      -47.0,
+      -23.0
+    ],
+    "coordinate": "org.modeljars.huggingface:bartowski.llama-3.2-1b-instruct-gguf.q4_k_m:3.2.0-q4_k_m.1",
+    "delta": -35.0,
+    "experiment": "grounding-arm-selection",
+    "maxHeapMiB": null,
+    "medianMillis": 1903.5,
+    "metric": "exactMatch",
+    "n": 100,
+    "reference": {
+      "arm": "frontier",
+      "catalogIds": [
+        "gpt-5.1"
+      ],
+      "value": 70.0
+    },
+    "tokenF1": 38.29,
+    "value": 35.0,
+    "verdict": "REJECT"
+  },
+  {
+    "abstained": 46,
+    "arm": "llama3.1-8b",
+    "artifact": "results-llama3.1-8b-squad2.jsonl",
+    "bestLocal": {
+      "arm": "llama3.1-8b",
+      "arms": [
+        "llama3.1-8b"
+      ],
+      "behind": 0.0,
+      "value": 79.0
+    },
+    "capabilityDataset": "qa/squad2",
+    "carriesDeclaration": true,
+    "ci95": [
+      1.0,
+      17.0
+    ],
+    "coordinate": "org.modeljars.huggingface:bartowski.meta-llama-3.1-8b-instruct-gguf.q4_k_m:3.1.0-q4_k_m.2",
+    "delta": 9.0,
+    "experiment": "grounding-arm-selection",
+    "maxHeapMiB": 552,
+    "medianMillis": 13477.5,
+    "metric": "exactMatch",
+    "n": 100,
+    "reference": {
+      "arm": "frontier",
+      "catalogIds": [
+        "gpt-5.1"
+      ],
+      "value": 70.0
+    },
+    "tokenF1": 85.45,
+    "value": 79.0,
+    "verdict": "ACCEPT"
+  },
+  {
+    "abstained": 0,
+    "arm": "llama1b",
+    "artifact": "../routing-accuracy/results-qa-routed-hotpotqa.jsonl",
+    "bestLocal": {
+      "arm": "llama1b",
+      "arms": [
+        "llama1b"
+      ],
+      "behind": 0.0,
+      "value": 37.0
+    },
+    "capabilityDataset": "qa/hotpotqa",
+    "carriesDeclaration": true,
+    "ci95": [
+      -35.0,
+      -11.0
+    ],
+    "coordinate": "org.modeljars.huggingface:bartowski.llama-3.2-1b-instruct-gguf.q4_k_m:3.2.0-q4_k_m.1",
+    "delta": -23.0,
+    "experiment": "grounding-arm-selection",
+    "maxHeapMiB": null,
+    "medianMillis": 12897.5,
+    "metric": "exactMatch",
+    "n": 100,
+    "reference": {
+      "arm": "frontier",
+      "catalogIds": [
+        "gpt-5.1"
+      ],
+      "value": 60.0
+    },
+    "tokenF1": 47.24,
+    "value": 37.0,
+    "verdict": "REJECT"
+  },
+  {
+    "abstained": 33,
+    "arm": "llama3.1-8b",
+    "artifact": "results-llama3.1-8b-hotpotqa.jsonl + results-llama3.1-8b-hotpotqa.from50.jsonl",
+    "bestLocal": {
+      "arm": "llama1b",
+      "arms": [
+        "llama1b"
+      ],
+      "behind": 6.0,
+      "value": 37.0
+    },
+    "capabilityDataset": "qa/hotpotqa",
+    "carriesDeclaration": false,
+    "ci95": [
+      -40.0,
+      -18.0
+    ],
+    "coordinate": "org.modeljars.huggingface:bartowski.meta-llama-3.1-8b-instruct-gguf.q4_k_m:3.1.0-q4_k_m.2",
+    "delta": -29.0,
+    "experiment": "grounding-arm-selection",
+    "maxHeapMiB": 1915,
+    "medianMillis": 73180.0,
+    "metric": "exactMatch",
+    "n": 100,
+    "reference": {
+      "arm": "frontier",
+      "catalogIds": [
+        "gpt-5.1"
+      ],
+      "value": 60.0
+    },
+    "tokenF1": 41.88,
+    "value": 31.0,
+    "verdict": "REJECT"
+  }
+]

@@ -1,0 +1,200 @@
+{
+  "datasets": {
+    "snips": {
+      "bestAccuracyInSweep": {
+        "accuracy": 96.0,
+        "confusion": {
+          "fn": 2,
+          "fp": 18,
+          "tn": 62,
+          "tp": 18
+        },
+        "escalatedShare": 36.0,
+        "f1": 0.6429,
+        "f2": 0.7759,
+        "n": 100,
+        "precision": 0.5,
+        "recall": 0.9,
+        "threshold": 0.6
+      },
+      "bestF1InSweep": {
+        "accuracy": 93.0,
+        "confusion": {
+          "fn": 5,
+          "fp": 6,
+          "tn": 74,
+          "tp": 15
+        },
+        "escalatedShare": 21.0,
+        "f1": 0.7317,
+        "f2": 0.7426,
+        "n": 100,
+        "precision": 0.7143,
+        "recall": 0.75,
+        "threshold": 0.47
+      },
+      "calibration": {
+        "brier": {
+          "delta": -0.0154,
+          "deltaCi95": [
+            -0.0351,
+            0.0046
+          ],
+          "foldsImproved": 4,
+          "plattScaled": 0.1044,
+          "reported": 0.1198
+        },
+        "expectedCalibrationError": 0.1526,
+        "meanConfidence": 0.6635,
+        "observedAccuracy": 0.8,
+        "shippedThresholdAsProbabilityOfBeingRight": 0.8181
+      },
+      "crossValidated": {
+        "constraintFeasible": false,
+        "heldOutAccuracyDelta": -3.0,
+        "heldOutEscalatedShareDelta": -12.0,
+        "median": 0.47,
+        "selectedThresholds": [
+          0.47,
+          0.55,
+          0.47,
+          0.47,
+          0.47
+        ]
+      },
+      "noiseFloorPoints": 2.0,
+      "ruleClauses": {
+        "beatsAccuracyAtNoGreaterShare": false,
+        "savesTenPointsOfShareWithinNoise": false
+      },
+      "shipped": {
+        "accuracy": 96.0,
+        "confusion": {
+          "fn": 2,
+          "fp": 18,
+          "tn": 62,
+          "tp": 18
+        },
+        "escalatedShare": 36.0,
+        "f1": 0.6429,
+        "f2": 0.7759,
+        "n": 100,
+        "precision": 0.5,
+        "recall": 0.9,
+        "threshold": 0.6
+      },
+      "simulatorValidated": {
+        "accuracyGap": -2.0,
+        "escalatedShareGap": 3.0,
+        "itemsCrossingShippedThreshold": 3,
+        "medianConfidenceDrift": 0.0104
+      }
+    },
+    "trec": {
+      "bestAccuracyInSweep": {
+        "accuracy": 92.0,
+        "confusion": {
+          "fn": 0,
+          "fp": 76,
+          "tn": 0,
+          "tp": 24
+        },
+        "escalatedShare": 100.0,
+        "f1": 0.3871,
+        "f2": 0.6122,
+        "n": 100,
+        "precision": 0.24,
+        "recall": 1.0,
+        "threshold": 0.85
+      },
+      "bestF1InSweep": {
+        "accuracy": 91.0,
+        "confusion": {
+          "fn": 2,
+          "fp": 46,
+          "tn": 30,
+          "tp": 22
+        },
+        "escalatedShare": 68.0,
+        "f1": 0.4783,
+        "f2": 0.6707,
+        "n": 100,
+        "precision": 0.3235,
+        "recall": 0.9167,
+        "threshold": 0.55
+      },
+      "calibration": {
+        "brier": {
+          "delta": -0.0953,
+          "deltaCi95": [
+            -0.1486,
+            -0.0414
+          ],
+          "foldsImproved": 5,
+          "plattScaled": 0.1743,
+          "reported": 0.2695
+        },
+        "expectedCalibrationError": 0.322,
+        "meanConfidence": 0.455,
+        "observedAccuracy": 0.76,
+        "shippedThresholdAsProbabilityOfBeingRight": 0.8445
+      },
+      "crossValidated": {
+        "constraintFeasible": false,
+        "heldOutAccuracyDelta": -1.0,
+        "heldOutEscalatedShareDelta": -15.0,
+        "median": 0.55,
+        "selectedThresholds": [
+          0.55,
+          0.52,
+          0.55,
+          0.55,
+          0.33
+        ]
+      },
+      "noiseFloorPoints": 0.0,
+      "ruleClauses": {
+        "beatsAccuracyAtNoGreaterShare": false,
+        "savesTenPointsOfShareWithinNoise": false
+      },
+      "shipped": {
+        "accuracy": 90.0,
+        "confusion": {
+          "fn": 2,
+          "fp": 52,
+          "tn": 24,
+          "tp": 22
+        },
+        "escalatedShare": 74.0,
+        "f1": 0.449,
+        "f2": 0.6471,
+        "n": 100,
+        "precision": 0.2973,
+        "recall": 0.9167,
+        "threshold": 0.6
+      },
+      "simulatorValidated": {
+        "accuracyGap": 0.0,
+        "escalatedShareGap": 0.0,
+        "itemsCrossingShippedThreshold": 4,
+        "medianConfidenceDrift": 0.022
+      }
+    }
+  },
+  "experiment": "decision-threshold",
+  "inputs": "experiments/routing-accuracy committed rows; no model run, no provider called",
+  "question": "does the shipped escalation threshold of 0.6 survive cross-validated tuning, and is the confidence it reads calibrated?",
+  "shippedThreshold": 0.6,
+  "verdict": {
+    "clauseSatisfiedOn": [],
+    "plattScaling": {
+      "conclusiveOn": [
+        "trec"
+      ],
+      "improvesPointEstimateOnBoth": true,
+      "statement": "Adopt as a reporting change: the point estimate improves on both datasets, the interval excludes zero on trec only, and a monotone recalibration cannot change which questions the gate escalates -- only the number printed beside an answer."
+    },
+    "statement": "KEEP 0.6. The cross-validated threshold is lower on both datasets and buys a smaller escalated share, but it loses accuracy on the held-out folds, and the rule requires one dataset not to contradict the other. Satisfied on: neither dataset.",
+    "thresholdReplaced": false
+  }
+}

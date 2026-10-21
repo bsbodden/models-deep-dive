@@ -1,0 +1,21 @@
+classifier: 10 tasks from google_embeddinggemma_300m_gguf_q8_0, 768-dimensional, similarity floor 0.60
+
+PROMPT                                               IN      OUT       MS
+ping                                                  7       10     1712
+still there?                                          9       26     1095
+ok                                                    7       19     1001
+I was charged twice for my September order.          15      562     8633
+tell me more                                          9       95     2068
+I was charged twice for my September subscr…         19      700     8545
+When is a refund issued, and to which payme…        162       28     1839
+What happens to a duplicate charge?                 157       27     1352
+Our refund policy promises five business da…         61      459     7848
+Summarise this appendix for the support han…     236534       89    16063
+
+== every prompt through gpt-5.1 ==
+provider-reported: 236980 input + 2015 completion tokens
+at the declared $1.25/M in, $10.00/M out: $0.316375
+conversation wall clock: 50171 ms, of which 50156 ms (100.0%) was model calls
+No local weights are loaded, so there is no startup cost to amortise.
+Retrieval ran for the grounded prompts here exactly as it does in the routed arm, so both
+arms sent byte-identical text and the comparison is like for like.

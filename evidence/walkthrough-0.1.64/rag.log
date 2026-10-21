@@ -1,0 +1,26 @@
+[jbang] Resolving dependencies...
+[jbang]    org.modeljars:modeljars:0.1.64
+[jbang]    com.integrallis:vectors-db:0.1.30
+[jbang]    com.integrallis:models-rag:0.5.2
+[jbang]    org.modeljars.huggingface:second-state.all-minilm-l6-v2-embedding-gguf.q4_k_m:2.0.0-q4_k_m.2
+[jbang]    org.modeljars.huggingface:ggml-org.qwen3-0.6b-gguf.q4_0:3.0.0-q4_0.1
+[jbang] Dependencies resolved
+[jbang] Building jar for rag.java...
+WARNING: Using incubator modules: jdk.incubator.vector
+Oct 20, 2026 10:26:48 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Verifying cached model second_state_all_minilm_l6_v2_embedding_gguf_q4_k_m (20.0 MiB) at /Users/briansam-bodden/.modeljars/cache/sha256/2e/2ec4cee28a27a9c973d5f5230930d6ef6e52694bd2bc71be26a9bef5b1d755e6/model.gguf
+Oct 20, 2026 10:26:48 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Model cache verified: second_state_all_minilm_l6_v2_embedding_gguf_q4_k_m
+Oct 20, 2026 10:26:49 PM com.integrallis.vectors.core.PanamaVectorUtilSupportProvider create
+INFO: vectors-core: Using Panama Vector API SIMD provider (vector bits: 256)
+Oct 20, 2026 10:26:49 PM com.integrallis.vectors.core.VectorizationProvider logActiveToggles
+INFO: vectors-core: provider=PanamaVectorUtilSupport panama=true maxBits=256 preferredBits=256 fastVectorFMA=true fastScalarFMA=true sve=false ggufParallel=true ggufParallelThreshold=1048576 ggufExecutor=persistent ggufThreads=12 ggufChunksPerThread=2 mappedKQuantLongOffsets=auto(q4=true,q5=false,q6=false) q4ShortPairwiseSupported=true q4UnsignedPairwiseSupported=true toggles=[(defaults — no -Dvectors.* overrides)]
+Retrieved doc-0, score 0.8581: The museum opens at nine in the morning and closes at five in the afternoon.
+Retrieved doc-1, score 0.6651: The library lends books for twenty-one days.
+Oct 20, 2026 10:26:51 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Verifying cached model qwen3_0_6b_q4_0 (409.1 MiB) at /Users/briansam-bodden/.modeljars/cache/sha256/da/da2572f16c06133561ce56accaa822216f2391ef4d37fba427801cd6736417d4/model.gguf
+Oct 20, 2026 10:26:53 PM org.modeljars.ModelJarInstaller reportProgress
+INFO: Model cache verified: qwen3_0_6b_q4_0
+Raw model answer: The museum opens at nine in the morning. [doc-0]
+Grounding outcome: EXTRACTIVE_FALLBACK
+Returned answer: The museum opens at nine in the morning and closes at five in the afternoon. [doc-0] The library lends books for twenty-one days. [doc-1]

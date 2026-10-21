@@ -1,0 +1,502 @@
+[
+ {
+  "id": "snips-SearchScreeningEvent-680",
+  "label": "SearchScreeningEvent",
+  "text": "What times will The Young Swordsman be showing at my cinema?"
+ },
+ {
+  "id": "snips-SearchScreeningEvent-638",
+  "label": "SearchScreeningEvent",
+  "text": "May I have the movie schedules for Speakeasy Theaters"
+ },
+ {
+  "id": "snips-AddToPlaylist-54",
+  "label": "AddToPlaylist",
+  "text": "For my fantastic workout can you add sara bareilles?"
+ },
+ {
+  "id": "snips-SearchScreeningEvent-673",
+  "label": "SearchScreeningEvent",
+  "text": "Find the movie schedules at Goodrich Quality Theaters."
+ },
+ {
+  "id": "snips-PlayMusic-306",
+  "label": "PlayMusic",
+  "text": "Let me hear the good songs from James Iha"
+ },
+ {
+  "id": "snips-GetWeather-279",
+  "label": "GetWeather",
+  "text": "I need the weather in Wakarusa"
+ },
+ {
+  "id": "snips-SearchScreeningEvent-611",
+  "label": "SearchScreeningEvent",
+  "text": "I want to see While the Sun Shines at the closest movie house."
+ },
+ {
+  "id": "snips-GetWeather-242",
+  "label": "GetWeather",
+  "text": "What is the weather forecast for Burundi"
+ },
+ {
+  "id": "snips-AddToPlaylist-56",
+  "label": "AddToPlaylist",
+  "text": "Add Ted Heath to the road trip playlist."
+ },
+ {
+  "id": "snips-BookRestaurant-102",
+  "label": "BookRestaurant",
+  "text": "I would like to book a restaurant in Tanzania that is within walking distance for my mom and I"
+ },
+ {
+  "id": "snips-SearchCreativeWork-534",
+  "label": "SearchCreativeWork",
+  "text": "Get me the Secret South song."
+ },
+ {
+  "id": "snips-RateBook-408",
+  "label": "RateBook",
+  "text": "Give two stars out of 6 to 36 Children"
+ },
+ {
+  "id": "snips-SearchCreativeWork-597",
+  "label": "SearchCreativeWork",
+  "text": "Can you find me the ALMOST HUMAN painting?"
+ },
+ {
+  "id": "snips-PlayMusic-386",
+  "label": "PlayMusic",
+  "text": "Please open Zvooq"
+ },
+ {
+  "id": "snips-SearchScreeningEvent-614",
+  "label": "SearchScreeningEvent",
+  "text": "What are the movie schedules for my favorite theaters"
+ },
+ {
+  "id": "snips-SearchScreeningEvent-644",
+  "label": "SearchScreeningEvent",
+  "text": "What are the movie times at Caribbean Cinemas"
+ },
+ {
+  "id": "snips-BookRestaurant-179",
+  "label": "BookRestaurant",
+  "text": "book a restaurant for six at an outdoor cafe in \u00c5land"
+ },
+ {
+  "id": "snips-AddToPlaylist-87",
+  "label": "AddToPlaylist",
+  "text": "A Very Cellular Song needs to be added to my masters of metal playlist"
+ },
+ {
+  "id": "snips-AddToPlaylist-92",
+  "label": "AddToPlaylist",
+  "text": "Add emilie autumn to my Na\u00e7\u00e3o Reggae playlist."
+ },
+ {
+  "id": "snips-RateBook-498",
+  "label": "RateBook",
+  "text": "Give four stars to The Broken Window"
+ },
+ {
+  "id": "snips-GetWeather-278",
+  "label": "GetWeather",
+  "text": "overcast on State Holiday in Pawling Nature Reserve  and neighboring places"
+ },
+ {
+  "id": "snips-SearchScreeningEvent-645",
+  "label": "SearchScreeningEvent",
+  "text": "I need films in the neighborhood"
+ },
+ {
+  "id": "snips-RateBook-400",
+  "label": "RateBook",
+  "text": "rate this album four out of 6 stars"
+ },
+ {
+  "id": "snips-SearchCreativeWork-527",
+  "label": "SearchCreativeWork",
+  "text": "Can you search the Daring Youth saga?"
+ },
+ {
+  "id": "snips-SearchScreeningEvent-628",
+  "label": "SearchScreeningEvent",
+  "text": "Is Patrick Still Lives showing at AMC Theaters"
+ },
+ {
+  "id": "snips-PlayMusic-395",
+  "label": "PlayMusic",
+  "text": "Let's hear good Mohammad Mamle on Vimeo."
+ },
+ {
+  "id": "snips-AddToPlaylist-44",
+  "label": "AddToPlaylist",
+  "text": "Add the Matt Murphy tune to the Flow Espa\u00f1ol playlist."
+ },
+ {
+  "id": "snips-GetWeather-286",
+  "label": "GetWeather",
+  "text": "how's the weather here at two Am"
+ },
+ {
+  "id": "snips-SearchScreeningEvent-666",
+  "label": "SearchScreeningEvent",
+  "text": "What movies are playing close by"
+ },
+ {
+  "id": "snips-SearchCreativeWork-542",
+  "label": "SearchCreativeWork",
+  "text": "Search for the TV show, A Lawless Street."
+ },
+ {
+  "id": "snips-PlayMusic-368",
+  "label": "PlayMusic",
+  "text": "play some Gary Lee Conner"
+ },
+ {
+  "id": "snips-SearchScreeningEvent-654",
+  "label": "SearchScreeningEvent",
+  "text": "show the animated movies playing in the neighbourhood"
+ },
+ {
+  "id": "snips-SearchCreativeWork-543",
+  "label": "SearchCreativeWork",
+  "text": "Please look up Three Essays on the Theory of Sexuality show."
+ },
+ {
+  "id": "snips-PlayMusic-337",
+  "label": "PlayMusic",
+  "text": "Play something from 90s Pop Rock Essentials"
+ },
+ {
+  "id": "snips-GetWeather-243",
+  "label": "GetWeather",
+  "text": "What's the weather in Benton City?"
+ },
+ {
+  "id": "snips-BookRestaurant-144",
+  "label": "BookRestaurant",
+  "text": "I want to book a restaurant in Frenier 12 years from now for 4 people."
+ },
+ {
+  "id": "snips-RateBook-401",
+  "label": "RateBook",
+  "text": "Give this textbook four stars."
+ },
+ {
+  "id": "snips-SearchScreeningEvent-695",
+  "label": "SearchScreeningEvent",
+  "text": "Is any cinema playing The Spirit of Youth"
+ },
+ {
+  "id": "snips-SearchScreeningEvent-637",
+  "label": "SearchScreeningEvent",
+  "text": "Can I get the times for movies in the neighbourhood"
+ },
+ {
+  "id": "snips-AddToPlaylist-96",
+  "label": "AddToPlaylist",
+  "text": "add the song to my We Everywhere playlist"
+ },
+ {
+  "id": "snips-RateBook-460",
+  "label": "RateBook",
+  "text": "rate The Lives of John Lennon five points"
+ },
+ {
+  "id": "snips-GetWeather-274",
+  "label": "GetWeather",
+  "text": "Weather in Walden Russia on 12/26/2018"
+ },
+ {
+  "id": "snips-SearchCreativeWork-551",
+  "label": "SearchCreativeWork",
+  "text": "Can you find me the work, Bible translations into Hawaii Pidgin?"
+ },
+ {
+  "id": "snips-BookRestaurant-110",
+  "label": "BookRestaurant",
+  "text": "Book me a reservation for the best bistro"
+ },
+ {
+  "id": "snips-AddToPlaylist-77",
+  "label": "AddToPlaylist",
+  "text": "add this tune to my Sleepify playlist"
+ },
+ {
+  "id": "snips-SearchScreeningEvent-652",
+  "label": "SearchScreeningEvent",
+  "text": "Find the movie times at Harkins Theatres."
+ },
+ {
+  "id": "snips-GetWeather-271",
+  "label": "GetWeather",
+  "text": "what is the forecast in North Carolina for Edgemoor"
+ },
+ {
+  "id": "snips-SearchScreeningEvent-669",
+  "label": "SearchScreeningEvent",
+  "text": "Find the movie schedule close by"
+ },
+ {
+  "id": "snips-AddToPlaylist-6",
+  "label": "AddToPlaylist",
+  "text": "Add the album to the Might and Myth Power Metal playlist."
+ },
+ {
+  "id": "snips-SearchScreeningEvent-602",
+  "label": "SearchScreeningEvent",
+  "text": "Is Bartok the Magnificent playing at seven AM?"
+ },
+ {
+  "id": "snips-PlayMusic-324",
+  "label": "PlayMusic",
+  "text": "Start playing something from Iheart"
+ },
+ {
+  "id": "snips-AddToPlaylist-89",
+  "label": "AddToPlaylist",
+  "text": "Add the song to the Mac 'N Cheese playlist."
+ },
+ {
+  "id": "snips-PlayMusic-333",
+  "label": "PlayMusic",
+  "text": "I want to listen to an ep from 1998."
+ },
+ {
+  "id": "snips-SearchCreativeWork-564",
+  "label": "SearchCreativeWork",
+  "text": "Please get me The Henderson Kids saga."
+ },
+ {
+  "id": "snips-RateBook-441",
+  "label": "RateBook",
+  "text": "Give A Brief Stop on the Road from Auschwitz 1 out of 6 stars"
+ },
+ {
+  "id": "snips-SearchScreeningEvent-664",
+  "label": "SearchScreeningEvent",
+  "text": "Find the schedule for Great Mail Robbery."
+ },
+ {
+  "id": "snips-AddToPlaylist-30",
+  "label": "AddToPlaylist",
+  "text": "add ireland in the junior eurovision song contest 2015 to my Jazzy Dinner playlist"
+ },
+ {
+  "id": "snips-RateBook-422",
+  "label": "RateBook",
+  "text": "Give the Catedral series four stars."
+ },
+ {
+  "id": "snips-GetWeather-246",
+  "label": "GetWeather",
+  "text": "what is the weather here"
+ },
+ {
+  "id": "snips-SearchScreeningEvent-663",
+  "label": "SearchScreeningEvent",
+  "text": "Show me the schedule for ArcLight Hollywood for only animated movies"
+ },
+ {
+  "id": "snips-SearchCreativeWork-582",
+  "label": "SearchCreativeWork",
+  "text": "Can you please get me the book Dracula 5: The Blood Legacy?"
+ },
+ {
+  "id": "snips-PlayMusic-378",
+  "label": "PlayMusic",
+  "text": "Use the last fm service to play A Mis Ni\u00f1os de 30"
+ },
+ {
+  "id": "snips-SearchScreeningEvent-600",
+  "label": "SearchScreeningEvent",
+  "text": "Is Babar: King of the Elephants playing"
+ },
+ {
+  "id": "snips-GetWeather-229",
+  "label": "GetWeather",
+  "text": "What kind of weather is forecast around one pmnear Vatican?"
+ },
+ {
+  "id": "snips-AddToPlaylist-37",
+  "label": "AddToPlaylist",
+  "text": "add track in my\n playlist called Hands Up"
+ },
+ {
+  "id": "snips-BookRestaurant-178",
+  "label": "BookRestaurant",
+  "text": "Book sot for 7 at a restaurant that serves european in Stringtown on Feb. the 28th, 2034"
+ },
+ {
+  "id": "snips-GetWeather-244",
+  "label": "GetWeather",
+  "text": "What will the weather be in KY on Oct. 16, 2036?"
+ },
+ {
+  "id": "snips-PlayMusic-305",
+  "label": "PlayMusic",
+  "text": "Play a symphony from 2013."
+ },
+ {
+  "id": "snips-BookRestaurant-108",
+  "label": "BookRestaurant",
+  "text": "book spot for two at City Tavern"
+ },
+ {
+  "id": "snips-SearchScreeningEvent-689",
+  "label": "SearchScreeningEvent",
+  "text": "Where can I find the movie schedules"
+ },
+ {
+  "id": "snips-SearchScreeningEvent-658",
+  "label": "SearchScreeningEvent",
+  "text": "Is No Time to Be Young showing at AMC Theaters"
+ },
+ {
+  "id": "snips-SearchScreeningEvent-635",
+  "label": "SearchScreeningEvent",
+  "text": "Can I get the movie times"
+ },
+ {
+  "id": "snips-SearchScreeningEvent-685",
+  "label": "SearchScreeningEvent",
+  "text": "Find the movie schedule in the area."
+ },
+ {
+  "id": "snips-AddToPlaylist-76",
+  "label": "AddToPlaylist",
+  "text": "Add the album to the Hipster Soul playlist."
+ },
+ {
+  "id": "snips-GetWeather-267",
+  "label": "GetWeather",
+  "text": "what is the cold condition of our current position for tomorrow"
+ },
+ {
+  "id": "snips-SearchScreeningEvent-677",
+  "label": "SearchScreeningEvent",
+  "text": "Is The Eye \u2013 Infinity playing at General Cinema Corporation"
+ },
+ {
+  "id": "snips-SearchCreativeWork-565",
+  "label": "SearchCreativeWork",
+  "text": "Find the movie Splendor in the Grass"
+ },
+ {
+  "id": "snips-SearchScreeningEvent-609",
+  "label": "SearchScreeningEvent",
+  "text": "Where can I see The Prime Ministers: The Pioneers"
+ },
+ {
+  "id": "snips-GetWeather-299",
+  "label": "GetWeather",
+  "text": "What will the weather be in Milleville Beach?"
+ },
+ {
+  "id": "snips-SearchCreativeWork-544",
+  "label": "SearchCreativeWork",
+  "text": "Please get me the Compulsive Disclosure song."
+ },
+ {
+  "id": "snips-SearchScreeningEvent-662",
+  "label": "SearchScreeningEvent",
+  "text": "Will I Think I Do be playing at 7 PM?"
+ },
+ {
+  "id": "snips-SearchCreativeWork-520",
+  "label": "SearchCreativeWork",
+  "text": "Please search for Switched."
+ },
+ {
+  "id": "snips-SearchScreeningEvent-603",
+  "label": "SearchScreeningEvent",
+  "text": "What's the movie schedule"
+ },
+ {
+  "id": "snips-PlayMusic-303",
+  "label": "PlayMusic",
+  "text": "Use Groove Shark to play music"
+ },
+ {
+  "id": "snips-SearchCreativeWork-566",
+  "label": "SearchCreativeWork",
+  "text": "Am looking for a book with the title Free to Play"
+ },
+ {
+  "id": "snips-SearchCreativeWork-515",
+  "label": "SearchCreativeWork",
+  "text": "Please look up the work, Bachelor Pad."
+ },
+ {
+  "id": "snips-GetWeather-232",
+  "label": "GetWeather",
+  "text": "Will it be hot at 13:19 in De Funiak Springs Serbia and Montenegro?"
+ },
+ {
+  "id": "snips-RateBook-438",
+  "label": "RateBook",
+  "text": "Rate the current novel 3 stars"
+ },
+ {
+  "id": "snips-SearchScreeningEvent-607",
+  "label": "SearchScreeningEvent",
+  "text": "Is Any Which Way You Can playing in 15 seconds"
+ },
+ {
+  "id": "snips-BookRestaurant-120",
+  "label": "BookRestaurant",
+  "text": "Book a popular restaurant for 5 people"
+ },
+ {
+  "id": "snips-RateBook-490",
+  "label": "RateBook",
+  "text": "Give this novel a 1."
+ },
+ {
+  "id": "snips-GetWeather-255",
+  "label": "GetWeather",
+  "text": "what is the forecast in Nicodemus and nearby"
+ },
+ {
+  "id": "snips-PlayMusic-390",
+  "label": "PlayMusic",
+  "text": "Play some blues brit\u00e2nico."
+ },
+ {
+  "id": "snips-SearchCreativeWork-537",
+  "label": "SearchCreativeWork",
+  "text": "Could you locate the Epic Conditions picture?"
+ },
+ {
+  "id": "snips-RateBook-499",
+  "label": "RateBook",
+  "text": "Rate the current series 4 points"
+ },
+ {
+  "id": "snips-SearchScreeningEvent-657",
+  "label": "SearchScreeningEvent",
+  "text": "Is The Unnaturals showing at 13."
+ },
+ {
+  "id": "snips-AddToPlaylist-80",
+  "label": "AddToPlaylist",
+  "text": "Add the chris clark tune to my women of the blues playlist."
+ },
+ {
+  "id": "snips-BookRestaurant-195",
+  "label": "BookRestaurant",
+  "text": "book a party at their campus within the same area for churrascaria"
+ },
+ {
+  "id": "snips-GetWeather-269",
+  "label": "GetWeather",
+  "text": "Will it be freezing today in Delaware and Lehigh National Heritage Corridor?"
+ },
+ {
+  "id": "snips-SearchCreativeWork-538",
+  "label": "SearchCreativeWork",
+  "text": "get me the trailer of Good Morning Sunshine"
+ }
+]

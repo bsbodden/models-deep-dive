@@ -1,7 +1,7 @@
 //JAVA 25
 //RUNTIME_OPTIONS --add-modules=jdk.incubator.vector
 //RUNTIME_OPTIONS --enable-native-access=ALL-UNNAMED -Xmx4g
-//DEPS org.modeljars:modeljars:0.1.63
+//DEPS org.modeljars:modeljars:0.1.64
 //DEPS org.modeljars.huggingface:ggml-org.qwen3-0.6b-gguf.q4_0:3.0.0-q4_0.1
 
 import com.integrallis.models.api.SamplingOptions;

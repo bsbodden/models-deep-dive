@@ -1,0 +1,107 @@
+started 2026-10-20T22:44:41Z
+load: 8.76 8.49 7.83 1/182 2990
+WARNING: Using incubator modules: jdk.incubator.vector
+ITEM      PROMPT        MS   HEAP MIB  ANSWER
+1           2818      6017        221  Girls Aloud co-wrote an autobiography titled Dreams Tha…
+2           7087     16132        315  Chester Endersby Gwazda
+3           2579      5598        316  Minchin describes his act as a "funny cabaret show" and…
+4           3546      6781        316  He also said that the idea of a single country for both…
+5           2708      5246        316  North Melbourne.
+6           3221      6755        323  I don't know.
+7           3000      6193        324  I don't know.
+8           7554     14497        332  Gilbreth's work in domestic management and home economi…
+9           7178     16160        335  April 22, 1969
+10          3430      6682        337  Dian Belmont
+11          2708      4478        341  I don't know.
+12          2201      3848        345  Salman Khan
+13          2637      5229        346  Yes
+14          2097      4175        346  The passage discusses the life and work of Guru Arjan, …
+15          3222      6390        347  I don't know.
+16          4660      9377        356  No.
+17          3459      5580        358  No
+18          2782      5682        359  No.
+19          3380      6658        363  France
+20          3283      6531        365  No
+21          3250      6286        367  Major League Baseball All-Century Team.
+22          2508      4682        369  They took DeFreeze to Patricia Soltysik's house.
+23          1961      3388        370  Who says you need to buy a guitar?
+24          3117      6496        375  No
+25          3406      6505        382  No
+26          3727      7641        382  No
+27          1741      3192        383  No.
+28          2040      4124        386  striker-partner
+29          3287      6478        389  I don't know.
+30          3013      5514        391  I don't know.
+31          3204      5794        391  dishonorable discharge
+32          2663      6287        394  Spahn led the NL in strikeouts for four consecutive sea…
+33          3716      6729        399  French literature
+34          2432      4504        401  I don't know.
+35          2040      3997        402  No
+36          2700      4703        403  The passage does not mention any other interesting aspe…
+37          2703      4839        405  princeps.
+38          3280      6549        413  The band formed in March 1985.
+39          2110      3496        414  No.
+40          2495      4826        414  Yes
+41          3479      6606        417  After getting an agent at the age of six.
+42          7970     17854        423  "Kick Out the Jams", "Rama Lama Fa Fa Fa", "Starship"
+43          2862      5058        423  Yes.
+44          8180     18662        435  2 May 1519
+45          3333      6498        436  6-1
+46          3445      6427        437  I don't know.
+47          3908      7176        442  I don't know.
+48          3658      7746        443  Lighters Up
+49          3261      7426        447  Kapoor's family members include her father Shakti Kapoo…
+50          3622      7633        452  I Am Woman
+51          2975      5394        455  Yes
+52          3482      6523        455  I don't know.
+53          2605      4474        457  I don't know.
+54          3351      6663        461  I don't know.
+55          3109      6381        463  The Comanche and Kiowa.
+56          3325      6294        463  They voted for the UK to leave.
+57          2525      5224        470  He cycled and hitched lifts home.
+58          3418      7672        475  Aquino's flag-draped casket was escorted from the Cathe…
+59          3305      6361        476  Doolittle
+60          2543      4801        476  I don't know.
+61          2727      5204        476  He adopted his own views through his philosophical view…
+62          2775      5414        231  The Irish Literary Theatre project.
+63          2269      3835        231  immigrated
+64          2486      4624        231  I don't know.
+65          3497      6693        237  No.
+66          2579      4689        237  Jesse Ed Davis.
+67          3270      6324        237  No. 3.
+68          7346     16923        245  new wave
+69          3301      6559        250  Yes
+70          2053      3962        250  G-Force, Youth in Revolt, Up in the Air.
+71          3242      6613        252  I don't know.
+72          2802      6166        258  I don't know.
+73          4156      7553        259  I don't know.
+74          6317     13740        263  Kelly was arrested the following day for highway robber…
+75          3247      6577        270  Diamond Rio performed their first official concert as D…
+76          2967      5894        271  He was also a keen singer.
+77          3536      8364        274  Capriati failed to qualify for the season-ending champi…
+78          3116      6248        276  2004
+79          2683      5227        277  I don't know.
+80          2262      4153        280  No.
+81          7484     16668        287  No.
+82          2458      4107        290  1981
+83          3417      6371        291  unified
+84          2435      4593        293  No
+85          2709      5052        297  I don't know.
+86          2526      4942        298  The Gentrys' "Keep on Dancing"; and a new recording of …
+87          3585      7639        302  Keegan was voted the PFA Player of the Year and awarded…
+88          2802      5033        303  Bradlaugh.
+89          3202      6487        308  1988
+90          2950      6012        311  David Guetta and Ludacris.
+91          3396      6321        311  No.
+92          2055      4085        314  Bertie Wooster's mother was a great friend of Lord Wick…
+93          1874      2977        316  No.
+94          3000      5078        317  He was critical of organized religion.
+95          2427      3965        318  head up a transition team
+96          2182      3788        322  630 AD
+97          7343     14537        329  The Quiet Man.
+98          2526      4446        330  1982
+99          2728      5233        331  From the Depths of Dreams
+100         3738      6970        334  The passage and conversation do not mention any other i…
+
+wrote 100 rows to results-llama1b-quac.jsonl
+finished 2026-10-20T22:55:48Z

@@ -1,0 +1,111 @@
+started 2026-10-20T22:38:23Z
+load: 7.40 7.88 7.41 1/181 2790
+WARNING: Using incubator modules: jdk.incubator.vector
+ITEM      PROMPT        MS   HEAP MIB  ANSWER
+Oct 20, 2026 10:38:27 PM com.integrallis.vectors.core.PanamaVectorUtilSupportProvider create
+INFO: vectors-core: Using Panama Vector API SIMD provider (vector bits: 256)
+Oct 20, 2026 10:38:27 PM com.integrallis.vectors.core.VectorizationProvider logActiveToggles
+INFO: vectors-core: provider=PanamaVectorUtilSupport panama=true maxBits=256 preferredBits=256 fastVectorFMA=true fastScalarFMA=true sve=false ggufParallel=true ggufParallelThreshold=1048576 ggufExecutor=persistent ggufThreads=8 ggufChunksPerThread=2 mappedKQuantLongOffsets=auto(q4=true,q5=false,q6=false) q4ShortPairwiseSupported=true q4UnsignedPairwiseSupported=true toggles=[(defaults — no -Dvectors.* overrides)]
+1           1379      2848        308  Auntie Beth
+2           1405      2167        312  England
+3           1273      2168        147  sad
+4           1444      2537        149  she paid her to steal it
+5           2206      3895        229  No
+6           1917      3726        229  No
+7           2189      3729        229  story time
+8           2044      3435        235  Sony Music
+9           2431      4452        235  70 to 80 kilograms.
+10          3732      7696        236  No
+11          2054      3716        240  He would look you over in the course of a month or two.
+12          2160      3956        241  woman
+13          3730      7309        243  $75.
+14          1788      3010        243  They yelled.
+15          1978      3543        248  150 runs
+16          1815      3301        249  Tammy Meyers.
+17          2991      5475        251  Eduard Kokoity.
+18          2300      3880        251  Alzheimer's
+19          2030      3189        253  Lionel Messi and Cristiano Ronaldo
+20          2220      4533        260  He thinks he is a sharper.
+21          2113      2943        261  secondary sex characteristics
+22          1139      1867        262  Cindy
+23          2404      5126        263  Lake Minniemashie.
+24          2216      3602        265  Twitter
+25          1575      2792        266  Texas
+26          2268      4057        269  started a bank.
+27          1871      2615        269  Chemurgy
+28          1825      2873        270  Der Spiegel.
+29          2040      3133        271  Radicalized individuals
+30          2446      4595        274  sunken, pale cheeks
+31          1421      2736        275  It rested its head on its bear paws.
+32          2198      3588        276  1960
+33          2137      3622        278  June 25, 2009
+34          2285      4396        279  Tom Watson
+35          2321      4092        284  U.S. President Barack Obama's revised policies toward t…
+36          1163      1823        285  Utah
+37          1176      1894        286  Milo
+38          2310      4153        288  Yes
+39          1106      1855        288  The brown-haired lady.
+40          1447      2674        289  Does he stay fresh?
+41          1924      3430        292  model
+42          1707      2534        293  ISDN networks
+43          2066      3517        294  Yes
+44          2269      3946        298  Florence
+45          1871      3011        299  Somali pirates
+46          2513      4124        302  Beth
+47          1527      2189        304  I don't know.
+48          2667      4926        305  pancakes
+49          1756      2941        305  He was set on fire.
+50          2636      4549        307  no drug
+51          1769      3228        310  They were talking to each other happily.
+52          1928      2771        311  home
+53          2154      3355        312  Central Institute of Statistics
+54          2189      4435        312  Sam.
+55          2314      3974        319  No.
+56          1808      3112        321  no
+57          2184      4664        323  Phineas Duge
+58          1686      3049        323  Janet Jackson is doing a duet with her brother.
+59          2530      4926        324  Tom goes shopping with Catherine.
+60          1383      2556        328  Oscar
+61          2221      3640        329  Prime Minister Nuri al-Maliki
+62          1774      3168        329  No
+63          1798      2949        331  Bashti
+64          2151      3334        331  Slovenia
+65          2209      4519        335  his notebook
+66          2783      5001        336  their plans to start a theatre.
+67          2126      3627        337  Japan
+68          1927      3672        177  skates
+69          2560      4603        177  catch and release.
+70          2206      4299        180  War of 1967
+71          2150      3630        180  Yes
+72          1332      2346        180  outside
+73          2567      4561        184  The lions.
+74          1909      3445        185  Louisville Metropolitan Police Department
+75          2011      3926        187  He looked worried.
+76          2148      3592        188  Duomo
+77          2342      4709        191  approaching
+78          2579      4439        195  Tom Seaton
+79          1921      3699        196  Martin.
+80          2002      3861        198  Mary feels gratitude and love for Terence.
+81          2389      4113        199  No.
+82          1231      1875        201  I don't know.
+83          2395      4315        202  dialling code
+84          1784      2980        203  by the stream
+85          2629      4835        205  residents of Greer.
+86          3105      6235        210  Practice random kindness and senseless acts of beauty.
+87          2176      3642        211  No
+88          2344      4427        214  No.
+89          2687      4740        216  lightweight materials
+90          1635      2998        216  Max simple nods back.
+91          3298      5551        219  No
+92          2321      3750        220  Portland, Oregon, US.
+93          2410      4384        225  Pakistani
+94          2036      3754        226  get to Western Germany
+95          2860      4603        228  germ-free
+96          1379      2397        229  The pool
+97          1453      2514        230  I don't know.
+98          2114      3886        232  British soldiers burning Washington, D.C. in the war of…
+99          2041      3297        234  1920
+100         1885      3467        235  Xinhai Revolution, May Fourth Movement
+
+wrote 100 rows to results-llama1b-coqa.jsonl
+finished 2026-10-20T22:44:38Z

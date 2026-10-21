@@ -1,0 +1,502 @@
+[
+ {
+  "id": "trec-3",
+  "label": "DESC",
+  "text": "What is an atom ?"
+ },
+ {
+  "id": "trec-53",
+  "label": "DESC",
+  "text": "What is fibromyalgia ?"
+ },
+ {
+  "id": "trec-255",
+  "label": "LOC",
+  "text": "What planet is known as the `` red '' planet ?"
+ },
+ {
+  "id": "trec-126",
+  "label": "NUM",
+  "text": "How wide is the Milky Way galaxy ?"
+ },
+ {
+  "id": "trec-247",
+  "label": "DESC",
+  "text": "What is home equity ?"
+ },
+ {
+  "id": "trec-268",
+  "label": "NUM",
+  "text": "For how long is an elephant pregnant ?"
+ },
+ {
+  "id": "trec-321",
+  "label": "NUM",
+  "text": "When was President Kennedy shot ?"
+ },
+ {
+  "id": "trec-153",
+  "label": "NUM",
+  "text": "When was Algeria colonized ?"
+ },
+ {
+  "id": "trec-383",
+  "label": "HUM",
+  "text": "Who was the first US President to ride in an automobile to his inauguration ?"
+ },
+ {
+  "id": "trec-124",
+  "label": "NUM",
+  "text": "What is the earth 's diameter ?"
+ },
+ {
+  "id": "trec-265",
+  "label": "DESC",
+  "text": "What does the word fortnight mean ?"
+ },
+ {
+  "id": "trec-326",
+  "label": "DESC",
+  "text": "Why is the sun yellow ?"
+ },
+ {
+  "id": "trec-157",
+  "label": "DESC",
+  "text": "What is nanotechnology ?"
+ },
+ {
+  "id": "trec-488",
+  "label": "ENTY",
+  "text": "What is the source of natural gas ?"
+ },
+ {
+  "id": "trec-134",
+  "label": "DESC",
+  "text": "What is foreclosure ?"
+ },
+ {
+  "id": "trec-400",
+  "label": "HUM",
+  "text": "What is Shakespeare 's nickname ?"
+ },
+ {
+  "id": "trec-473",
+  "label": "NUM",
+  "text": "What is the population of Venezuela ?"
+ },
+ {
+  "id": "trec-376",
+  "label": "LOC",
+  "text": "Where do apple snails live ?"
+ },
+ {
+  "id": "trec-397",
+  "label": "NUM",
+  "text": "What is the sales tax rate in New York ?"
+ },
+ {
+  "id": "trec-356",
+  "label": "NUM",
+  "text": "What is the speed of light ?"
+ },
+ {
+  "id": "trec-56",
+  "label": "NUM",
+  "text": "When did Elvis Presley die ?"
+ },
+ {
+  "id": "trec-438",
+  "label": "ABBR",
+  "text": "What does the abbreviation SOS mean ?"
+ },
+ {
+  "id": "trec-156",
+  "label": "LOC",
+  "text": "What is the capital of Mongolia ?"
+ },
+ {
+  "id": "trec-224",
+  "label": "LOC",
+  "text": "Which mountain range in North America stretches from Maine to Georgia ?"
+ },
+ {
+  "id": "trec-283",
+  "label": "DESC",
+  "text": "What is the chunnel ?"
+ },
+ {
+  "id": "trec-486",
+  "label": "LOC",
+  "text": "What city is also known as `` The Gateway to the West '' ?"
+ },
+ {
+  "id": "trec-44",
+  "label": "ENTY",
+  "text": "What is the proper name for a female walrus ?"
+ },
+ {
+  "id": "trec-244",
+  "label": "DESC",
+  "text": "What is bandwidth ?"
+ },
+ {
+  "id": "trec-454",
+  "label": "NUM",
+  "text": "How cold should a refrigerator be ?"
+ },
+ {
+  "id": "trec-299",
+  "label": "ENTY",
+  "text": "What color is a giraffe 's tongue ?"
+ },
+ {
+  "id": "trec-89",
+  "label": "LOC",
+  "text": "What country did Ponce de Leon come from ?"
+ },
+ {
+  "id": "trec-451",
+  "label": "ENTY",
+  "text": "What is the most popular sport in Japan ?"
+ },
+ {
+  "id": "trec-22",
+  "label": "LOC",
+  "text": "What river in the US is known as the Big Muddy ?"
+ },
+ {
+  "id": "trec-338",
+  "label": "DESC",
+  "text": "What is Ursa Major ?"
+ },
+ {
+  "id": "trec-116",
+  "label": "NUM",
+  "text": "When did the Hindenberg crash ?"
+ },
+ {
+  "id": "trec-450",
+  "label": "ENTY",
+  "text": "What colors need to be mixed to get the color pink ?"
+ },
+ {
+  "id": "trec-271",
+  "label": "DESC",
+  "text": "What is the difference between AM radio stations and FM radio stations ?"
+ },
+ {
+  "id": "trec-117",
+  "label": "ENTY",
+  "text": "What mineral helps prevent osteoporosis ?"
+ },
+ {
+  "id": "trec-16",
+  "label": "ENTY",
+  "text": "What metal has the highest melting point ?"
+ },
+ {
+  "id": "trec-347",
+  "label": "DESC",
+  "text": "What is the effect of volcanoes on the climate ?"
+ },
+ {
+  "id": "trec-193",
+  "label": "NUM",
+  "text": "When was the first Wal-Mart store opened ?"
+ },
+ {
+  "id": "trec-228",
+  "label": "LOC",
+  "text": "Where is the Grand Canyon ?"
+ },
+ {
+  "id": "trec-435",
+  "label": "DESC",
+  "text": "What is vertigo ?"
+ },
+ {
+  "id": "trec-495",
+  "label": "HUM",
+  "text": "Who was the 22nd President of the US ?"
+ },
+ {
+  "id": "trec-349",
+  "label": "DESC",
+  "text": "What is acid rain ?"
+ },
+ {
+  "id": "trec-188",
+  "label": "LOC",
+  "text": "Where did Howard Hughes die ?"
+ },
+ {
+  "id": "trec-218",
+  "label": "NUM",
+  "text": "How many pounds in a ton ?"
+ },
+ {
+  "id": "trec-424",
+  "label": "LOC",
+  "text": "What continent is Argentina on ?"
+ },
+ {
+  "id": "trec-216",
+  "label": "DESC",
+  "text": "What is sodium chloride ?"
+ },
+ {
+  "id": "trec-9",
+  "label": "DESC",
+  "text": "What is autism ?"
+ },
+ {
+  "id": "trec-345",
+  "label": "HUM",
+  "text": "Who painted the ceiling of the Sistine Chapel ?"
+ },
+ {
+  "id": "trec-367",
+  "label": "ENTY",
+  "text": "What are the colors of the German flag ?"
+ },
+ {
+  "id": "trec-276",
+  "label": "DESC",
+  "text": "What is viscosity ?"
+ },
+ {
+  "id": "trec-28",
+  "label": "LOC",
+  "text": "Where is John Wayne airport ?"
+ },
+ {
+  "id": "trec-339",
+  "label": "NUM",
+  "text": "What is the percentage of water content in the human body ?"
+ },
+ {
+  "id": "trec-167",
+  "label": "DESC",
+  "text": "What is acetaminophen ?"
+ },
+ {
+  "id": "trec-92",
+  "label": "NUM",
+  "text": "What is the temperature of the sun 's surface ?"
+ },
+ {
+  "id": "trec-209",
+  "label": "DESC",
+  "text": "What is the effect of acid rain ?"
+ },
+ {
+  "id": "trec-414",
+  "label": "ENTY",
+  "text": "What is the state flower of Michigan ?"
+ },
+ {
+  "id": "trec-199",
+  "label": "ENTY",
+  "text": "What is pastrami made of ?"
+ },
+ {
+  "id": "trec-310",
+  "label": "LOC",
+  "text": "What is the capital of Persia ?"
+ },
+ {
+  "id": "trec-146",
+  "label": "HUM",
+  "text": "Who is a German philosopher ?"
+ },
+ {
+  "id": "trec-470",
+  "label": "DESC",
+  "text": "What are capers ?"
+ },
+ {
+  "id": "trec-496",
+  "label": "ENTY",
+  "text": "What is the money they use in Zambia ?"
+ },
+ {
+  "id": "trec-189",
+  "label": "ENTY",
+  "text": "What is the birthstone for June ?"
+ },
+ {
+  "id": "trec-492",
+  "label": "ENTY",
+  "text": "What 's the easiest way to remove wallpaper ?"
+ },
+ {
+  "id": "trec-273",
+  "label": "HUM",
+  "text": "Who was the first woman governor in the U.S. ?"
+ },
+ {
+  "id": "trec-480",
+  "label": "ENTY",
+  "text": "What was the name of the first U.S. satellite sent into space ?"
+ },
+ {
+  "id": "trec-24",
+  "label": "DESC",
+  "text": "What is cholesterol ?"
+ },
+ {
+  "id": "trec-149",
+  "label": "DESC",
+  "text": "What is nicotine ?"
+ },
+ {
+  "id": "trec-437",
+  "label": "NUM",
+  "text": "When is the official first day of summer ?"
+ },
+ {
+  "id": "trec-129",
+  "label": "NUM",
+  "text": "What is the gestation period for a cat ?"
+ },
+ {
+  "id": "trec-206",
+  "label": "HUM",
+  "text": "Who was the 23rd president of the United States ?"
+ },
+ {
+  "id": "trec-323",
+  "label": "ENTY",
+  "text": "What color is yak milk ?"
+ },
+ {
+  "id": "trec-76",
+  "label": "ENTY",
+  "text": "What type of currency is used in Australia ?"
+ },
+ {
+  "id": "trec-40",
+  "label": "ENTY",
+  "text": "Material called linen is made from what plant ?"
+ },
+ {
+  "id": "trec-51",
+  "label": "HUM",
+  "text": "Who discovered x-rays ?"
+ },
+ {
+  "id": "trec-461",
+  "label": "ENTY",
+  "text": "What is New York 's state bird ?"
+ },
+ {
+  "id": "trec-277",
+  "label": "NUM",
+  "text": "What year did Oklahoma become a state ?"
+ },
+ {
+  "id": "trec-257",
+  "label": "ENTY",
+  "text": "What is the colorful Korean traditional dress called ?"
+ },
+ {
+  "id": "trec-62",
+  "label": "LOC",
+  "text": "What river flows between Fargo , North Dakota and Moorhead , Minnesota ?"
+ },
+ {
+  "id": "trec-386",
+  "label": "DESC",
+  "text": "What is Muscular Dystrophy ?"
+ },
+ {
+  "id": "trec-109",
+  "label": "LOC",
+  "text": "What is the highest dam in the U.S. ?"
+ },
+ {
+  "id": "trec-317",
+  "label": "LOC",
+  "text": "Where is the Little League Museum ?"
+ },
+ {
+  "id": "trec-479",
+  "label": "LOC",
+  "text": "Which country gave New York the Statue of Liberty ?"
+ },
+ {
+  "id": "trec-175",
+  "label": "LOC",
+  "text": "What U.S. state 's motto is `` Live free or Die '' ?"
+ },
+ {
+  "id": "trec-154",
+  "label": "HUM",
+  "text": "What baseball team was the first to make numbers part of their uniform ?"
+ },
+ {
+  "id": "trec-49",
+  "label": "HUM",
+  "text": "What is the name of the chocolate company in San Francisco ?"
+ },
+ {
+  "id": "trec-135",
+  "label": "ENTY",
+  "text": "What is the major fault line near Kentucky ?"
+ },
+ {
+  "id": "trec-26",
+  "label": "DESC",
+  "text": "What is caffeine ?"
+ },
+ {
+  "id": "trec-249",
+  "label": "ENTY",
+  "text": "What is the criterion for being legally blind ?"
+ },
+ {
+  "id": "trec-427",
+  "label": "LOC",
+  "text": "Where is the tallest roller coaster located ?"
+ },
+ {
+  "id": "trec-287",
+  "label": "DESC",
+  "text": "What are Quaaludes ?"
+ },
+ {
+  "id": "trec-233",
+  "label": "NUM",
+  "text": "How many gallons of water are there in a cubic foot ?"
+ },
+ {
+  "id": "trec-65",
+  "label": "HUM",
+  "text": "Who was Abraham Lincoln ?"
+ },
+ {
+  "id": "trec-159",
+  "label": "LOC",
+  "text": "What state is the geographic center of the lower 48 states ?"
+ },
+ {
+  "id": "trec-177",
+  "label": "NUM",
+  "text": "When was the first stamp issued ?"
+ },
+ {
+  "id": "trec-409",
+  "label": "DESC",
+  "text": "What is metabolism ?"
+ },
+ {
+  "id": "trec-430",
+  "label": "DESC",
+  "text": "What is bangers and mash ?"
+ },
+ {
+  "id": "trec-78",
+  "label": "NUM",
+  "text": "How much does the human adult female brain weigh ?"
+ }
+]

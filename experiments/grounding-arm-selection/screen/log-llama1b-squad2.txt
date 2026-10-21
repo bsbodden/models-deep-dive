@@ -1,0 +1,70 @@
+started 2026-10-20T18:14:24Z
+load: 1.22 0.42 0.15 1/205 2208
+[jbang] Resolving dependencies...
+[jbang]    org.modeljars:modeljars:0.1.63
+[jbang]    com.integrallis:models-router:0.5.1
+[jbang]    com.fasterxml.jackson.core:jackson-databind:2.22.3
+[jbang]    org.modeljars.huggingface:bartowski.llama-3.2-1b-instruct-gguf.q4_k_m:3.2.0-q4_k_m.1
+[jbang]    org.modeljars.huggingface:qwen.qwen3-8b-gguf.q4_k_m:3.0.0-q4_k_m.3
+[jbang]    org.modeljars.huggingface:bartowski.meta-llama-3.1-8b-instruct-gguf.q4_k_m:3.1.0-q4_k_m.2
+[jbang] Dependencies resolved
+[jbang] Building jar for arms.java...
+WARNING: Using incubator modules: jdk.incubator.vector
+ITEM      PROMPT        MS   HEAP MIB  ANSWER
+Oct 20, 2026 6:14:33 PM com.integrallis.vectors.core.PanamaVectorUtilSupportProvider create
+INFO: vectors-core: Using Panama Vector API SIMD provider (vector bits: 256)
+Oct 20, 2026 6:14:33 PM com.integrallis.vectors.core.VectorizationProvider logActiveToggles
+INFO: vectors-core: provider=PanamaVectorUtilSupport panama=true maxBits=256 preferredBits=256 fastVectorFMA=true fastScalarFMA=true sve=false ggufParallel=true ggufParallelThreshold=1048576 ggufExecutor=persistent ggufThreads=8 ggufChunksPerThread=2 mappedKQuantLongOffsets=auto(q4=true,q5=false,q6=false) q4ShortPairwiseSupported=true q4UnsignedPairwiseSupported=true toggles=[(defaults — no -Dvectors.* overrides)]
+1           1068      3009        267  The Treaty of Amsterdam
+2           1073      3197        268  Complexity theory is interested in how algorithms scale…
+3           1432      4055        316  William the Silent.
+4            772      1880        316  Roger Ebert
+5            803      1932        316  civil disobedience
+6           1046      2877        318  Rhine Gutter
+7            946      2216        318  Islamic fundamentalist or neofundamentalist
+8           1105      2653        318  30%
+9           1459      3274        318  Summing component forces.
+10           795      2209        320  The Middle Rhine
+11           977      2516        321  It expanded again.
+12           785      2076        321  Harvard ended its early admissions program in 2007.
+13          1063      2652        323  17,786,419
+14          1102      2565        325  The object's weight.
+15           947      2057        325  Medication Therapy Management
+16           796      1943        326  Toyota Corona
+17           787      1693        326  Brownlee
+18           801      2425        326  Bonn at the Rhine
+19          1157      3281        144  P = NP is not solved.
+20          1226      3237        144  Francisco de Orellana.
+21          1117      2424        144  Computational complexity theory.
+22           929      2537        144  Marseille
+23           796      2009        144  Early Action program is more selective, lower transfer-…
+24           830      1681        144  physicians
+25           807      2067        144  packet switching
+26           882      2383        144  Rhine knee
+27          1265      3301        148  Metamorphic rock.
+28          1212      2803        150  Oncogenes.
+29           882      2387        154  Iroquois Confederation
+30          1466      3652        155  60%
+31           804      1907        155  Donald Johanson
+32          1016      2733        156  The City council.
+33          1031      2560        156  Magdalen Tower
+34           959      2455        156  often damaging
+35           905      2016        156  Scandinavia
+36           856      2359        156  160 kPa
+37           765      1925        156  1994
+38           879      2278        156  December 12
+39           924      3156        158  The committees in Scottish Parliament are weaker than i…
+40           745      1972        160  Kingdom of Prussia
+41          1288      3289        162  recent testing show it to be weak.
+42           870      2246        163  Net mechanical energy is what in an open system is conv…
+43          1061      2704        163  azote
+44           864      2089        163  Seine
+45          1252      2691        163  1769
+46           845      2169        163  Roeding Park
+47          1179      3020        163  John B. Weller
+48          1241      3324        163  The spread of diseases from Europe.
+49          1312      3011        166  Antimicrobial peptides called defensins.
+50          1389      3134        168  basic necessities.
+
+wrote 50 rows to results-llama1b-squad2.jsonl
+finished 2026-10-20T18:16:42Z

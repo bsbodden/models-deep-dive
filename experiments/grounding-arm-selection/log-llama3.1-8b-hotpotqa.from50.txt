@@ -1,0 +1,70 @@
+started 2026-10-20T21:08:33Z
+load: 0.41 0.11 0.04 1/205 2307
+[jbang] Resolving dependencies...
+[jbang]    org.modeljars:modeljars:0.1.63
+[jbang]    com.integrallis:models-router:0.5.1
+[jbang]    com.fasterxml.jackson.core:jackson-databind:2.22.3
+[jbang]    org.modeljars.huggingface:bartowski.llama-3.2-1b-instruct-gguf.q4_k_m:3.2.0-q4_k_m.1
+[jbang]    org.modeljars.huggingface:qwen.qwen3-8b-gguf.q4_k_m:3.0.0-q4_k_m.3
+[jbang]    org.modeljars.huggingface:bartowski.meta-llama-3.1-8b-instruct-gguf.q4_k_m:3.1.0-q4_k_m.2
+[jbang] Dependencies resolved
+[jbang] Building jar for arms.java...
+WARNING: Using incubator modules: jdk.incubator.vector
+ITEM      PROMPT        MS   HEAP MIB  ANSWER
+Oct 20, 2026 9:09:06 PM com.integrallis.vectors.core.PanamaVectorUtilSupportProvider create
+INFO: vectors-core: Using Panama Vector API SIMD provider (vector bits: 256)
+Oct 20, 2026 9:09:06 PM com.integrallis.vectors.core.VectorizationProvider logActiveToggles
+INFO: vectors-core: provider=PanamaVectorUtilSupport panama=true maxBits=256 preferredBits=256 fastVectorFMA=true fastScalarFMA=true sve=false ggufParallel=true ggufParallelThreshold=1048576 ggufExecutor=persistent ggufThreads=8 ggufChunksPerThread=2 mappedKQuantLongOffsets=auto(q4=true,q5=false,q6=false) q4ShortPairwiseSupported=true q4UnsignedPairwiseSupported=true toggles=[(defaults — no -Dvectors.* overrides)]
+51          4888     45821       1138  Kathy Sullivan
+52          6748     66280       1151  Texas Tech University.
+53          7238     68933       1161  February
+54          4901     53064       1168  George Raft.
+55          5933     57974       1180  I don't know.
+56          5461     51875       1188  Fairfax County
+57          5593     48511       1198  Valuation method
+58          5367     50287       1205  I don't know.
+59          6040     55357       1213  North Atlantic Conference
+60          5458     56631       1223  I don't know
+61          3529     34267       1228  I don't know.
+62          6434     62573       1239  I don't know.
+63          4685     46636       1246  I don't know.
+64          5079     49632        643  Pasek and Paul.
+65          4887     49261        650  I don't know.
+66          3789     36383        659  I don't know.
+67          6694     60576        667  The United States presidential election of 2016.
+68          6738     66986        678  I don't know.
+69          6761     72269        688  The early years of the nineteenth century.
+70          8547     69986        701  IT products and services.
+71          4746     48244        709  Lee Hazlewood, Jim Shoulders.
+72          5628     62416        720  Leo Varadkar.
+73          5205     49118        730  Canary Islands, Spain.
+74          5759     52640        736  Henry J. Kaiser.
+75         13824    126073       1686  I don't know.
+76          7829     69588       1696  April 1, 1949
+77          8126     81567       1710  I don't know.
+78          6311     61616       1720  Old Frisian.
+79          7162     67943       1731  I don't know.
+80          4910     44610       1736  Ann
+81          5108     45663       1746  City of Cessnock
+82          6263     65234       1759  I don't know
+83          8557     87261       1770  Ethiopian sovereignty.
+84          4892     42428       1778  Anna Clyne.
+85          5577     50436       1786  The Beatles.
+86          3812     42207       1792  I don't know.
+87          7539     78613       1806  Dinosaur
+88          5020     48976       1811  Ghost Rider
+89          6210     64860       1824  Field Marshal Stapleton Cotton, 1st Viscount Combermere
+90          7120     69724       1834  Rear Adm. J. Edward Snyder, USN (Ret.)
+91          4767     41760       1846  Salford City
+92          4350     48131       1851  Sasanian Empire.
+93          5284     55322       1863  I don't know.
+94          5133     55061       1871  Charles Nungesser and François Coli.
+95          1773     17469       1874  I don't know.
+96          5058     47809       1880  I don't know.
+97          4658     44896       1893  Unbreakable Kimmy Schmidt.
+98          2628     26264       1895  I don't know.
+99          7106     69565       1906  7 October 1978
+100         4693     51194       1915  Vikram Bhatt
+
+wrote 50 rows to results-llama3.1-8b-hotpotqa.from50.jsonl
+finished 2026-10-20T21:56:08Z

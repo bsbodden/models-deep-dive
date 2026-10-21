@@ -1,0 +1,408 @@
+{
+  "snips": {
+    "n": 100,
+    "accuracy": 80.0,
+    "wrong": 20,
+    "confusions": [
+      {
+        "gold": "SearchScreeningEvent",
+        "predicted": "SearchCreativeWork",
+        "count": 5,
+        "shareOfErrors": 25.0,
+        "items": [
+          {
+            "id": "snips-SearchScreeningEvent-640",
+            "confidence": 0.468,
+            "probability": 0.552,
+            "text": "Is American Primitive showing in Santikos Theatres"
+          },
+          {
+            "id": "snips-SearchScreeningEvent-606",
+            "confidence": 0.364,
+            "probability": 0.539,
+            "text": "show me the schedule for Rat Rod Rockers!"
+          },
+          {
+            "id": "snips-SearchScreeningEvent-671",
+            "confidence": 0.517,
+            "probability": 0.473,
+            "text": "show me the schedule of movie The Great Gildersleeve near movie house"
+          },
+          {
+            "id": "snips-SearchScreeningEvent-604",
+            "confidence": 0.728,
+            "probability": 0.882,
+            "text": "i want to see JLA Adventures: Trapped In Time"
+          },
+          {
+            "id": "snips-SearchScreeningEvent-690",
+            "confidence": 0.548,
+            "probability": 0.493,
+            "text": "Find the movie schedule for North American Cinemas in eleven seconds."
+          }
+        ]
+      },
+      {
+        "gold": "RateBook",
+        "predicted": "PlayMusic",
+        "count": 5,
+        "shareOfErrors": 25.0,
+        "items": [
+          {
+            "id": "snips-RateBook-476",
+            "confidence": 0.434,
+            "probability": 0.642,
+            "text": "Out of 6, give Rivers of Babylon a 1"
+          },
+          {
+            "id": "snips-RateBook-431",
+            "confidence": 0.465,
+            "probability": 0.668,
+            "text": "mark this album a score of 5"
+          },
+          {
+            "id": "snips-RateBook-429",
+            "confidence": 0.233,
+            "probability": 0.343,
+            "text": "rate Black Boy 4 out of 6"
+          },
+          {
+            "id": "snips-RateBook-406",
+            "confidence": 0.167,
+            "probability": 0.341,
+            "text": "Give the current series four of 6 points."
+          },
+          {
+            "id": "snips-RateBook-453",
+            "confidence": 0.36,
+            "probability": 0.564,
+            "text": "rate Personal Demons 0 out of 6 points"
+          }
+        ]
+      },
+      {
+        "gold": "BookRestaurant",
+        "predicted": "SearchCreativeWork",
+        "count": 3,
+        "shareOfErrors": 15.0,
+        "items": [
+          {
+            "id": "snips-BookRestaurant-125",
+            "confidence": 0.258,
+            "probability": 0.531,
+            "text": "book spot for 4 in Somalia"
+          },
+          {
+            "id": "snips-BookRestaurant-145",
+            "confidence": 0.229,
+            "probability": 0.423,
+            "text": "Book seven in neighboring Moorpark"
+          },
+          {
+            "id": "snips-BookRestaurant-137",
+            "confidence": 0.236,
+            "probability": 0.378,
+            "text": "book spot for 1 at Town of Ramsgate in Merit"
+          }
+        ]
+      },
+      {
+        "gold": "AddToPlaylist",
+        "predicted": "PlayMusic",
+        "count": 2,
+        "shareOfErrors": 10.0,
+        "items": [
+          {
+            "id": "snips-AddToPlaylist-36",
+            "confidence": 0.597,
+            "probability": 0.642,
+            "text": "Add a song to this is racionais mc's"
+          },
+          {
+            "id": "snips-AddToPlaylist-15",
+            "confidence": 0.386,
+            "probability": 0.439,
+            "text": "Onto jerry's Classical Moments in Movies, please add the album."
+          }
+        ]
+      },
+      {
+        "gold": "RateBook",
+        "predicted": "SearchCreativeWork",
+        "count": 1,
+        "shareOfErrors": 5.0,
+        "items": [
+          {
+            "id": "snips-RateBook-409",
+            "confidence": 0.243,
+            "probability": 0.425,
+            "text": "Rate The Sneetches and Other Stories a three"
+          }
+        ]
+      },
+      {
+        "gold": "SearchScreeningEvent",
+        "predicted": "PlayMusic",
+        "count": 1,
+        "shareOfErrors": 5.0,
+        "items": [
+          {
+            "id": "snips-SearchScreeningEvent-686",
+            "confidence": 0.78,
+            "probability": 0.899,
+            "text": "Is Cowboy Canteen playing"
+          }
+        ]
+      },
+      {
+        "gold": "BookRestaurant",
+        "predicted": "PlayMusic",
+        "count": 1,
+        "shareOfErrors": 5.0,
+        "items": [
+          {
+            "id": "snips-BookRestaurant-118",
+            "confidence": 0.259,
+            "probability": 0.392,
+            "text": "I want to book Oregon Electric Station in North City."
+          }
+        ]
+      },
+      {
+        "gold": "SearchCreativeWork",
+        "predicted": "PlayMusic",
+        "count": 1,
+        "shareOfErrors": 5.0,
+        "items": [
+          {
+            "id": "snips-SearchCreativeWork-519",
+            "confidence": 0.379,
+            "probability": 0.555,
+            "text": "Can you find me, Hey Man?"
+          }
+        ]
+      },
+      {
+        "gold": "BookRestaurant",
+        "predicted": "AddToPlaylist",
+        "count": 1,
+        "shareOfErrors": 5.0,
+        "items": [
+          {
+            "id": "snips-BookRestaurant-132",
+            "confidence": 0.177,
+            "probability": 0.289,
+            "text": "Book spot for 9"
+          }
+        ]
+      }
+    ]
+  },
+  "trec": {
+    "n": 100,
+    "accuracy": 76.0,
+    "wrong": 24,
+    "confusions": [
+      {
+        "gold": "DESC",
+        "predicted": "ENTY",
+        "count": 13,
+        "shareOfErrors": 54.2,
+        "items": [
+          {
+            "id": "trec-98",
+            "confidence": 0.443,
+            "probability": 0.691,
+            "text": "What are coral reefs ?"
+          },
+          {
+            "id": "trec-237",
+            "confidence": 0.601,
+            "probability": 0.81,
+            "text": "What is phosphorus ?"
+          },
+          {
+            "id": "trec-241",
+            "confidence": 0.261,
+            "probability": 0.549,
+            "text": "What is Valentine 's Day ?"
+          },
+          {
+            "id": "trec-468",
+            "confidence": 0.373,
+            "probability": 0.586,
+            "text": "What are solar cells ?"
+          },
+          {
+            "id": "trec-313",
+            "confidence": 0.266,
+            "probability": 0.381,
+            "text": "What is pneumonia ?"
+          },
+          {
+            "id": "trec-364",
+            "confidence": 0.511,
+            "probability": 0.744,
+            "text": "What is acetic acid ?"
+          },
+          {
+            "id": "trec-47",
+            "confidence": 0.372,
+            "probability": 0.642,
+            "text": "What are triglycerides ?"
+          },
+          {
+            "id": "trec-490",
+            "confidence": 0.487,
+            "probability": 0.723,
+            "text": "What is pectin ?"
+          },
+          {
+            "id": "trec-254",
+            "confidence": 0.328,
+            "probability": 0.54,
+            "text": "What is pilates ?"
+          },
+          {
+            "id": "trec-258",
+            "confidence": 0.457,
+            "probability": 0.708,
+            "text": "What is Mardi Gras ?"
+          },
+          {
+            "id": "trec-436",
+            "confidence": 0.279,
+            "probability": 0.522,
+            "text": "What is the spirometer test ?"
+          },
+          {
+            "id": "trec-21",
+            "confidence": 0.224,
+            "probability": 0.443,
+            "text": "What is a biosphere ?"
+          },
+          {
+            "id": "trec-288",
+            "confidence": 0.447,
+            "probability": 0.614,
+            "text": "What is naproxen ?"
+          }
+        ]
+      },
+      {
+        "gold": "ENTY",
+        "predicted": "NUM",
+        "count": 3,
+        "shareOfErrors": 12.5,
+        "items": [
+          {
+            "id": "trec-223",
+            "confidence": 0.283,
+            "probability": 0.465,
+            "text": "What is the electrical output in Madrid , Spain ?"
+          },
+          {
+            "id": "trec-190",
+            "confidence": 0.55,
+            "probability": 0.776,
+            "text": "What is the sales tax in Minnesota ?"
+          },
+          {
+            "id": "trec-99",
+            "confidence": 0.486,
+            "probability": 0.738,
+            "text": "What is the longest major league baseball-winning streak ?"
+          }
+        ]
+      },
+      {
+        "gold": "ENTY",
+        "predicted": "ABBR",
+        "count": 3,
+        "shareOfErrors": 12.5,
+        "items": [
+          {
+            "id": "trec-465",
+            "confidence": 0.278,
+            "probability": 0.552,
+            "text": "What do you call a word that is spelled the same backwards and forwards ?"
+          },
+          {
+            "id": "trec-164",
+            "confidence": 0.218,
+            "probability": 0.379,
+            "text": "What is another astronomic term for the Northern Lights ?"
+          },
+          {
+            "id": "trec-341",
+            "confidence": 0.469,
+            "probability": 0.695,
+            "text": "What was President Lyndon Johnson 's reform program called ?"
+          }
+        ]
+      },
+      {
+        "gold": "DESC",
+        "predicted": "ABBR",
+        "count": 2,
+        "shareOfErrors": 8.3,
+        "items": [
+          {
+            "id": "trec-266",
+            "confidence": 0.253,
+            "probability": 0.403,
+            "text": "What is dianetics ?"
+          },
+          {
+            "id": "trec-105",
+            "confidence": 0.146,
+            "probability": 0.373,
+            "text": "What is a micron ?"
+          }
+        ]
+      },
+      {
+        "gold": "DESC",
+        "predicted": "HUM",
+        "count": 1,
+        "shareOfErrors": 4.2,
+        "items": [
+          {
+            "id": "trec-43",
+            "confidence": 0.848,
+            "probability": 0.945,
+            "text": "What is a shaman ?"
+          }
+        ]
+      },
+      {
+        "gold": "LOC",
+        "predicted": "ENTY",
+        "count": 1,
+        "shareOfErrors": 4.2,
+        "items": [
+          {
+            "id": "trec-319",
+            "confidence": 0.306,
+            "probability": 0.568,
+            "text": "What is the brightest star ?"
+          }
+        ]
+      },
+      {
+        "gold": "ENTY",
+        "predicted": "HUM",
+        "count": 1,
+        "shareOfErrors": 4.2,
+        "items": [
+          {
+            "id": "trec-263",
+            "confidence": 0.327,
+            "probability": 0.622,
+            "text": "What instrument did Glenn Miller play ?"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,27 @@
+[jbang] Resolving dependencies...
+[jbang]    org.modeljars:modeljars:0.1.64
+[jbang]    org.modeljars.huggingface:cactus-compute.needle2-cact.cq2_mixed:2.0.0-cq2_mixed.2
+[jbang]    com.fasterxml.jackson.core:jackson-databind:2.22.3
+[jbang] Dependencies resolved
+[jbang] Building jar for tools.java...
+WARNING: Using incubator modules: jdk.incubator.vector
+Request:      Dim the bedroom lights to 20 percent and lock the front door.
+Model output: <think>
+'bedroom' -> room 'bedroom'; 'dim' -> action 'dim'; '20 percent' -> brightness 20. 'front door' -> door 'front door'; 'lock' -> action 'lock'.
+</think>
+<tool_call>[{"name":"set_lights","arguments":{"room":"bedroom","brightness":20}},{"name":"lock_door","arguments":{"door":"front door"}}]</tool_call>
+Tool calls:   2
+  set_lights {"room":"bedroom","brightness":20}
+  lock_door {"door":"front door"}
+Home state:
+  Lights:       {bedroom=20}
+  Locked doors: [front door]
+
+Metrics:
+  Load                 640 ms
+  Tokenization         19 ms
+  Prompt preparation   0 ms
+  Prefill              7,621 ms
+  TTFT                 7,657 ms
+  Decode               6,074 ms (13.8 tokens/s)
+  Tokens               123 prompt + 85 completion

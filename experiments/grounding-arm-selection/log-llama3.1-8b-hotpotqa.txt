@@ -1,0 +1,70 @@
+started 2026-10-20T19:39:54Z
+load: 0.95 0.32 0.11 1/202 2294
+[jbang] Resolving dependencies...
+[jbang]    org.modeljars:modeljars:0.1.63
+[jbang]    com.integrallis:models-router:0.5.1
+[jbang]    com.fasterxml.jackson.core:jackson-databind:2.22.3
+[jbang]    org.modeljars.huggingface:bartowski.llama-3.2-1b-instruct-gguf.q4_k_m:3.2.0-q4_k_m.1
+[jbang]    org.modeljars.huggingface:qwen.qwen3-8b-gguf.q4_k_m:3.0.0-q4_k_m.3
+[jbang]    org.modeljars.huggingface:bartowski.meta-llama-3.1-8b-instruct-gguf.q4_k_m:3.1.0-q4_k_m.2
+[jbang] Dependencies resolved
+[jbang] Building jar for arms.java...
+WARNING: Using incubator modules: jdk.incubator.vector
+ITEM      PROMPT        MS   HEAP MIB  ANSWER
+Oct 20, 2026 7:40:20 PM com.integrallis.vectors.core.PanamaVectorUtilSupportProvider create
+INFO: vectors-core: Using Panama Vector API SIMD provider (vector bits: 256)
+Oct 20, 2026 7:40:20 PM com.integrallis.vectors.core.VectorizationProvider logActiveToggles
+INFO: vectors-core: provider=PanamaVectorUtilSupport panama=true maxBits=256 preferredBits=256 fastVectorFMA=true fastScalarFMA=true sve=false ggufParallel=true ggufParallelThreshold=1048576 ggufExecutor=persistent ggufThreads=8 ggufChunksPerThread=2 mappedKQuantLongOffsets=auto(q4=true,q5=false,q6=false) q4ShortPairwiseSupported=true q4UnsignedPairwiseSupported=true toggles=[(defaults — no -Dvectors.* overrides)]
+1           5429     77079       1060  The Conversation
+2           4995     78360       1067  Harsh Times
+3           8601    141692       1080  Seasonal television specials.
+4           6436    107601       1090  Lush Ltd.
+5           4485     79869       1100  Dirleton village lies on the south shore of the Firth o…
+6           5691     94657       1108  I don't know.
+7           5533     96163       1121  We'll Burn That Bridge.
+8           5189     87015       1128  David Weissman.
+9           4612     75165       1135  I don't know.
+10          4539     66167        646  I don't know.
+11          6556    120888        654  Jillian Bell.
+12          6663    119885        670  I don't know
+13          8558    124310        680  keyboard function keys.
+14          6388     91107        690  I don't know
+15          6473    103516        702  Cranberry
+16          5147     77322        709  Wichita, Kansas.
+17          8175    121025        723  Teach the Controversy
+18          5571     87736        729  I don't know.
+19          5408     74091        736  Halliburton.
+20          7835    118556        748  Monica Lewinsky.
+21          4924     82214        757  Albert Ball.
+22          9247    143280        774  requiring only men to register for the draft was consti…
+23          6156     98387        781  I don't know.
+24          7783    122637        794  The Scotch Collie.
+25          5104     86927        800  Bottom of the World
+26          6057     91226        811  Brooklyn, New York.
+27          8766    144379        827  The Drop-In (podcast).
+28          8315    147066        838  Usher.
+29          7582    114650        850  I don't know.
+30          7380    125334        863  I don't know.
+31          6701    106602        875  13–3
+32          5751     96750        886  I don't know.
+33          4879     69986        890  World War II
+34          7547    121832        902  Romeo Montague
+35          5241     87134        647  I don't know.
+36          5593    101166        655  Brad Silberling.
+37          6979    116603        666  I don't know.
+38          6293    102117        679  Letters to Cleo.
+39          5758     88164        685  Kevin Spacey
+40          6202     96645        695  Bank of China Tower (Hong Kong).
+41          3878     66352        706  Mechte Navstrechu.
+42          4104     67234        710  Richmond River.
+43          9410    155216       1767  I don't know
+44          6689    110297       1776  Lady Antebellum
+45         14298    230448       1798  4,000 capacity (3,677 seated)
+46          5154     76260       1805  I don't know.
+47          7512    120700       1818  I don't know.
+48          5569     88873       1826  Carabao Cup.
+49          6262    104816       1838  Kurt Vonnegut
+50          4446     74601       1845  George Archainbaud.
+
+wrote 50 rows to results-llama3.1-8b-hotpotqa.jsonl
+finished 2026-10-20T21:06:43Z

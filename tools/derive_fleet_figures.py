@@ -138,7 +138,16 @@ def main() -> int:
     local_cost = (Decimal(local_in) * in_price + Decimal(local_out) * out_price) / Decimal(1_000_000)
     local_share = local_cost / ar_cost * 100
 
-    print(f"prompts: {len(rows)}, answered locally: {len(local_idx)}, escalated: {len(rows) - len(local_idx)}")
+    # "answered locally" and "stayed on this machine" are different questions now that a local arm
+    # can escalate part of its work, so this prints the first and defers the second to the demo's
+    # own line, which article_figures.boundary_counts reads.
+    print(f"prompts: {len(rows)}, answered locally: {len(local_idx)}, "
+          f"routed to a provider: {len(rows) - len(local_idx)}")
+    boundary = re.search(
+        r"\d+ of \d+ prompts sent no text off this machine; \d+ did, \d+ of them while a local"
+        r" arm answered", routed)
+    print("data boundary: " + (boundary.group(0) if boundary
+                               else "not stated by this log (predates the escalation ledger)"))
     print(f"all-remote: {ar_in} input + {ar_out} completion = ${ar_cost}")
     print(f"as routed:  {sum(p[0] for p in providers.values())} input + "
           f"{sum(p[1] for p in providers.values())} completion = ${routed_cost}")
@@ -163,7 +172,9 @@ def main() -> int:
               f"Haiku {Decimal(slow) / Decimal(fast):.1f} times faster")
 
     wall = re.search(r"conversation wall clock: (\d+) ms, of which (\d+) ms \(([\d.]+)%\)", routed)
-    load = re.search(r"one-off load of the four local models: (\d+) ms", routed)
+    # The count is a number in the log now, not the word "four": an arm added or removed used to
+    # leave this regex matching nothing and the line silently missing from the output.
+    load = re.search(r"one-off load of the \d+ local models: (\d+) ms", routed)
     base_wall = re.search(r"conversation wall clock: (\d+) ms", remote)
     if wall and load:
         print(f"routed wall clock {wall.group(1)} ms, {wall.group(2)} ms ({wall.group(3)}%) in model "

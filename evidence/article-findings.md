@@ -68,3 +68,25 @@ release suffixes with `<model-version>`; linked executable scripts and historica
 receipts retain the tested pins. The synchronizer enforces this distinction. All
 four Mermaid figures are regenerated as SVG and PNG. Model-family names remain
 exact, because they identify the models under discussion.
+
+## The quality claims, 2026-10-20
+
+Everything above was found by *running* the article. This section is what was found by **scoring**
+it: the fleet declared four capabilities and nothing had ever checked whether the models could
+serve them. Three of the four declarations were wrong, and the fourth was a claim about work the
+router never sent locally.
+
+| Finding | Observed effect | Correction | Evidence |
+| --- | --- | --- | --- |
+| Four quality numbers typed in by hand | `chat 0.45`, `chat 0.60`, `grounding 0.70`, `decision 0.90` were this application's opinion. Measured against gpt-5.1 on four public datasets they were 16 to 35 points optimistic, and the 0.70 contradicted the catalog's own evidence for that artifact (GUARDED_RAG, model-only correctness 0.111). | Every declared quality number deleted. The fleet declares capabilities only; Models 0.5.x made that the honest option by scoring an unmeasured task as a neutral prior instead of a zero. | [routing-accuracy](../experiments/routing-accuracy/README.md), protocol frozen before the first call; [FINDINGS](../experiments/routing-accuracy/FINDINGS.md) |
+| `grounding` declared on a 1B model | 35.0 exact match on SQuAD v2 against gpt-5.1's 70.0, and **0 abstentions out of 50** on the unanswerable half, with the prompt naming the abstention string. | The grounding arm is the largest Llama in the catalog, measured at 79.0 against gpt-5.1's 70.0 on the same 100 items. | [grounding-arm-selection](../experiments/grounding-arm-selection/README.md) |
+| `decision` declared on the local arm alone | 80.0 and 76.0 against gpt-5.1's 96.0 and 92.0 — 16 points behind on both datasets. | The fleet escalates a decision whose calibrated confidence falls below 0.6, measured live at 98.0 and 90.0, and ships with that default on. The escalation share and its dollar cost are reported beside the gain. | [ESCALATION.txt](../experiments/routing-accuracy/ESCALATION.txt), `results-decide-gated0-6-*.jsonl` |
+| `summarization` declared and never exercised | The only summarization prompt exceeds every local arm's context window, so eligibility ruled the arm out before the capability was consulted. Nothing measured it because nothing used it. | Declaration deleted. | `tools/parity_gate.py` reported it as unmeasured |
+| Confidence medians labelled with the wrong scope | `fleet.java` and FINDINGS reported "median 0.793 when right, 0.379 when wrong ... over 200 items". Those were SNIPS's numbers; pooled over 200 items the medians are 0.637 and 0.368, and TREC's separation is much narrower (0.483 against 0.350). | Both are now derived from the arm's own rows by `confidence_medians` in `tools/article_figures.py`, per dataset, and the narrower TREC separation is reported as the reason that dataset has to escalate three quarters of its decisions. | `results-decide-routed-*.jsonl` |
+| Nothing checked a declaration at all | Four wrong claims shipped because prose cannot check prose. | [`PARITY-BASIS.json`](../PARITY-BASIS.json) records the kind of evidence each declaration rests on, and `tools/parity_gate.py` fails the build with an exit code equal to the number it cannot verify. It matches each declaration to a measurement of the model the fleet actually ships, and refuses a declaration measured with an escalation gate the fleet does not ship. | `make check`, run in CI |
+
+Two harness defects were corrected in the same round, because a measurement harness that leaks is a
+measurement nobody can trust: `tools/isolated_host.sh` left a paid firewall behind when a run was
+killed between creating the firewall and creating the server, and looped forever when the provider
+refused the create instead of reporting the refusal. Both now fail loudly and tear down on every
+exit path.

@@ -1,0 +1,308 @@
+[
+  {
+    "arm": "routed",
+    "artifact": "results-qa-routed-squad2.jsonl",
+    "capabilityDataset": "qa/squad2",
+    "catalogIds": [
+      "bartowski_llama_3_2_1b_instruct_gguf_q4_k_m"
+    ],
+    "ci95": [
+      -47.0,
+      -23.0
+    ],
+    "coordinate": null,
+    "cost": {
+      "dollars": 0.0,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "providerCalls": 0,
+      "source": [
+        "no provider call"
+      ]
+    },
+    "delta": -35.0,
+    "experiment": "routing-accuracy",
+    "localShare": 100.0,
+    "metric": "exactMatch",
+    "n": 100,
+    "reference": {
+      "arm": "api",
+      "catalogIds": [
+        "gpt-5.1"
+      ],
+      "value": 70.0
+    },
+    "value": 35.0
+  },
+  {
+    "arm": "api",
+    "artifact": "results-qa-api-squad2.jsonl",
+    "capabilityDataset": "qa/squad2",
+    "catalogIds": [
+      "gpt-5.1"
+    ],
+    "coordinate": null,
+    "cost": {
+      "dollars": 0.041811,
+      "inputTokens": 22177,
+      "outputTokens": 1409,
+      "providerCalls": 100,
+      "source": [
+        "measured on this arm"
+      ]
+    },
+    "experiment": "routing-accuracy",
+    "metric": "exactMatch",
+    "n": 100,
+    "value": 70.0
+  },
+  {
+    "arm": "routed",
+    "artifact": "results-qa-routed-hotpotqa.jsonl",
+    "capabilityDataset": "qa/hotpotqa",
+    "catalogIds": [
+      "bartowski_llama_3_2_1b_instruct_gguf_q4_k_m"
+    ],
+    "ci95": [
+      -35.0,
+      -11.0
+    ],
+    "coordinate": null,
+    "cost": {
+      "dollars": 0.0,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "providerCalls": 0,
+      "source": [
+        "no provider call"
+      ]
+    },
+    "delta": -23.0,
+    "experiment": "routing-accuracy",
+    "localShare": 100.0,
+    "metric": "exactMatch",
+    "n": 100,
+    "reference": {
+      "arm": "api",
+      "catalogIds": [
+        "gpt-5.1"
+      ],
+      "value": 60.0
+    },
+    "value": 37.0
+  },
+  {
+    "arm": "api",
+    "artifact": "results-qa-api-hotpotqa.jsonl",
+    "capabilityDataset": "qa/hotpotqa",
+    "catalogIds": [
+      "gpt-5.1"
+    ],
+    "coordinate": null,
+    "cost": {
+      "dollars": 0.184801,
+      "inputTokens": 136777,
+      "outputTokens": 1383,
+      "providerCalls": 100,
+      "source": [
+        "measured on this arm"
+      ]
+    },
+    "experiment": "routing-accuracy",
+    "metric": "exactMatch",
+    "n": 100,
+    "value": 60.0
+  },
+  {
+    "arm": "routed",
+    "artifact": "results-decide-routed-snips.jsonl",
+    "capabilityDataset": "decide/snips",
+    "catalogIds": [
+      "unsloth_qwen3_5_4b_gguf_q4_k_m"
+    ],
+    "ci95": [
+      -24.0,
+      -9.0
+    ],
+    "coordinate": null,
+    "cost": {
+      "dollars": 0.0,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "providerCalls": 0,
+      "source": [
+        "no provider call"
+      ]
+    },
+    "delta": -16.0,
+    "experiment": "routing-accuracy",
+    "localShare": 100.0,
+    "metric": "accuracy",
+    "n": 100,
+    "reference": {
+      "arm": "api",
+      "catalogIds": [
+        "gpt-5.1"
+      ],
+      "value": 96.0
+    },
+    "value": 80.0
+  },
+  {
+    "arm": "api",
+    "artifact": "results-decide-api-snips.jsonl",
+    "capabilityDataset": "decide/snips",
+    "catalogIds": [
+      "gpt-5.1"
+    ],
+    "coordinate": null,
+    "cost": {
+      "dollars": 0.034267,
+      "inputTokens": 18214,
+      "outputTokens": 1150,
+      "providerCalls": 100,
+      "source": [
+        "measured on this arm"
+      ]
+    },
+    "experiment": "routing-accuracy",
+    "metric": "accuracy",
+    "n": 100,
+    "value": 96.0
+  },
+  {
+    "arm": "gated0-6",
+    "artifact": "results-decide-gated0-6-snips.jsonl",
+    "capabilityDataset": "decide/snips",
+    "catalogIds": [
+      "gpt-5.1",
+      "unsloth_qwen3_5_4b_gguf_q4_k_m"
+    ],
+    "ci95": [
+      0.0,
+      5.0
+    ],
+    "coordinate": null,
+    "cost": {
+      "dollars": 0.011383,
+      "inputTokens": 5978,
+      "outputTokens": 391,
+      "providerCalls": 33,
+      "source": [
+        "measured on the all-API arm's call for the same item"
+      ]
+    },
+    "delta": 2.0,
+    "escalatedShare": 33.0,
+    "experiment": "routing-accuracy",
+    "metric": "accuracy",
+    "n": 100,
+    "reference": {
+      "arm": "api",
+      "catalogIds": [
+        "gpt-5.1"
+      ],
+      "value": 96.0
+    },
+    "thresholds": [
+      0.6
+    ],
+    "value": 98.0
+  },
+  {
+    "arm": "routed",
+    "artifact": "results-decide-routed-trec.jsonl",
+    "capabilityDataset": "decide/trec",
+    "catalogIds": [
+      "unsloth_qwen3_5_4b_gguf_q4_k_m"
+    ],
+    "ci95": [
+      -25.0,
+      -8.0
+    ],
+    "coordinate": null,
+    "cost": {
+      "dollars": 0.0,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "providerCalls": 0,
+      "source": [
+        "no provider call"
+      ]
+    },
+    "delta": -16.0,
+    "experiment": "routing-accuracy",
+    "localShare": 100.0,
+    "metric": "accuracy",
+    "n": 100,
+    "reference": {
+      "arm": "api",
+      "catalogIds": [
+        "gpt-5.1"
+      ],
+      "value": 92.0
+    },
+    "value": 76.0
+  },
+  {
+    "arm": "api",
+    "artifact": "results-decide-api-trec.jsonl",
+    "capabilityDataset": "decide/trec",
+    "catalogIds": [
+      "gpt-5.1"
+    ],
+    "coordinate": null,
+    "cost": {
+      "dollars": 0.03124,
+      "inputTokens": 16744,
+      "outputTokens": 1031,
+      "providerCalls": 100,
+      "source": [
+        "measured on this arm"
+      ]
+    },
+    "experiment": "routing-accuracy",
+    "metric": "accuracy",
+    "n": 100,
+    "value": 92.0
+  },
+  {
+    "arm": "gated0-6",
+    "artifact": "results-decide-gated0-6-trec.jsonl",
+    "capabilityDataset": "decide/trec",
+    "catalogIds": [
+      "gpt-5.1",
+      "unsloth_qwen3_5_4b_gguf_q4_k_m"
+    ],
+    "ci95": [
+      -6.0,
+      2.0
+    ],
+    "coordinate": null,
+    "cost": {
+      "dollars": 0.023053,
+      "inputTokens": 12370,
+      "outputTokens": 759,
+      "providerCalls": 74,
+      "source": [
+        "measured on the all-API arm's call for the same item"
+      ]
+    },
+    "delta": -2.0,
+    "escalatedShare": 74.0,
+    "experiment": "routing-accuracy",
+    "metric": "accuracy",
+    "n": 100,
+    "reference": {
+      "arm": "api",
+      "catalogIds": [
+        "gpt-5.1"
+      ],
+      "value": 92.0
+    },
+    "thresholds": [
+      0.6
+    ],
+    "value": 90.0
+  }
+]

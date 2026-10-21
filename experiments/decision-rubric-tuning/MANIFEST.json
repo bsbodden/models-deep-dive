@@ -1,0 +1,26 @@
+{
+  "measuredSeed": 20261019,
+  "sampleSize": 100,
+  "samples": {
+    "snips": {
+      "corpus": 700,
+      "drawnFrom": 600,
+      "file": "sample-snips-heldout.json",
+      "items": 100,
+      "measuredSampleIds": 100,
+      "overlapWithMeasured": 0,
+      "sha256": "d4b29a13dd1cf8856bb1e8e99b714888fb55ac1519a1fb62db30bd71e5d931e5"
+    },
+    "trec": {
+      "corpus": 500,
+      "drawnFrom": 400,
+      "file": "sample-trec-heldout.json",
+      "items": 100,
+      "measuredSampleIds": 100,
+      "overlapWithMeasured": 0,
+      "sha256": "12cb759f26d1debd440d85c1d59b75be5a75f54c3432a18bcee6abd909ce45b3"
+    }
+  },
+  "seed": 20261021,
+  "slice": "every item not in ../routing-accuracy's committed sample, shuffled with this file's own seed, first 100"
+}

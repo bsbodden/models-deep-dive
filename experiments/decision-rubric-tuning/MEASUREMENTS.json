@@ -1,0 +1,34 @@
+[
+  {
+    "arm": "routed",
+    "artifact": "results-decide-routed-snips-heldout.jsonl",
+    "capabilityDataset": "decide/snips-heldout",
+    "catalogIds": [
+      "unsloth_qwen3_5_4b_gguf_q4_k_m"
+    ],
+    "coordinate": null,
+    "experiment": "decision-rubric-tuning",
+    "medianConfidenceRight": 0.797,
+    "medianConfidenceWrong": 0.486,
+    "metric": "accuracy",
+    "n": 100,
+    "value": 78.0,
+    "wouldEscalateAt06": 45.0
+  },
+  {
+    "arm": "routed",
+    "artifact": "results-decide-routed-trec-heldout.jsonl",
+    "capabilityDataset": "decide/trec-heldout",
+    "catalogIds": [
+      "unsloth_qwen3_5_4b_gguf_q4_k_m"
+    ],
+    "coordinate": null,
+    "experiment": "decision-rubric-tuning",
+    "medianConfidenceRight": 0.49,
+    "medianConfidenceWrong": 0.35,
+    "metric": "accuracy",
+    "n": 100,
+    "value": 78.0,
+    "wouldEscalateAt06": 80.0
+  }
+]

@@ -1,0 +1,86 @@
+[
+  {
+    "arm": "decisions",
+    "artifact": "experiments/decision-threshold/stage3-cv.json",
+    "capabilityDataset": "tuning/snips",
+    "coordinate": "org.modeljars.composite:harriet",
+    "delta": -3.0,
+    "escalatedShareDelta": -12.0,
+    "experiment": "decision-threshold",
+    "metric": "held-out label accuracy, cross-validated threshold",
+    "n": 100,
+    "note": "a tuning sweep, not a declaration: these thresholds are not what the fleet ships, and tuning/* is not a key any capability maps to",
+    "reference": {
+      "arm": "shipped threshold 0.6",
+      "value": 96.0
+    },
+    "selectedThresholds": [
+      0.47,
+      0.55,
+      0.47,
+      0.47,
+      0.47
+    ],
+    "value": 93.0
+  },
+  {
+    "arm": "decisions",
+    "artifact": "experiments/decision-threshold/stage4-calibration.json",
+    "brierDeltaCi95": [
+      -0.0351,
+      0.0046
+    ],
+    "brierPlattScaled": 0.1044,
+    "brierReported": 0.1198,
+    "capabilityDataset": "tuning/snips",
+    "coordinate": "org.modeljars.composite:harriet",
+    "experiment": "decision-threshold",
+    "meanConfidence": 0.6635,
+    "metric": "expected calibration error of the reported confidence",
+    "n": 100,
+    "observedAccuracy": 0.8,
+    "value": 0.15
+  },
+  {
+    "arm": "decisions",
+    "artifact": "experiments/decision-threshold/stage3-cv.json",
+    "capabilityDataset": "tuning/trec",
+    "coordinate": "org.modeljars.composite:harriet",
+    "delta": -1.0,
+    "escalatedShareDelta": -15.0,
+    "experiment": "decision-threshold",
+    "metric": "held-out label accuracy, cross-validated threshold",
+    "n": 100,
+    "note": "a tuning sweep, not a declaration: these thresholds are not what the fleet ships, and tuning/* is not a key any capability maps to",
+    "reference": {
+      "arm": "shipped threshold 0.6",
+      "value": 90.0
+    },
+    "selectedThresholds": [
+      0.55,
+      0.52,
+      0.55,
+      0.55,
+      0.33
+    ],
+    "value": 89.0
+  },
+  {
+    "arm": "decisions",
+    "artifact": "experiments/decision-threshold/stage4-calibration.json",
+    "brierDeltaCi95": [
+      -0.1486,
+      -0.0414
+    ],
+    "brierPlattScaled": 0.1743,
+    "brierReported": 0.2695,
+    "capabilityDataset": "tuning/trec",
+    "coordinate": "org.modeljars.composite:harriet",
+    "experiment": "decision-threshold",
+    "meanConfidence": 0.455,
+    "metric": "expected calibration error of the reported confidence",
+    "n": 100,
+    "observedAccuracy": 0.76,
+    "value": 0.32
+  }
+]

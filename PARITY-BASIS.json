@@ -1,0 +1,57 @@
+{
+  "_comment": [
+    "Every capability this fleet declares, and the kind of evidence the declaration rests on.",
+    "tools/parity_gate.py checks the evidence, not the claim, and refuses a basis it cannot check.",
+    "",
+    "There is no 'waived' entry and no way to write one. A declaration that measured badly does",
+    "not get excused because the measurement is inconvenient -- that is the failure this gate",
+    "exists to stop. Leaving the gate red is the correct outcome until the gap closes or the",
+    "declaration is deleted from fleet.java.",
+    "",
+    "A declared quality number is checked too, and against a stricter rule than a declaration:",
+    "the only value the gate accepts is the WORST measurement behind it, because a mean lets a",
+    "strong dataset hide a weak one and the number a floor compares against has to be the one a",
+    "deployment can rely on. This fleet once carried four of these as guesses and they measured",
+    "16 to 35 points optimistic.",
+    "",
+    "basis: frontier     the fleet may send this work to gpt-5.1, so it has to be within the",
+    "                    margin of gpt-5.1 on every dataset that speaks for the capability",
+    "basis: best-local   fleet.java's requirement for this capability sets LOCAL_ONLY, so gpt-5.1",
+    "                    is not a candidate the router may pick; the declaration goes to the local",
+    "                    arm the measurement puts first, and the gap to gpt-5.1 is still printed",
+    "basis: latency-only the work has no accuracy axis; refused for anything a dataset scores"
+  ],
+  "declarations": {
+    "tiny/liveness": {
+      "basis": "latency-only",
+      "measuredBy": {
+        "evidence": "evidence/fleet-routing/runs"
+      },
+      "reason": "A liveness check's only correct answer is a few tokens saying the session is alive. There is no accuracy axis: the prompt carries no question, so no public dataset can score it and no frontier comparison means anything. Latency is the whole metric and it is measured, per run, in the evidence directory named here."
+    },
+    "decisions/decision": {
+      "basis": "frontier",
+      "measuredBy": {
+        "experiment": "routing-accuracy",
+        "arm": "gated0-6"
+      },
+      "reason": "Harriet answers three typed questions with a calibrated confidence, and the fleet escalates a question whose confidence falls below its threshold. The arm measured here is that configuration -- the one the fleet ships -- not the local-only arm, which is 16 points behind gpt-5.1 on both datasets and is reported beside it."
+    },
+    "grounder/grounding-single-passage": {
+      "basis": "best-local",
+      "measuredBy": {
+        "experiment": "grounding-arm-selection",
+        "arm": "llama3.1-8b"
+      },
+      "reason": "The fleet's grounded prompts set dataBoundary(LOCAL_ONLY) -- a customer's notes do not leave the machine -- so gpt-5.1 is not a candidate the router may pick for them and the question is which local arm serves them best. On SQuAD v2, the dataset whose shape this fleet's retrieval produces, this arm is first among the local arms and 9.0 points ahead of gpt-5.1. The broad `grounding` claim is not made: at n=100 this arm scores 31.0 on HotpotQA against gpt-5.1's 60.0 and 6.0 behind the 1B arm, and the gate still holds the broad name to both datasets for anyone who declares it."
+    },
+    "grounder/chat": {
+      "basis": "frontier",
+      "measuredBy": {
+        "experiment": "local-only-chat",
+        "arm": "llama3.1-8b"
+      },
+      "reason": "This fleet's chat prompts set dataBoundary(LOCAL_ONLY), so a best-local basis would be available -- and is not used, because this arm does not need it. On CoQA and QuAC, 100 items each, it is 1.6 and 0.9 token F1 points off gpt-5.1, inside the two points the gate requires, which is the stronger claim. The arm it replaced, a 0.6B, was 69.2 and 21.8 points off and declined 62 and 72 of its 100 items; it declares nothing now and the router cannot select it. What this basis does not cover is the rest of chat: tone, instruction following, refusal behaviour and multi-turn task completion are not conversational question answering, and no dataset here scores them."
+    }
+  }
+}

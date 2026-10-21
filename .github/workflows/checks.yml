@@ -1,0 +1,25 @@
+name: checks
+
+# The three claims this repository makes about itself, checked on every push:
+#   every scored number re-derives from the raw rows committed beside it,
+#   every figure in the article re-derives from the archived run logs,
+#   every capability the demo fleet declares rests on a measurement.
+#
+# What is deliberately not here: anything that needs a JDK, the local weights or a provider key.
+# `make measured` runs those on a machine that has them, and pretending a runner could is how a
+# green check stops meaning anything.
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: make check

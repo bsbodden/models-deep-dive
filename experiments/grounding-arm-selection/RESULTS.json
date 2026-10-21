@@ -1,0 +1,191 @@
+{
+  "acceptWithin": 2.0,
+  "bestLocal": {
+    "hotpotqa": [
+      "llama1b"
+    ],
+    "squad2": [
+      "llama3.1-8b"
+    ]
+  },
+  "datasets": {
+    "hotpotqa": {
+      "arms": {
+        "frontier": {
+          "answerable": {
+            "abstained": 10,
+            "exactMatch": 60.0,
+            "n": 100,
+            "tokenF1": 71.32
+          },
+          "exactMatch": 60.0,
+          "local": false,
+          "maxHeapMiB": null,
+          "medianMillis": 637.5,
+          "n": 100,
+          "tokenF1": 71.32
+        },
+        "llama1b": {
+          "answerable": {
+            "abstained": 0,
+            "exactMatch": 37.0,
+            "n": 100,
+            "tokenF1": 47.24
+          },
+          "behindBestLocal": 0.0,
+          "carriesDeclaration": true,
+          "deltaExactMatch": -23.0,
+          "driftFromFrozen": 0.0,
+          "exactMatch": 37.0,
+          "frozenExactMatch": 37.0,
+          "interval95": [
+            -35.0,
+            -11.0
+          ],
+          "local": true,
+          "maxHeapMiB": null,
+          "medianMillis": 12897.5,
+          "n": 100,
+          "tokenF1": 47.24,
+          "verdict": "REJECT"
+        },
+        "llama3.1-8b": {
+          "answerable": {
+            "abstained": 33,
+            "exactMatch": 31.0,
+            "n": 100,
+            "tokenF1": 41.88
+          },
+          "behindBestLocal": 6.0,
+          "carriesDeclaration": false,
+          "deltaExactMatch": -29.0,
+          "exactMatch": 31.0,
+          "interval95": [
+            -40.0,
+            -18.0
+          ],
+          "local": true,
+          "maxHeapMiB": 1915,
+          "medianMillis": 73180.0,
+          "n": 100,
+          "tokenF1": 41.88,
+          "verdict": "REJECT"
+        }
+      },
+      "artifacts": {
+        "frontier": "../routing-accuracy/results-qa-api-hotpotqa.jsonl",
+        "llama1b": "../routing-accuracy/results-qa-routed-hotpotqa.jsonl",
+        "llama3.1-8b": "results-llama3.1-8b-hotpotqa.jsonl + results-llama3.1-8b-hotpotqa.from50.jsonl"
+      },
+      "n": 100
+    },
+    "squad2": {
+      "arms": {
+        "frontier": {
+          "answerable": {
+            "abstained": 2,
+            "exactMatch": 70.0,
+            "n": 50,
+            "tokenF1": 86.6
+          },
+          "exactMatch": 70.0,
+          "local": false,
+          "maxHeapMiB": null,
+          "medianMillis": 619.5,
+          "n": 100,
+          "tokenF1": 78.3,
+          "unanswerable": {
+            "abstained": 35,
+            "exactMatch": 70.0,
+            "n": 50,
+            "tokenF1": 70.0
+          }
+        },
+        "llama1b": {
+          "answerable": {
+            "abstained": 0,
+            "exactMatch": 70.0,
+            "n": 50,
+            "tokenF1": 76.59
+          },
+          "behindBestLocal": 44.0,
+          "carriesDeclaration": false,
+          "deltaExactMatch": -35.0,
+          "driftFromFrozen": 0.0,
+          "exactMatch": 35.0,
+          "frozenExactMatch": 35.0,
+          "interval95": [
+            -47.0,
+            -23.0
+          ],
+          "local": true,
+          "maxHeapMiB": null,
+          "medianMillis": 1903.5,
+          "n": 100,
+          "tokenF1": 38.29,
+          "unanswerable": {
+            "abstained": 0,
+            "exactMatch": 0.0,
+            "n": 50,
+            "tokenF1": 0.0
+          },
+          "verdict": "REJECT"
+        },
+        "llama3.1-8b": {
+          "answerable": {
+            "abstained": 3,
+            "exactMatch": 72.0,
+            "n": 50,
+            "tokenF1": 84.91
+          },
+          "behindBestLocal": 0.0,
+          "carriesDeclaration": true,
+          "deltaExactMatch": 9.0,
+          "exactMatch": 79.0,
+          "interval95": [
+            1.0,
+            17.0
+          ],
+          "local": true,
+          "maxHeapMiB": 552,
+          "medianMillis": 13477.5,
+          "n": 100,
+          "tokenF1": 85.45,
+          "unanswerable": {
+            "abstained": 43,
+            "exactMatch": 86.0,
+            "n": 50,
+            "tokenF1": 86.0
+          },
+          "verdict": "ACCEPT"
+        }
+      },
+      "artifacts": {
+        "frontier": "../routing-accuracy/results-qa-api-squad2.jsonl",
+        "llama1b": "../routing-accuracy/results-qa-routed-squad2.jsonl",
+        "llama3.1-8b": "results-llama3.1-8b-squad2.jsonl"
+      },
+      "n": 100
+    }
+  },
+  "overall": {
+    "llama1b": {
+      "call": "REJECT",
+      "perDataset": [
+        "REJECT",
+        "REJECT"
+      ]
+    },
+    "llama3.1-8b": {
+      "call": "REJECT",
+      "perDataset": [
+        "ACCEPT",
+        "REJECT"
+      ]
+    }
+  },
+  "rejectBeyond": 5.0,
+  "resamples": 10000,
+  "scorer": "../routing-accuracy/score.py",
+  "seed": 20261019
+}

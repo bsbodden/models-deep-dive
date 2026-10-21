@@ -1,0 +1,12 @@
+[jbang] Resolving dependencies...
+[jbang]    org.modeljars:modeljars:0.1.64
+[jbang]    org.modeljars.huggingface:ggml-org.embeddinggemma-2-gguf.q8_0:2.0.0-q8_0.1
+[jbang] Dependencies resolved
+[jbang] Building jar for gemma.java...
+WARNING: Using incubator modules: jdk.incubator.vector
+Query:     task: search result | query: How can public transit connect neighborhoods?
+Document recipe: title: none | text: <document text>
+First eight components: [-0.0099079935, -0.01696781, -0.015205306, -0.013024352, -0.01057791, -0.02443056, -0.005509168, 0.008825546]
+Dimensions: 768
+Load:       2,348 ms
+Execution:   1,328 ms

@@ -1,0 +1,5 @@
+Evidence: I was charged twice for my September subscription and no refund arrived.
+Rubrics: none
+
+  the library refuses a rubric-less answer space:
+  java.lang.IllegalArgumentException: criterion for false must not be blank

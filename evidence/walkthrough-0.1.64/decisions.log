@@ -1,0 +1,11 @@
+[jbang] Resolving dependencies...
+[jbang]    org.modeljars.composite:harriet:0.1.64
+[jbang] Dependencies resolved
+[jbang] Building jar for decisions.java...
+WARNING: Using incubator modules: jdk.incubator.vector
+Evidence: I was charged twice for my September subscription and no refund arrived.
+Rubrics: attached to every outcome
+
+  billing?   true         p=0.920  confidence=0.60
+  queue      billing      p=0.991  confidence=0.95
+  urgency    today        p=0.389  confidence=0.02

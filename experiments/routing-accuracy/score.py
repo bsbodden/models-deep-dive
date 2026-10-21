@@ -22,6 +22,10 @@ from collections import Counter
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE.parent.parent / "tools"))
+
+import measurements  # noqa: E402  the one record shape parity_gate.py reads
+
 RESAMPLES = 10_000
 SEED = 20261019
 ACCEPT_WITHIN = 2.0   # points; see README.md
@@ -128,6 +132,73 @@ def verdict(delta: float, low: float, high: float) -> str:
     return "INCONCLUSIVE"
 
 
+def provider_cost(rows: dict, usage_from: dict | None = None) -> dict:
+    """What an arm spent at the provider, from token counts the harness recorded per item.
+
+    The prices are read out of `code/fleet.java`, not restated here: the article quotes that file's
+    numbers and two copies of a price list is how a table ends up disagreeing with the code beside
+    it. Only gpt-5.1's prices are needed -- it is the only provider these experiments call.
+
+    `usage_from` covers one case honestly rather than quietly. The gated arm's rows were collected
+    before `accuracy.java` recorded the usage of an escalated call, so for those rows the token
+    counts come from the all-API arm's measurement **of the same item**: the escalation sends that
+    arm's prompt, byte for byte, with the same model and the same 16-token cap, and the scorer has
+    already refused the whole comparison if any prompt hash differs. The input tokens are therefore
+    identical by construction and the output tokens are a second sample of the same capped
+    completion. `source` says which of the two happened, in the artifact, so nobody has to guess.
+    The harness now records it directly and the next collection will not need this.
+    """
+    source = (HERE.parent.parent / "code/fleet.java").read_text()
+    prices = dict(re.findall(r"static final double (PREMIUM_(?:IN|OUT))\s*=\s*([0-9.]+);", source))
+    if len(prices) != 2:
+        raise SystemExit("could not read PREMIUM_IN/PREMIUM_OUT out of code/fleet.java")
+
+    def usage(item_id: str, row: dict) -> tuple[int, int, str]:
+        if "providerInputTokens" in row or "providerOutputTokens" in row:
+            return (row.get("providerInputTokens", 0), row.get("providerOutputTokens", 0),
+                    "measured on this arm")
+        if usage_from and item_id in usage_from:
+            other = usage_from[item_id]
+            return (other.get("providerInputTokens", 0), other.get("providerOutputTokens", 0),
+                    "measured on the all-API arm's call for the same item")
+        return (0, 0, "no provider call")
+
+    inbound = outbound = calls = 0
+    sources = set()
+    for item_id, row in rows.items():
+        if row.get("local", True) and not row.get("escalated"):
+            continue
+        tokens_in, tokens_out, origin = usage(item_id, row)
+        if not (tokens_in or tokens_out):
+            continue
+        inbound += tokens_in
+        outbound += tokens_out
+        calls += 1
+        sources.add(origin)
+    dollars = (inbound * float(prices["PREMIUM_IN"])
+               + outbound * float(prices["PREMIUM_OUT"])) / 1_000_000
+    return {"providerCalls": calls, "inputTokens": inbound, "outputTokens": outbound,
+            "dollars": round(dollars, 6), "source": sorted(sources) or ["no provider call"]}
+
+
+def models_used(rows: dict) -> list[str]:
+    """The catalog ids an arm actually answered with, read off its own rows.
+
+    `selected` is what the harness recorded at the moment it answered, so this is the arm's
+    identity as measured rather than as configured. The parity gate matches a fleet's declared
+    model id against this list, which is why it is an id and not a prose name.
+    """
+    return sorted({row["selected"] for row in rows.values() if row.get("selected")})
+
+
+def gated_arms(stage: str, dataset: str) -> list[str]:
+    """Every escalation-gated arm present for this dataset, by name, lowest threshold first."""
+    prefix, suffix = f"results-{stage}-gated", f"-{dataset}.jsonl"
+    found = [path.name[len(prefix) - len("gated"):-len(suffix)]
+             for path in HERE.glob(f"{prefix}*{suffix}")]
+    return sorted(found)
+
+
 def load(stage: str, arm: str, dataset: str) -> dict | None:
     path = HERE / f"results-{stage}-{arm}-{dataset}.jsonl"
     if not path.exists():
@@ -144,6 +215,7 @@ def main() -> int:
     manifest = json.loads((HERE / "MANIFEST.json").read_text())
     report = {"resamples": RESAMPLES, "seed": SEED, "stages": {}}
     lines = []
+    records = []
 
     for stage, datasets in (("qa", ("squad2", "hotpotqa")), ("decide", ("snips", "trec"))):
         for dataset in datasets:
@@ -210,6 +282,83 @@ def main() -> int:
             if split:
                 report["stages"][f"{stage}/{dataset}"]["split"] = split
 
+            # One record per arm, in the shape parity_gate.py reads. The verdicts stay in this
+            # file; a record carries a number, the items it was measured over, and the catalog ids
+            # of the models that produced it, so a gate can check that the thing measured is the
+            # thing a fleet declares.
+            reference = {"arm": "api", "catalogIds": models_used(api),
+                         "value": round(right[headline], 2)}
+            records.append(measurements.record(
+                experiment="routing-accuracy", capability_dataset=f"{stage}/{dataset}",
+                arm="routed", coordinate=None, metric=headline, value=left[headline],
+                n=left["n"], artifact=f"results-{stage}-routed-{dataset}.jsonl",
+                reference=reference, delta=delta, ci95=[low, high],
+                extra={"catalogIds": models_used(routed),
+                       "localShare": round(local_share, 1),
+                       "cost": provider_cost(routed)}))
+            records.append(measurements.record(
+                experiment="routing-accuracy", capability_dataset=f"{stage}/{dataset}",
+                arm="api", coordinate=None, metric=headline, value=right[headline],
+                n=right["n"], artifact=f"results-{stage}-api-{dataset}.jsonl",
+                extra={"catalogIds": models_used(api),
+                       "cost": provider_cost(api)}))
+
+            # The escalation-gated arms, when they were collected. The fleet's decision requirement
+            # carries no local-only boundary, so "what this fleet does" can include escalating a
+            # decision the local model is not confident about -- and that configuration is a
+            # different arm with a different accuracy, not a footnote on the local-only one.
+            for arm in gated_arms(stage, dataset):
+                gated = load(stage, arm, dataset)
+                if not gated:
+                    continue
+                gated = {k: v for k, v in gated.items() if k in shared}
+                if len(gated) != len(shared):
+                    lines.append(f"{stage}/{dataset}/{arm}: {len(gated)} of {len(shared)} items, "
+                                 "not scored")
+                    continue
+                drifted = [k for k in gated
+                           if gated[k]["promptSha256"] != routed[k]["promptSha256"]]
+                if drifted:
+                    raise SystemExit(f"{stage}/{dataset}: {arm} differs from the routed arm on "
+                                     f"{len(drifted)} prompts")
+                if stage == "qa":
+                    scored = score_qa(gated, gold)
+                else:
+                    scored = score_labels(gated, gold, manifest["labelSets"][dataset])
+                gated_delta = scored[headline] - right[headline]
+                gated_low, gated_high = paired_interval(scored, right)
+                escalated = sum(1 for row in gated.values() if row.get("escalated"))
+                thresholds = sorted({row.get("threshold") for row in gated.values()
+                                     if row.get("threshold") is not None})
+                summary = {
+                    "n": scored["n"], "metric": metric,
+                    "value": round(scored[headline], 2),
+                    "allApi": round(right[headline], 2),
+                    "delta": round(gated_delta, 2),
+                    "ci95": [round(gated_low, 2), round(gated_high, 2)],
+                    "escalatedShare": round(100 * escalated / len(gated), 1),
+                    "thresholds": thresholds,
+                    "cost": provider_cost(gated, api),
+                    "verdict": verdict(gated_delta, gated_low, gated_high),
+                }
+                report["stages"][f"{stage}/{dataset}"].setdefault("gatedArms", {})[arm] = summary
+                records.append(measurements.record(
+                    experiment="routing-accuracy", capability_dataset=f"{stage}/{dataset}",
+                    arm=arm, coordinate=None, metric=headline, value=scored[headline],
+                    n=scored["n"], artifact=f"results-{stage}-{arm}-{dataset}.jsonl",
+                    reference=reference, delta=gated_delta,
+                    ci95=[gated_low, gated_high],
+                    extra={"catalogIds": models_used(gated),
+                           "escalatedShare": summary["escalatedShare"],
+                           "thresholds": thresholds,
+                           "cost": provider_cost(gated, api)}))
+                lines.append(
+                    f"{stage}/{dataset}/{arm}: n={scored['n']} {metric} {scored[headline]:.1f} "
+                    f"against all-API {right[headline]:.1f}, delta {gated_delta:+.1f} "
+                    f"[{gated_low:+.1f}, {gated_high:+.1f}] -- {summary['verdict']}; "
+                    f"{summary['escalatedShare']:.0f}% escalated at threshold "
+                    f"{thresholds if len(thresholds) != 1 else thresholds[0]}")
+
             # The grounding-policy arm is reported, not judged: it re-decides the same collected
             # answers through GroundedAnswerPolicy, which fleet.java does not use and rag.java
             # does. It exists because "you did not use the policy" is the first objection to the
@@ -237,8 +386,9 @@ def main() -> int:
                              f"F1 {values['tokenF1']:.1f} abstained {values['abstained']}")
 
     (HERE / "RESULTS.json").write_text(json.dumps(report, indent=2) + "\n")
+    written = measurements.write(HERE, records)
     print("\n".join(lines))
-    print("\nRESULTS.json written")
+    print(f"\nRESULTS.json and {written.name} written ({len(records)} records)")
     return 0
 
 

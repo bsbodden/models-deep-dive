@@ -6,16 +6,16 @@
 // 20x: qwen3-0.6b answered the same prompt in 1,169 ms alone and 23,946 ms beside the others.
 // Three threads each shares the twelve this host has.
 //RUNTIME_OPTIONS -Dmodels.native.kernels.threads=3
-//DEPS org.modeljars:modeljars:0.1.63
-//DEPS com.integrallis:models-router:0.5.1
-//DEPS com.integrallis:models-rag:0.5.1
+//DEPS org.modeljars:modeljars:0.1.64
+//DEPS com.integrallis:models-router:0.5.2
+//DEPS com.integrallis:models-rag:0.5.2
 //DEPS com.integrallis:vectors-db:0.1.30
 //DEPS com.fasterxml.jackson.core:jackson-databind:2.22.3
-//DEPS org.modeljars.composite:harriet:0.1.63
+//DEPS org.modeljars.composite:harriet:0.1.64
 //DEPS org.modeljars.huggingface:ggml-org.embeddinggemma-300m-gguf.q8_0:3.0.0-q8_0.1
 //DEPS org.modeljars.huggingface:huggingfacetb.smollm2-360m-instruct-gguf.q8_0:2.0.0-q8_0.1
 //DEPS org.modeljars.huggingface:ggml-org.qwen3-0.6b-gguf.q4_0:3.0.0-q4_0.1
-//DEPS org.modeljars.huggingface:bartowski.llama-3.2-1b-instruct-gguf.q4_k_m:3.2.0-q4_k_m.1
+//DEPS org.modeljars.huggingface:bartowski.meta-llama-3.1-8b-instruct-gguf.q4_k_m:3.1.0-q4_k_m.2
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -109,16 +109,33 @@ class fleet {
       "org.modeljars.huggingface:huggingfacetb.smollm2-360m-instruct-gguf.q8_0:2.0.0-q8_0.1";
   static final String SMALL =
       "org.modeljars.huggingface:ggml-org.qwen3-0.6b-gguf.q4_0:3.0.0-q4_0.1";
+  // The grounding arm was a 1B until it was measured. On SQuAD v2 the 1B scored 35.0 exact match
+  // against gpt-5.1's 70.0 and declined 0 of the 50 unanswerable questions, with the prompt naming
+  // the string to decline with; this 8B scores 79.0 on the same 100 items and declines 43 of 50.
+  // On HotpotQA it goes the other way -- 31.0 against the 1B's 37.0 and gpt-5.1's 60.0 -- which is
+  // why the capability this arm declares is the narrow one. The trade is in the same evidence:
+  // 4.92 GB of weights instead of 0.81, and 13.5 s per answer on eight dedicated cores against
+  // 1.9 s. See experiments/grounding-arm-selection.
   static final String GROUNDER =
-      "org.modeljars.huggingface:bartowski.llama-3.2-1b-instruct-gguf.q4_k_m:3.2.0-q4_k_m.1";
+      "org.modeljars.huggingface:bartowski.meta-llama-3.1-8b-instruct-gguf.q4_k_m:3.1.0-q4_k_m.2";
 
   // The same four models as the catalog names them. A coordinate is what you depend on; a catalog
   // id is what discovery reports and what the router then routes to, so the ledger below is keyed
   // on the second. Harriet's composite contributes its base weights under the fourth id.
   static final String TINY_ID = "smollm2_360m_instruct_q8_0";
   static final String SMALL_ID = "qwen3_0_6b_q4_0";
-  static final String GROUNDER_ID = "bartowski_llama_3_2_1b_instruct_gguf_q4_k_m";
+  static final String GROUNDER_ID = "llama_3_1_8b_instruct_q4_k_m";
   static final String HARRIET_ID = "unsloth_qwen3_5_4b_gguf_q4_k_m";
+
+  /**
+   * Every local arm, in one list, because the run record counts them.
+   *
+   * <p>The startup line used to spell the count -- "the four local models" -- and the article's
+   * figure generator parsed that word back out of the log. An arm added or removed would have left
+   * both of them describing a fleet that no longer existed, which is the same class of drift the
+   * generated figures exist to stop.
+   */
+  static final List<String> LOCAL_IDS = List.of(TINY_ID, SMALL_ID, GROUNDER_ID, HARRIET_ID);
 
   /** A fleet client is whatever the application can call. Here: text in, text out. */
   interface Responder {
@@ -129,6 +146,18 @@ class fleet {
 
   /** Provider-reported usage for the last remote call, which beats any local estimate. */
   static RoutingUsage lastRemoteUsage;
+
+  /**
+   * Tokens a provider billed for work a *local* arm escalated, which the router never saw.
+   *
+   * <p>Kept apart from {@link #lastRemoteUsage} on purpose. When the decision arm escalates a
+   * question it is unsure about, the model the router selected is still Harriet, so the per-prompt
+   * accounting below takes its local branch and the provider's tokens were counted nowhere at all:
+   * the first run with the escalation gate on by default sent two questions to gpt-5.1 and
+   * reported a ledger that did not contain them. Sharing one field would be worse than silence,
+   * because the router's usage reporter would then charge a local candidate for a remote call.
+   */
+  static final Map<String, long[]> lastEscalationUsage = new LinkedHashMap<>();
 
   /** One running transcript per session, which is what makes "tell me more" answerable. */
   static final List<ChatMessage> TRANSCRIPT =
@@ -181,6 +210,7 @@ class fleet {
     warmers.put(GROUNDER_ID, text -> complete(GROUNDER, List.of(ChatMessage.user(text)), 8));
     // A lambda, not a method reference: the local fleet variable shadows this class's own name.
     warmers.put(HARRIET_ID, text -> decide(text));
+    warming = true;
     for (var warm : warmers.entrySet()) {
       long began = System.nanoTime();
       warm.getValue().respond("ready?");
@@ -188,6 +218,11 @@ class fleet {
       warmTotal += millis;
       System.out.printf("%-32s %9d%n", abbreviate(warm.getKey(), 32), millis);
     }
+    warming = false;
+    // Zeroed after the warm-up, not declared once: this counts what the measured conversation
+    // escalated, and the first run with the gate on reported five escalations out of three
+    // questions because the warm-up's were still in the total.
+    lastDecisionEscalations = 0;
     System.out.printf("%-32s %9d%n", "total", warmTotal);
 
     var floor = qualityFloor(args);
@@ -243,11 +278,13 @@ class fleet {
     long sessionStart = System.nanoTime();
     TRANSCRIPT.subList(1, TRANSCRIPT.size()).clear();
     int escalated = 0;
+    int promptsThatLeftTheMachine = 0;
     var work = prompts();
     System.out.printf(
         "%n%-32s %-20s %-32s %9s %7s%n", "PROMPT", "CLASSIFIED", "SELECTED", "LOCAL IN", "MS");
     for (var prompt : work) {
       lastRemoteUsage = null;
+      lastEscalationUsage.clear();
       // Retrieval happens here, before routing, so the router sizes and bills the prompt a model
       // will actually receive -- notes included.
       String text = resolve(retrieval, prompt);
@@ -313,6 +350,28 @@ class fleet {
         continue;
       }
       var chosen = result.decision().selected();
+      // A local arm that escalated still sent text to a provider, and the ledger has to say so:
+      // the prompt counts as local for "which model answered" and as off-machine for "what left
+      // this machine", which are two different questions a reader is entitled to both answers to.
+      if (!lastEscalationUsage.isEmpty()) {
+        var premium =
+            ModelCandidate.builder(PREMIUM)
+                .local(false)
+                .costPerMillionTokens(PREMIUM_IN, PREMIUM_OUT)
+                .build();
+        for (var entry : lastEscalationUsage.entrySet()) {
+          long in = entry.getValue()[0];
+          long out = entry.getValue()[1];
+          remoteTokens += in;
+          remoteCompletionTokens += out;
+          remoteSpend.merge(entry.getKey(), premium.costOf(in, out), BigDecimal::add);
+          remoteTokensBy.computeIfAbsent(entry.getKey(), key -> new long[2]);
+          remoteTokensBy.get(entry.getKey())[0] += in;
+          remoteTokensBy.get(entry.getKey())[1] += out;
+        }
+        localRulerRemote += tokens;
+        promptsThatLeftTheMachine++;
+      }
       if (chosen.local()) {
         localCompletionTokens += tokenizer.encode(String.valueOf(result.value())).length;
       } else {
@@ -328,6 +387,7 @@ class fleet {
         remoteTokensBy.get(chosen.id())[0] += in;
         remoteTokensBy.get(chosen.id())[1] += out;
         escalated++;
+        promptsThatLeftTheMachine++;
       }
       long millis =
           result.attempts().isEmpty()
@@ -378,13 +438,28 @@ class fleet {
         "conversation wall clock: %d ms, of which %d ms (%.1f%%) was model calls%n",
         sessionMillis, accounted, 100.0 * accounted / sessionMillis);
     System.out.printf(
-        "one-off load of the four local models: %d ms, paid once at startup, not per request%n",
+        "one-off load of the %d local models: %d ms, paid once at startup, not per request%n",
+        LOCAL_IDS.size(),
         warmTotal);
 
     System.out.printf("%n== ledger ==%n");
     System.out.printf(
-        "%d prompts, %d escalated to a remote provider, %d answered on local weights%n",
+        "%d prompts, %d routed to a remote provider, %d answered on local weights%n",
         work.size(), escalated, work.size() - escalated);
+    System.out.printf(
+        "%d of %d prompts sent no text off this machine; %d did, %d of them while a local arm"
+            + " answered%n",
+        work.size() - promptsThatLeftTheMachine,
+        work.size(),
+        promptsThatLeftTheMachine,
+        promptsThatLeftTheMachine - escalated);
+    if (lastDecisionEscalations > 0) {
+      System.out.printf(
+          "the decision arm escalated %d of its questions below confidence %s, and those calls are"
+              + " in the ledger below%n",
+          lastDecisionEscalations,
+          System.getProperty("fleet.decisions.escalateBelowConfidence", "0.6"));
+    }
 
     // Two rulers, kept apart on purpose. The local tokenizer measures every prompt the same way,
     // which is what makes the share comparable; the provider's own count is what it bills.
@@ -466,9 +541,9 @@ class fleet {
       catalog.put(found.id(), found);
     }
 
-    // Only what a catalog cannot know: `liveness` and `grounding` are names this application
-    // invented, because they describe how this application intends to use a model rather than a
-    // property of the weights. `toBuilder` keeps everything the catalog measured.
+    // Only what a catalog cannot know: `liveness` and `grounding-single-passage` are names this
+    // application invented, because they describe how this application intends to use a model
+    // rather than a property of the weights. `toBuilder` keeps everything the catalog measured.
     //
     // No quality numbers are declared here, and that is the point. This fleet used to carry four
     // of them -- chat 0.45, chat 0.60, grounding 0.70, decision 0.90 -- typed in by hand because
@@ -478,11 +553,13 @@ class fleet {
     // artifact it described: that entry is GUARDED_RAG with a model-only correctness of 0.111, and
     // this fleet was generating unguarded.
     //
-    // Models 0.5.0 made declaring nothing the honest option: an unmeasured task scores a neutral
-    // prior under its own `quality-unmeasured` key, so absence no longer loses by default, and
-    // `withMinimumQuality` refuses an unmeasured candidate outright instead of pretending it
-    // scored zero. What the catalog measures, the router gets. What nobody measured, nobody
-    // claims.
+    // Models 0.5.x made declaring nothing the honest option: an unmeasured task scores a neutral
+    // prior rather than a zero, so absence no longer loses by default, and `withMinimumQuality`
+    // refuses an unmeasured candidate outright instead of pretending it scored zero. 0.5.0 put
+    // that prior under a second breakdown key and 0.5.2 removed it again, so `scoreBreakdown()`
+    // has the keys it had in 0.4.3 and the distinction between "nobody measured this" and
+    // "measured zero" lives in `ModelCandidate.measuredQualityFor`, which is typed. What the
+    // catalog measures, the router gets. What nobody measured, nobody claims.
     //
     // Tags are a second filter, separate from capabilities and active only when non-empty: a model
     // tagged `chat` is refused outright for a prompt classified `summarization`. The catalog tags
@@ -505,15 +582,50 @@ class fleet {
             .tags(Set.of())
             .capabilities(Set.of("liveness"))
             .build();
-    var small =
-        discovered(catalog, SMALL_ID)
-            .tags(Set.of())
-            .capabilities(Set.of("chat", "summarization"))
-            .build();
+    // The 0.6B arm is gone from the fleet and still loaded, and both halves of that are
+    // deliberate.
+    //
+    // Gone, because it was measured. MEASURED 2026-10-20 on CoQA and QuAC, 100 items each
+    // (experiments/local-only-chat): it scores 14.7 and 27.1 token F1 where the 8B arm scores 82.2
+    // and 48.1 and gpt-5.1 scores 83.9 and 49.0 -- and it gets there by answering "I don't know"
+    // to **62 and 72 of its 100 items**. An arm that declines two thirds of what it is asked is
+    // not a cheap chat arm, it is an outage with a low latency, and the limp replies in this
+    // article's own run record were it standing one notch away from refusing. `summarization` went
+    // the same way earlier for a different reason: the router never once acted on it, because the
+    // only summarization prompt here is larger than every local context window.
+    //
+    // Still loaded, because its tokenizer is the ruler every token count in this article is
+    // measured with -- the "local ruler" column and the share of input routed off the machine.
+    // Swapping rulers would renumber figures that have nothing to do with which arm answers. It
+    // declares no capability, so `ModelRouter.eligible` can never select it, and it appears below
+    // only in the warm-up and in LOCAL_IDS, which count what is loaded rather than what can serve.
+    // `grounding-single-passage`, not `grounding`, and the narrower name is the result of a
+    // measurement rather than a way around one.
+    //
+    // MEASURED 2026-10-20 at n=100 per dataset (experiments/grounding-arm-selection): on SQuAD v2
+    // -- one short passage, half the questions unanswerable -- this arm scores 79.0 exact match
+    // against gpt-5.1's 70.0. On HotpotQA -- ten paragraphs, two hops, nothing unanswerable -- it
+    // scores 31.0 against 60.0, and 6.0 points *behind* the 1B arm it replaced, because it
+    // declines 33 of 100 questions that do have answers. No local arm in this catalog is within 23
+    // points of the frontier model on that dataset, and the two datasets disagree about which
+    // local arm is better, so `grounding` as a whole is a claim nothing here can carry. That null
+    // is published rather than worked around.
+    //
+    // What this fleet actually asks for is the narrower thing: `buildRetrieval` indexes three
+    // one-sentence notes and `resolve` retrieves the top two, so a grounded prompt here is one
+    // short passage and never a multi-hop join over ten. The declaration says that, the gate maps
+    // the narrow name to the dataset that measures it and still holds the broad name to both, and a
+    // deployment whose retrieval returns ten paragraphs must not reuse this declaration.
+    // One arm, two capabilities, both measured against gpt-5.1 on public data and neither of them
+    // the broad claim the name might suggest. `chat` here is conversational question answering --
+    // CoQA and QuAC, where this arm is 1.6 and 0.9 points off gpt-5.1, inside the two points this
+    // project requires -- and not tone, instruction following or multi-turn task completion, which
+    // nothing here measures. `grounding-single-passage` is the narrow name the grounding evidence
+    // supports; see the comment on GROUNDER above for why the broad one was dropped.
     var grounder =
         discovered(catalog, GROUNDER_ID)
             .tags(Set.of())
-            .capabilities(Set.of("grounding"))
+            .capabilities(Set.of("grounding-single-passage", "chat"))
             .build();
     // Harriet is the exception. The catalog reports the composite's base weights as a chat model,
     // true of the weights and wrong about this arm: three typed questions, three forward passes, no
@@ -598,14 +710,15 @@ class fleet {
     // region: wiring
     return ModelFleet.<Responder>builder()
         .classifier(classifier)
-        // BALANCED weights quality 0.40 and latency 0.15, and picks qwen3-0.6b for a customer's
-        // question. LOCAL_FIRST picks it too: every local arm scores identical locality, so a 0.35
-        // thumb there separates nothing between them, and the LOCAL_ONLY boundary already keeps
-        // these requests on this machine. FASTEST is the policy that changes the answer -- it
-        // hands ordinary chat to the 360M model on latency alone, which is the wrong trade here.
+        // The policy no longer decides who answers a customer's question, and that is a result
+        // rather than a simplification. `chat` is declared by one arm because it is the only one
+        // measured able to serve it: the 0.6B that used to hold the declaration answered "I don't
+        // know" to 62 of 100 CoQA items. BALANCED, LOCAL_FIRST and BEST_QUALITY therefore all pick
+        // the same arm here. FASTEST would still change the answer -- it would hand a billing
+        // complaint to the 360M liveness arm on latency alone -- which is why `liveness` is a
+        // capability of its own rather than a faster flavour of `chat`.
         .policy(policy)
         .model(tiny, prompt -> acknowledge(TINY, prompt))
-        .model(small, prompt -> chat(SMALL, prompt, 80))
         .model(grounder, fleet::ground)
         .model(decisions, fleet::decide)
         // One fleet, three remote clients. Each closure is where a provider's SDK would live, so
@@ -784,7 +897,7 @@ class fleet {
             .build();
     var grounded =
         RoutingRequirements.builder()
-            .requireCapability("grounding")
+            .requireCapability("grounding-single-passage")
             .dataBoundary(RoutingDataBoundary.LOCAL_ONLY)
             .build();
     var decision = RoutingRequirements.builder().requireCapability("decision").build();
@@ -931,30 +1044,39 @@ class fleet {
         .strip();
   }
 
-  /** Retrieval plus a small local model: the ordinary RAG shape, reachable only via "grounding". */
-  /** The grounded arm receives an already-retrieved prompt, so it only generates. */
+  /**
+   * The one local arm that answers prose: a grounded question when retrieval ran, a chat turn when
+   * it did not.
+   *
+   * <p>`resolve` records the evidence before this is called, so the branch below is "was this a
+   * grounded prompt" and not a guess. A grounded answer is a span and gets a short ceiling; a chat
+   * reply is a sentence or two and gets a longer one, which is the only thing the two paths do
+   * differently.
+   */
   static String ground(String groundedPrompt) {
-    var raw = generate(GROUNDER, groundedPrompt, 64);
     var evidence = lastGroundingEvidence;
     var question = lastGroundingQuestion;
+    var raw = generate(GROUNDER, groundedPrompt, evidence == null ? 96 : 64);
     if (evidence == null || question == null) {
-      // No retrieval ran for this prompt, so there is nothing to check an answer against. Returning
-      // the raw generation is the only honest option, and it cannot happen for a grounded prompt:
-      // resolve() records both before the arm is ever called.
+      // A chat turn: no retrieval ran, so there is no evidence to check an answer against and the
+      // grounding policy has nothing to decide. Returning the generation is the only honest
+      // option, and the capability that routed here says `chat` rather than grounding.
       return raw;
     }
     // The guard this artifact was qualified under, not an unguarded generation. ModelJars reports
-    // the Llama-3.2-1B entry as GUARDED_RAG, which the policy defines as production-usable *with*
-    // the grounding and extractive fallback policy, and its model-only correctness is 0.111
-    // against a pipeline correctness of 1.0. This fleet generated unguarded for every run before
-    // 0.5.0 while quoting the catalog as evidence that the arm was fit for the job.
+    // the Llama-3.1-8B entry as GUARDED_RAG -- production-usable *with* the grounding and
+    // extractive-fallback policy -- with a model-only correct-answer rate of 0.778 against a
+    // pipeline rate of 1.0, and a model-answer rate of 0.556. Better than the 1B arm this replaced,
+    // whose model-only rate was 0.111, and still short of the 0.9 both must clear for the catalog
+    // to call an artifact GENERATIVE_RAG. So the policy stays. This fleet generated unguarded for
+    // every run before 0.5.0 while quoting the catalog as evidence that the arm was fit for the job.
     var decided = GROUNDING_POLICY.apply(question, evidence, raw);
     lastGroundingDecision = decided.decision();
     return decided.text();
   }
 
   /** Closed answer spaces: one forward pass, no generated prose to parse or repair. */
-  static String decide(String evidence) {
+  static String decide(String evidence) throws Exception {
     var harriet = (ModelJarDecisionRuntime) OPEN.computeIfAbsent("harriet", key -> Harriet.open());
     // decideAll, not three separate calls. The three questions are asked about one piece of
     // evidence, and Harriet prefills that evidence once and resumes per question. Calling noul,
@@ -990,8 +1112,90 @@ class fleet {
                         "this week", "money is at stake but the customer is not blocked",
                         "today", "the customer is blocked or out of pocket with no path forward"))),
             evidence);
-    return "billing=%s queue=%s urgency=%s"
-        .formatted(show(verdicts.get(0)), show(verdicts.get(1)), show(verdicts.get(2)));
+    // A calibrated model that says it is unsure is only useful if something acts on that. MEASURED
+    // 2026-10-20 over 200 public intent-classification items, this arm's confidence separates its
+    // own hits from its misses -- on SNIPS a median of 0.790 where it was right against 0.372
+    // where it was wrong, on TREC 0.483 against 0.350 -- so the fleet asks a provider the
+    // questions it is not confident about. The separation is much narrower on TREC, which is
+    // exactly why the gate has to escalate three quarters of that dataset to reach parity and a
+    // third of the other. Run live at this threshold, the arm scores
+    // 98.0 against gpt-5.1's 96.0 on SNIPS and 90.0 against 92.0 on TREC, where the local model
+    // alone scores 80.0 and 76.0: the gate recovers the whole 16-point gap on one dataset and all
+    // but two points of it on the other.
+    //
+    // It is not free, and the default says so out loud rather than in a footnote: 33% of the SNIPS
+    // decisions and 74% of the TREC ones left the machine to do it. A deployment that cannot pay
+    // that sets the property to 0 and keeps a local-only decision arm that is 16 points behind.
+    //
+    // 0.6 is the default because it is the threshold the sweep chose on SNIPS and the one that was
+    // then validated on TREC -- chosen on one dataset, scored on the other, so the data that
+    // picked it is not the data that justifies it. A deployment with its own held-out data should
+    // calibrate it there; tools/parity_gate.py refuses the fleet's `decision` declaration if this
+    // default stops matching the threshold the measurement was taken at.
+    var escalateBelow =
+        warming
+            ? 0.0
+            : Double.parseDouble(
+                System.getProperty("fleet.decisions.escalateBelowConfidence", "0.6"));
+    var answers = new java.util.ArrayList<String>();
+    var names = List.of("billing", "queue", "urgency");
+    for (int index = 0; index < verdicts.size(); index++) {
+      var verdict = verdicts.get(index);
+      if (verdict.confidence() >= escalateBelow) {
+        answers.add(names.get(index) + "=" + show(verdict));
+        continue;
+      }
+      lastDecisionEscalations++;
+      answers.add(names.get(index) + "=" + escalateDecision(names.get(index), evidence, verdict));
+    }
+    return String.join(" ", answers);
+  }
+
+  /** How many questions this run handed to a provider because the local arm was unsure. */
+  static int lastDecisionEscalations;
+
+  /**
+   * True while the local arms are being loaded, which must cost nothing and leave nothing.
+   *
+   * <p>The warm-up calls every local arm with "ready?" to pay the cold-load cost before anything
+   * is measured. With the escalation gate on by default, the decision arm's three questions about
+   * "ready?" all came back unconfident -- correctly -- and all three were handed to a provider:
+   * the warm-up was spending money and sending its text off this machine, and because the
+   * measured loop clears the escalation ledger before its first prompt, it was doing so without
+   * appearing anywhere. A warm-up escalates nothing.
+   */
+  static boolean warming;
+
+  /**
+   * Asks a provider the question the local arm was not confident about.
+   *
+   * <p>Reported as an escalation rather than folded into the answer, because a decision that cost
+   * a provider call is not the same product as one that did not: it costs money, it leaves the
+   * machine, and a reader comparing arms has to be able to see which happened.
+   */
+  static String escalateDecision(String name, String evidence, Verdict local) throws Exception {
+    var before = lastRemoteUsage;
+    var answer =
+        callOpenAi(
+            PREMIUM,
+            16,
+            "Answer with one word from this list and nothing else: "
+                + String.join(", ", local.space().labels())
+                + "\n\nWhich of those describes the "
+                + name
+                + " of this support ticket?\nTicket: "
+                + evidence);
+    if (lastRemoteUsage != null) {
+      var counted = lastEscalationUsage.computeIfAbsent(PREMIUM, key -> new long[2]);
+      counted[0] += lastRemoteUsage.inputTokens();
+      counted[1] += lastRemoteUsage.outputTokens();
+    }
+    // The router's usage reporter reads lastRemoteUsage to decide what this prompt cost, and this
+    // prompt was answered by a local arm. Restoring what it held keeps the escalation out of that
+    // number; the ledger picks it up from lastEscalationUsage instead.
+    lastRemoteUsage = before;
+    return "%s(escalated, local was %s c=%.2f)".formatted(answer.strip(), local.winner(),
+        local.confidence());
   }
 
   static String show(Verdict verdict) {

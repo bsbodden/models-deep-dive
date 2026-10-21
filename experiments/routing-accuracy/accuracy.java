@@ -218,8 +218,16 @@ class accuracy {
 
   static void runDecisions(String arm, JsonNode items, int limit, List<Map<String, Object>> out,
       Path sample) throws Exception {
-    var rubricFile = sample.resolveSibling(
-        "rubrics-" + sample.getFileName().toString().replace("sample-", ""));
+    // The rubric file follows the sample's name unless told otherwise. The override exists so one
+    // sample can be measured against two rubric sets -- which is the whole shape of a rubric
+    // experiment -- without copying the sample to a second filename to carry a second rubric.
+    var rubricOverride = System.getProperty("accuracy.rubrics");
+    var rubricFile =
+        rubricOverride != null && !rubricOverride.isBlank()
+            ? Path.of(rubricOverride)
+            : sample.resolveSibling(
+                "rubrics-" + sample.getFileName().toString().replace("sample-", ""));
+    System.out.printf("rubrics: %s%n", rubricFile);
     var rubricJson = JSON.readTree(Files.readString(rubricFile));
     var question = rubricJson.get("question").asText();
     var labels = new ArrayList<String>();
@@ -230,7 +238,8 @@ class accuracy {
     });
 
     ModelJarDecisionRuntime harriet = null;
-    if ("routed".equals(arm)) {
+    // The gated arm answers locally first, so it needs the same runtime the routed arm does.
+    if (arm.startsWith("routed") || arm.startsWith("gated")) {
       harriet = Harriet.open();
       long began = System.nanoTime();
       Harriet.choice(harriet, question, labels, criteria, "ready?");
@@ -251,13 +260,37 @@ class accuracy {
 
       long began = System.nanoTime();
       String answer;
-      if ("routed".equals(arm)) {
+      if (arm.startsWith("routed") || arm.startsWith("gated")) {
         var verdict = Harriet.choice(harriet, question, labels, criteria, text);
         answer = verdict.winner();
         row.put("probability", verdict.probabilityOf(verdict.winner()));
         row.put("confidence", verdict.confidence());
         row.put("selected", fleet.HARRIET_ID);
         row.put("local", true);
+        // The gated arm is the local arm plus the escalation the fleet ships: below the threshold
+        // the question goes to the provider. Measured live rather than composed from the other two
+        // arms' files, because a composition assumes the provider answers a question the same way
+        // whether or not it was asked in sequence, and that is an assumption rather than a reading.
+        if (arm.startsWith("gated")) {
+          double threshold = Double.parseDouble(arm.substring("gated".length()).replace("-", "."));
+          row.put("threshold", threshold);
+          if (verdict.confidence() < threshold) {
+            answer = fleet.callOpenAi(fleet.PREMIUM, 16, prompt).strip();
+            row.put("escalated", true);
+            row.put("localAnswer", verdict.winner());
+            row.put("local", false);
+            row.put("selected", fleet.PREMIUM);
+            // The tokens this escalation actually bought. Without them the gated arm's rows say
+            // it escalated and not what that cost, and the cost is half of what the arm is for:
+            // parity recovered by escalating is parity that is paid for, per question.
+            if (fleet.lastRemoteUsage != null) {
+              row.put("providerInputTokens", fleet.lastRemoteUsage.inputTokens());
+              row.put("providerOutputTokens", fleet.lastRemoteUsage.outputTokens());
+            }
+          } else {
+            row.put("escalated", false);
+          }
+        }
       } else {
         answer = fleet.callOpenAi(fleet.PREMIUM, 16, prompt).strip();
         row.put("selected", fleet.PREMIUM);

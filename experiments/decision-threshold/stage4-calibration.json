@@ -1,0 +1,298 @@
+{
+  "bins": 10,
+  "datasets": {
+    "snips": {
+      "brier": {
+        "delta": -0.0154,
+        "deltaCi95": [
+          -0.0351,
+          0.0046
+        ],
+        "foldsImproved": 4,
+        "plattScaled": 0.1044,
+        "reported": 0.1198
+      },
+      "expectedCalibrationError": 0.1526,
+      "meanConfidence": 0.6635,
+      "observedAccuracy": 0.8,
+      "plattFits": [
+        {
+          "a": 1.4195,
+          "b": 0.9088,
+          "fold": 0,
+          "shippedThresholdCalibrated": 0.8152
+        },
+        {
+          "a": 1.9373,
+          "b": 0.7066,
+          "fold": 1,
+          "shippedThresholdCalibrated": 0.8164
+        },
+        {
+          "a": 1.6444,
+          "b": 0.9143,
+          "fold": 2,
+          "shippedThresholdCalibrated": 0.8293
+        },
+        {
+          "a": 1.561,
+          "b": 0.7376,
+          "fold": 3,
+          "shippedThresholdCalibrated": 0.7975
+        },
+        {
+          "a": 1.8201,
+          "b": 0.8637,
+          "fold": 4,
+          "shippedThresholdCalibrated": 0.8322
+        }
+      ],
+      "reliability": [
+        {
+          "bin": [
+            0.0,
+            0.1
+          ],
+          "n": 0
+        },
+        {
+          "bin": [
+            0.1,
+            0.2
+          ],
+          "gap": -0.3219,
+          "meanConfidence": 0.1781,
+          "n": 4,
+          "observedAccuracy": 0.5
+        },
+        {
+          "bin": [
+            0.2,
+            0.3
+          ],
+          "gap": 0.0945,
+          "meanConfidence": 0.2374,
+          "n": 7,
+          "observedAccuracy": 0.1429
+        },
+        {
+          "bin": [
+            0.3,
+            0.4
+          ],
+          "gap": 0.0242,
+          "meanConfidence": 0.3575,
+          "n": 6,
+          "observedAccuracy": 0.3333
+        },
+        {
+          "bin": [
+            0.4,
+            0.5
+          ],
+          "gap": -0.0355,
+          "meanConfidence": 0.4645,
+          "n": 6,
+          "observedAccuracy": 0.5
+        },
+        {
+          "bin": [
+            0.5,
+            0.6
+          ],
+          "gap": -0.2112,
+          "meanConfidence": 0.558,
+          "n": 13,
+          "observedAccuracy": 0.7692
+        },
+        {
+          "bin": [
+            0.6,
+            0.7
+          ],
+          "gap": -0.3431,
+          "meanConfidence": 0.6569,
+          "n": 9,
+          "observedAccuracy": 1.0
+        },
+        {
+          "bin": [
+            0.7,
+            0.8
+          ],
+          "gap": -0.1214,
+          "meanConfidence": 0.7536,
+          "n": 16,
+          "observedAccuracy": 0.875
+        },
+        {
+          "bin": [
+            0.8,
+            0.9
+          ],
+          "gap": -0.1427,
+          "meanConfidence": 0.8573,
+          "n": 33,
+          "observedAccuracy": 1.0
+        },
+        {
+          "bin": [
+            0.9,
+            1.0
+          ],
+          "gap": -0.0786,
+          "meanConfidence": 0.9214,
+          "n": 6,
+          "observedAccuracy": 1.0
+        }
+      ],
+      "shippedThresholdCalibratedMean": 0.8181
+    },
+    "trec": {
+      "brier": {
+        "delta": -0.0953,
+        "deltaCi95": [
+          -0.1486,
+          -0.0414
+        ],
+        "foldsImproved": 5,
+        "plattScaled": 0.1743,
+        "reported": 0.2695
+      },
+      "expectedCalibrationError": 0.322,
+      "meanConfidence": 0.455,
+      "observedAccuracy": 0.76,
+      "plattFits": [
+        {
+          "a": 0.7538,
+          "b": 1.4162,
+          "fold": 0,
+          "shippedThresholdCalibrated": 0.8484
+        },
+        {
+          "a": 0.8828,
+          "b": 1.3892,
+          "fold": 1,
+          "shippedThresholdCalibrated": 0.8516
+        },
+        {
+          "a": 0.7351,
+          "b": 1.4171,
+          "fold": 2,
+          "shippedThresholdCalibrated": 0.8475
+        },
+        {
+          "a": 0.6504,
+          "b": 1.3528,
+          "fold": 3,
+          "shippedThresholdCalibrated": 0.8343
+        },
+        {
+          "a": 0.7701,
+          "b": 1.3504,
+          "fold": 4,
+          "shippedThresholdCalibrated": 0.8406
+        }
+      ],
+      "reliability": [
+        {
+          "bin": [
+            0.0,
+            0.1
+          ],
+          "n": 0
+        },
+        {
+          "bin": [
+            0.1,
+            0.2
+          ],
+          "gap": -0.624,
+          "meanConfidence": 0.176,
+          "n": 5,
+          "observedAccuracy": 0.8
+        },
+        {
+          "bin": [
+            0.2,
+            0.3
+          ],
+          "gap": -0.3241,
+          "meanConfidence": 0.2548,
+          "n": 19,
+          "observedAccuracy": 0.5789
+        },
+        {
+          "bin": [
+            0.3,
+            0.4
+          ],
+          "gap": -0.3571,
+          "meanConfidence": 0.3487,
+          "n": 17,
+          "observedAccuracy": 0.7059
+        },
+        {
+          "bin": [
+            0.4,
+            0.5
+          ],
+          "gap": -0.2516,
+          "meanConfidence": 0.4627,
+          "n": 21,
+          "observedAccuracy": 0.7143
+        },
+        {
+          "bin": [
+            0.5,
+            0.6
+          ],
+          "gap": -0.2806,
+          "meanConfidence": 0.5527,
+          "n": 12,
+          "observedAccuracy": 0.8333
+        },
+        {
+          "bin": [
+            0.6,
+            0.7
+          ],
+          "gap": -0.2997,
+          "meanConfidence": 0.6477,
+          "n": 19,
+          "observedAccuracy": 0.9474
+        },
+        {
+          "bin": [
+            0.7,
+            0.8
+          ],
+          "gap": -0.2765,
+          "meanConfidence": 0.7235,
+          "n": 6,
+          "observedAccuracy": 1.0
+        },
+        {
+          "bin": [
+            0.8,
+            0.9
+          ],
+          "gap": 0.848,
+          "meanConfidence": 0.848,
+          "n": 1,
+          "observedAccuracy": 0.0
+        },
+        {
+          "bin": [
+            0.9,
+            1.0
+          ],
+          "n": 0
+        }
+      ],
+      "shippedThresholdCalibratedMean": 0.8445
+    }
+  },
+  "folds": 5,
+  "seed": 20261021
+}

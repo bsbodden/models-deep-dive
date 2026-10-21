@@ -1,0 +1,256 @@
+{
+  "bestLocal": {
+    "coqa": [
+      "llama3.1-8b"
+    ],
+    "quac": [
+      "llama3.1-8b"
+    ]
+  },
+  "datasets": {
+    "coqa": {
+      "arms": {
+        "frontier": {
+          "abstained": 2,
+          "answerable": {
+            "abstained": 1,
+            "exactMatch": 62.63,
+            "n": 99,
+            "tokenF1": 83.72
+          },
+          "exactMatch": 63.0,
+          "maxHeapMiB": 28,
+          "medianMillis": 1057.5,
+          "n": 100,
+          "tokenF1": 83.88,
+          "unanswerable": {
+            "abstained": 1,
+            "exactMatch": 100.0,
+            "n": 1,
+            "tokenF1": 100.0
+          }
+        },
+        "llama1b": {
+          "abstained": 3,
+          "answerable": {
+            "abstained": 2,
+            "exactMatch": 47.47,
+            "n": 99,
+            "tokenF1": 57.32
+          },
+          "behindBestLocal": 24.5,
+          "carriesDeclaration": false,
+          "ceilingGap": -26.13,
+          "ceilingInterval95": [
+            -35.77,
+            -16.84
+          ],
+          "ceilingVerdict": "REJECT",
+          "exactMatch": 48.0,
+          "maxHeapMiB": 337,
+          "medianMillis": 3635.0,
+          "n": 100,
+          "tokenF1": 57.75,
+          "unanswerable": {
+            "abstained": 1,
+            "exactMatch": 100.0,
+            "n": 1,
+            "tokenF1": 100.0
+          }
+        },
+        "llama3.1-8b": {
+          "abstained": 1,
+          "answerable": {
+            "abstained": 0,
+            "exactMatch": 64.65,
+            "n": 99,
+            "tokenF1": 82.07
+          },
+          "behindBestLocal": 0.0,
+          "carriesDeclaration": true,
+          "ceilingGap": -1.63,
+          "ceilingInterval95": [
+            -8.15,
+            4.8
+          ],
+          "ceilingVerdict": "INCONCLUSIVE",
+          "exactMatch": 65.0,
+          "maxHeapMiB": 596,
+          "medianMillis": 32987.5,
+          "n": 100,
+          "tokenF1": 82.25,
+          "unanswerable": {
+            "abstained": 1,
+            "exactMatch": 100.0,
+            "n": 1,
+            "tokenF1": 100.0
+          }
+        },
+        "small": {
+          "abstained": 62,
+          "answerable": {
+            "abstained": 61,
+            "exactMatch": 4.04,
+            "n": 99,
+            "tokenF1": 13.84
+          },
+          "behindBestLocal": 67.55,
+          "carriesDeclaration": false,
+          "ceilingGap": -69.18,
+          "ceilingInterval95": [
+            -76.19,
+            -62.0
+          ],
+          "ceilingVerdict": "REJECT",
+          "exactMatch": 5.0,
+          "maxHeapMiB": 736,
+          "medianMillis": 9091.5,
+          "n": 100,
+          "tokenF1": 14.7,
+          "unanswerable": {
+            "abstained": 1,
+            "exactMatch": 100.0,
+            "n": 1,
+            "tokenF1": 100.0
+          }
+        }
+      },
+      "bestLocal": [
+        "llama3.1-8b"
+      ],
+      "n": 100
+    },
+    "quac": {
+      "arms": {
+        "frontier": {
+          "abstained": 34,
+          "answerable": {
+            "abstained": 20,
+            "exactMatch": 18.29,
+            "n": 82,
+            "tokenF1": 42.65
+          },
+          "exactMatch": 29.0,
+          "maxHeapMiB": 28,
+          "medianMillis": 1146.5,
+          "n": 100,
+          "tokenF1": 48.97,
+          "unanswerable": {
+            "abstained": 14,
+            "exactMatch": 77.78,
+            "n": 18,
+            "tokenF1": 77.78
+          }
+        },
+        "llama1b": {
+          "abstained": 19,
+          "answerable": {
+            "abstained": 12,
+            "exactMatch": 10.98,
+            "n": 82,
+            "tokenF1": 25.61
+          },
+          "behindBestLocal": 20.1,
+          "carriesDeclaration": false,
+          "ceilingGap": -20.97,
+          "ceilingInterval95": [
+            -29.83,
+            -12.3
+          ],
+          "ceilingVerdict": "REJECT",
+          "exactMatch": 16.0,
+          "maxHeapMiB": 476,
+          "medianMillis": 6220.5,
+          "n": 100,
+          "tokenF1": 28.0,
+          "unanswerable": {
+            "abstained": 7,
+            "exactMatch": 38.89,
+            "n": 18,
+            "tokenF1": 38.89
+          }
+        },
+        "llama3.1-8b": {
+          "abstained": 16,
+          "answerable": {
+            "abstained": 8,
+            "exactMatch": 14.63,
+            "n": 82,
+            "tokenF1": 48.9
+          },
+          "behindBestLocal": 0.0,
+          "carriesDeclaration": true,
+          "ceilingGap": -0.87,
+          "ceilingInterval95": [
+            -9.96,
+            8.51
+          ],
+          "ceilingVerdict": "INCONCLUSIVE",
+          "exactMatch": 20.0,
+          "maxHeapMiB": 1144,
+          "medianMillis": 48578.5,
+          "n": 100,
+          "tokenF1": 48.1,
+          "unanswerable": {
+            "abstained": 8,
+            "exactMatch": 44.44,
+            "n": 18,
+            "tokenF1": 44.44
+          }
+        },
+        "small": {
+          "abstained": 72,
+          "answerable": {
+            "abstained": 56,
+            "exactMatch": 4.88,
+            "n": 82,
+            "tokenF1": 13.59
+          },
+          "behindBestLocal": 20.95,
+          "carriesDeclaration": false,
+          "ceilingGap": -21.82,
+          "ceilingInterval95": [
+            -30.61,
+            -13.09
+          ],
+          "ceilingVerdict": "REJECT",
+          "exactMatch": 20.0,
+          "maxHeapMiB": 1258,
+          "medianMillis": 13760.5,
+          "n": 100,
+          "tokenF1": 27.15,
+          "unanswerable": {
+            "abstained": 16,
+            "exactMatch": 88.89,
+            "n": 18,
+            "tokenF1": 88.89
+          }
+        }
+      },
+      "bestLocal": [
+        "llama3.1-8b"
+      ],
+      "n": 100
+    }
+  },
+  "declaration": {
+    "agreed": [
+      "llama3.1-8b"
+    ],
+    "call": "move to llama3.1-8b",
+    "declaredToday": "small",
+    "perDataset": {
+      "coqa": [
+        "llama3.1-8b"
+      ],
+      "quac": [
+        "llama3.1-8b"
+      ]
+    }
+  },
+  "headline": "tokenF1",
+  "localMargin": 2.0,
+  "resamples": 10000,
+  "scorer": "../routing-accuracy/score.py",
+  "seed": 20261019
+}

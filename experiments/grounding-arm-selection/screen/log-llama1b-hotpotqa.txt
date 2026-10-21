@@ -1,0 +1,57 @@
+started 2026-10-20T18:16:46Z
+load: 7.81 3.49 1.34 1/204 2476
+WARNING: Using incubator modules: jdk.incubator.vector
+ITEM      PROMPT        MS   HEAP MIB  ANSWER
+1           5429     15101        316  The Conversation
+2           4995     15463        317  Street Kings 2: Motor City
+3           8601     28436        324  Rankin/Bass.
+4           6436     21085        330  Lush
+5           4485     14938        330  Dirleton Castle.
+6           5691     19058        338  Kirton End is located in the Boston district of Lincoln…
+7           5533     18605        344  Tonight I Climbed the Wall
+8           5189     16739        350  David Weissman.
+9           4612     14236        352  2004
+10          4539     12412        353  Golden Valley, Minnesota
+11          6556     24021        365  Jillian Bell.
+12          6663     23444        366  Sacred Planet
+13          8558     24918        378  iSight iMac G5.
+14          6388     17775        380  712 Fifth Avenue
+15          6473     20244        385  American Revolutionary War.
+16          5147     14601        392  Wichita
+17          8175     23685        397  Truth Initiative
+18          5571     16690        400  8
+19          5408     13972        405  70
+20          7835     23390        412  Paula Jones
+21          4924     15724        416  5
+22          9247     28402        424  gender distinction.
+23          6156     18970        429  three centuries.
+24          7783     24474        436  Scotch Collie.
+25          5104     16856        440  One Night in Istanbul
+26          6057     17680        448  Brooklyn, New York
+27          8766     28737        452  Talking Dead
+28          8315     29845        462  Usher
+29          7582     22636        464  Seven Days Battles.
+30          7380     24879        474  Marsilea
+31          6701     20864        480  13-3
+32          5751     18774        232  Catan
+33          4879     13317        237  World War II
+34          7547     24070        245  Romeo.
+35          5241     16937        245  Peter Schmeichel.
+36          5593     20092        253  Rise of the Planet of the Apes
+37          6979     23638        260  Armie Hammer voices Tonto in The Lone Ranger.
+38          6293     19968        268  Screaming Trees
+39          5758     17086        272  Annette Bening
+40          6202     19108        276  One Raffles Place.
+41          3878     12402        281  Battle Beyond the Stars
+42          4104     14175        286  Mummulgum is a stop on the Bruxner Highway before reach…
+43          9410     31175        564  1901
+44          6689     21453        570  Montgomery Gentry
+45         14298     47192        581  1,400
+46          5154     14265        584  No
+47          7512     23293        592  Yes
+48          5569     16899        594  Carabao Cup
+49          6262     20447        602  Kurt Vonnegut.
+50          4446     14045        605  Ralph Murphy
+
+wrote 50 rows to results-llama1b-hotpotqa.jsonl
+finished 2026-10-20T18:33:45Z

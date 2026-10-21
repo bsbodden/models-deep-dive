@@ -1,0 +1,5 @@
+CPU(s):                                  8
+Model name:                              AMD EPYC-Milan Processor
+               total        used        free      shared  buff/cache   available
+Mem:            30Gi       689Mi        30Gi       4.8Mi       240Mi        29Gi
+/dev/sda1       225G  1.2G  215G   1% /

@@ -75,20 +75,80 @@ flattering an arm that emits no citations.
 
 ## The one thing that worked: the decision arm knows when it is unsure
 
-Harriet's confidence separates its own hits from its misses: median **0.793** on the items it got
-right, **0.379** on the ones it got wrong. [ESCALATION.txt](ESCALATION.txt) sweeps a gate that takes
-the local answer above a threshold and the provider's below it, computed over the collected answers
-rather than run:
+Harriet's confidence separates its own hits from its misses, by a lot on one dataset and a little on
+the other: a median of **0.790** where it was right against **0.372** where it was wrong on SNIPS,
+and **0.483** against **0.350** on TREC.
+
+(An earlier revision of this file and of `fleet.java` reported that separation as "median 0.793 when
+right, 0.379 when wrong ... over 200 items". Those were SNIPS's numbers wearing both datasets'
+label. Pooled over all 200 items the medians are 0.637 and 0.368; per dataset they are the four
+above. Both scripts now derive them from the arm's own rows -- `confidence_medians` in
+`tools/article_figures.py` -- so the number in the prose is the number in the artifact.)
+
+[ESCALATION.txt](ESCALATION.txt) sweeps a gate that takes the local answer above a threshold and the
+provider's below it, computed over the already-collected answers rather than run:
 
 | threshold from | applied to | local only | with the gate | all-API | escalated |
 | --- | --- | --- | --- | --- | --- |
 | SNIPS | TREC | 76.0 | **90.0** | 92.0 | 74% |
 | TREC | SNIPS | 80.0 | **96.0** | 96.0 | 74% |
 
-The gate recovers almost the whole gap, and the cross-dataset column is the one to read, because a
-threshold chosen on the data that scores it is overfitting. But it escalates **74%** of the
-decisions to do it, and 74% of that traffic going to a provider is most of the cost advantage for
-that traffic. Calibration is real here and not sharp enough to be free.
+Then it was run, live, at the threshold the sweep chose on SNIPS -- `accuracy.java decide gated0-6`,
+which asks Harriet first and the provider only below the threshold, so the arm is the mechanism and
+not an arithmetic recombination of two other arms' files:
+
+| public dataset | local only | live gated arm | all-API | escalated | verdict |
+| --- | --- | --- | --- | --- | --- |
+| SNIPS | 80.0 | **98.0** | 96.0 | 33% | +2.0 [+0.0, +5.0] ACCEPT |
+| TREC | 76.0 | **90.0** | 92.0 | 74% | -2.0 [-6.0, +2.0] INCONCLUSIVE |
+
+Three things in that table are worth more than the headline. The live arm **beat** the all-API arm
+on SNIPS, which the simulation did not predict: the local model is right on items gpt-5.1 gets
+wrong, so the combination is better than either side alone. The escalation rate is **33%** on SNIPS
+and not the 74% the sweep estimated, because the sweep's rate came from TREC's much narrower
+confidence separation. And TREC's -2.0 is exactly at the margin this project requires, with an
+interval that still spans -6.0 to +2.0 -- a hundred items saying it cannot resolve two points, which
+is reported rather than rounded into the claim.
+
+The cost is the other half of the mechanism and it is in `MEASUREMENTS.json` per arm: parity on
+these datasets is bought with provider calls, a third of them on one dataset and three quarters on
+the other. The fleet ships with the gate on by default, because a declaration measured with it on is
+a claim about a fleet that runs with it on, and `tools/parity_gate.py` fails the build if the
+default and the measured threshold ever diverge.
+
+## How the decision arm is wrong, which is the only part a fix can act on
+
+`error_analysis.py` groups the wrong items by the confusion they are, from the arm's own rows, and
+writes [ERROR-ANALYSIS.json](ERROR-ANALYSIS.json). Two confusions carry most of the loss:
+
+| dataset | confusion | items | share of errors | median confidence |
+| --- | --- | --- | --- | --- |
+| TREC | `DESC` read as `ENTY` | 13 of 24 | 54% | 0.373 |
+| SNIPS | `SearchScreeningEvent` read as `SearchCreativeWork` | 5 of 20 | 25% | 0.517 |
+| SNIPS | `RateBook` read as `PlayMusic` | 5 of 20 | 25% | 0.360 |
+
+TREC's block is one ambiguity repeated: "What is phosphorus?", "What are coral reefs?", "What is
+pectin?" are definitions, which TREC labels `DESC`, and the arm reads them as entities. SNIPS's two
+blocks are a schedule-versus-work confusion ("show me the schedule for Rat Rod Rockers!") and a
+rating-versus-playing one ("mark this album a score of 5"), where the medium in the sentence pulls
+harder than the verb.
+
+Two things follow, and both matter to the fleet rather than only to the leaderboard.
+
+**The errors are concentrated and they are describable in a sentence each**, which is what a rubric
+is. This arm's accuracy is a function of the criteria the caller writes -- the first of the six
+findings in the article is that the same question without a rubric comes back `p=0.503
+confidence=0.00` -- so these three blocks are a tuning experiment with a clear hypothesis and a
+clear risk of overfitting to the items that suggested it. **Not attempted here**, and the protocol
+it would need is written down rather than improvised: rubrics rewritten from one dataset's first
+half, scored on the other half and on the other dataset, with the rubric text committed before the
+second run.
+
+**The errors are mostly low-confidence**, which is why the escalation gate recovers as much as it
+does: the median confidence on an error is below the 0.6 threshold in every block but one. The
+exception is the one to watch -- "What is a shaman?" came back `HUM` at confidence **0.848**, above
+any sane threshold, and a gate cannot catch a mistake the model is sure about. Calibration buys
+back the uncertain errors and nothing else.
 
 ## What this changes in the article
 
@@ -102,8 +162,9 @@ these four datasets say, which is not what the routing argument assumed. Specifi
 - The fleet has **no abstention path** on its grounding arm, and the policy that exists does not
   provide one. A deployment that cares about unanswerable questions needs something the demo does
   not have.
-- A **confidence gate on the decision arm is worth building and measuring properly**, not assuming:
-  it worked here at a price worth stating.
+- A **confidence gate on the decision arm was built, run live and shipped on by default**: 98.0
+  against gpt-5.1's 96.0 on SNIPS at 33% escalated, 90.0 against 92.0 on TREC at 74%. The price is
+  stated in the same table as the gain.
 
 ## What this still cannot test
 
@@ -114,5 +175,7 @@ these four datasets say, which is not what the routing argument assumed. Specifi
 - Not the article's own ten prompts, deliberately: a corpus we wrote would score our own
   assumptions back to us.
 - Not prompt engineering. Both arms got one prompt, written once, and a better prompt for the small
-  model is a different experiment -- as is a larger local model, which is the obvious next question
-  and is not answered here.
+  model is a different experiment.
+- Not a larger local model, which was the obvious next question and is answered in
+  [grounding-arm-selection](../grounding-arm-selection/README.md) instead, on these same items with
+  this same scorer.
