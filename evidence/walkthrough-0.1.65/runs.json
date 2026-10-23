@@ -1,0 +1,217 @@
+[
+  {
+    "script": "chat.java",
+    "sha256": "748addac72d62e6dd79edf73cd29935bbb256bc484a43c5b56ba52276f3d76c1",
+    "command": [
+      "jbang",
+      "chat.java"
+    ],
+    "startedAt": "2026-10-23T18:30:42.050930+00:00",
+    "finishedAt": "2026-10-23T18:30:50.437245+00:00",
+    "exitCode": 0,
+    "log": "chat.log",
+    "dependencies": [
+      "org.modeljars:modeljars:0.1.65",
+      "org.modeljars.huggingface:ggml-org.qwen3-0.6b-gguf.q4_0:3.0.0-q4_0.1"
+    ]
+  },
+  {
+    "script": "safetensors.java",
+    "sha256": "e02e51b7c3ceaf29e16f005bbdadf48f2f45ee95ec9828cef7f23b972dbdf4c8",
+    "command": [
+      "jbang",
+      "safetensors.java"
+    ],
+    "startedAt": "2026-10-23T18:30:50.438005+00:00",
+    "finishedAt": "2026-10-23T18:30:58.002541+00:00",
+    "exitCode": 0,
+    "log": "safetensors.log",
+    "dependencies": [
+      "org.modeljars:modeljars:0.1.65",
+      "org.modeljars.huggingface:qwen.qwen2.5-0.5b-instruct.bf16:2.5.0-bf16.2"
+    ]
+  },
+  {
+    "script": "embed.java",
+    "sha256": "a6d2f42838fe71a814b30abea78d17ade1c99a5097eb988a35f3c70c581ea2f5",
+    "command": [
+      "jbang",
+      "embed.java"
+    ],
+    "startedAt": "2026-10-23T18:30:58.003342+00:00",
+    "finishedAt": "2026-10-23T18:31:02.030335+00:00",
+    "exitCode": 0,
+    "log": "embed.log",
+    "dependencies": [
+      "org.modeljars:modeljars:0.1.65",
+      "org.modeljars.huggingface:liquidai.lfm2.5-embedding-350m-gguf.q4_0:2.5.0-q4_0.1"
+    ]
+  },
+  {
+    "script": "rerank.java",
+    "sha256": "f16191cae10faa3ee2f848b07b2e3dad41ad59820e0b92e75bde32e2f94ac83c",
+    "command": [
+      "jbang",
+      "rerank.java"
+    ],
+    "startedAt": "2026-10-23T18:31:02.031007+00:00",
+    "finishedAt": "2026-10-23T18:31:05.340616+00:00",
+    "exitCode": 0,
+    "log": "rerank.log",
+    "dependencies": [
+      "org.modeljars:modeljars:0.1.65",
+      "org.modeljars.huggingface:cstr.ms-marco-minilm-l-6-v2-gguf.q4_k_imatrix_g7c_f7:2.0.0-q4_k_imatrix_g7c_f7.2"
+    ]
+  },
+  {
+    "script": "tools.java",
+    "sha256": "090ad90795d937f24f001906ed3d352ba20baaa91460c5205fda664f3e0aa99c",
+    "command": [
+      "jbang",
+      "tools.java"
+    ],
+    "startedAt": "2026-10-23T18:31:05.341311+00:00",
+    "finishedAt": "2026-10-23T18:31:20.702855+00:00",
+    "exitCode": 0,
+    "log": "tools.log",
+    "dependencies": [
+      "org.modeljars:modeljars:0.1.65",
+      "org.modeljars.huggingface:cactus-compute.needle2-cact.cq2_mixed:2.0.0-cq2_mixed.2",
+      "com.fasterxml.jackson.core:jackson-databind:2.22.3"
+    ]
+  },
+  {
+    "script": "composite.java",
+    "sha256": "999e4b60f4473b1cfb123972fd80d3f38ee8b8e6333beca8518f7157ac989010",
+    "command": [
+      "jbang",
+      "composite.java"
+    ],
+    "startedAt": "2026-10-23T18:31:20.703615+00:00",
+    "finishedAt": "2026-10-23T18:31:44.347647+00:00",
+    "exitCode": 0,
+    "log": "composite.log",
+    "dependencies": [
+      "org.modeljars.composite:granite-answerability:0.1.65"
+    ]
+  },
+  {
+    "script": "decisions.java",
+    "sha256": "f3f4bd8f5d70643c51256fac22e0f689d6d027754adbaf3f7aab9fb86bef3e13",
+    "command": [
+      "jbang",
+      "decisions.java"
+    ],
+    "startedAt": "2026-10-23T18:31:44.348631+00:00",
+    "finishedAt": "2026-10-23T18:32:07.730399+00:00",
+    "exitCode": 0,
+    "log": "decisions.log",
+    "dependencies": [
+      "org.modeljars.composite:harriet:0.1.65"
+    ]
+  },
+  {
+    "script": "speech.java",
+    "sha256": "3ef02c1ad8c94e35efdb4748c8dfcc839ad59ecac4af59483d2a46d0d090e824",
+    "command": [
+      "jbang",
+      "speech.java"
+    ],
+    "startedAt": "2026-10-23T18:32:07.731183+00:00",
+    "finishedAt": "2026-10-23T18:32:14.017736+00:00",
+    "exitCode": 0,
+    "log": "speech.log",
+    "dependencies": [
+      "org.modeljars:modeljars:0.1.65",
+      "org.modeljars.huggingface:walkingcat.soprano-1.1-80m-gguf.bf16:1.1.0-bf16.1"
+    ]
+  },
+  {
+    "script": "spring.java",
+    "sha256": "aa3a05c443304df5a900b511c748ae174cfe00f9d4c61a2eae8e2c9c040d6855",
+    "command": [
+      "jbang",
+      "spring.java"
+    ],
+    "startedAt": "2026-10-23T18:32:14.018413+00:00",
+    "finishedAt": "2026-10-23T18:32:21.520997+00:00",
+    "exitCode": 0,
+    "log": "spring.log",
+    "dependencies": [
+      "org.springframework.ai:spring-ai-bom:2.0.0@pom",
+      "org.springframework.ai:spring-ai-client-chat",
+      "com.integrallis:models-spring-ai:0.5.4",
+      "org.modeljars:modeljars:0.1.65",
+      "org.modeljars.huggingface:ggml-org.qwen3-0.6b-gguf.q4_0:3.0.0-q4_0.1"
+    ]
+  },
+  {
+    "script": "route.java",
+    "sha256": "7437dad8999b520d4f305820d5b15d5c10d864ea6422ae36d555d419b1db034e",
+    "command": [
+      "jbang",
+      "route.java"
+    ],
+    "startedAt": "2026-10-23T18:32:21.521823+00:00",
+    "finishedAt": "2026-10-23T18:32:23.758300+00:00",
+    "exitCode": 0,
+    "log": "route.log",
+    "dependencies": [
+      "org.modeljars:modeljars:0.1.65",
+      "com.integrallis:models-router:0.5.4",
+      "org.modeljars.huggingface:ggml-org.qwen3-0.6b-gguf.q4_0:3.0.0-q4_0.1",
+      "org.modeljars.huggingface:qwen.qwen2.5-0.5b-instruct.bf16:2.5.0-bf16.2"
+    ]
+  },
+  {
+    "script": "rag.java",
+    "sha256": "ca8e538ce1d7b0db4d4bd6d02b95871ddb7f24864b506291a9329dd4fafbcc9a",
+    "command": [
+      "jbang",
+      "rag.java"
+    ],
+    "startedAt": "2026-10-23T18:32:23.758937+00:00",
+    "finishedAt": "2026-10-23T18:32:37.511986+00:00",
+    "exitCode": 0,
+    "log": "rag.log",
+    "dependencies": [
+      "org.modeljars:modeljars:0.1.65",
+      "com.integrallis:vectors-db:0.1.30",
+      "com.integrallis:models-rag:0.5.4",
+      "org.modeljars.huggingface:second-state.all-minilm-l6-v2-embedding-gguf.q4_k_m:2.0.0-q4_k_m.2",
+      "org.modeljars.huggingface:ggml-org.qwen3-0.6b-gguf.q4_0:3.0.0-q4_0.1"
+    ]
+  },
+  {
+    "script": "gemma.java",
+    "sha256": "b2ca53b5ebb891c08ee0a67e485793a2fae0ab17d4cae0ebaa382c6c531f0e5e",
+    "command": [
+      "jbang",
+      "gemma.java"
+    ],
+    "startedAt": "2026-10-23T18:32:37.512782+00:00",
+    "finishedAt": "2026-10-23T18:32:42.116585+00:00",
+    "exitCode": 0,
+    "log": "gemma.log",
+    "dependencies": [
+      "org.modeljars:modeljars:0.1.65",
+      "org.modeljars.huggingface:ggml-org.embeddinggemma-2-gguf.q8_0:2.0.0-q8_0.1"
+    ]
+  },
+  {
+    "script": "bonsai.java",
+    "sha256": "7bab62760961fcd940101f302e4716f8ab1928a398ab2fef5490d45b3a7e78f1",
+    "command": [
+      "jbang",
+      "bonsai.java"
+    ],
+    "startedAt": "2026-10-23T18:32:42.117346+00:00",
+    "finishedAt": "2026-10-23T18:33:47.161475+00:00",
+    "exitCode": 0,
+    "log": "bonsai.log",
+    "dependencies": [
+      "com.integrallis:models:0.5.4",
+      "com.integrallis:backend-java:0.5.4"
+    ]
+  }
+]

@@ -1,12 +1,12 @@
 | run (UTC) | routed | no router | latency ratio | cost factor |
 | --- | --- | --- | --- | --- |
-| `20261021T053512Z` | 134,244 ms | 43,861 ms | 3.06× | 3.13× cheaper |
-| `20261021T053908Z` | 137,880 ms | 26,918 ms | 5.12× | 3.12× cheaper |
-| `20261021T054341Z` | 125,040 ms | 50,171 ms | 2.49× | 3.16× cheaper |
+| `20261023T191733Z` | 135,777 ms | 39,573 ms | 3.43× | 3.17× cheaper |
+| `20261023T192128Z` | 108,247 ms | 30,859 ms | 3.51× | 3.17× cheaper |
+| `20261023T192658Z` | 187,311 ms | 32,069 ms | 5.84× | 3.16× cheaper |
 
-Across **3 measured pairs** — same code, same prompts, same machine, all archived under [`evidence/fleet-routing/runs/`](evidence/fleet-routing/runs) — the latency ratio moved from **2.49× to 5.12×** (median 3.06×) while the cost factor moved from **3.12× to 3.16×**. One of those is a property of the fleet; the other is a property of the provider's queue on the day. Which is which:
+Across **3 measured pairs** — same code, same prompts, same machine, all archived under [`evidence/fleet-routing/runs/`](evidence/fleet-routing/runs) — the latency ratio moved from **3.43× to 5.84×** (median 3.51×) while the cost factor moved from **3.16× to 3.17×**. One of those is a property of the fleet; the other is a property of the provider's queue on the day. Which is which:
 
-- the no-router arm's wall clock ranged over **1.86×** (26,918 ms to 50,171 ms)
-- the routed arm's remote portion ranged over **1.96×** (19,093 ms to 37,493 ms)
-- the routed arm's local portion ranged over **1.06×** (100,387 ms to 105,947 ms)
-- the appendix prompt alone, byte for byte identical every run, came back in 4,040 ms at best and 17,640 ms at worst — **4.37×** on one call to one provider
+- the no-router arm's wall clock ranged over **1.28×** (30,859 ms to 39,573 ms)
+- the routed arm's remote portion ranged over **5.78×** (15,958 ms to 92,296 ms)
+- the routed arm's local portion ranged over **1.07×** (92,289 ms to 98,512 ms)
+- the appendix prompt alone, byte for byte identical every run, came back in 3,070 ms at best and 14,789 ms at worst — **4.82×** on one call to one provider

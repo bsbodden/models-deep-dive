@@ -3,8 +3,8 @@
 //RUNTIME_OPTIONS --enable-native-access=ALL-UNNAMED -Xmx4g
 //DEPS org.springframework.ai:spring-ai-bom:2.0.0@pom
 //DEPS org.springframework.ai:spring-ai-client-chat
-//DEPS com.integrallis:models-spring-ai:0.5.2
-//DEPS org.modeljars:modeljars:0.1.64
+//DEPS com.integrallis:models-spring-ai:0.5.4
+//DEPS org.modeljars:modeljars:0.1.65
 //DEPS org.modeljars.huggingface:ggml-org.qwen3-0.6b-gguf.q4_0:3.0.0-q4_0.1
 
 import com.integrallis.models.api.SamplingOptions;

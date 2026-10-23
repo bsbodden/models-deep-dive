@@ -1,0 +1,44 @@
+[jbang] Resolving dependencies...
+[jbang]    org.modeljars:modeljars:0.1.65
+[jbang]    com.integrallis:models-router:0.5.4
+[jbang]    org.modeljars.huggingface:ggml-org.embeddinggemma-300m-gguf.q8_0:3.0.0-q8_0.1
+[jbang]    org.modeljars.huggingface:ggml-org.qwen3-0.6b-gguf.q4_0:3.0.0-q4_0.1
+[jbang]    org.modeljars.huggingface:qwen.qwen3-8b-gguf.q4_k_m:3.0.0-q4_k_m.3
+[jbang] Dependencies resolved
+[jbang] Building jar for arrival.java...
+WARNING: Using incubator modules: jdk.incubator.vector
+== phase: before-the-model-is-added
+catalogs installed: 1
+candidates discovered: 2
+
+CANDIDATE                                      TAGS                   TOOL-USE  CONTEXT
+qwen3_0_6b_q4_0                                chat                   unmeasured 40960
+qwen3_8b_q4_k_m                                chat,tool-use          1.000     40960
+
+candidates tagged tool-use: 1
+  qwen3_8b_q4_k_m                              carries a measured tool-use quality of 1.000, from the catalog's own tool qualification
+
+-- routing one tool-use prompt
+   prompt: Call the get_order_status function with order id 88412.
+   classified: tool-use 0.653
+   task label used for the quality term: tool-use
+
+   [BALANCED] SELECTED qwen3_8b_q4_k_m
+     measured tool-use quality: 1.000 | context 40960 | local true
+     score 1.0000
+       availability     1.0000
+       cost             0.3333
+       latency          0.1667
+       locality         0.0556
+       quality          0.4444
+     runners-up: []
+
+   [BEST_QUALITY] SELECTED qwen3_8b_q4_k_m
+     measured tool-use quality: 1.000 | context 40960 | local true
+     score 1.0000
+       availability     1.0000
+       cost             0.0000
+       latency          0.0000
+       locality         0.0000
+       quality          1.0000
+     runners-up: []

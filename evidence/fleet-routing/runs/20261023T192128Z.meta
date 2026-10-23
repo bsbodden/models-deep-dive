@@ -1,0 +1,13 @@
+stamp: 20261023T192128Z
+load at start of routed arm: { 2.77 3.22 2.83 }
+load after routed arm: { 4.82 3.98 3.21 }
+smollm2-360m mean: 146 ms (acceptance ceiling 550)
+waited for quiet: 0s of 600s, threshold 3.5
+host: Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz, 12 logical CPUs
+provider keys present: openai
+pin: org.modeljars:modeljars:0.1.65
+pin: org.modeljars.composite:harriet:0.1.65
+pin: org.modeljars.huggingface:ggml-org.embeddinggemma-300m-gguf.q8_0:3.0.0-q8_0.1
+pin: org.modeljars.huggingface:huggingfacetb.smollm2-360m-instruct-gguf.q8_0:2.0.0-q8_0.1
+pin: org.modeljars.huggingface:ggml-org.qwen3-0.6b-gguf.q4_0:3.0.0-q4_0.1
+pin: org.modeljars.huggingface:bartowski.meta-llama-3.1-8b-instruct-gguf.q4_k_m:3.1.0-q4_k_m.2

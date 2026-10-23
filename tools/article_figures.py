@@ -784,6 +784,11 @@ def conclusion_region(routed: str, remote: str) -> str:
     The conclusion used to restate figures from the tables above it in prose, which is how a
     conclusion ends up describing a previous run. It states them from the same artifacts now, and
     the declaration count comes from the gate rather than from a count somebody keeps by hand.
+
+    It also used to end "those were the numbers this article had from the start", which is a claim
+    about history that nothing here can check -- and re-measuring on the 0.1.65 pins falsified it:
+    the routed arm's remote variation went from 1.96x to 5.78x. A generated region may only assert
+    what its artifacts support, so it now says which run and which pins the numbers came from.
     """
     found = pairs()
     if not found:
@@ -818,8 +823,8 @@ def conclusion_region(routed: str, remote: str) -> str:
         f"than sending all ten to a frontier model, and across {WORDS[len(found)]} runs of "
         f"identical code the local portion of the wall clock varied by "
         f"{max(locals_) / min(locals_):.2f}× while the remote portion varied by "
-        f"{max(remotes_) / min(remotes_):.2f}×. Those were the numbers this article had from the "
-        "start.\n\n"
+        f"{max(remotes_) / min(remotes_):.2f}×. Those are this run's numbers, measured on the pins "
+        "this article resolves today.\n\n"
         f"What it did not have was the right to the word *enough*. It does now: {checked} "
         f"declarations are checked -- {dataset_backed} of them against a public dataset, the rest "
         f"against the evidence their basis names -- and {supported} "

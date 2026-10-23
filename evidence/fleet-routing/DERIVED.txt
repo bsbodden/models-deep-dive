@@ -1,11 +1,11 @@
 prompts: 10, answered locally: 8, routed to a provider: 2
 data boundary: 7 of 10 prompts sent no text off this machine; 3 did, 1 of them while a local arm answered
-all-remote: 236980 input + 2015 completion = $0.316375
-as routed:  236694 input + 598 completion = $0.100146
-saved: $0.216229 -- 68.3% less, a factor of 3.16
-the 8 locally answered prompts would have billed 1467 completion tokens on gpt-5.1, or $0.015151 -- 4.8% of the all-remote bill
-  gpt-5.1: 159 in + 521 completion = $0.005409
-  gpt-4.1-mini: 236535 in + 77 completion = $0.094737
+all-remote: 236980 input + 1643 completion = $0.312655
+as routed:  236694 input + 495 completion = $0.099007
+saved: $0.213648 -- 68.3% less, a factor of 3.16
+the 8 locally answered prompts would have billed 1147 completion tokens on gpt-5.1, or $0.011951 -- 3.8% of the all-remote bill
+  gpt-5.1: 159 in + 405 completion = $0.004249
+  gpt-4.1-mini: 236535 in + 90 completion = $0.094758
 declared list prices per million tokens, from code/fleet.java:
   PREMIUM_IN = 1.25
   PREMIUM_OUT = 10.00
@@ -16,16 +16,16 @@ declared list prices per million tokens, from code/fleet.java:
   HAIKU_HIGH_IN = 0.50
   HAIKU_HIGH_OUT = 2.50
 on completion, PREMIUM_OUT is 20 times HAIKU_OUT ($10.00 against $0.50 per million)
-routed wall clock 125040 ms, 117356 ms (93.9%) in model calls; one-off load 44799 ms
-no-router wall clock 50171 ms; routed is +74869 ms (+149.2%)
+routed wall clock 187311 ms, 103086 ms (55.0%) in model calls; one-off load 38005 ms
+no-router wall clock 32069 ms; routed is +155242 ms (+484.1%)
 per-prompt wall clock, no-router vs routed:
-  ping                                         1712 ms ->    196 ms (smollm2_360m_instruct_q8_0)
-  still there?                                 1095 ms ->    190 ms (smollm2_360m_instruct_q8_0)
-  ok                                           1001 ms ->    170 ms (smollm2_360m_instruct_q8_0)
-  I was charged twice for my September ord     8633 ms ->  34771 ms (llama_3_1_8b_instruct_q4_k_m)
-  tell me more                                 2068 ms ->  13778 ms (llama_3_1_8b_instruct_q4_k_m)
-  I was charged twice for my September sub     8545 ms ->  15635 ms (unsloth_qwen3_5_4b_gguf_q4_k)
-  When is a refund issued, and to which pa     1839 ms ->  27570 ms (llama_3_1_8b_instruct_q4_k_m)
-  What happens to a duplicate charge?          1352 ms ->  13637 ms (llama_3_1_8b_instruct_q4_k_m)
-  Our refund policy promises five business     7848 ms ->   5338 ms (gpt-5.1)
-  Summarise this appendix for the support     16063 ms ->   6071 ms (gpt-4.1-mini)
+  ping                                         1590 ms ->    157 ms (smollm2_360m_instruct_q8_0)
+  still there?                                 2063 ms ->    174 ms (smollm2_360m_instruct_q8_0)
+  ok                                           1019 ms ->    170 ms (smollm2_360m_instruct_q8_0)
+  I was charged twice for my September ord     5636 ms ->  32514 ms (llama_3_1_8b_instruct_q4_k_m)
+  tell me more                                 2273 ms ->  13151 ms (llama_3_1_8b_instruct_q4_k_m)
+  I was charged twice for my September sub     5408 ms ->  14086 ms (unsloth_qwen3_5_4b_gguf_q4_k)
+  When is a refund issued, and to which pa     1470 ms ->  22180 ms (llama_3_1_8b_instruct_q4_k_m)
+  What happens to a duplicate charge?          1227 ms ->  12583 ms (llama_3_1_8b_instruct_q4_k_m)
+  Our refund policy promises five business     6993 ms ->   4984 ms (gpt-5.1)
+  Summarise this appendix for the support      4375 ms ->   3087 ms (gpt-4.1-mini)

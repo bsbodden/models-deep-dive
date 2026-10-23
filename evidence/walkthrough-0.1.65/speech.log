@@ -1,0 +1,16 @@
+[jbang] Resolving dependencies...
+[jbang]    org.modeljars:modeljars:0.1.65
+[jbang]    org.modeljars.huggingface:walkingcat.soprano-1.1-80m-gguf.bf16:1.1.0-bf16.1
+[jbang] Dependencies resolved
+[jbang] Building jar for speech.java...
+WARNING: Using incubator modules: jdk.incubator.vector
+Oct 23, 2026 11:32:11 AM com.integrallis.vectors.core.PanamaVectorUtilSupportProvider create
+INFO: vectors-core: Using Panama Vector API SIMD provider (vector bits: 256)
+Oct 23, 2026 11:32:11 AM com.integrallis.vectors.core.VectorizationProvider logActiveToggles
+INFO: vectors-core: provider=PanamaVectorUtilSupport panama=true maxBits=256 preferredBits=256 fastVectorFMA=true fastScalarFMA=true sve=false ggufParallel=true ggufParallelThreshold=1048576 ggufExecutor=persistent ggufThreads=12 ggufChunksPerThread=2 mappedKQuantLongOffsets=auto(q4=true,q5=false,q6=false) q4ShortPairwiseSupported=true q4UnsignedPairwiseSupported=true toggles=[(defaults — no -Dvectors.* overrides)]
+Input: The JVM can speak for itself.
+Audio: /Users/briansam-bodden/Code/java-ai/articles/models-deep-dive/code/../recordings/speech.wav
+Duration: 1,856 ms at 32,000 Hz, 1 channel
+Load: 1,689 ms
+Synthesis: 2,434 ms
+RTF: 1.312
